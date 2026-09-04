@@ -58,7 +58,7 @@ PolicyFuzz provides a policy QA workflow analogous to continuous integration for
 - Integer minor units for every monetary value.
 - At most 12 compiled rules and 15 accepted scenarios per run.
 - Normal, boundary, adversarial, and one targeted follow-up generation cycle.
-- Exact source citations for every executable rule.
+- Exact source citations for every baseline executable rule; patched rules use explicit session-revision provenance.
 - Session confirmation of the compiled rules and three to five intent invariants.
 - One revision proposal and one confirm-or-reject decision.
 - Session-confirmed structured rule revision and frozen-suite comparison.
@@ -125,7 +125,7 @@ The frontend polls a display-safe `RunView` every one to two seconds. WebSockets
 | `workflow` | Run state, stage transitions, retries, orchestration and store | Public stage protocols |
 | `features.policy` | Text ingestion, cited extraction, invariant suggestions, structured revision and draft wording | Domain models and LLM protocol |
 | `features.fuzzing` | Mechanical boundary tests, LLM exploratory tests, validation, deduplication and coverage planning | Domain models and LLM protocol |
-| `features.evaluation` | Predicate evaluation, effect resolution, traces, findings, metrics and regression comparison | Domain models only; no LLM |
+| `features.evaluation` | Predicate evaluation, effect resolution, traces, findings, deterministic patch validation/application, metrics and regression comparison | Domain models only; no LLM |
 
 Feature modules do not call API routes, manipulate the run store, or import another feature's internals. The coordinator wires them through typed protocols.
 
@@ -182,7 +182,7 @@ Each `Rule` contains:
 - `when[]` predicates with AND semantics.
 - `effects[]` containing dimension and value.
 - Dimension-specific `overrides[]` references; each reference names a lower-precedence rule that this rule supersedes when both apply.
-- Exact source section, page, character range, quote, and quote hash.
+- Discriminated provenance. A baseline compiled rule uses `text_citation` with exact section, page, character range, quote, and quote hash. A structured patched rule uses `session_revision` with proposal ID, operation index, confirmation timestamp, and the baseline citation IDs that motivated the change.
 - Extraction confidence for display only.
 
 Supported fact fields are:
@@ -284,7 +284,7 @@ Fingerprints are deterministic: a gap uses finding type, effect dimension, and s
 
 A proposal is anchored to the exact baseline document, rule-set, policy-contract, and suite hashes. It identifies only user-accepted findings and contains one to three typed operations plus draft policy wording. Supported operations are `add_rule`, `replace_rule`, and `add_override`; deletion is excluded. A replacement preserves the baseline rule ID and increments its revision.
 
-The structured diff is authoritative for the MVP. Draft wording is an unverified writing suggestion. The proposal cannot change the suite, policy contract, engine, prompt manifest, or unrelated rules, and cannot insert an unrestricted catch-all merely to remove gaps.
+The structured diff is authoritative for the MVP. Draft wording is an unverified writing suggestion. Added or replaced rules therefore carry `session_revision` provenance rather than fabricated text citations. The proposal cannot change the suite, policy contract, engine, prompt manifest, or unrelated rules, and cannot insert an unrestricted catch-all merely to remove gaps.
 
 The regression report requires identical suite and engine hashes before and after. It has two non-overlapping result tables:
 
@@ -472,7 +472,7 @@ The root `AGENTS.md` defines universal rules. Each person folder contains an exa
 | 1 | Integration lead | Contracts, API, core, domain, workflow, provider adapter, CI, root files | Full pipeline runs offline with fake adapters |
 | 2 | Policy intelligence | Text ingestion, extraction, citations, structured revision, draft wording, sample policies | Development and blind policies produce schema-valid cited artifacts |
 | 3 | Fuzz-test designer | Scenario planning, deterministic boundaries, exploratory prompts, validation, coverage | Stable, deduplicated suite covers supported rules and invariants |
-| 4 | Deterministic evaluator | Predicates, resolution, traces, findings, metrics, regression | Every semantic branch has deterministic tests and no model dependency |
+| 4 | Deterministic evaluator | Predicates, resolution, traces, findings, patch validation/application, metrics, regression | Every semantic branch has deterministic tests and no model dependency |
 | 5 | Product and demo lead | React frontend, UI tests, submission deck and video | Production build and complete mock/live demo pass |
 
 Person 1 is the only owner of shared schemas and backend dependencies. Person 5 is the only owner of frontend dependencies and final submission source. Specialists do not edit another person's paths directly.
