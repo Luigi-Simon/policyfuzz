@@ -18,6 +18,8 @@ PolicyFuzz does not claim that a policy is legally compliant, universally correc
 
 ## 2. Hackathon alignment and deliverables
 
+**Official challenge theme:** “Design for a World in Transformation.”
+
 The solution answers the challenge by helping a policy remain usable as circumstances, thresholds, exceptions, and employee behavior change. Its agentic loop is `plan -> act -> observe -> adapt -> retest`:
 
 1. Compile cited rules from a policy.
@@ -178,14 +180,14 @@ An unsupported clause stores its exact source span, reason code, affected effect
 
 Each `Rule` contains:
 
-- Stable baseline ID derived from the semantic rule signature plus source-span hash, and a short description. A structured `replace_rule` operation preserves this ID and increments `revision`.
+- Stable baseline ID derived from the semantic rule signature plus source-span hash, and a short description. Structured `replace_rule` and `add_override` operations preserve the affected source rule's ID and increment its `revision` exactly once.
 - `when[]` predicates with AND semantics.
 - `effects[]` containing dimension and value.
 - Dimension-specific `overrides[]` references; each reference names a lower-precedence rule that this rule supersedes when both apply.
 - Discriminated provenance. A baseline compiled rule uses `text_citation` with exact section, page, character range, quote, and quote hash. A structured patched rule uses `session_revision` with proposal ID, operation index, confirmation timestamp, and the baseline citation IDs that motivated the change.
 - Extraction confidence for display only.
 
-Supported fact fields are:
+Stored scenario fact fields are:
 
 - `employee_role`
 - `expense_category`
@@ -196,7 +198,7 @@ Supported fact fields are:
 - `approval_roles_present`
 - `prior_same_day_category_spend_minor`
 
-For daily-cap evaluation, Python derives `daily_category_total_minor` by adding the current claim amount to prior same-day category spending. No transaction database or arbitrary aggregation window is implemented.
+For daily-cap evaluation, Python derives the invariant-only predicate field `daily_category_total_minor` by adding the current claim amount to prior same-day category spending. It is never stored in `ScenarioFacts` and is rejected in executable rule conditions. No transaction database or arbitrary aggregation window is implemented.
 
 Field domains and valid operators are fixed:
 
@@ -210,6 +212,7 @@ Field domains and valid operators are fixed:
 | `receipt_present` | Boolean | `eq`, `neq` |
 | `approval_roles_present` | set of `manager | director | finance` | `contains` |
 | `prior_same_day_category_spend_minor` | integer from 0 to 10,000,000 | `eq`, `neq`, `lt`, `lte`, `gt`, `gte` |
+| `daily_category_total_minor` | derived integer from 0 to 20,000,000; invariant conditions only | `eq`, `neq`, `lt`, `lte`, `gt`, `gte` |
 
 All predicates are type-checked before execution. For each effect dimension, applicable rules are collected, then the targeted lower-precedence effects named by applicable rules' `overrides[]` entries are removed. Zero remaining values is a gap, one unique value is resolved, and multiple unique values are a conflict. Dangling overrides and override cycles invalidate the entire rule set.
 
@@ -278,13 +281,13 @@ Finding types are `structural_gap`, `conflict`, `intent_breach`, `regression`, `
 
 Findings are grouped by a root-cause fingerprint so multiple witness scenarios do not inflate the defect count. Severity comes from a confirmed invariant or session reviewer, never the model.
 
-Fingerprints are deterministic: a gap uses finding type, effect dimension, and sorted target rule or invariant IDs; a conflict uses type, dimension, and sorted conflicting rule IDs; an intent breach uses type and invariant ID; an unsupported clause uses type and source-span hash; and a regression uses type and assertion ID. The fingerprint is the semantic hash of that tuple.
+Fingerprints are deterministic: a gap uses finding type, effect dimension, and sorted target rule or invariant IDs; a conflict uses type, dimension, and sorted conflicting rule IDs; an intent breach uses type and invariant ID; an unsupported clause uses type and source-span hash; a regression uses type and assertion ID; and a `potential_loophole` candidate uses type, dimension, sorted target IDs, and sorted witness fact hashes. The fingerprint is the semantic hash of that tuple.
 
 ### 8.7 `RevisionProposal`, `RegressionReport`, and `PatchAcceptanceReport`
 
-A proposal is anchored to the exact baseline document, rule-set, policy-contract, and suite hashes. It identifies only user-accepted findings and contains one to three typed operations plus draft policy wording. Supported operations are `add_rule`, `replace_rule`, and `add_override`; deletion is excluded. A replacement preserves the baseline rule ID and increments its revision.
+A proposal is anchored to the exact baseline document, rule-set, policy-contract, and suite hashes. It identifies only user-accepted findings and contains one to three typed operations plus draft policy wording. Supported operations are `add_rule`, `replace_rule`, and `add_override`; deletion is excluded. A replacement preserves the baseline rule ID and increments its revision. `add_override` likewise preserves and increments the source rule while adding only the named dimension-specific edge.
 
-The structured diff is authoritative for the MVP. Draft wording is an unverified writing suggestion. Added or replaced rules therefore carry `session_revision` provenance rather than fabricated text citations. The proposal cannot change the suite, policy contract, engine, prompt manifest, or unrelated rules, and cannot insert an unrestricted catch-all merely to remove gaps.
+The structured diff is authoritative for the MVP. Draft wording is an unverified writing suggestion. Added, replaced, and override-modified rules therefore carry `session_revision` provenance rather than fabricated text citations; unchanged target rules retain their existing provenance. The proposal cannot change the suite, policy contract, engine, prompt manifest, or unrelated rules, and cannot insert an unrestricted catch-all merely to remove gaps.
 
 The regression report requires identical suite and engine hashes before and after. It has two non-overlapping result tables:
 
@@ -310,10 +313,10 @@ The stretch prose path applies at most three non-overlapping edits to normalized
 
 | Endpoint | Behavior |
 |---|---|
-| `POST /api/v1/runs` | Accept pasted text or the bundled sample; return `202` and `run_id` |
+| `POST /api/v1/runs` | Accept pasted text or the bundled sample; return `202`, `schema_version`, and `run_id` |
 | `GET /api/v1/runs/{run_id}` | Return the latest display-safe `RunView` |
 | `POST /api/v1/runs/{run_id}/confirm-contract` | Confirm baseline rules and submit three to five confirmed invariants |
-| `POST /api/v1/runs/{run_id}/select-findings` | Accept or reject findings and start one revision proposal |
+| `POST /api/v1/runs/{run_id}/select-findings` | Accept or reject findings; accepted unscored structural findings require session reviewer severity; then start one revision proposal |
 | `POST /api/v1/runs/{run_id}/confirm-revision` | Submit `confirm` or `reject`; confirmation applies the structured diff and starts retesting |
 | `DELETE /api/v1/runs/{run_id}` | Remove the run and its in-memory artifacts immediately |
 | `GET /api/v1/health` | Return application health and provider configuration status without secrets |
@@ -470,12 +473,12 @@ The root `AGENTS.md` defines universal rules. Each person folder contains an exa
 | Person | Role | Exclusive ownership | Definition of done |
 |---|---|---|---|
 | 1 | Integration lead | Contracts, API, core, domain, workflow, provider adapter, CI, root files | Full pipeline runs offline with fake adapters |
-| 2 | Policy intelligence | Text ingestion, extraction, citations, structured revision, draft wording, sample policies | Development and blind policies produce schema-valid cited artifacts |
+| 2 | Policy intelligence | Text ingestion, extraction, citations, structured revision, draft wording, development/corrected sample policies | Development and corrected policies produce schema-valid cited artifacts |
 | 3 | Fuzz-test designer | Scenario planning, deterministic boundaries, exploratory prompts, validation, coverage | Stable, deduplicated suite covers supported rules and invariants |
 | 4 | Deterministic evaluator | Predicates, resolution, traces, findings, patch validation/application, metrics, regression | Every semantic branch has deterministic tests and no model dependency |
-| 5 | Product and demo lead | React frontend, UI tests, submission deck and video | Production build and complete mock/live demo pass |
+| 5 | Product and demo lead | React frontend, UI tests, submission deck/video, sealed blind policy and labels | Production build, blind-custody handoff, and complete cached/live demo pass |
 
-Person 1 is the only owner of shared schemas and backend dependencies. Person 5 is the only owner of frontend dependencies and final submission source. Specialists do not edit another person's paths directly.
+Person 1 is the only owner of shared schemas and backend dependencies. Person 5 is the only owner of frontend dependencies, final submission source, and the blind-policy/label custody exception. Person 2 owns all non-blind sample policies. Specialists do not edit another person's paths directly.
 
 Submission evidence is shared even though Person 5 is the final editor: Person 1 provides architecture and setup proof, Person 2 provides extraction evidence, Person 3 provides agentic scenario examples, and Person 4 provides benchmark metrics and safeguards. Each contribution is written into that person's `HANDOFF.md` before Person 5 assembles the deck and video.
 
@@ -488,7 +491,7 @@ Submission evidence is shared even though Person 5 is the final editor: Person 1
 5. Person 1 wires the baseline pipeline, then revision and frozen-suite retesting.
 6. Person 5 replaces the mock transport with the stable HTTP API.
 7. The team runs the blind benchmark and records actual metrics.
-8. Interfaces freeze at least six hours before recording; the verified commit is tagged `demo-v1`.
+8. Application code, prompts, contracts, runtime fixtures, and benchmarks freeze at least six hours before recording; that verified commit is tagged `demo-core-v1`. Submission artifacts and packaging are added afterward, and the complete verified submission is tagged `demo-v1`.
 
 Branches are short-lived and named `pN/type-description`, such as `p3/feat-boundary-generation`. Commits use conventional prefixes. One pull request contains one independently testable change. Contract changes are separate pull requests owned by Person 1. No specialist performs repository-wide formatting or modifies shared lockfiles. Person 1 controls the merge queue.
 
