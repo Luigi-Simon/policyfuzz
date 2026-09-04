@@ -2,7 +2,7 @@
 
 **Date:** 4 September 2026
 
-**Status:** Awaiting final written-spec approval
+**Status:** Approved for implementation
 
 **Repository target:** `Luigi-Simon/policyfuzz`
 
