@@ -1,4 +1,13 @@
-Status: In progress — ingestion foundation and compiler preparation complete
+Status: Ready for review — contract-independent Policy Intelligence foundation complete
+
+Branch: `p2/feat-policy-ingestion`
+
+Commits after the ingestion commit already on `main`:
+
+- `7b1bf3a` — compiler fixtures, vocabulary, sample policy, and prompt requirements
+- `21c9ee1` — primitive exact-citation validation
+- `d7e3580` — strict typed model-output validation
+- `6cfaa8b` — bounded compiler retrieval tools
 
 ## Interfaces
 
@@ -80,6 +89,21 @@ Status: In progress — ingestion foundation and compiler preparation complete
   Selecting and adding a PDF dependency belongs to the shared dependency owner.
 - The public `ingest_policy_text(...) -> PolicyDocument` adapter from Task 12
   remains pending until the frozen shared contracts are available.
-- Citation tests are contract-first and use `pytest.importorskip`; they will
-  become executable when Person 1's `SourceSpan` and the policy citation module
-  are available.
+- Contract-adapter citation tests remain skipped until Person 1's `SourceSpan`
+  model exists. Primitive citation tests are active and passing.
+
+## Integration handoff
+
+Person 1 needs to publish the documented shared `PolicyDocument`, `PolicyPage`,
+`SourceSpan`, `RuleDraft`, `PolicyExtraction`, request/response models,
+`canonical_sha256`, and public LLM protocol. Person 2 should then:
+
+1. Adapt `PreparedPolicyText` to the official `PolicyDocument` and compute its
+   canonical document hash.
+2. Add `validate_source_span(document, span)` as a thin adapter over the tested
+   primitive citation validator and enable the skipped tests.
+3. Wrap `parse_typed_output` in the one-repair LLM workflow.
+4. Use the bounded retrieval tools in the Policy Compiler Agent.
+
+No file outside Person 2's owned paths is changed by this branch. The local
+`person-2-policy-flow.svg` diagram is untracked and is not part of this handoff.
