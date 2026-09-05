@@ -6,6 +6,7 @@ Status: In progress — ingestion foundation and compiler preparation complete
 - `prepare_policy_pages(pages, *, max_characters=50_000, max_pages=20) -> PreparedPolicyText`
 - `load_bundled_policy_text(path) -> PreparedPolicyText`
 - `validate_citation(*, pages, page_number, start_offset, end_offset, quote, quote_sha256) -> ValidatedCitation`
+- `parse_typed_output(raw_output, *, response_model, max_characters=100_000) -> BaseModel`
 - `PreparedPolicyText` and `PreparedPolicyPage` are feature-local preparation
   types, not replacements for Person 1's shared `PolicyDocument` contract.
 
@@ -18,6 +19,8 @@ Status: In progress — ingestion foundation and compiler preparation complete
 - `backend/tests/features/policy/test_citations_contract_draft.py`
 - `backend/app/features/policy/citations.py`
 - `backend/tests/features/policy/test_citations.py`
+- `backend/app/features/policy/model_output.py`
+- `backend/tests/features/policy/test_model_output.py`
 - `samples/policies/development-policy.txt`
 - `team/person-2-policy/expected-extracted-rules.json`
 - `team/person-2-policy/supported-vocabulary.md`
@@ -32,7 +35,7 @@ Status: In progress — ingestion foundation and compiler preparation complete
 - GREEN: `PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider tests/features/policy/test_ingest.py -q`
   - Result: 12 passed.
 - FULL: `PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider -q`
-  - Result after primitive citation validation: 41 passed, 1 skipped
+  - Result after typed output validation: 53 passed, 1 skipped
     (only the future shared-contract adapter tests remain skipped).
 - JSON validation: `python -m json.tool team/person-2-policy/expected-extracted-rules.json` and `python -m json.tool team/person-2-policy/fake-llm-responses.json`
   - Result: both valid.
@@ -50,8 +53,14 @@ Status: In progress — ingestion foundation and compiler preparation complete
   character offsets into the combined normalized text.
 - Primitive citation validation rejects invalid pages, offsets, quote text, and
   SHA-256 values using sanitized error codes.
+- Typed model-output parsing strictly validates JSON against a caller-supplied
+  Pydantic model and exposes only deterministic field paths and error codes.
+- Malformed, empty, oversized, schema-invalid, and coercion-dependent model
+  output is rejected without echoing raw output or private values.
 - Every rule and unsupported clause in the development fixture now has an exact
   source offset and independently verified quote hash.
+- Prompt requirements record the broader large-population stakeholder audience
+  while preserving the repository's current T&E MVP scope.
 
 ## Limitations
 
