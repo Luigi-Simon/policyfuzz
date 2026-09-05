@@ -7,6 +7,10 @@ Status: In progress — ingestion foundation and compiler preparation complete
 - `load_bundled_policy_text(path) -> PreparedPolicyText`
 - `validate_citation(*, pages, page_number, start_offset, end_offset, quote, quote_sha256) -> ValidatedCitation`
 - `parse_typed_output(raw_output, *, response_model, max_characters=100_000) -> BaseModel`
+- `read_page(policy, *, page_number, max_characters=5_000) -> PageExcerpt`
+- `search_policy(policy, query, *, max_results=5, context_characters=120) -> tuple[SearchHit, ...]`
+- `find_section(policy, section_name, *, max_characters=3_000) -> SectionExcerpt`
+- `get_clause_context(policy, *, page_number, start_offset, end_offset, context_characters=120) -> PageExcerpt`
 - `PreparedPolicyText` and `PreparedPolicyPage` are feature-local preparation
   types, not replacements for Person 1's shared `PolicyDocument` contract.
 
@@ -21,6 +25,8 @@ Status: In progress — ingestion foundation and compiler preparation complete
 - `backend/tests/features/policy/test_citations.py`
 - `backend/app/features/policy/model_output.py`
 - `backend/tests/features/policy/test_model_output.py`
+- `backend/app/features/policy/tools.py`
+- `backend/tests/features/policy/test_tools.py`
 - `samples/policies/development-policy.txt`
 - `team/person-2-policy/expected-extracted-rules.json`
 - `team/person-2-policy/supported-vocabulary.md`
@@ -35,7 +41,7 @@ Status: In progress — ingestion foundation and compiler preparation complete
 - GREEN: `PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider tests/features/policy/test_ingest.py -q`
   - Result: 12 passed.
 - FULL: `PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider -q`
-  - Result after typed output validation: 53 passed, 1 skipped
+  - Result after compiler retrieval tools: 69 passed, 1 skipped
     (only the future shared-contract adapter tests remain skipped).
 - JSON validation: `python -m json.tool team/person-2-policy/expected-extracted-rules.json` and `python -m json.tool team/person-2-policy/fake-llm-responses.json`
   - Result: both valid.
@@ -61,6 +67,9 @@ Status: In progress — ingestion foundation and compiler preparation complete
   source offset and independently verified quote hash.
 - Prompt requirements record the broader large-population stakeholder audience
   while preserving the repository's current T&E MVP scope.
+- Compiler retrieval tools provide bounded page reads, literal case-insensitive
+  search, numbered-section lookup, and clause context with stable offsets.
+- Retrieval failures use sanitized error codes and do not include policy text.
 
 ## Limitations
 
