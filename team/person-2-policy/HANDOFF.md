@@ -1,4 +1,4 @@
-Status: In progress — contract-independent ingestion foundation complete
+Status: In progress — ingestion foundation and compiler preparation complete
 
 ## Interfaces
 
@@ -14,6 +14,12 @@ Status: In progress — contract-independent ingestion foundation complete
 - `backend/tests/features/policy/__init__.py`
 - `backend/tests/features/policy/test_ingest.py`
 - `team/person-2-policy/HANDOFF.md`
+- `backend/tests/features/policy/test_citations_contract_draft.py`
+- `samples/policies/development-policy.txt`
+- `team/person-2-policy/expected-extracted-rules.json`
+- `team/person-2-policy/supported-vocabulary.md`
+- `team/person-2-policy/fake-llm-responses.json`
+- `team/person-2-policy/prompt-requirements.md`
 
 ## Commands
 
@@ -23,7 +29,9 @@ Status: In progress — contract-independent ingestion foundation complete
 - GREEN: `PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider tests/features/policy/test_ingest.py -q`
   - Result: 12 passed.
 - FULL: `PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider -q`
-  - Result: 27 passed.
+  - Result: 27 passed, 1 skipped (citation draft is intentionally skipped until shared citation models/module exist).
+- JSON validation: `python -m json.tool team/person-2-policy/expected-extracted-rules.json` and `python -m json.tool team/person-2-policy/fake-llm-responses.json`
+  - Result: both valid.
 - LINT: `python -m ruff check app/features/policy/ingest.py tests/features/policy/test_ingest.py`
   - Not run: `ruff` is declared as a development dependency but is not
     installed in the current environment.
@@ -46,3 +54,6 @@ Status: In progress — contract-independent ingestion foundation complete
   Selecting and adding a PDF dependency belongs to the shared dependency owner.
 - The public `ingest_policy_text(...) -> PolicyDocument` adapter from Task 12
   remains pending until the frozen shared contracts are available.
+- Citation tests are contract-first and use `pytest.importorskip`; they will
+  become executable when Person 1's `SourceSpan` and the policy citation module
+  are available.

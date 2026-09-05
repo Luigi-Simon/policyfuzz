@@ -1,0 +1,20 @@
+{
+  "extraction_valid": {
+    "rules": [
+      {"when": [{"field": "amount_minor", "operator": "gt", "value": 5000}], "effects": [{"dimension": "approval_requirement", "value": "manager"}], "citation": {"page": 1, "start": 0, "end": 10, "quote": "Claims above SGD 50"}},
+      {"when": [{"field": "expense_category", "operator": "eq", "value": "meal"}], "effects": [{"dimension": "receipt_requirement", "value": "required"}], "citation": {"page": 1, "start": 0, "end": 10, "quote": "A receipt is required"}}
+    ],
+    "unsupported_clauses": [{"text": "reasonable exceptions", "reason_code": "ambiguous_exception", "citation": {"page": 1, "start": 0, "end": 10, "quote": "reasonable exceptions"}}]
+  },
+  "extraction_invalid_then_repaired": {
+    "first_response": {"rules": "not-a-list"},
+    "repair_response": {"rules": [], "unsupported_clauses": []}
+  },
+  "invariant_suggestions": {
+    "invariants": [
+      {"name": "meal_cap", "rationale": "Meal claims should not exceed the published daily cap."},
+      {"name": "receipt_required", "rationale": "Every meal reimbursement should have a receipt."},
+      {"name": "approval_threshold", "rationale": "Higher-value claims should require the stated approval."}
+    ]
+  }
+}

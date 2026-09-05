@@ -1,0 +1,55 @@
+{
+  "source_file": "samples/policies/development-policy.txt",
+  "rules": [
+    {
+      "temporary_id": "meal-daily-cap",
+      "when": [
+        {"field": "expense_category", "operator": "eq", "value": "meal"},
+        {"field": "employee_role", "operator": "in", "value": ["employee", "manager", "director", "executive"]}
+      ],
+      "effects": [{"dimension": "daily_category_cap_minor", "value": 8000}],
+      "citation": {"section": "1", "quote": "Employees may claim meals up to SGD 80 per day while travelling for approved business."}
+    },
+    {
+      "temporary_id": "meal-receipt",
+      "when": [{"field": "expense_category", "operator": "eq", "value": "meal"}],
+      "effects": [{"dimension": "receipt_requirement", "value": "required"}],
+      "citation": {"section": "1", "quote": "A receipt is required for every meal claim."}
+    },
+    {
+      "temporary_id": "manager-approval-over-50",
+      "when": [{"field": "amount_minor", "operator": "gt", "value": 5000}],
+      "effects": [{"dimension": "approval_requirement", "value": "manager"}],
+      "citation": {"section": "2", "quote": "Claims above SGD 50 require manager approval before reimbursement."}
+    },
+    {
+      "temporary_id": "finance-approval-over-200",
+      "when": [{"field": "amount_minor", "operator": "gt", "value": 20000}],
+      "effects": [{"dimension": "approval_requirement", "value": "finance"}],
+      "overrides": ["manager-approval-over-50"],
+      "citation": {"section": "2", "quote": "Claims above SGD 200 require finance approval."}
+    },
+    {
+      "temporary_id": "domestic-hotel-cap",
+      "when": [
+        {"field": "expense_category", "operator": "eq", "value": "hotel"},
+        {"field": "destination_type", "operator": "eq", "value": "domestic"}
+      ],
+      "effects": [{"dimension": "claim_cap_minor", "value": 22000}],
+      "citation": {"section": "3", "quote": "Hotel claims are allowed up to SGD 220 per night for domestic travel"}
+    },
+    {
+      "temporary_id": "international-hotel-cap",
+      "when": [
+        {"field": "expense_category", "operator": "eq", "value": "hotel"},
+        {"field": "destination_type", "operator": "eq", "value": "international"}
+      ],
+      "effects": [{"dimension": "claim_cap_minor", "value": 30000}],
+      "citation": {"section": "3", "quote": "Hotel claims are allowed up to SGD 300 per night for international travel"}
+    }
+  ],
+  "unsupported_clauses": [
+    {"section": "4", "text": "The company may make reasonable exceptions in urgent circumstances.", "reason": "ambiguous_exception"},
+    {"section": "4", "text": "Claims that do not follow this policy may be reviewed under applicable law.", "reason": "unsupported_legal_reference"}
+  ]
+}
