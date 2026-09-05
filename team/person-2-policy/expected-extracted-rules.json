@@ -8,26 +8,26 @@
         {"field": "employee_role", "operator": "in", "value": ["employee", "manager", "director", "executive"]}
       ],
       "effects": [{"dimension": "daily_category_cap_minor", "value": 8000}],
-      "citation": {"section": "1", "quote": "Employees may claim meals up to SGD 80 per day while travelling for approved business."}
+      "citation": {"section": "1", "page": 1, "start": 45, "end": 131, "quote": "Employees may claim meals up to SGD 80 per day while travelling for approved business.", "quote_sha256": "d0d00319b40c3bb39dbc81b3b01c3b80b4ad6ccf246707ffa246424e8cc22ae4"}
     },
     {
       "temporary_id": "meal-receipt",
       "when": [{"field": "expense_category", "operator": "eq", "value": "meal"}],
       "effects": [{"dimension": "receipt_requirement", "value": "required"}],
-      "citation": {"section": "1", "quote": "A receipt is required for every meal claim."}
+      "citation": {"section": "1", "page": 1, "start": 132, "end": 175, "quote": "A receipt is required for every meal claim.", "quote_sha256": "955d04c967832363ba42fb302b65a09e2a022290c84a40b5f26e4afef24277f0"}
     },
     {
       "temporary_id": "manager-approval-over-50",
       "when": [{"field": "amount_minor", "operator": "gt", "value": 5000}],
       "effects": [{"dimension": "approval_requirement", "value": "manager"}],
-      "citation": {"section": "2", "quote": "Claims above SGD 50 require manager approval before reimbursement."}
+      "citation": {"section": "2", "page": 1, "start": 189, "end": 255, "quote": "Claims above SGD 50 require manager approval before reimbursement.", "quote_sha256": "ca80c5634f210446202e6c480b0b8fdce04795cb18456bdd604aec46158542bc"}
     },
     {
       "temporary_id": "finance-approval-over-200",
       "when": [{"field": "amount_minor", "operator": "gt", "value": 20000}],
       "effects": [{"dimension": "approval_requirement", "value": "finance"}],
       "overrides": ["manager-approval-over-50"],
-      "citation": {"section": "2", "quote": "Claims above SGD 200 require finance approval."}
+      "citation": {"section": "2", "page": 1, "start": 256, "end": 302, "quote": "Claims above SGD 200 require finance approval.", "quote_sha256": "a7358a065000ed604dd96bd2c4885bab6e2a44a8c0591d4ee06a2d8482adbce8"}
     },
     {
       "temporary_id": "domestic-hotel-cap",
@@ -36,7 +36,7 @@
         {"field": "destination_type", "operator": "eq", "value": "domestic"}
       ],
       "effects": [{"dimension": "claim_cap_minor", "value": 22000}],
-      "citation": {"section": "3", "quote": "Hotel claims are allowed up to SGD 220 per night for domestic travel"}
+      "citation": {"section": "3", "page": 1, "start": 382, "end": 450, "quote": "Hotel claims are allowed up to SGD 220 per night for domestic travel", "quote_sha256": "306e11a74fabc0e8f517f283aeb64b671f96dcf734813a4b3493ebc46537a573"}
     },
     {
       "temporary_id": "international-hotel-cap",
@@ -45,11 +45,11 @@
         {"field": "destination_type", "operator": "eq", "value": "international"}
       ],
       "effects": [{"dimension": "claim_cap_minor", "value": 30000}],
-      "citation": {"section": "3", "quote": "Hotel claims are allowed up to SGD 300 per night for international travel"}
+      "citation": {"section": "3", "page": 1, "start": 455, "end": 498, "quote": "SGD 300 per night for international travel.", "quote_sha256": "ef0a6e4ce440611918da732587dd80a36f5d943b4320fa4eb02af65171b79177"}
     }
   ],
   "unsupported_clauses": [
-    {"section": "4", "text": "The company may make reasonable exceptions in urgent circumstances.", "reason": "ambiguous_exception"},
-    {"section": "4", "text": "Claims that do not follow this policy may be reviewed under applicable law.", "reason": "unsupported_legal_reference"}
+    {"section": "4", "text": "The company may make reasonable exceptions in urgent circumstances.", "reason": "ambiguous_exception", "citation": {"page": 1, "start": 539, "end": 606, "quote_sha256": "cc4d0696162d247c1ae226fed3c6937363b452c8738e19e16fd14736a97b865b"}},
+    {"section": "4", "text": "Claims that do not follow this policy may be reviewed under applicable law.", "reason": "unsupported_legal_reference", "citation": {"page": 1, "start": 649, "end": 724, "quote_sha256": "0bcb98c334e4373f5af3793dc76837e57e4afa3114c1fe0b0bfbd6c84f8b7f73"}}
   ]
 }

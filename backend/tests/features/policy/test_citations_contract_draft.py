@@ -6,6 +6,11 @@ import pytest
 
 
 citations = pytest.importorskip("app.features.policy.citations")
+if not hasattr(citations, "SourceSpan"):
+    pytest.skip(
+        "waiting for Person 1's shared SourceSpan contract and adapter",
+        allow_module_level=True,
+    )
 
 
 def _span(page: int, text: str, start: int, end: int):

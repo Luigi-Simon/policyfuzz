@@ -5,6 +5,7 @@ Status: In progress — ingestion foundation and compiler preparation complete
 - `prepare_policy_text(text, *, max_characters=50_000) -> PreparedPolicyText`
 - `prepare_policy_pages(pages, *, max_characters=50_000, max_pages=20) -> PreparedPolicyText`
 - `load_bundled_policy_text(path) -> PreparedPolicyText`
+- `validate_citation(*, pages, page_number, start_offset, end_offset, quote, quote_sha256) -> ValidatedCitation`
 - `PreparedPolicyText` and `PreparedPolicyPage` are feature-local preparation
   types, not replacements for Person 1's shared `PolicyDocument` contract.
 
@@ -15,6 +16,8 @@ Status: In progress — ingestion foundation and compiler preparation complete
 - `backend/tests/features/policy/test_ingest.py`
 - `team/person-2-policy/HANDOFF.md`
 - `backend/tests/features/policy/test_citations_contract_draft.py`
+- `backend/app/features/policy/citations.py`
+- `backend/tests/features/policy/test_citations.py`
 - `samples/policies/development-policy.txt`
 - `team/person-2-policy/expected-extracted-rules.json`
 - `team/person-2-policy/supported-vocabulary.md`
@@ -29,7 +32,8 @@ Status: In progress — ingestion foundation and compiler preparation complete
 - GREEN: `PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider tests/features/policy/test_ingest.py -q`
   - Result: 12 passed.
 - FULL: `PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider -q`
-  - Result: 27 passed, 1 skipped (citation draft is intentionally skipped until shared citation models/module exist).
+  - Result after primitive citation validation: 41 passed, 1 skipped
+    (only the future shared-contract adapter tests remain skipped).
 - JSON validation: `python -m json.tool team/person-2-policy/expected-extracted-rules.json` and `python -m json.tool team/person-2-policy/fake-llm-responses.json`
   - Result: both valid.
 - LINT: `python -m ruff check app/features/policy/ingest.py tests/features/policy/test_ingest.py`
@@ -44,6 +48,10 @@ Status: In progress — ingestion foundation and compiler preparation complete
   with sanitized stable error codes.
 - Prepared pages retain deterministic one-based page numbers and global
   character offsets into the combined normalized text.
+- Primitive citation validation rejects invalid pages, offsets, quote text, and
+  SHA-256 values using sanitized error codes.
+- Every rule and unsupported clause in the development fixture now has an exact
+  source offset and independently verified quote hash.
 
 ## Limitations
 
