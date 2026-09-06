@@ -1,0 +1,49 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "enum": [
+        "timeout",
+        "rate_limit",
+        "authentication",
+        "invalid_request",
+        "unavailable",
+        "invalid_response",
+        "refusal",
+        "script_exhausted"
+      ],
+      "title": "Code",
+      "type": "string"
+    },
+    "operation": {
+      "enum": [
+        "policy_extraction",
+        "invariant_suggestion",
+        "scenario_generation",
+        "targeted_scenario_generation",
+        "revision_proposal"
+      ],
+      "title": "Operation",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "transport_retries": {
+      "default": 0,
+      "maximum": 2,
+      "minimum": 0,
+      "title": "Transport Retries",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "code",
+    "operation"
+  ],
+  "title": "LLMError",
+  "type": "object"
+}

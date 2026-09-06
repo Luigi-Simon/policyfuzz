@@ -67,6 +67,10 @@ class ScenarioCandidate(StrictModel):
         return self
 
 
+class ScenarioBatch(StrictModel):
+    candidates: tuple[ScenarioCandidate, ...]
+
+
 class Scenario(StrictModel):
     scenario_id: Identifier
     category: ScenarioCategory

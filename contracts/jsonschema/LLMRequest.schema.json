@@ -1,0 +1,116 @@
+{
+  "$defs": {
+    "GenerationConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "max_output_tokens": {
+          "default": 4096,
+          "minimum": 1,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "seed": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Seed"
+        },
+        "temperature_milli": {
+          "default": 0,
+          "maximum": 2000,
+          "minimum": 0,
+          "title": "Temperature Milli",
+          "type": "integer"
+        },
+        "top_p_percent": {
+          "default": 100,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Top P Percent",
+          "type": "integer"
+        }
+      },
+      "title": "GenerationConfig",
+      "type": "object"
+    },
+    "JsonValue": {}
+  },
+  "additionalProperties": false,
+  "properties": {
+    "generation_config": {
+      "$ref": "#/$defs/GenerationConfig"
+    },
+    "operation": {
+      "enum": [
+        "policy_extraction",
+        "invariant_suggestion",
+        "scenario_generation",
+        "targeted_scenario_generation",
+        "revision_proposal"
+      ],
+      "title": "Operation",
+      "type": "string"
+    },
+    "repair_attempt": {
+      "default": 0,
+      "enum": [
+        0,
+        1
+      ],
+      "title": "Repair Attempt",
+      "type": "integer"
+    },
+    "response_schema": {
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "Response Schema",
+      "type": "object"
+    },
+    "response_schema_name": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "title": "Response Schema Name",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "system_instructions": {
+      "minLength": 1,
+      "title": "System Instructions",
+      "type": "string"
+    },
+    "untrusted_payload_json": {
+      "minLength": 1,
+      "title": "Untrusted Payload Json",
+      "type": "string"
+    }
+  },
+  "required": [
+    "operation",
+    "system_instructions",
+    "untrusted_payload_json",
+    "response_schema",
+    "response_schema_name"
+  ],
+  "title": "LLMRequest",
+  "type": "object"
+}

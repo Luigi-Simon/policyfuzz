@@ -1,4 +1,73 @@
-Status: Task 3 complete, independently reviewed and verified. Tasks 1–2 complete; Gate A2 is next.
+# Person 1 integration handoff
+
+Status: Task 4 shared interfaces and adapter infrastructure are complete and
+frozen as version `1.0`; see `contracts/freeze-v1.json` and the integration reference.
+
+## Task 4 interfaces
+
+The normative integration reference is `contracts/task4-integration.md`. It lists
+all eight stage protocols, exact provider-neutral fields, retry/repair rules,
+configuration and Person 2's remaining wrapper work. Public imports are
+`app.domain.models` and `app.domain.protocols`.
+
+- Added `LLMRequest`, `LLMResponse`, `LLMOperation`, `LLMError`, `LLMErrorCode` and
+  safe infrastructure exceptions/public projections.
+- Added `InvariantSuggestion` / `InvariantSuggestions`: unconfirmed model intent,
+  no severity or oracle fields, three-to-five validation and duplicate detection.
+- Added `ScenarioBatch`, document-only `CompilePolicyRequest`, and additive
+  `PolicyCompilation.invariant_drafts`. Deterministic compilation still requires
+  a supplied extraction; its existing feature helper is unchanged.
+- Added `Settings`, `ScriptedLLMClient`, `RetryingLLMClient` and `OpenAILLMClient`.
+  Cached settings need no credentials. Every provider call uses the supplied
+  original schema with `strict=False`; Pydantic feature validation is mandatory.
+- Automatic transport retries are limited to two for timeout/rate-limit errors.
+  SDK retries are disabled; one feature-level repair remains Person 2's work.
+
+## Scope and verification
+
+Task 4 changes shared domain/core code, its tests, generated schemas, the safe
+root environment template and Person 1 contract documentation. Person 2 feature
+code and Person 5 UI/submission artifacts are preserved. Existing HTTP OpenAPI
+and the canonical completed `RunView` fixture remain byte-identical.
+
+- Baseline before Task 4: 424 backend tests passed.
+- Shared-model/protocol focused suite: 31 passed.
+- Domain plus Person 2 compatibility suite: 386 passed.
+- Individual JSON-schema registry: 111 models; exact generation checks pass.
+- Adapter/protocol focused suite: 59 passed.
+- Full backend regression suite: 511 passed.
+- All 17 changed Python files pass their owned Ruff and formatting checks.
+- Schema/OpenAPI export, canonical fixture and frontend generated-type checks pass.
+- Shared-model independent review: spec PASS and quality APPROVED.
+- Adapter and final integration review records are retained with the local task
+  evidence; publication occurs only after required fixes are resolved.
+
+No live provider was called, credentials were not created or changed, and no
+private benchmark content was inspected. Fake tests establish mapping, validation
+and budgets; they do not establish live model/schema compatibility.
+
+## Person 2 handoff and downstream work
+
+Read `contracts/task4-integration.md` and use the frozen types instead of adding
+feature-local transport/protocol contracts. Implement the remaining
+`complete_typed`, `extract_policy`, `LLMPolicyCompiler`, invariant generation and
+`LLMRevisionPlanner` wrappers. Preserve deterministic validation after every model
+response and populate extraction before calling the deterministic compiler.
+
+The audit also identified two Person 2 trust-boundary follow-ups: reject or
+normalize model-authored unsupported-clause confirmation, and sanitize parser
+error chains/repair paths. These are feature work, not changes to the shared
+protocol. Session confirmation and reviewer-owned severity stay in Person 1's
+future coordinator/API flow.
+
+Person 3 can implement the typed scenario planner; Person 4 retains deterministic
+evaluation/report/patch/comparison authority. Person 1 Tasks 19–20 still wire the
+coordinator and public API after specialists integrate. Final live acceptance,
+benchmark human review, Gate B and submission recording remain pending.
+
+## Historical Task 3 record
+
+Task 3 historical checkpoint. Its subsequent Gate A2 technical prerequisite was completed and published by Person 5; see the current Task 4 status above.
 
 ## Interfaces
 

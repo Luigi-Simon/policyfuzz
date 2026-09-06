@@ -1,9 +1,22 @@
 # PolicyFuzz version 1.0 contracts
 
-Person 1 owns these generated interfaces. Contract freeze follows Task 4.
+Person 1 owns these generated interfaces. Task 4 freezes version `1.0`.
 The source is `backend/app/domain/models`; generated files must not be edited
-by hand. The current registry contains 105 concrete model schemas, an OpenAPI
+by hand. The current registry contains 111 concrete model schemas, an OpenAPI
 registry, and one completed `RunView` fixture.
+
+Read [Task 4 integration](task4-integration.md) for exact protocol signatures,
+LLM request fields, provisional suggestions, configuration, retries and the
+Person 2 handoff. [freeze-v1.json](freeze-v1.json) records source/artifact hashes
+and the verified scope, including tested runtime versions. The manifest is not a dependency lockfile. Its `freeze_sha256` is the canonical hash of the record
+with that self-hash field omitted. File hashes cover exact bytes.
+
+Shared interface changes require Person 1 review, regenerated schemas and a
+new verified freeze record. Breaking changes require an explicit versioned
+migration. The initial Task 4 freeze preserves the seven-operation HTTP contract
+and canonical completed fixture. Fake-tested provider mapping is included;
+live provider/model compatibility and later feature/API wiring remain separate
+gates.
 
 ## Generate and check
 

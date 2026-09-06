@@ -1,5 +1,6 @@
 """Authoritative policy vocabulary, provenance, and independently confirmed intent."""
 
+import json
 from typing import Annotated, Literal
 
 from pydantic import Field, model_validator
@@ -340,6 +341,73 @@ class Invariant(InvariantDraft):
     origin: Literal["session_confirmed"] = "session_confirmed"
 
 
+class InvariantSuggestion(StrictModel):
+    """Unconfirmed model-authored intent for explicit reviewer confirmation."""
+
+    invariant_id: Identifier
+    description: NonEmptyText
+    rationale: NonEmptyText
+    when: tuple[Predicate, ...]
+    assertion: AssertionContent
+    origin: Literal["model_suggestion"] = "model_suggestion"
+
+
+def _suggestion_semantics(suggestion: InvariantSuggestion) -> tuple[object, ...]:
+    conditions = {
+        (
+            predicate.field,
+            predicate.operator,
+            json.dumps(
+                tuple(sorted(set(predicate.value)))
+                if predicate.operator in ("in", "not_in")
+                and isinstance(predicate.value, tuple)
+                else predicate.value,
+                ensure_ascii=False,
+                separators=(",", ":"),
+            ),
+        )
+        for predicate in suggestion.when
+    }
+    assertion = suggestion.assertion
+    return (
+        tuple(sorted(conditions)),
+        assertion.target_kind,
+        assertion.dimension,
+        assertion.operator,
+        json.dumps(
+            assertion.expected_value,
+            ensure_ascii=False,
+            separators=(",", ":"),
+        ),
+    )
+
+
+def _validate_suggestions(
+    suggestions: tuple[InvariantSuggestion, ...], *, allow_empty: bool
+) -> None:
+    if not suggestions and allow_empty:
+        return
+    if not 3 <= len(suggestions) <= 5:
+        raise ValueError("invariant suggestions require three to five items")
+    if len({item.invariant_id for item in suggestions}) != len(suggestions):
+        raise ValueError("suggestion IDs must be unique")
+    if len({item.assertion.assertion_id for item in suggestions}) != len(suggestions):
+        raise ValueError("suggestion assertion IDs must be unique")
+    if len({_suggestion_semantics(item) for item in suggestions}) != len(suggestions):
+        raise ValueError("suggestion semantics must be unique")
+
+
+class InvariantSuggestions(StrictModel):
+    invariant_drafts: Annotated[
+        tuple[InvariantSuggestion, ...], Field(min_length=3, max_length=5)
+    ]
+
+    @model_validator(mode="after")
+    def unique_suggestions(self) -> "InvariantSuggestions":
+        _validate_suggestions(self.invariant_drafts, allow_empty=False)
+        return self
+
+
 class PolicyContract(StrictModel):
     contract_id: Identifier
     required_dimensions: Annotated[EffectDimensions, Field(min_length=1)]
@@ -364,9 +432,17 @@ class PolicyExtraction(StrictModel):
 
 class CompilePolicyRequest(StrictModel):
     document: PolicyDocument
-    extraction: PolicyExtraction
+    extraction: PolicyExtraction | None = None
 
 
 class PolicyCompilation(StrictModel):
     policy: PolicyIR
     excluded_rule_count: NonNegativeInt = 0
+    invariant_drafts: Annotated[
+        tuple[InvariantSuggestion, ...], Field(max_length=5)
+    ] = ()
+
+    @model_validator(mode="after")
+    def valid_suggestion_count(self) -> "PolicyCompilation":
+        _validate_suggestions(self.invariant_drafts, allow_empty=True)
+        return self

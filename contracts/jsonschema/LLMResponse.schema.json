@@ -1,0 +1,75 @@
+{
+  "$defs": {
+    "GenerationUsage": {
+      "additionalProperties": false,
+      "properties": {
+        "input_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Output Tokens",
+          "type": "integer"
+        },
+        "repair_calls": {
+          "default": 0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Repair Calls",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "transport_retries": {
+          "default": 0,
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Transport Retries",
+          "type": "integer"
+        }
+      },
+      "title": "GenerationUsage",
+      "type": "object"
+    },
+    "JsonValue": {}
+  },
+  "additionalProperties": false,
+  "properties": {
+    "output": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "type": "object"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "title": "Output"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "usage": {
+      "$ref": "#/$defs/GenerationUsage"
+    }
+  },
+  "required": [
+    "output"
+  ],
+  "title": "LLMResponse",
+  "type": "object"
+}

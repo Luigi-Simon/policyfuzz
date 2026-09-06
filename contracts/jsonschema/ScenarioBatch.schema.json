@@ -1,0 +1,352 @@
+{
+  "$defs": {
+    "Assertion": {
+      "additionalProperties": false,
+      "properties": {
+        "assertion_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Assertion Id",
+          "type": "string"
+        },
+        "dimension": {
+          "enum": [
+            "eligibility",
+            "receipt_requirement",
+            "approval_requirement",
+            "claim_cap_minor",
+            "daily_category_cap_minor"
+          ],
+          "title": "Dimension",
+          "type": "string"
+        },
+        "expected_value": {
+          "anyOf": [
+            {
+              "enum": [
+                "allow",
+                "deny"
+              ],
+              "type": "string"
+            },
+            {
+              "enum": [
+                "required",
+                "not_required"
+              ],
+              "type": "string"
+            },
+            {
+              "enum": [
+                "none",
+                "manager",
+                "director",
+                "finance"
+              ],
+              "type": "string"
+            },
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "enum": [
+                "COMPLIANT",
+                "NONCOMPLIANT"
+              ],
+              "type": "string"
+            }
+          ],
+          "title": "Expected Value"
+        },
+        "gold_label_id": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Gold Label Id"
+        },
+        "mechanical_relation_id": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mechanical Relation Id"
+        },
+        "operator": {
+          "enum": [
+            "eq",
+            "neq",
+            "lte",
+            "gte"
+          ],
+          "title": "Operator",
+          "type": "string"
+        },
+        "origin": {
+          "enum": [
+            "gold",
+            "session_confirmed",
+            "mechanical"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_invariant_id": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Invariant Id"
+        },
+        "target_kind": {
+          "enum": [
+            "effect_value",
+            "compliance_value"
+          ],
+          "title": "Target Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "assertion_id",
+        "target_kind",
+        "dimension",
+        "operator",
+        "expected_value",
+        "origin"
+      ],
+      "title": "Assertion",
+      "type": "object"
+    },
+    "ScenarioCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "assertions": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Assertion"
+          },
+          "title": "Assertions",
+          "type": "array"
+        },
+        "candidate_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "category": {
+          "enum": [
+            "normal",
+            "boundary",
+            "adversarial"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "facts": {
+          "$ref": "#/$defs/ScenarioFacts"
+        },
+        "origins": {
+          "items": {
+            "enum": [
+              "gold",
+              "session",
+              "mechanical",
+              "llm_exploratory"
+            ],
+            "type": "string"
+          },
+          "minLength": 1,
+          "title": "Origins",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "partition": {
+          "default": "visible",
+          "enum": [
+            "visible",
+            "holdout"
+          ],
+          "title": "Partition",
+          "type": "string"
+        },
+        "protected": {
+          "default": false,
+          "title": "Protected",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "target_invariant_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Target Invariant Ids",
+          "type": "array"
+        },
+        "target_rule_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Target Rule Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "category",
+        "origins",
+        "facts"
+      ],
+      "title": "ScenarioCandidate",
+      "type": "object"
+    },
+    "ScenarioFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "amount_minor": {
+          "maximum": 10000000,
+          "minimum": 0,
+          "title": "Amount Minor",
+          "type": "integer"
+        },
+        "approval_roles_present": {
+          "items": {
+            "enum": [
+              "manager",
+              "director",
+              "finance"
+            ],
+            "type": "string"
+          },
+          "title": "Approval Roles Present",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "booking_days_before": {
+          "maximum": 365,
+          "minimum": 0,
+          "title": "Booking Days Before",
+          "type": "integer"
+        },
+        "destination_type": {
+          "enum": [
+            "domestic",
+            "international"
+          ],
+          "title": "Destination Type",
+          "type": "string"
+        },
+        "employee_role": {
+          "enum": [
+            "employee",
+            "manager",
+            "director",
+            "executive"
+          ],
+          "title": "Employee Role",
+          "type": "string"
+        },
+        "expense_category": {
+          "enum": [
+            "meal",
+            "hotel",
+            "transport",
+            "airfare",
+            "incidental"
+          ],
+          "title": "Expense Category",
+          "type": "string"
+        },
+        "prior_same_day_category_spend_minor": {
+          "maximum": 10000000,
+          "minimum": 0,
+          "title": "Prior Same Day Category Spend Minor",
+          "type": "integer"
+        },
+        "receipt_present": {
+          "title": "Receipt Present",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "employee_role",
+        "expense_category",
+        "amount_minor",
+        "destination_type",
+        "booking_days_before",
+        "receipt_present",
+        "approval_roles_present",
+        "prior_same_day_category_spend_minor"
+      ],
+      "title": "ScenarioFacts",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "candidates": {
+      "items": {
+        "$ref": "#/$defs/ScenarioCandidate"
+      },
+      "title": "Candidates",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "candidates"
+  ],
+  "title": "ScenarioBatch",
+  "type": "object"
+}
