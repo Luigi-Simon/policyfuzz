@@ -2,7 +2,7 @@
 
 Status: Complete for Tasks 12–15 and Person 2's Task 21 ownership
 
-Current branch: `p2/feat-deterministic-policy-pipeline`
+Current branch: `p2/refactor-complete-policy-intelligence`
 
 ## Executive summary
 
@@ -217,3 +217,43 @@ Final synthetic artifact anchors:
 No live provider was called. Revision application, deterministic evaluation,
 workflow/API wiring, recorded cached-run assembly, and benchmark execution labels
 remain with their assigned owners.
+
+## Final policy-stage hardening update
+
+Person 2's standalone stage now rejects invalid proposals before they reach the
+workflow or Person 4. Every accepted finding must be targeted by at least one
+operation, an operation may reference only eligible findings without duplicates,
+one rule may be changed at most once per proposal, and deterministic IDs for
+added rules cannot collide with baseline or earlier added rules.
+
+Extraction now closes the executable override graph after citation validation
+and the 12-rule cap. If an override target is removed, every dependent rule is
+removed transitively and preserved with its verified citation as an
+`unsupported_logic` clause. This prevents a validated extraction from failing
+later because it contains a dangling override reference.
+
+This update does not apply revisions or assign confirmation. Person 2 returns a
+validated, AI-generated and unverified proposal. Person 4 remains responsible
+for deterministic atomic application, revision increments, session provenance,
+re-evaluation, and comparison; Person 1 owns workflow/API orchestration.
+
+Hardening files:
+
+- `backend/app/features/policy/extraction.py`
+- `backend/app/features/policy/revision.py`
+- `backend/tests/features/policy/test_extraction_validation.py`
+- `backend/tests/features/policy/test_revision.py`
+- `team/person-2-policy/HANDOFF.md`
+
+Hardening verification:
+
+- RED revision suite: **3 failed, 13 passed**, proving missing coverage for
+  untargeted accepted findings, repeated source-rule changes, and colliding
+  deterministic add-rule IDs.
+- GREEN focused extraction/compiler/rule-ID suite: **28 passed**.
+- Complete Person 2 suite: `uv run --frozen --extra dev python -m pytest -p
+  no:cacheprovider tests/features/policy -q` — **131 passed**.
+- Full backend regression: `uv run --frozen --extra dev python -m pytest -p
+  no:cacheprovider -q` — **1,442 passed**.
+- Person 2 Ruff check: **passed**; Ruff format check: **25 files already
+  formatted**.

@@ -116,6 +116,49 @@ def test_invalid_rule_citation_is_excluded_and_preserved_as_unsupported() -> Non
     assert clause.affected_dimensions == frozenset({"receipt_requirement"})
 
 
+def test_rule_depending_on_invalidly_cited_rule_is_preserved_as_unsupported() -> None:
+    target = _draft(index=1).model_copy(
+        update={
+            "description": "Normal approval rule",
+            "effects": (Effect(dimension="approval_requirement", value="none"),),
+            "provenance": TextRuleProvenance(
+                citation_id="normal-approval",
+                span=_span("Meals require receipts.").model_copy(
+                    update={"quote_sha256": "0" * 64}
+                ),
+            ),
+        }
+    )
+    dependent = _draft(index=2, span=_span("Claims above SGD 50")).model_copy(
+        update={
+            "description": "Manager approval exception",
+            "effects": (Effect(dimension="approval_requirement", value="manager"),),
+            "overrides": (
+                OverrideRef(
+                    dimension="approval_requirement",
+                    target_rule_id="normal-approval",
+                ),
+            ),
+        }
+    )
+    extraction = PolicyExtraction(
+        document_sha256=HASH,
+        rules=(target, dependent),
+    )
+
+    result = validate_policy_extraction(_document(), extraction)
+    compiled = compile_baseline_policy(
+        CompilePolicyRequest(document=_document(), extraction=result.extraction)
+    )
+
+    assert compiled.policy.rules == ()
+    assert result.excluded_rule_count == 2
+    assert {clause.reason_code for clause in result.extraction.unsupported_clauses} == {
+        "invalid_citation",
+        "unsupported_logic",
+    }
+
+
 def test_rule_limit_keeps_first_twelve_and_counts_excluded_rules() -> None:
     extraction = PolicyExtraction(
         document_sha256=HASH,

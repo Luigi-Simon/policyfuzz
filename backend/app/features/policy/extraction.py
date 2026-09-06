@@ -286,6 +286,69 @@ def _invalid_citation_clause(
     )
 
 
+def _unsupported_logic_clause(
+    document: PolicyDocument,
+    rule: RuleDraft,
+    *,
+    index: int,
+    existing_ids: set[str],
+) -> UnsupportedClause:
+    """Preserve a validly cited rule whose override dependency was excluded."""
+
+    provenance = rule.provenance
+    if not isinstance(provenance, TextRuleProvenance):
+        raise ExtractionValidationError("INVALID_RULE_PROVENANCE")
+    clause_id = f"unsupported-logic-{index + 1}"
+    suffix = 2
+    while clause_id in existing_ids:
+        clause_id = f"unsupported-logic-{index + 1}-{suffix}"
+        suffix += 1
+    existing_ids.add(clause_id)
+    return UnsupportedClause(
+        clause_id=clause_id,
+        span=canonical_source_span(document, provenance.span),
+        reason_code="unsupported_logic",
+        affected_dimensions=frozenset(effect.dimension for effect in rule.effects),
+        when_hint=rule.when or None,
+        review_status="provisional",
+    )
+
+
+def _close_override_dependencies(
+    document: PolicyDocument,
+    candidates: list[tuple[int, RuleDraft]],
+    *,
+    unsupported: list[UnsupportedClause],
+    existing_ids: set[str],
+) -> list[tuple[int, RuleDraft]]:
+    """Remove rules with missing override targets until the graph is closed."""
+
+    remaining = candidates
+    while remaining:
+        available = {_base_reference(rule) for _, rule in remaining}
+        dangling = [
+            (index, rule)
+            for index, rule in remaining
+            if any(edge.target_rule_id not in available for edge in rule.overrides)
+        ]
+        if not dangling:
+            return remaining
+        dangling_indexes = {index for index, _ in dangling}
+        unsupported.extend(
+            _unsupported_logic_clause(
+                document,
+                rule,
+                index=index,
+                existing_ids=existing_ids,
+            )
+            for index, rule in dangling
+        )
+        remaining = [
+            (index, rule) for index, rule in remaining if index not in dangling_indexes
+        ]
+    return remaining
+
+
 def validate_policy_extraction(
     document: PolicyDocument,
     extraction: PolicyExtraction,
@@ -325,10 +388,9 @@ def validate_policy_extraction(
             )
         )
 
-    accepted: list[RuleDraft] = []
+    citation_valid: list[tuple[int, RuleDraft]] = []
     unsupported = list(provisional_clauses)
     existing_ids = {clause.clause_id for clause in unsupported}
-    excluded = 0
     for index, rule in enumerate(rewritten_rules):
         if not isinstance(rule.provenance, TextRuleProvenance):
             raise ExtractionValidationError("INVALID_RULE_PROVENANCE")
@@ -343,24 +405,32 @@ def validate_policy_extraction(
                     existing_ids=existing_ids,
                 )
             )
-            excluded += 1
             continue
-        if len(accepted) == max_rules:
-            excluded += 1
-            continue
-        accepted.append(
-            rule.model_copy(
-                update={
-                    "provenance": rule.provenance.model_copy(
-                        update={"span": verified_span}
-                    )
-                }
+        citation_valid.append(
+            (
+                index,
+                rule.model_copy(
+                    update={
+                        "provenance": rule.provenance.model_copy(
+                            update={"span": verified_span}
+                        )
+                    }
+                ),
             )
         )
 
+    accepted_with_indexes = _close_override_dependencies(
+        document,
+        citation_valid[:max_rules],
+        unsupported=unsupported,
+        existing_ids=existing_ids,
+    )
+    accepted = tuple(rule for _, rule in accepted_with_indexes)
+    excluded = len(rewritten_rules) - len(accepted)
+
     validated = PolicyExtraction(
         document_sha256=document.document_sha256,
-        rules=tuple(accepted),
+        rules=accepted,
         unsupported_clauses=tuple(unsupported),
     )
     return ValidatedPolicyExtraction(

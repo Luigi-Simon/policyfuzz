@@ -162,6 +162,56 @@ def test_add_rule_ignores_model_generated_rule_id() -> None:
     assert result.proposal.operations[0].rule_id != "model-rule-id"
 
 
+def test_revision_requires_every_accepted_finding_to_have_an_operation() -> None:
+    request = _request()
+    second_finding = request.findings.findings[0].model_copy(
+        update={"finding_id": "finding-2"}
+    )
+    request = request.model_copy(
+        update={
+            "findings": request.findings.model_copy(
+                update={"findings": (*request.findings.findings, second_finding)}
+            ),
+            "decisions": (
+                *request.decisions,
+                FindingDecision(finding_id="finding-2", decision="accept"),
+            ),
+        }
+    )
+    proposal = _proposal(request).model_copy(
+        update={"accepted_finding_ids": ("finding-1", "finding-2")}
+    )
+
+    with pytest.raises(RevisionValidationError, match="UNTARGETED_ACCEPTED_FINDING"):
+        validate_revision_proposal(request, proposal)
+
+
+def test_revision_rejects_multiple_changes_to_the_same_rule() -> None:
+    request = _request()
+    operation = _proposal(request).operations[0]
+    proposal = _proposal(request).model_copy(
+        update={"operations": (operation, operation)}
+    )
+
+    with pytest.raises(RevisionValidationError, match="RULE_REVISED_MULTIPLE_TIMES"):
+        validate_revision_proposal(request, proposal)
+
+
+def test_revision_rejects_duplicate_deterministic_added_rule_ids() -> None:
+    request = _request()
+    operation = AddRuleOperation(
+        rule_id="model-rule-id",
+        rule=_rule_draft(),
+        finding_ids=("finding-1",),
+    )
+    proposal = _proposal(request).model_copy(
+        update={"operations": (operation, operation.model_copy())}
+    )
+
+    with pytest.raises(RevisionValidationError, match="DUPLICATE_RULE_ID"):
+        validate_revision_proposal(request, proposal)
+
+
 def test_revision_prompt_contains_only_visible_eligible_evidence() -> None:
     request = _request()
 

@@ -98,10 +98,22 @@ def _validate_request_anchors(request: ProposeRevisionRequest) -> None:
 def _normalize_operations(
     request: ProposeRevisionRequest,
     proposal: RevisionProposal,
+    *,
+    eligible_finding_ids: frozenset[str],
 ) -> tuple[RevisionOperation, ...]:
     rules = {rule.rule_id: rule for rule in request.policy.rules}
+    assigned_rule_ids = set(rules)
+    changed_rule_ids: set[str] = set()
+    targeted_finding_ids: set[str] = set()
     normalized: list[RevisionOperation] = []
     for operation in proposal.operations:
+        operation_finding_ids = set(operation.finding_ids)
+        if len(operation_finding_ids) != len(operation.finding_ids):
+            raise RevisionValidationError("DUPLICATE_OPERATION_FINDING_ID")
+        if not operation_finding_ids <= eligible_finding_ids:
+            raise RevisionValidationError("INELIGIBLE_OPERATION_FINDING")
+        targeted_finding_ids.update(operation_finding_ids)
+
         if isinstance(operation, AddRuleOperation):
             identity = canonical_sha256(
                 {
@@ -110,8 +122,9 @@ def _normalize_operations(
                 }
             )
             rule_id = f"rule-{identity}"
-            if rule_id in rules:
+            if rule_id in assigned_rule_ids:
                 raise RevisionValidationError("DUPLICATE_RULE_ID")
+            assigned_rule_ids.add(rule_id)
             normalized.append(operation.model_copy(update={"rule_id": rule_id}))
         elif isinstance(operation, ReplaceRuleOperation):
             target = rules.get(operation.rule_id)
@@ -132,6 +145,14 @@ def _normalize_operations(
             normalized.append(operation)
         else:  # pragma: no cover - Pydantic's discriminated union prevents this.
             raise RevisionValidationError("UNSUPPORTED_REVISION_OPERATION")
+
+        changed_rule_id = normalized[-1].rule_id
+        if changed_rule_id in changed_rule_ids:
+            raise RevisionValidationError("RULE_REVISED_MULTIPLE_TIMES")
+        changed_rule_ids.add(changed_rule_id)
+
+    if targeted_finding_ids != eligible_finding_ids:
+        raise RevisionValidationError("UNTARGETED_ACCEPTED_FINDING")
     return tuple(normalized)
 
 
@@ -160,7 +181,11 @@ def validate_revision_proposal(
     if set(proposal.accepted_finding_ids) != set(eligible):
         raise RevisionValidationError("ACCEPTED_FINDING_MISMATCH")
 
-    operations = _normalize_operations(request, proposal)
+    operations = _normalize_operations(
+        request,
+        proposal,
+        eligible_finding_ids=frozenset(eligible),
+    )
     identity = canonical_sha256(
         {
             "document_sha256": proposal.document_sha256,
