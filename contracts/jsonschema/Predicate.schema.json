@@ -1,0 +1,75 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "field": {
+      "anyOf": [
+        {
+          "enum": [
+            "employee_role",
+            "expense_category",
+            "amount_minor",
+            "destination_type",
+            "booking_days_before",
+            "receipt_present",
+            "approval_roles_present",
+            "prior_same_day_category_spend_minor"
+          ],
+          "type": "string"
+        },
+        {
+          "const": "daily_category_total_minor",
+          "type": "string"
+        }
+      ],
+      "title": "Field"
+    },
+    "operator": {
+      "enum": [
+        "eq",
+        "neq",
+        "in",
+        "not_in",
+        "lt",
+        "lte",
+        "gt",
+        "gte",
+        "contains"
+      ],
+      "title": "Operator",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "value": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      ],
+      "title": "Value"
+    }
+  },
+  "required": [
+    "field",
+    "operator",
+    "value"
+  ],
+  "title": "Predicate",
+  "type": "object"
+}

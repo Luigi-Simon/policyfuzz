@@ -1,0 +1,33 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "matched": {
+      "title": "Matched",
+      "type": "boolean"
+    },
+    "predicate_index": {
+      "minimum": 0,
+      "title": "Predicate Index",
+      "type": "integer"
+    },
+    "rule_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Rule Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "rule_id",
+    "predicate_index",
+    "matched"
+  ],
+  "title": "PredicateResult",
+  "type": "object"
+}

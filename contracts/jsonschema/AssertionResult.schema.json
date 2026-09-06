@@ -1,0 +1,76 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "actual_value": {
+      "anyOf": [
+        {
+          "enum": [
+            "allow",
+            "deny"
+          ],
+          "type": "string"
+        },
+        {
+          "enum": [
+            "required",
+            "not_required"
+          ],
+          "type": "string"
+        },
+        {
+          "enum": [
+            "none",
+            "manager",
+            "director",
+            "finance"
+          ],
+          "type": "string"
+        },
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "enum": [
+            "COMPLIANT",
+            "NONCOMPLIANT"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Actual Value"
+    },
+    "assertion_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Assertion Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "INCONCLUSIVE",
+        "ERROR"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "assertion_id",
+    "status"
+  ],
+  "title": "AssertionResult",
+  "type": "object"
+}

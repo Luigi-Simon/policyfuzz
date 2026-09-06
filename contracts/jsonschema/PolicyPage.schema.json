@@ -1,0 +1,38 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "end": {
+      "minimum": 0,
+      "title": "End",
+      "type": "integer"
+    },
+    "page": {
+      "minimum": 1,
+      "title": "Page",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "start": {
+      "minimum": 0,
+      "title": "Start",
+      "type": "integer"
+    },
+    "text": {
+      "title": "Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "page",
+    "text",
+    "start",
+    "end"
+  ],
+  "title": "PolicyPage",
+  "type": "object"
+}

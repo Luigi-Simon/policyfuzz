@@ -1,0 +1,1915 @@
+{
+  "$defs": {
+    "Assertion": {
+      "additionalProperties": false,
+      "properties": {
+        "assertion_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Assertion Id",
+          "type": "string"
+        },
+        "dimension": {
+          "enum": [
+            "eligibility",
+            "receipt_requirement",
+            "approval_requirement",
+            "claim_cap_minor",
+            "daily_category_cap_minor"
+          ],
+          "title": "Dimension",
+          "type": "string"
+        },
+        "expected_value": {
+          "anyOf": [
+            {
+              "enum": [
+                "allow",
+                "deny"
+              ],
+              "type": "string"
+            },
+            {
+              "enum": [
+                "required",
+                "not_required"
+              ],
+              "type": "string"
+            },
+            {
+              "enum": [
+                "none",
+                "manager",
+                "director",
+                "finance"
+              ],
+              "type": "string"
+            },
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "enum": [
+                "COMPLIANT",
+                "NONCOMPLIANT"
+              ],
+              "type": "string"
+            }
+          ],
+          "title": "Expected Value"
+        },
+        "gold_label_id": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Gold Label Id"
+        },
+        "mechanical_relation_id": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mechanical Relation Id"
+        },
+        "operator": {
+          "enum": [
+            "eq",
+            "neq",
+            "lte",
+            "gte"
+          ],
+          "title": "Operator",
+          "type": "string"
+        },
+        "origin": {
+          "enum": [
+            "gold",
+            "session_confirmed",
+            "mechanical"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_invariant_id": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Invariant Id"
+        },
+        "target_kind": {
+          "enum": [
+            "effect_value",
+            "compliance_value"
+          ],
+          "title": "Target Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "assertion_id",
+        "target_kind",
+        "dimension",
+        "operator",
+        "expected_value",
+        "origin"
+      ],
+      "title": "Assertion",
+      "type": "object"
+    },
+    "AssertionResult": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_value": {
+          "anyOf": [
+            {
+              "enum": [
+                "allow",
+                "deny"
+              ],
+              "type": "string"
+            },
+            {
+              "enum": [
+                "required",
+                "not_required"
+              ],
+              "type": "string"
+            },
+            {
+              "enum": [
+                "none",
+                "manager",
+                "director",
+                "finance"
+              ],
+              "type": "string"
+            },
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "enum": [
+                "COMPLIANT",
+                "NONCOMPLIANT"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Actual Value"
+        },
+        "assertion_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Assertion Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "INCONCLUSIVE",
+            "ERROR"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "assertion_id",
+        "status"
+      ],
+      "title": "AssertionResult",
+      "type": "object"
+    },
+    "ComplianceResult": {
+      "additionalProperties": false,
+      "properties": {
+        "dimension": {
+          "enum": [
+            "receipt_requirement",
+            "approval_requirement",
+            "claim_cap_minor",
+            "daily_category_cap_minor"
+          ],
+          "title": "Dimension",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "COMPLIANT",
+            "NONCOMPLIANT",
+            "NOT_APPLICABLE",
+            "INCONCLUSIVE",
+            "ERROR"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "dimension",
+        "status"
+      ],
+      "title": "ComplianceResult",
+      "type": "object"
+    },
+    "CoverageEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "predicate_index": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Predicate Index"
+        },
+        "predicate_outcome": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Predicate Outcome"
+        },
+        "scenario_ids": {
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Scenario Ids",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "target_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Target Id",
+          "type": "string"
+        },
+        "target_kind": {
+          "enum": [
+            "rule",
+            "invariant",
+            "predicate_branch"
+          ],
+          "title": "Target Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_kind",
+        "target_id",
+        "scenario_ids"
+      ],
+      "title": "CoverageEvidence",
+      "type": "object"
+    },
+    "CoverageSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "covered_invariants": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Covered Invariants",
+          "type": "integer"
+        },
+        "covered_predicate_branches": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Covered Predicate Branches",
+          "type": "integer"
+        },
+        "covered_rules": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Covered Rules",
+          "type": "integer"
+        },
+        "evidence": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/CoverageEvidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "missing_invariant_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Missing Invariant Ids",
+          "type": "array"
+        },
+        "missing_rule_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Missing Rule Ids",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "default": "pending",
+          "enum": [
+            "pending",
+            "satisfied",
+            "COVERAGE_LIMIT_EXCEEDED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "targeted_cycles": {
+          "default": 0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Targeted Cycles",
+          "type": "integer"
+        },
+        "total_invariants": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Total Invariants",
+          "type": "integer"
+        },
+        "total_predicate_branches": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Total Predicate Branches",
+          "type": "integer"
+        },
+        "total_rules": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Total Rules",
+          "type": "integer"
+        }
+      },
+      "title": "CoverageSnapshot",
+      "type": "object"
+    },
+    "DimensionResult": {
+      "additionalProperties": false,
+      "properties": {
+        "applicable_rule_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Applicable Rule Ids",
+          "type": "array"
+        },
+        "conflicting_values": {
+          "default": [],
+          "items": {
+            "anyOf": [
+              {
+                "enum": [
+                  "allow",
+                  "deny"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "required",
+                  "not_required"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "none",
+                  "manager",
+                  "director",
+                  "finance"
+                ],
+                "type": "string"
+              },
+              {
+                "minimum": 0,
+                "type": "integer"
+              }
+            ]
+          },
+          "title": "Conflicting Values",
+          "type": "array"
+        },
+        "dimension": {
+          "enum": [
+            "eligibility",
+            "receipt_requirement",
+            "approval_requirement",
+            "claim_cap_minor",
+            "daily_category_cap_minor"
+          ],
+          "title": "Dimension",
+          "type": "string"
+        },
+        "overridden_rule_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Overridden Rule Ids",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "VALUE",
+            "GAP",
+            "NOT_APPLICABLE",
+            "CONFLICT",
+            "INCONCLUSIVE",
+            "ERROR"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "unsupported_clause_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Unsupported Clause Ids",
+          "type": "array"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "enum": [
+                "allow",
+                "deny"
+              ],
+              "type": "string"
+            },
+            {
+              "enum": [
+                "required",
+                "not_required"
+              ],
+              "type": "string"
+            },
+            {
+              "enum": [
+                "none",
+                "manager",
+                "director",
+                "finance"
+              ],
+              "type": "string"
+            },
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        }
+      },
+      "required": [
+        "dimension",
+        "status"
+      ],
+      "title": "DimensionResult",
+      "type": "object"
+    },
+    "Effect": {
+      "additionalProperties": false,
+      "properties": {
+        "dimension": {
+          "enum": [
+            "eligibility",
+            "receipt_requirement",
+            "approval_requirement",
+            "claim_cap_minor",
+            "daily_category_cap_minor"
+          ],
+          "title": "Dimension",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "enum": [
+                "allow",
+                "deny"
+              ],
+              "type": "string"
+            },
+            {
+              "enum": [
+                "required",
+                "not_required"
+              ],
+              "type": "string"
+            },
+            {
+              "enum": [
+                "none",
+                "manager",
+                "director",
+                "finance"
+              ],
+              "type": "string"
+            },
+            {
+              "minimum": 0,
+              "type": "integer"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "dimension",
+        "value"
+      ],
+      "title": "Effect",
+      "type": "object"
+    },
+    "EvaluationReport": {
+      "additionalProperties": false,
+      "properties": {
+        "coverage": {
+          "$ref": "#/$defs/CoverageSnapshot"
+        },
+        "engine_version": {
+          "minLength": 1,
+          "title": "Engine Version",
+          "type": "string"
+        },
+        "inputs": {
+          "$ref": "#/$defs/InputHashes"
+        },
+        "report_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Report Id",
+          "type": "string"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/$defs/ScenarioEvaluation"
+          },
+          "title": "Results",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "report_id",
+        "inputs",
+        "engine_version",
+        "results",
+        "coverage"
+      ],
+      "title": "EvaluationReport",
+      "type": "object"
+    },
+    "EvaluationTrace": {
+      "additionalProperties": false,
+      "properties": {
+        "compliance_values": {
+          "items": {
+            "$ref": "#/$defs/ComplianceResult"
+          },
+          "title": "Compliance Values",
+          "type": "array"
+        },
+        "fired_rule_ids": {
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Fired Rule Ids",
+          "type": "array"
+        },
+        "predicate_results": {
+          "items": {
+            "$ref": "#/$defs/PredicateResult"
+          },
+          "title": "Predicate Results",
+          "type": "array"
+        },
+        "resolved_effects": {
+          "items": {
+            "$ref": "#/$defs/DimensionResult"
+          },
+          "title": "Resolved Effects",
+          "type": "array"
+        },
+        "scenario_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Scenario Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_citations": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "session_revision": "#/$defs/SessionRevisionProvenance",
+                "text_citation": "#/$defs/TextRuleProvenance"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextRuleProvenance"
+              },
+              {
+                "$ref": "#/$defs/SessionRevisionProvenance"
+              }
+            ]
+          },
+          "title": "Source Citations",
+          "type": "array"
+        },
+        "trace_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Trace Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scenario_id",
+        "fired_rule_ids",
+        "predicate_results",
+        "resolved_effects",
+        "compliance_values",
+        "source_citations",
+        "trace_sha256"
+      ],
+      "title": "EvaluationTrace",
+      "type": "object"
+    },
+    "InputHashes": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Contract Sha256",
+          "type": "string"
+        },
+        "engine_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Engine Sha256",
+          "type": "string"
+        },
+        "policy_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "run_manifest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Run Manifest Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "suite_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Suite Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_sha256",
+        "contract_sha256",
+        "suite_sha256",
+        "engine_sha256",
+        "run_manifest_sha256"
+      ],
+      "title": "InputHashes",
+      "type": "object"
+    },
+    "Invariant": {
+      "additionalProperties": false,
+      "properties": {
+        "assertion": {
+          "$ref": "#/$defs/Assertion"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "invariant_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Invariant Id",
+          "type": "string"
+        },
+        "origin": {
+          "const": "session_confirmed",
+          "default": "session_confirmed",
+          "title": "Origin",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "when": {
+          "items": {
+            "$ref": "#/$defs/Predicate"
+          },
+          "title": "When",
+          "type": "array"
+        }
+      },
+      "required": [
+        "invariant_id",
+        "description",
+        "when",
+        "assertion",
+        "severity"
+      ],
+      "title": "Invariant",
+      "type": "object"
+    },
+    "OverrideRef": {
+      "additionalProperties": false,
+      "properties": {
+        "dimension": {
+          "enum": [
+            "eligibility",
+            "receipt_requirement",
+            "approval_requirement",
+            "claim_cap_minor",
+            "daily_category_cap_minor"
+          ],
+          "title": "Dimension",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "target_rule_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Target Rule Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "dimension",
+        "target_rule_id"
+      ],
+      "title": "OverrideRef",
+      "type": "object"
+    },
+    "PolicyContract": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Contract Id",
+          "type": "string"
+        },
+        "invariants": {
+          "items": {
+            "$ref": "#/$defs/Invariant"
+          },
+          "maxItems": 5,
+          "minItems": 3,
+          "title": "Invariants",
+          "type": "array"
+        },
+        "required_dimensions": {
+          "items": {
+            "enum": [
+              "eligibility",
+              "receipt_requirement",
+              "approval_requirement",
+              "claim_cap_minor",
+              "daily_category_cap_minor"
+            ],
+            "type": "string"
+          },
+          "minLength": 1,
+          "title": "Required Dimensions",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contract_id",
+        "required_dimensions",
+        "invariants"
+      ],
+      "title": "PolicyContract",
+      "type": "object"
+    },
+    "PolicyIR": {
+      "additionalProperties": false,
+      "properties": {
+        "base_currency": {
+          "const": "SGD",
+          "default": "SGD",
+          "title": "Base Currency",
+          "type": "string"
+        },
+        "document_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Document Sha256",
+          "type": "string"
+        },
+        "kind": {
+          "default": "compiled_baseline",
+          "enum": [
+            "compiled_baseline",
+            "structured_revision"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "policy_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "review_status": {
+          "enum": [
+            "provisional",
+            "session_confirmed"
+          ],
+          "title": "Review Status",
+          "type": "string"
+        },
+        "rules": {
+          "items": {
+            "$ref": "#/$defs/Rule"
+          },
+          "maxItems": 12,
+          "title": "Rules",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unsupported_clauses": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/UnsupportedClause"
+          },
+          "title": "Unsupported Clauses",
+          "type": "array"
+        }
+      },
+      "required": [
+        "policy_id",
+        "document_sha256",
+        "review_status",
+        "rules"
+      ],
+      "title": "PolicyIR",
+      "type": "object"
+    },
+    "Predicate": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "anyOf": [
+            {
+              "enum": [
+                "employee_role",
+                "expense_category",
+                "amount_minor",
+                "destination_type",
+                "booking_days_before",
+                "receipt_present",
+                "approval_roles_present",
+                "prior_same_day_category_spend_minor"
+              ],
+              "type": "string"
+            },
+            {
+              "const": "daily_category_total_minor",
+              "type": "string"
+            }
+          ],
+          "title": "Field"
+        },
+        "operator": {
+          "enum": [
+            "eq",
+            "neq",
+            "in",
+            "not_in",
+            "lt",
+            "lte",
+            "gt",
+            "gte",
+            "contains"
+          ],
+          "title": "Operator",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "field",
+        "operator",
+        "value"
+      ],
+      "title": "Predicate",
+      "type": "object"
+    },
+    "PredicateResult": {
+      "additionalProperties": false,
+      "properties": {
+        "matched": {
+          "title": "Matched",
+          "type": "boolean"
+        },
+        "predicate_index": {
+          "minimum": 0,
+          "title": "Predicate Index",
+          "type": "integer"
+        },
+        "rule_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule_id",
+        "predicate_index",
+        "matched"
+      ],
+      "title": "PredicateResult",
+      "type": "object"
+    },
+    "PublicError": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "INVALID_INPUT",
+            "INVALID_STATE",
+            "INVALID_POLICY",
+            "INVALID_CITATION",
+            "MALFORMED_MODEL_OUTPUT",
+            "PROVIDER_UNAVAILABLE",
+            "COVERAGE_LIMIT_EXCEEDED",
+            "HASH_MISMATCH",
+            "REVISION_INVALID",
+            "PROSE_COMPILE_MISMATCH",
+            "RUN_NOT_FOUND",
+            "INTERNAL_ERROR"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "error_id": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error Id"
+        },
+        "message": {
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "retryable": {
+          "default": false,
+          "title": "Retryable",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "PublicError",
+      "type": "object"
+    },
+    "Rule": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence_percent": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence Percent"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "effects": {
+          "items": {
+            "$ref": "#/$defs/Effect"
+          },
+          "minItems": 1,
+          "title": "Effects",
+          "type": "array"
+        },
+        "overrides": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/OverrideRef"
+          },
+          "title": "Overrides",
+          "type": "array"
+        },
+        "provenance": {
+          "discriminator": {
+            "mapping": {
+              "session_revision": "#/$defs/SessionRevisionProvenance",
+              "text_citation": "#/$defs/TextRuleProvenance"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/TextRuleProvenance"
+            },
+            {
+              "$ref": "#/$defs/SessionRevisionProvenance"
+            }
+          ],
+          "title": "Provenance"
+        },
+        "revision": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "rule_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "when": {
+          "items": {
+            "$ref": "#/$defs/Predicate"
+          },
+          "title": "When",
+          "type": "array"
+        }
+      },
+      "required": [
+        "description",
+        "when",
+        "effects",
+        "provenance",
+        "rule_id"
+      ],
+      "title": "Rule",
+      "type": "object"
+    },
+    "Scenario": {
+      "additionalProperties": false,
+      "properties": {
+        "assertions": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Assertion"
+          },
+          "title": "Assertions",
+          "type": "array"
+        },
+        "category": {
+          "enum": [
+            "normal",
+            "boundary",
+            "adversarial"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "facts": {
+          "$ref": "#/$defs/ScenarioFacts"
+        },
+        "origins": {
+          "items": {
+            "enum": [
+              "gold",
+              "session",
+              "mechanical",
+              "llm_exploratory"
+            ],
+            "type": "string"
+          },
+          "minLength": 1,
+          "title": "Origins",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "partition": {
+          "default": "visible",
+          "enum": [
+            "visible",
+            "holdout"
+          ],
+          "title": "Partition",
+          "type": "string"
+        },
+        "protected": {
+          "default": false,
+          "title": "Protected",
+          "type": "boolean"
+        },
+        "scenario_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Scenario Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "target_invariant_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Target Invariant Ids",
+          "type": "array"
+        },
+        "target_rule_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Target Rule Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "scenario_id",
+        "category",
+        "origins",
+        "facts"
+      ],
+      "title": "Scenario",
+      "type": "object"
+    },
+    "ScenarioEvaluation": {
+      "additionalProperties": false,
+      "properties": {
+        "assertion_results": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AssertionResult"
+          },
+          "title": "Assertion Results",
+          "type": "array"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PublicError"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "scenario_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Scenario Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "trace": {
+          "$ref": "#/$defs/EvaluationTrace"
+        },
+        "verdict": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "UNSCORED",
+            "INCONCLUSIVE",
+            "ERROR"
+          ],
+          "title": "Verdict",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scenario_id",
+        "trace",
+        "verdict"
+      ],
+      "title": "ScenarioEvaluation",
+      "type": "object"
+    },
+    "ScenarioFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "amount_minor": {
+          "maximum": 10000000,
+          "minimum": 0,
+          "title": "Amount Minor",
+          "type": "integer"
+        },
+        "approval_roles_present": {
+          "items": {
+            "enum": [
+              "manager",
+              "director",
+              "finance"
+            ],
+            "type": "string"
+          },
+          "title": "Approval Roles Present",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "booking_days_before": {
+          "maximum": 365,
+          "minimum": 0,
+          "title": "Booking Days Before",
+          "type": "integer"
+        },
+        "destination_type": {
+          "enum": [
+            "domestic",
+            "international"
+          ],
+          "title": "Destination Type",
+          "type": "string"
+        },
+        "employee_role": {
+          "enum": [
+            "employee",
+            "manager",
+            "director",
+            "executive"
+          ],
+          "title": "Employee Role",
+          "type": "string"
+        },
+        "expense_category": {
+          "enum": [
+            "meal",
+            "hotel",
+            "transport",
+            "airfare",
+            "incidental"
+          ],
+          "title": "Expense Category",
+          "type": "string"
+        },
+        "prior_same_day_category_spend_minor": {
+          "maximum": 10000000,
+          "minimum": 0,
+          "title": "Prior Same Day Category Spend Minor",
+          "type": "integer"
+        },
+        "receipt_present": {
+          "title": "Receipt Present",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "employee_role",
+        "expense_category",
+        "amount_minor",
+        "destination_type",
+        "booking_days_before",
+        "receipt_present",
+        "approval_roles_present",
+        "prior_same_day_category_spend_minor"
+      ],
+      "title": "ScenarioFacts",
+      "type": "object"
+    },
+    "ScenarioRejection": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "duplicate_of": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Duplicate Of"
+        },
+        "reason_code": {
+          "enum": [
+            "invalid_facts",
+            "invalid_assertion",
+            "duplicate",
+            "budget_exceeded",
+            "incompatible_assertions"
+          ],
+          "title": "Reason Code",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "reason_code"
+      ],
+      "title": "ScenarioRejection",
+      "type": "object"
+    },
+    "ScenarioSuite": {
+      "additionalProperties": false,
+      "properties": {
+        "content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "document_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Document Sha256",
+          "type": "string"
+        },
+        "engine_version": {
+          "minLength": 1,
+          "title": "Engine Version",
+          "type": "string"
+        },
+        "policy_contract_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Contract Sha256",
+          "type": "string"
+        },
+        "rule_set_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Rule Set Sha256",
+          "type": "string"
+        },
+        "scenarios": {
+          "items": {
+            "$ref": "#/$defs/Scenario"
+          },
+          "maxItems": 15,
+          "minItems": 1,
+          "title": "Scenarios",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "seed": {
+          "minimum": 0,
+          "title": "Seed",
+          "type": "integer"
+        },
+        "statistics": {
+          "$ref": "#/$defs/SuiteStatistics"
+        },
+        "suite_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Suite Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "suite_id",
+        "content_sha256",
+        "seed",
+        "document_sha256",
+        "policy_contract_sha256",
+        "rule_set_sha256",
+        "engine_version",
+        "scenarios"
+      ],
+      "title": "ScenarioSuite",
+      "type": "object"
+    },
+    "SessionRevisionProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_citation_ids": {
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Baseline Citation Ids",
+          "type": "array"
+        },
+        "confirmed_at": {
+          "format": "date-time",
+          "title": "Confirmed At",
+          "type": "string"
+        },
+        "kind": {
+          "const": "session_revision",
+          "default": "session_revision",
+          "title": "Kind",
+          "type": "string"
+        },
+        "operation_index": {
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Operation Index",
+          "type": "integer"
+        },
+        "proposal_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Proposal Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "proposal_id",
+        "operation_index",
+        "confirmed_at",
+        "baseline_citation_ids"
+      ],
+      "title": "SessionRevisionProvenance",
+      "type": "object"
+    },
+    "SourceSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "minimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "page": {
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "quote": {
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        },
+        "quote_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Quote Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "page",
+        "start",
+        "end",
+        "quote",
+        "quote_sha256"
+      ],
+      "title": "SourceSpan",
+      "type": "object"
+    },
+    "SuiteStatistics": {
+      "additionalProperties": false,
+      "properties": {
+        "duplicate_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Duplicate Count",
+          "type": "integer"
+        },
+        "generated_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Generated Count",
+          "type": "integer"
+        },
+        "rejected_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Rejected Count",
+          "type": "integer"
+        },
+        "rejections": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ScenarioRejection"
+          },
+          "title": "Rejections",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "title": "SuiteStatistics",
+      "type": "object"
+    },
+    "TextRuleProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "citation_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Citation Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "text_citation",
+          "default": "text_citation",
+          "title": "Kind",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "span": {
+          "$ref": "#/$defs/SourceSpan"
+        }
+      },
+      "required": [
+        "citation_id",
+        "span"
+      ],
+      "title": "TextRuleProvenance",
+      "type": "object"
+    },
+    "UnsupportedClause": {
+      "additionalProperties": false,
+      "properties": {
+        "affected_dimensions": {
+          "items": {
+            "enum": [
+              "eligibility",
+              "receipt_requirement",
+              "approval_requirement",
+              "claim_cap_minor",
+              "daily_category_cap_minor"
+            ],
+            "type": "string"
+          },
+          "minLength": 1,
+          "title": "Affected Dimensions",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "clause_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Clause Id",
+          "type": "string"
+        },
+        "reason_code": {
+          "enum": [
+            "unsupported_vocabulary",
+            "unsupported_logic",
+            "ambiguous_language",
+            "invalid_citation",
+            "unsupported_aggregation",
+            "unsupported_currency"
+          ],
+          "title": "Reason Code",
+          "type": "string"
+        },
+        "review_status": {
+          "default": "provisional",
+          "enum": [
+            "provisional",
+            "session_confirmed"
+          ],
+          "title": "Review Status",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "span": {
+          "$ref": "#/$defs/SourceSpan"
+        },
+        "when_hint": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/Predicate"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "When Hint"
+        }
+      },
+      "required": [
+        "clause_id",
+        "span",
+        "reason_code",
+        "affected_dimensions"
+      ],
+      "title": "UnsupportedClause",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "contract": {
+      "$ref": "#/$defs/PolicyContract"
+    },
+    "evaluation": {
+      "$ref": "#/$defs/EvaluationReport"
+    },
+    "policy": {
+      "$ref": "#/$defs/PolicyIR"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "suite": {
+      "$ref": "#/$defs/ScenarioSuite"
+    }
+  },
+  "required": [
+    "policy",
+    "contract",
+    "suite",
+    "evaluation"
+  ],
+  "title": "AnalyzeFindingsRequest",
+  "type": "object"
+}

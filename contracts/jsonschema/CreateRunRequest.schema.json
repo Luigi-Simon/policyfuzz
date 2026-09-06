@@ -1,0 +1,63 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "non_confidential_confirmed": {
+      "default": false,
+      "title": "Non Confidential Confirmed",
+      "type": "boolean"
+    },
+    "sample_id": {
+      "anyOf": [
+        {
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sample Id"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_type": {
+      "enum": [
+        "pasted_text",
+        "bundled_sample"
+      ],
+      "title": "Source Type",
+      "type": "string"
+    },
+    "text": {
+      "anyOf": [
+        {
+          "maxLength": 50000,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Text"
+    },
+    "title": {
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_type",
+    "title"
+  ],
+  "title": "CreateRunRequest",
+  "type": "object"
+}

@@ -1,0 +1,49 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Artifact Sha256",
+      "type": "string"
+    },
+    "artifact_type": {
+      "enum": [
+        "policy_document",
+        "policy_ir",
+        "policy_contract",
+        "scenario_suite",
+        "evaluation_report",
+        "finding_report",
+        "revision_proposal",
+        "regression_report",
+        "patch_acceptance_report",
+        "comparison_bundle",
+        "metrics_report",
+        "benchmark_manifest",
+        "benchmark_score",
+        "coverage_snapshot",
+        "run_manifest"
+      ],
+      "title": "Artifact Type",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "semantic_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Semantic Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "artifact_type",
+    "artifact_sha256",
+    "semantic_sha256"
+  ],
+  "title": "ArtifactRef",
+  "type": "object"
+}

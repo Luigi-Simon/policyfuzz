@@ -1,0 +1,46 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "max_output_tokens": {
+      "default": 4096,
+      "minimum": 1,
+      "title": "Max Output Tokens",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "seed": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Seed"
+    },
+    "temperature_milli": {
+      "default": 0,
+      "maximum": 2000,
+      "minimum": 0,
+      "title": "Temperature Milli",
+      "type": "integer"
+    },
+    "top_p_percent": {
+      "default": 100,
+      "maximum": 100,
+      "minimum": 0,
+      "title": "Top P Percent",
+      "type": "integer"
+    }
+  },
+  "title": "GenerationConfig",
+  "type": "object"
+}

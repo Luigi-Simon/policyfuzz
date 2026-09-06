@@ -1,0 +1,359 @@
+{
+  "$defs": {
+    "ComplianceResult": {
+      "additionalProperties": false,
+      "properties": {
+        "dimension": {
+          "enum": [
+            "receipt_requirement",
+            "approval_requirement",
+            "claim_cap_minor",
+            "daily_category_cap_minor"
+          ],
+          "title": "Dimension",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "COMPLIANT",
+            "NONCOMPLIANT",
+            "NOT_APPLICABLE",
+            "INCONCLUSIVE",
+            "ERROR"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "dimension",
+        "status"
+      ],
+      "title": "ComplianceResult",
+      "type": "object"
+    },
+    "DimensionResult": {
+      "additionalProperties": false,
+      "properties": {
+        "applicable_rule_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Applicable Rule Ids",
+          "type": "array"
+        },
+        "conflicting_values": {
+          "default": [],
+          "items": {
+            "anyOf": [
+              {
+                "enum": [
+                  "allow",
+                  "deny"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "required",
+                  "not_required"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "none",
+                  "manager",
+                  "director",
+                  "finance"
+                ],
+                "type": "string"
+              },
+              {
+                "minimum": 0,
+                "type": "integer"
+              }
+            ]
+          },
+          "title": "Conflicting Values",
+          "type": "array"
+        },
+        "dimension": {
+          "enum": [
+            "eligibility",
+            "receipt_requirement",
+            "approval_requirement",
+            "claim_cap_minor",
+            "daily_category_cap_minor"
+          ],
+          "title": "Dimension",
+          "type": "string"
+        },
+        "overridden_rule_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Overridden Rule Ids",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "VALUE",
+            "GAP",
+            "NOT_APPLICABLE",
+            "CONFLICT",
+            "INCONCLUSIVE",
+            "ERROR"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "unsupported_clause_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Unsupported Clause Ids",
+          "type": "array"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "enum": [
+                "allow",
+                "deny"
+              ],
+              "type": "string"
+            },
+            {
+              "enum": [
+                "required",
+                "not_required"
+              ],
+              "type": "string"
+            },
+            {
+              "enum": [
+                "none",
+                "manager",
+                "director",
+                "finance"
+              ],
+              "type": "string"
+            },
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        }
+      },
+      "required": [
+        "dimension",
+        "status"
+      ],
+      "title": "DimensionResult",
+      "type": "object"
+    },
+    "PredicateResult": {
+      "additionalProperties": false,
+      "properties": {
+        "matched": {
+          "title": "Matched",
+          "type": "boolean"
+        },
+        "predicate_index": {
+          "minimum": 0,
+          "title": "Predicate Index",
+          "type": "integer"
+        },
+        "rule_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule_id",
+        "predicate_index",
+        "matched"
+      ],
+      "title": "PredicateResult",
+      "type": "object"
+    },
+    "SourceSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "minimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "page": {
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "quote": {
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        },
+        "quote_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Quote Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "page",
+        "start",
+        "end",
+        "quote",
+        "quote_sha256"
+      ],
+      "title": "SourceSpan",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Visible execution evidence, never facts, assertion answers, or holdout rows.",
+  "properties": {
+    "compliance_values": {
+      "items": {
+        "$ref": "#/$defs/ComplianceResult"
+      },
+      "title": "Compliance Values",
+      "type": "array"
+    },
+    "fired_rule_ids": {
+      "items": {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Fired Rule Ids",
+      "type": "array"
+    },
+    "partition": {
+      "const": "visible",
+      "default": "visible",
+      "title": "Partition",
+      "type": "string"
+    },
+    "phase": {
+      "enum": [
+        "baseline",
+        "revised"
+      ],
+      "title": "Phase",
+      "type": "string"
+    },
+    "predicate_results": {
+      "items": {
+        "$ref": "#/$defs/PredicateResult"
+      },
+      "title": "Predicate Results",
+      "type": "array"
+    },
+    "resolved_effects": {
+      "items": {
+        "$ref": "#/$defs/DimensionResult"
+      },
+      "title": "Resolved Effects",
+      "type": "array"
+    },
+    "scenario_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Scenario Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_citations": {
+      "items": {
+        "$ref": "#/$defs/SourceSpan"
+      },
+      "title": "Source Citations",
+      "type": "array"
+    },
+    "trace_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Trace Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "scenario_id",
+    "phase",
+    "trace_sha256",
+    "fired_rule_ids",
+    "predicate_results",
+    "resolved_effects",
+    "compliance_values",
+    "source_citations"
+  ],
+  "title": "VisibleTraceSummary",
+  "type": "object"
+}

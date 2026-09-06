@@ -1,0 +1,67 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "allowed_actions": {
+      "items": {
+        "enum": [
+          "confirm_contract",
+          "reject_contract",
+          "select_findings",
+          "confirm_revision",
+          "reject_revision",
+          "delete_run"
+        ],
+        "type": "string"
+      },
+      "title": "Allowed Actions",
+      "type": "array"
+    },
+    "run_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "stage": {
+      "enum": [
+        "queued",
+        "ingesting",
+        "extracting",
+        "awaiting_contract",
+        "generating_initial_tests",
+        "provisional_execution",
+        "targeting_coverage",
+        "freezing_suite",
+        "baseline_execution",
+        "analyzing",
+        "awaiting_finding_review",
+        "drafting_revision",
+        "awaiting_revision_confirmation",
+        "applying_revision",
+        "retesting",
+        "complete",
+        "completed_no_findings",
+        "completed_no_revision",
+        "contract_rejected",
+        "revision_rejected",
+        "coverage_limit_exceeded",
+        "failed"
+      ],
+      "title": "Stage",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "stage",
+    "allowed_actions"
+  ],
+  "title": "RunActionResponse",
+  "type": "object"
+}

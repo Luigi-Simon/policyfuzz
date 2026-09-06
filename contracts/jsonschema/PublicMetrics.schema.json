@@ -1,0 +1,137 @@
+{
+  "$defs": {
+    "AssertionCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Error",
+          "type": "integer"
+        },
+        "failed": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Failed",
+          "type": "integer"
+        },
+        "inconclusive": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Inconclusive",
+          "type": "integer"
+        },
+        "passed": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Passed",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "title": "AssertionCounts",
+      "type": "object"
+    },
+    "EffectStateCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "CONFLICT": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Conflict",
+          "type": "integer"
+        },
+        "ERROR": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Error",
+          "type": "integer"
+        },
+        "GAP": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Gap",
+          "type": "integer"
+        },
+        "INCONCLUSIVE": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Inconclusive",
+          "type": "integer"
+        },
+        "NOT_APPLICABLE": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Not Applicable",
+          "type": "integer"
+        },
+        "VALUE": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Value",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "title": "EffectStateCounts",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "assertion_pass_percent": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Assertion Pass Percent"
+    },
+    "assertions": {
+      "$ref": "#/$defs/AssertionCounts"
+    },
+    "effect_states": {
+      "$ref": "#/$defs/EffectStateCounts"
+    },
+    "scenario_count": {
+      "minimum": 0,
+      "title": "Scenario Count",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "unique_finding_count": {
+      "minimum": 0,
+      "title": "Unique Finding Count",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "scenario_count",
+    "effect_states",
+    "assertions",
+    "unique_finding_count"
+  ],
+  "title": "PublicMetrics",
+  "type": "object"
+}

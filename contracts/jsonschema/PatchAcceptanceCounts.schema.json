@@ -1,0 +1,61 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "baseline_gap_conflict_inconclusive_or_error": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Baseline Gap Conflict Inconclusive Or Error",
+      "type": "integer"
+    },
+    "fixed_target_findings": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Fixed Target Findings",
+      "type": "integer"
+    },
+    "holdout_regressions": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Holdout Regressions",
+      "type": "integer"
+    },
+    "new_failures_outside_targets": {
+      "default": 0,
+      "minimum": 0,
+      "title": "New Failures Outside Targets",
+      "type": "integer"
+    },
+    "protected_regressions": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Protected Regressions",
+      "type": "integer"
+    },
+    "revised_gap_conflict_inconclusive_or_error": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Revised Gap Conflict Inconclusive Or Error",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "target_findings": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Target Findings",
+      "type": "integer"
+    },
+    "unrelated_rule_changes": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Unrelated Rule Changes",
+      "type": "integer"
+    }
+  },
+  "title": "PatchAcceptanceCounts",
+  "type": "object"
+}

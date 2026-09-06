@@ -1,0 +1,59 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "enum": [
+        "INVALID_INPUT",
+        "INVALID_STATE",
+        "INVALID_POLICY",
+        "INVALID_CITATION",
+        "MALFORMED_MODEL_OUTPUT",
+        "PROVIDER_UNAVAILABLE",
+        "COVERAGE_LIMIT_EXCEEDED",
+        "HASH_MISMATCH",
+        "REVISION_INVALID",
+        "PROSE_COMPILE_MISMATCH",
+        "RUN_NOT_FOUND",
+        "INTERNAL_ERROR"
+      ],
+      "title": "Code",
+      "type": "string"
+    },
+    "error_id": {
+      "anyOf": [
+        {
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error Id"
+    },
+    "message": {
+      "minLength": 1,
+      "title": "Message",
+      "type": "string"
+    },
+    "retryable": {
+      "default": false,
+      "title": "Retryable",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "code",
+    "message"
+  ],
+  "title": "PublicError",
+  "type": "object"
+}

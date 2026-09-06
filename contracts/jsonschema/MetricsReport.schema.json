@@ -1,0 +1,351 @@
+{
+  "$defs": {
+    "AssertionCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Error",
+          "type": "integer"
+        },
+        "failed": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Failed",
+          "type": "integer"
+        },
+        "inconclusive": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Inconclusive",
+          "type": "integer"
+        },
+        "passed": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Passed",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "title": "AssertionCounts",
+      "type": "object"
+    },
+    "CoverageEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "predicate_index": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Predicate Index"
+        },
+        "predicate_outcome": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Predicate Outcome"
+        },
+        "scenario_ids": {
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Scenario Ids",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "target_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Target Id",
+          "type": "string"
+        },
+        "target_kind": {
+          "enum": [
+            "rule",
+            "invariant",
+            "predicate_branch"
+          ],
+          "title": "Target Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_kind",
+        "target_id",
+        "scenario_ids"
+      ],
+      "title": "CoverageEvidence",
+      "type": "object"
+    },
+    "CoverageSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "covered_invariants": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Covered Invariants",
+          "type": "integer"
+        },
+        "covered_predicate_branches": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Covered Predicate Branches",
+          "type": "integer"
+        },
+        "covered_rules": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Covered Rules",
+          "type": "integer"
+        },
+        "evidence": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/CoverageEvidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "missing_invariant_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Missing Invariant Ids",
+          "type": "array"
+        },
+        "missing_rule_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Missing Rule Ids",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "default": "pending",
+          "enum": [
+            "pending",
+            "satisfied",
+            "COVERAGE_LIMIT_EXCEEDED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "targeted_cycles": {
+          "default": 0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Targeted Cycles",
+          "type": "integer"
+        },
+        "total_invariants": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Total Invariants",
+          "type": "integer"
+        },
+        "total_predicate_branches": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Total Predicate Branches",
+          "type": "integer"
+        },
+        "total_rules": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Total Rules",
+          "type": "integer"
+        }
+      },
+      "title": "CoverageSnapshot",
+      "type": "object"
+    },
+    "EffectStateCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "CONFLICT": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Conflict",
+          "type": "integer"
+        },
+        "ERROR": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Error",
+          "type": "integer"
+        },
+        "GAP": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Gap",
+          "type": "integer"
+        },
+        "INCONCLUSIVE": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Inconclusive",
+          "type": "integer"
+        },
+        "NOT_APPLICABLE": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Not Applicable",
+          "type": "integer"
+        },
+        "VALUE": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Value",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "title": "EffectStateCounts",
+      "type": "object"
+    },
+    "InputHashes": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Contract Sha256",
+          "type": "string"
+        },
+        "engine_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Engine Sha256",
+          "type": "string"
+        },
+        "policy_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "run_manifest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Run Manifest Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "suite_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Suite Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_sha256",
+        "contract_sha256",
+        "suite_sha256",
+        "engine_sha256",
+        "run_manifest_sha256"
+      ],
+      "title": "InputHashes",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "assertion_pass_percent": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Assertion Pass Percent"
+    },
+    "assertions": {
+      "$ref": "#/$defs/AssertionCounts"
+    },
+    "coverage": {
+      "$ref": "#/$defs/CoverageSnapshot"
+    },
+    "effect_states": {
+      "$ref": "#/$defs/EffectStateCounts"
+    },
+    "inputs": {
+      "$ref": "#/$defs/InputHashes"
+    },
+    "scenario_count": {
+      "minimum": 0,
+      "title": "Scenario Count",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "unique_finding_count": {
+      "minimum": 0,
+      "title": "Unique Finding Count",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "inputs",
+    "scenario_count",
+    "effect_states",
+    "assertions",
+    "unique_finding_count",
+    "coverage"
+  ],
+  "title": "MetricsReport",
+  "type": "object"
+}

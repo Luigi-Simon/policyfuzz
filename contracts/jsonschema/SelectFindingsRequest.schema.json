@@ -1,0 +1,75 @@
+{
+  "$defs": {
+    "FindingDecision": {
+      "additionalProperties": false,
+      "properties": {
+        "decision": {
+          "enum": [
+            "accept",
+            "reject"
+          ],
+          "title": "Decision",
+          "type": "string"
+        },
+        "finding_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Finding Id",
+          "type": "string"
+        },
+        "reviewer_severity": {
+          "anyOf": [
+            {
+              "enum": [
+                "low",
+                "medium",
+                "high",
+                "critical"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewer Severity"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "finding_id",
+        "decision"
+      ],
+      "title": "FindingDecision",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "decisions": {
+      "items": {
+        "$ref": "#/$defs/FindingDecision"
+      },
+      "minItems": 1,
+      "title": "Decisions",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "decisions"
+  ],
+  "title": "SelectFindingsRequest",
+  "type": "object"
+}

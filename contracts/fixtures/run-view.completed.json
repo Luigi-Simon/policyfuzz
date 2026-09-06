@@ -1,0 +1,1325 @@
+{
+  "allowed_actions": [
+    "delete_run"
+  ],
+  "artifacts": [
+    {
+      "artifact": {
+        "artifact_sha256": "0fb25a62c09db225c7c6b1f83e8ff53f51af3e207ec2800bf71b1a472e4585b4",
+        "artifact_type": "patch_acceptance_report",
+        "schema_version": "1.0",
+        "semantic_sha256": "0fb25a62c09db225c7c6b1f83e8ff53f51af3e207ec2800bf71b1a472e4585b4"
+      },
+      "item_count": 7,
+      "schema_version": "1.0",
+      "title": "SYNTHETIC HACKATHON SAMPLE: aggregate patch acceptance"
+    }
+  ],
+  "baseline_metrics": {
+    "assertion_pass_percent": 40,
+    "assertions": {
+      "error": 0,
+      "failed": 2,
+      "inconclusive": 1,
+      "passed": 2,
+      "schema_version": "1.0"
+    },
+    "effect_states": {
+      "CONFLICT": 2,
+      "ERROR": 2,
+      "GAP": 2,
+      "INCONCLUSIVE": 2,
+      "NOT_APPLICABLE": 2,
+      "VALUE": 20,
+      "schema_version": "1.0"
+    },
+    "scenario_count": 6,
+    "schema_version": "1.0",
+    "unique_finding_count": 3
+  },
+  "comparison_metrics": {
+    "acceptance": {
+      "all_target_findings_fixed": true,
+      "baseline_inputs": {
+        "contract_sha256": "f394c3f1b71a5d9e36c1c8e0d35851c5ed9cc3318b024dcdd843827d57b630b0",
+        "engine_sha256": "b4ce19aa54cf99f2218a1a2e10e4db4b4db06d7978a4adcc5155b63a342a1275",
+        "policy_sha256": "f6d4ee5b70ff0bfefb4e17ec5db366f640d91f6b6c7f791211bc12030aea3602",
+        "run_manifest_sha256": "5da77fde7e431bc53403a9b42f0bcb1f573fc40f840a59d11e046fea4a643e6f",
+        "schema_version": "1.0",
+        "suite_sha256": "a22883b7d8d0fc3b6d9d39c6edde83ee7e076292efe7af76b10c09d889bbb1de"
+      },
+      "counts": {
+        "baseline_gap_conflict_inconclusive_or_error": 8,
+        "fixed_target_findings": 1,
+        "holdout_regressions": 0,
+        "new_failures_outside_targets": 1,
+        "protected_regressions": 1,
+        "revised_gap_conflict_inconclusive_or_error": 8,
+        "schema_version": "1.0",
+        "target_findings": 1,
+        "unrelated_rule_changes": 0
+      },
+      "holdout_not_worse": true,
+      "no_increase_in_gap_conflict_inconclusive_or_error": true,
+      "patch_accepted": false,
+      "revised_inputs": {
+        "contract_sha256": "f394c3f1b71a5d9e36c1c8e0d35851c5ed9cc3318b024dcdd843827d57b630b0",
+        "engine_sha256": "b4ce19aa54cf99f2218a1a2e10e4db4b4db06d7978a4adcc5155b63a342a1275",
+        "policy_sha256": "e934c1787545c3c58734d1495daf41274ce49ecde921147e83dea4310389309b",
+        "run_manifest_sha256": "5da77fde7e431bc53403a9b42f0bcb1f573fc40f840a59d11e046fea4a643e6f",
+        "schema_version": "1.0",
+        "suite_sha256": "a22883b7d8d0fc3b6d9d39c6edde83ee7e076292efe7af76b10c09d889bbb1de"
+      },
+      "schema_version": "1.0",
+      "suite_hash_matches": true,
+      "unrelated_rules_unchanged": true,
+      "zero_new_failures_outside_targets": false,
+      "zero_protected_regressions": false
+    },
+    "assertion_transition_counts": {
+      "fail_to_fail": 1,
+      "fail_to_pass": 1,
+      "inconclusive_or_error": 1,
+      "pass_to_fail": 1,
+      "pass_to_pass": 1,
+      "schema_version": "1.0"
+    },
+    "baseline": {
+      "assertion_pass_percent": 40,
+      "assertions": {
+        "error": 0,
+        "failed": 2,
+        "inconclusive": 1,
+        "passed": 2,
+        "schema_version": "1.0"
+      },
+      "effect_states": {
+        "CONFLICT": 2,
+        "ERROR": 2,
+        "GAP": 2,
+        "INCONCLUSIVE": 2,
+        "NOT_APPLICABLE": 2,
+        "VALUE": 20,
+        "schema_version": "1.0"
+      },
+      "scenario_count": 6,
+      "schema_version": "1.0",
+      "unique_finding_count": 3
+    },
+    "new_failures_outside_targets": 1,
+    "patch_accepted": false,
+    "protected_regressions": 1,
+    "revised": {
+      "assertion_pass_percent": 40,
+      "assertions": {
+        "error": 1,
+        "failed": 2,
+        "inconclusive": 0,
+        "passed": 2,
+        "schema_version": "1.0"
+      },
+      "effect_states": {
+        "CONFLICT": 2,
+        "ERROR": 2,
+        "GAP": 2,
+        "INCONCLUSIVE": 2,
+        "NOT_APPLICABLE": 2,
+        "VALUE": 20,
+        "schema_version": "1.0"
+      },
+      "scenario_count": 6,
+      "schema_version": "1.0",
+      "unique_finding_count": 3
+    },
+    "schema_version": "1.0"
+  },
+  "coverage": {
+    "covered_invariants": 3,
+    "covered_predicate_branches": 3,
+    "covered_rules": 2,
+    "scenario_count": 6,
+    "schema_version": "1.0",
+    "total_invariants": 3,
+    "total_predicate_branches": 4,
+    "total_rules": 2
+  },
+  "decision_at": "2026-09-04T12:00:00Z",
+  "error": null,
+  "events": [
+    {
+      "action_summary": "SYNTHETIC HACKATHON SAMPLE: authored contract illustration; no engine or model run. Patch acceptance is false.",
+      "artifact": {
+        "artifact_sha256": "0fb25a62c09db225c7c6b1f83e8ff53f51af3e207ec2800bf71b1a472e4585b4",
+        "artifact_type": "patch_acceptance_report",
+        "schema_version": "1.0",
+        "semantic_sha256": "0fb25a62c09db225c7c6b1f83e8ff53f51af3e207ec2800bf71b1a472e4585b4"
+      },
+      "error_id": null,
+      "schema_version": "1.0",
+      "stage": "complete",
+      "timestamp": "2026-09-04T12:00:00Z"
+    }
+  ],
+  "findings": [
+    {
+      "dimension": "claim_cap_minor",
+      "finding_id": "synthetic-finding-cap",
+      "finding_type": "intent_breach",
+      "review_status": "accepted",
+      "schema_version": "1.0",
+      "severity": "high",
+      "summary": "SYNTHETIC HACKATHON SAMPLE: meal-cap intent example.",
+      "witness_count": 1
+    },
+    {
+      "dimension": "eligibility",
+      "finding_id": "synthetic-finding-conflict",
+      "finding_type": "conflict",
+      "review_status": "rejected",
+      "schema_version": "1.0",
+      "severity": null,
+      "summary": "SYNTHETIC HACKATHON SAMPLE: conflicting eligibility example.",
+      "witness_count": 2
+    },
+    {
+      "dimension": "claim_cap_minor",
+      "finding_id": "synthetic-finding-unsupported",
+      "finding_type": "unsupported_clause",
+      "review_status": "rejected",
+      "schema_version": "1.0",
+      "severity": null,
+      "summary": "SYNTHETIC HACKATHON SAMPLE: discretionary clause remains inconclusive.",
+      "witness_count": 2
+    }
+  ],
+  "holdout_evidence": {
+    "baseline_effect_states": {
+      "CONFLICT": 0,
+      "ERROR": 0,
+      "GAP": 0,
+      "INCONCLUSIVE": 0,
+      "NOT_APPLICABLE": 0,
+      "VALUE": 5,
+      "schema_version": "1.0"
+    },
+    "partition": "holdout",
+    "rejected_rule_count": 0,
+    "rejected_scenario_count": 1,
+    "revised_effect_states": {
+      "CONFLICT": 0,
+      "ERROR": 0,
+      "GAP": 0,
+      "INCONCLUSIVE": 0,
+      "NOT_APPLICABLE": 0,
+      "VALUE": 5,
+      "schema_version": "1.0"
+    },
+    "scenario_count": 1,
+    "schema_version": "1.0",
+    "unsupported_clause_count": 0
+  },
+  "mode": "cached",
+  "pending_confirmation": null,
+  "rejections": [
+    {
+      "disposition": "excluded",
+      "item_id": "synthetic-rejected-rule",
+      "item_kind": "rule",
+      "partition": "visible",
+      "reason_code": "unsupported_logic",
+      "schema_version": "1.0",
+      "source_spans": [
+        {
+          "end": 223,
+          "page": 1,
+          "quote": "Exceptional meal claims may receive a reasonable discretionary allowance.",
+          "quote_sha256": "fcb018bea7da78026023e0e4f79920883081d2d90989a6c67b3eeb753818ce15",
+          "schema_version": "1.0",
+          "section": "3",
+          "start": 150
+        }
+      ]
+    },
+    {
+      "disposition": "excluded",
+      "item_id": "synthetic-rejected-scenario",
+      "item_kind": "scenario",
+      "partition": "visible",
+      "reason_code": "invalid_facts",
+      "schema_version": "1.0",
+      "source_spans": []
+    }
+  ],
+  "run_id": "synthetic-completed-run",
+  "schema_version": "1.0",
+  "stage": "complete",
+  "terminal_status": "complete",
+  "traces": [
+    {
+      "compliance_values": [
+        {
+          "dimension": "receipt_requirement",
+          "schema_version": "1.0",
+          "status": "COMPLIANT"
+        }
+      ],
+      "fired_rule_ids": [
+        "synthetic-rule-meal"
+      ],
+      "partition": "visible",
+      "phase": "baseline",
+      "predicate_results": [
+        {
+          "matched": true,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-meal",
+          "schema_version": "1.0"
+        },
+        {
+          "matched": false,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-exception",
+          "schema_version": "1.0"
+        }
+      ],
+      "resolved_effects": [
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "eligibility",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "allow"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "receipt_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "required"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "approval_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "manager"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "claim_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": 5000
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "daily_category_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": 10000
+        }
+      ],
+      "scenario_id": "synthetic-visible-1",
+      "schema_version": "1.0",
+      "source_citations": [
+        {
+          "end": 106,
+          "page": 1,
+          "quote": "Meals are eligible. Receipts are required. Meal claims are capped at SGD 50.",
+          "quote_sha256": "0cf21acc898b8db71259539edb68b0c4eb95fd7ba07cc55c1552f6156ab4eca7",
+          "schema_version": "1.0",
+          "section": "1",
+          "start": 30
+        }
+      ],
+      "trace_sha256": "0d5fecdeadb5d577c7cce4f3a035bf3071c0ffb11656f3fa4d1656c1ccabee02"
+    },
+    {
+      "compliance_values": [
+        {
+          "dimension": "receipt_requirement",
+          "schema_version": "1.0",
+          "status": "COMPLIANT"
+        }
+      ],
+      "fired_rule_ids": [
+        "synthetic-rule-meal"
+      ],
+      "partition": "visible",
+      "phase": "baseline",
+      "predicate_results": [
+        {
+          "matched": true,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-meal",
+          "schema_version": "1.0"
+        },
+        {
+          "matched": false,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-exception",
+          "schema_version": "1.0"
+        }
+      ],
+      "resolved_effects": [
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "eligibility",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "allow"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "receipt_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "required"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "approval_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "manager"
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "claim_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "GAP",
+          "unsupported_clause_ids": [],
+          "value": null
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "daily_category_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "NOT_APPLICABLE",
+          "unsupported_clause_ids": [],
+          "value": null
+        }
+      ],
+      "scenario_id": "synthetic-visible-2",
+      "schema_version": "1.0",
+      "source_citations": [
+        {
+          "end": 106,
+          "page": 1,
+          "quote": "Meals are eligible. Receipts are required. Meal claims are capped at SGD 50.",
+          "quote_sha256": "0cf21acc898b8db71259539edb68b0c4eb95fd7ba07cc55c1552f6156ab4eca7",
+          "schema_version": "1.0",
+          "section": "1",
+          "start": 30
+        }
+      ],
+      "trace_sha256": "c2223161e07fa40c08d0a85eda9739eaf3446e71bbbae87400dcecd061cb8cee"
+    },
+    {
+      "compliance_values": [
+        {
+          "dimension": "receipt_requirement",
+          "schema_version": "1.0",
+          "status": "COMPLIANT"
+        }
+      ],
+      "fired_rule_ids": [
+        "synthetic-rule-meal",
+        "synthetic-rule-exception"
+      ],
+      "partition": "visible",
+      "phase": "baseline",
+      "predicate_results": [
+        {
+          "matched": true,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-meal",
+          "schema_version": "1.0"
+        },
+        {
+          "matched": true,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-exception",
+          "schema_version": "1.0"
+        }
+      ],
+      "resolved_effects": [
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal",
+            "synthetic-rule-exception"
+          ],
+          "conflicting_values": [
+            "allow",
+            "deny"
+          ],
+          "dimension": "eligibility",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "CONFLICT",
+          "unsupported_clause_ids": [],
+          "value": null
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "receipt_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "required"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "approval_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "manager"
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "claim_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "INCONCLUSIVE",
+          "unsupported_clause_ids": [
+            "synthetic-discretionary-clause"
+          ],
+          "value": null
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "daily_category_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "ERROR",
+          "unsupported_clause_ids": [],
+          "value": null
+        }
+      ],
+      "scenario_id": "synthetic-visible-3",
+      "schema_version": "1.0",
+      "source_citations": [
+        {
+          "end": 106,
+          "page": 1,
+          "quote": "Meals are eligible. Receipts are required. Meal claims are capped at SGD 50.",
+          "quote_sha256": "0cf21acc898b8db71259539edb68b0c4eb95fd7ba07cc55c1552f6156ab4eca7",
+          "schema_version": "1.0",
+          "section": "1",
+          "start": 30
+        }
+      ],
+      "trace_sha256": "f700c9c4eee3bdc9999ce3f6c4be68470398efb9cba0137879ea2b9cd8a59e6d"
+    },
+    {
+      "compliance_values": [
+        {
+          "dimension": "receipt_requirement",
+          "schema_version": "1.0",
+          "status": "COMPLIANT"
+        }
+      ],
+      "fired_rule_ids": [
+        "synthetic-rule-meal"
+      ],
+      "partition": "visible",
+      "phase": "baseline",
+      "predicate_results": [
+        {
+          "matched": true,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-meal",
+          "schema_version": "1.0"
+        },
+        {
+          "matched": false,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-exception",
+          "schema_version": "1.0"
+        }
+      ],
+      "resolved_effects": [
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "eligibility",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "allow"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "receipt_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "required"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "approval_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "manager"
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "claim_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "GAP",
+          "unsupported_clause_ids": [],
+          "value": null
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "daily_category_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "NOT_APPLICABLE",
+          "unsupported_clause_ids": [],
+          "value": null
+        }
+      ],
+      "scenario_id": "synthetic-visible-4",
+      "schema_version": "1.0",
+      "source_citations": [
+        {
+          "end": 106,
+          "page": 1,
+          "quote": "Meals are eligible. Receipts are required. Meal claims are capped at SGD 50.",
+          "quote_sha256": "0cf21acc898b8db71259539edb68b0c4eb95fd7ba07cc55c1552f6156ab4eca7",
+          "schema_version": "1.0",
+          "section": "1",
+          "start": 30
+        }
+      ],
+      "trace_sha256": "f17fe851e1617a09ab96767a5ad9f18068ae2750af218a3776ef9a3a9c04c851"
+    },
+    {
+      "compliance_values": [
+        {
+          "dimension": "receipt_requirement",
+          "schema_version": "1.0",
+          "status": "COMPLIANT"
+        }
+      ],
+      "fired_rule_ids": [
+        "synthetic-rule-meal",
+        "synthetic-rule-exception"
+      ],
+      "partition": "visible",
+      "phase": "baseline",
+      "predicate_results": [
+        {
+          "matched": true,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-meal",
+          "schema_version": "1.0"
+        },
+        {
+          "matched": true,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-exception",
+          "schema_version": "1.0"
+        }
+      ],
+      "resolved_effects": [
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal",
+            "synthetic-rule-exception"
+          ],
+          "conflicting_values": [
+            "allow",
+            "deny"
+          ],
+          "dimension": "eligibility",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "CONFLICT",
+          "unsupported_clause_ids": [],
+          "value": null
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "receipt_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "required"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "approval_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "manager"
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "claim_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "INCONCLUSIVE",
+          "unsupported_clause_ids": [
+            "synthetic-discretionary-clause"
+          ],
+          "value": null
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "daily_category_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "ERROR",
+          "unsupported_clause_ids": [],
+          "value": null
+        }
+      ],
+      "scenario_id": "synthetic-visible-5",
+      "schema_version": "1.0",
+      "source_citations": [
+        {
+          "end": 106,
+          "page": 1,
+          "quote": "Meals are eligible. Receipts are required. Meal claims are capped at SGD 50.",
+          "quote_sha256": "0cf21acc898b8db71259539edb68b0c4eb95fd7ba07cc55c1552f6156ab4eca7",
+          "schema_version": "1.0",
+          "section": "1",
+          "start": 30
+        }
+      ],
+      "trace_sha256": "49d3a7c5161a534cd00849954f2c9a22a0f11e5dfa98c717687d2da3cc637b0f"
+    },
+    {
+      "compliance_values": [
+        {
+          "dimension": "receipt_requirement",
+          "schema_version": "1.0",
+          "status": "COMPLIANT"
+        }
+      ],
+      "fired_rule_ids": [
+        "synthetic-rule-meal"
+      ],
+      "partition": "visible",
+      "phase": "revised",
+      "predicate_results": [
+        {
+          "matched": true,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-meal",
+          "schema_version": "1.0"
+        },
+        {
+          "matched": false,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-exception",
+          "schema_version": "1.0"
+        }
+      ],
+      "resolved_effects": [
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "eligibility",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "allow"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "receipt_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "required"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "approval_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "manager"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "claim_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": 4500
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "daily_category_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": 10000
+        }
+      ],
+      "scenario_id": "synthetic-visible-1",
+      "schema_version": "1.0",
+      "source_citations": [
+        {
+          "end": 106,
+          "page": 1,
+          "quote": "Meals are eligible. Receipts are required. Meal claims are capped at SGD 50.",
+          "quote_sha256": "0cf21acc898b8db71259539edb68b0c4eb95fd7ba07cc55c1552f6156ab4eca7",
+          "schema_version": "1.0",
+          "section": "1",
+          "start": 30
+        }
+      ],
+      "trace_sha256": "aabbabfcc4b3d6763cb71f327e4072ec65a1d364238e1540f5d09aaafbd89c49"
+    },
+    {
+      "compliance_values": [
+        {
+          "dimension": "receipt_requirement",
+          "schema_version": "1.0",
+          "status": "COMPLIANT"
+        }
+      ],
+      "fired_rule_ids": [
+        "synthetic-rule-meal"
+      ],
+      "partition": "visible",
+      "phase": "revised",
+      "predicate_results": [
+        {
+          "matched": true,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-meal",
+          "schema_version": "1.0"
+        },
+        {
+          "matched": false,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-exception",
+          "schema_version": "1.0"
+        }
+      ],
+      "resolved_effects": [
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "eligibility",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "deny"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "receipt_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "required"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "approval_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "manager"
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "claim_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "GAP",
+          "unsupported_clause_ids": [],
+          "value": null
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "daily_category_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "NOT_APPLICABLE",
+          "unsupported_clause_ids": [],
+          "value": null
+        }
+      ],
+      "scenario_id": "synthetic-visible-2",
+      "schema_version": "1.0",
+      "source_citations": [
+        {
+          "end": 106,
+          "page": 1,
+          "quote": "Meals are eligible. Receipts are required. Meal claims are capped at SGD 50.",
+          "quote_sha256": "0cf21acc898b8db71259539edb68b0c4eb95fd7ba07cc55c1552f6156ab4eca7",
+          "schema_version": "1.0",
+          "section": "1",
+          "start": 30
+        }
+      ],
+      "trace_sha256": "4370d57aad5a2af3690966ed8512d4d8e356754d319e2d7a73a7fe090b77b362"
+    },
+    {
+      "compliance_values": [
+        {
+          "dimension": "receipt_requirement",
+          "schema_version": "1.0",
+          "status": "COMPLIANT"
+        }
+      ],
+      "fired_rule_ids": [
+        "synthetic-rule-meal",
+        "synthetic-rule-exception"
+      ],
+      "partition": "visible",
+      "phase": "revised",
+      "predicate_results": [
+        {
+          "matched": true,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-meal",
+          "schema_version": "1.0"
+        },
+        {
+          "matched": true,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-exception",
+          "schema_version": "1.0"
+        }
+      ],
+      "resolved_effects": [
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal",
+            "synthetic-rule-exception"
+          ],
+          "conflicting_values": [
+            "allow",
+            "deny"
+          ],
+          "dimension": "eligibility",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "CONFLICT",
+          "unsupported_clause_ids": [],
+          "value": null
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "receipt_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "required"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "approval_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "manager"
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "claim_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "INCONCLUSIVE",
+          "unsupported_clause_ids": [
+            "synthetic-discretionary-clause"
+          ],
+          "value": null
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "daily_category_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "ERROR",
+          "unsupported_clause_ids": [],
+          "value": null
+        }
+      ],
+      "scenario_id": "synthetic-visible-3",
+      "schema_version": "1.0",
+      "source_citations": [
+        {
+          "end": 106,
+          "page": 1,
+          "quote": "Meals are eligible. Receipts are required. Meal claims are capped at SGD 50.",
+          "quote_sha256": "0cf21acc898b8db71259539edb68b0c4eb95fd7ba07cc55c1552f6156ab4eca7",
+          "schema_version": "1.0",
+          "section": "1",
+          "start": 30
+        }
+      ],
+      "trace_sha256": "14829e9163519e863e0869a8cadc883fe6567d347e9e295ea15c0dd8c4518dc4"
+    },
+    {
+      "compliance_values": [
+        {
+          "dimension": "receipt_requirement",
+          "schema_version": "1.0",
+          "status": "COMPLIANT"
+        }
+      ],
+      "fired_rule_ids": [
+        "synthetic-rule-meal"
+      ],
+      "partition": "visible",
+      "phase": "revised",
+      "predicate_results": [
+        {
+          "matched": true,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-meal",
+          "schema_version": "1.0"
+        },
+        {
+          "matched": false,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-exception",
+          "schema_version": "1.0"
+        }
+      ],
+      "resolved_effects": [
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "eligibility",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "allow"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "receipt_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "required"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "approval_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "manager"
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "claim_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "GAP",
+          "unsupported_clause_ids": [],
+          "value": null
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "daily_category_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "NOT_APPLICABLE",
+          "unsupported_clause_ids": [],
+          "value": null
+        }
+      ],
+      "scenario_id": "synthetic-visible-4",
+      "schema_version": "1.0",
+      "source_citations": [
+        {
+          "end": 106,
+          "page": 1,
+          "quote": "Meals are eligible. Receipts are required. Meal claims are capped at SGD 50.",
+          "quote_sha256": "0cf21acc898b8db71259539edb68b0c4eb95fd7ba07cc55c1552f6156ab4eca7",
+          "schema_version": "1.0",
+          "section": "1",
+          "start": 30
+        }
+      ],
+      "trace_sha256": "7d0d2a47f3c97ec6d8354a3c7c8c298d001f2d1ede9fe0ef12a2013c8ee66bdb"
+    },
+    {
+      "compliance_values": [
+        {
+          "dimension": "receipt_requirement",
+          "schema_version": "1.0",
+          "status": "COMPLIANT"
+        }
+      ],
+      "fired_rule_ids": [
+        "synthetic-rule-meal",
+        "synthetic-rule-exception"
+      ],
+      "partition": "visible",
+      "phase": "revised",
+      "predicate_results": [
+        {
+          "matched": true,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-meal",
+          "schema_version": "1.0"
+        },
+        {
+          "matched": true,
+          "predicate_index": 0,
+          "rule_id": "synthetic-rule-exception",
+          "schema_version": "1.0"
+        }
+      ],
+      "resolved_effects": [
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal",
+            "synthetic-rule-exception"
+          ],
+          "conflicting_values": [
+            "allow",
+            "deny"
+          ],
+          "dimension": "eligibility",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "CONFLICT",
+          "unsupported_clause_ids": [],
+          "value": null
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "receipt_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "required"
+        },
+        {
+          "applicable_rule_ids": [
+            "synthetic-rule-meal"
+          ],
+          "conflicting_values": [],
+          "dimension": "approval_requirement",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "VALUE",
+          "unsupported_clause_ids": [],
+          "value": "manager"
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "claim_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "INCONCLUSIVE",
+          "unsupported_clause_ids": [
+            "synthetic-discretionary-clause"
+          ],
+          "value": null
+        },
+        {
+          "applicable_rule_ids": [],
+          "conflicting_values": [],
+          "dimension": "daily_category_cap_minor",
+          "overridden_rule_ids": [],
+          "schema_version": "1.0",
+          "status": "ERROR",
+          "unsupported_clause_ids": [],
+          "value": null
+        }
+      ],
+      "scenario_id": "synthetic-visible-5",
+      "schema_version": "1.0",
+      "source_citations": [
+        {
+          "end": 106,
+          "page": 1,
+          "quote": "Meals are eligible. Receipts are required. Meal claims are capped at SGD 50.",
+          "quote_sha256": "0cf21acc898b8db71259539edb68b0c4eb95fd7ba07cc55c1552f6156ab4eca7",
+          "schema_version": "1.0",
+          "section": "1",
+          "start": 30
+        }
+      ],
+      "trace_sha256": "1747058eb4937905fe77579dca54aac7271acdca85fa95ee725dc2796e0d7cb4"
+    }
+  ],
+  "unsupported_clauses": [
+    {
+      "affected_dimensions": [
+        "claim_cap_minor"
+      ],
+      "clause_id": "synthetic-discretionary-clause",
+      "disposition": "retained_inconclusive",
+      "partition": "visible",
+      "reason_code": "unsupported_logic",
+      "review_status": "provisional",
+      "schema_version": "1.0",
+      "span": {
+        "end": 223,
+        "page": 1,
+        "quote": "Exceptional meal claims may receive a reasonable discretionary allowance.",
+        "quote_sha256": "fcb018bea7da78026023e0e4f79920883081d2d90989a6c67b3eeb753818ce15",
+        "schema_version": "1.0",
+        "section": "3",
+        "start": 150
+      },
+      "when_hint": [
+        {
+          "field": "expense_category",
+          "operator": "eq",
+          "schema_version": "1.0",
+          "value": "meal"
+        }
+      ]
+    }
+  ]
+}

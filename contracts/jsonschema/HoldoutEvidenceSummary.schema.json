@@ -1,0 +1,110 @@
+{
+  "$defs": {
+    "EffectStateCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "CONFLICT": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Conflict",
+          "type": "integer"
+        },
+        "ERROR": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Error",
+          "type": "integer"
+        },
+        "GAP": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Gap",
+          "type": "integer"
+        },
+        "INCONCLUSIVE": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Inconclusive",
+          "type": "integer"
+        },
+        "NOT_APPLICABLE": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Not Applicable",
+          "type": "integer"
+        },
+        "VALUE": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Value",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "title": "EffectStateCounts",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The only holdout evidence shape: aggregate counts with no case identifiers.\n\nProjectors must route all private clauses, rejections and traces here, never\ninto the visible evidence collections or free-text summaries/events.",
+  "properties": {
+    "baseline_effect_states": {
+      "$ref": "#/$defs/EffectStateCounts"
+    },
+    "partition": {
+      "const": "holdout",
+      "default": "holdout",
+      "title": "Partition",
+      "type": "string"
+    },
+    "rejected_rule_count": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Rejected Rule Count",
+      "type": "integer"
+    },
+    "rejected_scenario_count": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Rejected Scenario Count",
+      "type": "integer"
+    },
+    "revised_effect_states": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EffectStateCounts"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "scenario_count": {
+      "default": 0,
+      "maximum": 15,
+      "minimum": 0,
+      "title": "Scenario Count",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "unsupported_clause_count": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Unsupported Clause Count",
+      "type": "integer"
+    }
+  },
+  "title": "HoldoutEvidenceSummary",
+  "type": "object"
+}

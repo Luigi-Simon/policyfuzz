@@ -1,0 +1,43 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "fail_to_fail": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Fail To Fail",
+      "type": "integer"
+    },
+    "fail_to_pass": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Fail To Pass",
+      "type": "integer"
+    },
+    "inconclusive_or_error": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Inconclusive Or Error",
+      "type": "integer"
+    },
+    "pass_to_fail": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Pass To Fail",
+      "type": "integer"
+    },
+    "pass_to_pass": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Pass To Pass",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "title": "AssertionTransitionCounts",
+  "type": "object"
+}

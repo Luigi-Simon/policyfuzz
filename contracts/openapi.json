@@ -1,0 +1,3541 @@
+{
+  "components": {
+    "schemas": {
+      "AddOverrideOperation": {
+        "additionalProperties": false,
+        "properties": {
+          "dimension": {
+            "enum": [
+              "eligibility",
+              "receipt_requirement",
+              "approval_requirement",
+              "claim_cap_minor",
+              "daily_category_cap_minor"
+            ],
+            "title": "Dimension",
+            "type": "string"
+          },
+          "finding_ids": {
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Finding Ids",
+            "type": "array"
+          },
+          "kind": {
+            "const": "add_override",
+            "default": "add_override",
+            "title": "Kind",
+            "type": "string"
+          },
+          "rule_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Rule Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "target_rule_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Target Rule Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rule_id",
+          "dimension",
+          "target_rule_id",
+          "finding_ids"
+        ],
+        "title": "AddOverrideOperation",
+        "type": "object"
+      },
+      "AddRuleOperation": {
+        "additionalProperties": false,
+        "properties": {
+          "finding_ids": {
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Finding Ids",
+            "type": "array"
+          },
+          "kind": {
+            "const": "add_rule",
+            "default": "add_rule",
+            "title": "Kind",
+            "type": "string"
+          },
+          "rule": {
+            "$ref": "#/components/schemas/RevisionRuleDraft"
+          },
+          "rule_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Rule Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rule_id",
+          "rule",
+          "finding_ids"
+        ],
+        "title": "AddRuleOperation",
+        "type": "object"
+      },
+      "ArtifactRef": {
+        "additionalProperties": false,
+        "properties": {
+          "artifact_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Artifact Sha256",
+            "type": "string"
+          },
+          "artifact_type": {
+            "enum": [
+              "policy_document",
+              "policy_ir",
+              "policy_contract",
+              "scenario_suite",
+              "evaluation_report",
+              "finding_report",
+              "revision_proposal",
+              "regression_report",
+              "patch_acceptance_report",
+              "comparison_bundle",
+              "metrics_report",
+              "benchmark_manifest",
+              "benchmark_score",
+              "coverage_snapshot",
+              "run_manifest"
+            ],
+            "title": "Artifact Type",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "semantic_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Semantic Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "artifact_type",
+          "artifact_sha256",
+          "semantic_sha256"
+        ],
+        "title": "ArtifactRef",
+        "type": "object"
+      },
+      "ArtifactSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "artifact": {
+            "$ref": "#/components/schemas/ArtifactRef"
+          },
+          "item_count": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Item Count"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "title": {
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "artifact",
+          "title"
+        ],
+        "title": "ArtifactSummary",
+        "type": "object"
+      },
+      "AssertionContent": {
+        "additionalProperties": false,
+        "description": "Typed assertion content, without oracle origins or private label references.",
+        "properties": {
+          "assertion_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Assertion Id",
+            "type": "string"
+          },
+          "dimension": {
+            "enum": [
+              "eligibility",
+              "receipt_requirement",
+              "approval_requirement",
+              "claim_cap_minor",
+              "daily_category_cap_minor"
+            ],
+            "title": "Dimension",
+            "type": "string"
+          },
+          "expected_value": {
+            "anyOf": [
+              {
+                "enum": [
+                  "allow",
+                  "deny"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "required",
+                  "not_required"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "none",
+                  "manager",
+                  "director",
+                  "finance"
+                ],
+                "type": "string"
+              },
+              {
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "enum": [
+                  "COMPLIANT",
+                  "NONCOMPLIANT"
+                ],
+                "type": "string"
+              }
+            ],
+            "title": "Expected Value"
+          },
+          "operator": {
+            "enum": [
+              "eq",
+              "neq",
+              "lte",
+              "gte"
+            ],
+            "title": "Operator",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "target_kind": {
+            "enum": [
+              "effect_value",
+              "compliance_value"
+            ],
+            "title": "Target Kind",
+            "type": "string"
+          }
+        },
+        "required": [
+          "assertion_id",
+          "target_kind",
+          "dimension",
+          "operator",
+          "expected_value"
+        ],
+        "title": "AssertionContent",
+        "type": "object"
+      },
+      "AssertionCounts": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Error",
+            "type": "integer"
+          },
+          "failed": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Failed",
+            "type": "integer"
+          },
+          "inconclusive": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Inconclusive",
+            "type": "integer"
+          },
+          "passed": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Passed",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "title": "AssertionCounts",
+        "type": "object"
+      },
+      "AssertionTransitionCounts": {
+        "additionalProperties": false,
+        "properties": {
+          "fail_to_fail": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Fail To Fail",
+            "type": "integer"
+          },
+          "fail_to_pass": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Fail To Pass",
+            "type": "integer"
+          },
+          "inconclusive_or_error": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Inconclusive Or Error",
+            "type": "integer"
+          },
+          "pass_to_fail": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Pass To Fail",
+            "type": "integer"
+          },
+          "pass_to_pass": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Pass To Pass",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "title": "AssertionTransitionCounts",
+        "type": "object"
+      },
+      "ComplianceResult": {
+        "additionalProperties": false,
+        "properties": {
+          "dimension": {
+            "enum": [
+              "receipt_requirement",
+              "approval_requirement",
+              "claim_cap_minor",
+              "daily_category_cap_minor"
+            ],
+            "title": "Dimension",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "COMPLIANT",
+              "NONCOMPLIANT",
+              "NOT_APPLICABLE",
+              "INCONCLUSIVE",
+              "ERROR"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dimension",
+          "status"
+        ],
+        "title": "ComplianceResult",
+        "type": "object"
+      },
+      "ConfirmContractRequest": {
+        "additionalProperties": false,
+        "description": "Confirm a server-held baseline by identity/hash and submit reviewed intent.\n\nThe coordinator checks both anchors against the stored provisional baseline;\nthe browser cannot replace the compiled rules or unsupported-clause mappings.",
+        "properties": {
+          "baseline_policy_id": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Baseline Policy Id"
+          },
+          "baseline_policy_sha256": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Artifact SHA256 of the exact server-held baseline PolicyIR.",
+            "title": "Baseline Policy Sha256"
+          },
+          "decision": {
+            "enum": [
+              "confirm",
+              "reject"
+            ],
+            "title": "Decision",
+            "type": "string"
+          },
+          "invariants": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/InvariantSummary"
+            },
+            "maxItems": 5,
+            "title": "Invariants",
+            "type": "array"
+          },
+          "required_dimensions": {
+            "default": [],
+            "items": {
+              "enum": [
+                "eligibility",
+                "receipt_requirement",
+                "approval_requirement",
+                "claim_cap_minor",
+                "daily_category_cap_minor"
+              ],
+              "type": "string"
+            },
+            "title": "Required Dimensions",
+            "type": "array",
+            "uniqueItems": true
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "decision"
+        ],
+        "title": "ConfirmContractRequest",
+        "type": "object"
+      },
+      "ConfirmRevisionRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "decision": {
+            "enum": [
+              "confirm",
+              "reject"
+            ],
+            "title": "Decision",
+            "type": "string"
+          },
+          "proposal_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Proposal Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "proposal_id",
+          "decision"
+        ],
+        "title": "ConfirmRevisionRequest",
+        "type": "object"
+      },
+      "ContractConfirmation": {
+        "additionalProperties": false,
+        "properties": {
+          "baseline_policy_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Baseline Policy Id",
+            "type": "string"
+          },
+          "baseline_policy_sha256": {
+            "description": "Artifact SHA256 of the exact server-held baseline PolicyIR.",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Baseline Policy Sha256",
+            "type": "string"
+          },
+          "document_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Document Sha256",
+            "type": "string"
+          },
+          "invariants": {
+            "items": {
+              "$ref": "#/components/schemas/InvariantSummary"
+            },
+            "maxItems": 5,
+            "minItems": 3,
+            "title": "Invariants",
+            "type": "array"
+          },
+          "kind": {
+            "const": "contract",
+            "default": "contract",
+            "title": "Kind",
+            "type": "string"
+          },
+          "required_dimensions": {
+            "items": {
+              "enum": [
+                "eligibility",
+                "receipt_requirement",
+                "approval_requirement",
+                "claim_cap_minor",
+                "daily_category_cap_minor"
+              ],
+              "type": "string"
+            },
+            "minLength": 1,
+            "title": "Required Dimensions",
+            "type": "array",
+            "uniqueItems": true
+          },
+          "rules": {
+            "items": {
+              "$ref": "#/components/schemas/RuleSummary"
+            },
+            "maxItems": 12,
+            "title": "Rules",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "baseline_policy_id",
+          "baseline_policy_sha256",
+          "document_sha256",
+          "rules",
+          "invariants",
+          "required_dimensions"
+        ],
+        "title": "ContractConfirmation",
+        "type": "object"
+      },
+      "CoverageCounters": {
+        "additionalProperties": false,
+        "properties": {
+          "covered_invariants": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Covered Invariants",
+            "type": "integer"
+          },
+          "covered_predicate_branches": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Covered Predicate Branches",
+            "type": "integer"
+          },
+          "covered_rules": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Covered Rules",
+            "type": "integer"
+          },
+          "scenario_count": {
+            "default": 0,
+            "maximum": 15,
+            "minimum": 0,
+            "title": "Scenario Count",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "total_invariants": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Total Invariants",
+            "type": "integer"
+          },
+          "total_predicate_branches": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Total Predicate Branches",
+            "type": "integer"
+          },
+          "total_rules": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Total Rules",
+            "type": "integer"
+          }
+        },
+        "title": "CoverageCounters",
+        "type": "object"
+      },
+      "CreateRunRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "non_confidential_confirmed": {
+            "default": false,
+            "title": "Non Confidential Confirmed",
+            "type": "boolean"
+          },
+          "sample_id": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Sample Id"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source_type": {
+            "enum": [
+              "pasted_text",
+              "bundled_sample"
+            ],
+            "title": "Source Type",
+            "type": "string"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "maxLength": 50000,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Text"
+          },
+          "title": {
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_type",
+          "title"
+        ],
+        "title": "CreateRunRequest",
+        "type": "object"
+      },
+      "CreateRunResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "run_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Run Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id"
+        ],
+        "title": "CreateRunResponse",
+        "type": "object"
+      },
+      "DeleteRunResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "deleted": {
+            "const": true,
+            "default": true,
+            "title": "Deleted",
+            "type": "boolean"
+          },
+          "run_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Run Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id"
+        ],
+        "title": "DeleteRunResponse",
+        "type": "object"
+      },
+      "DimensionResult": {
+        "additionalProperties": false,
+        "properties": {
+          "applicable_rule_ids": {
+            "default": [],
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            "title": "Applicable Rule Ids",
+            "type": "array"
+          },
+          "conflicting_values": {
+            "default": [],
+            "items": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "allow",
+                    "deny"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "enum": [
+                    "required",
+                    "not_required"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "enum": [
+                    "none",
+                    "manager",
+                    "director",
+                    "finance"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Conflicting Values",
+            "type": "array"
+          },
+          "dimension": {
+            "enum": [
+              "eligibility",
+              "receipt_requirement",
+              "approval_requirement",
+              "claim_cap_minor",
+              "daily_category_cap_minor"
+            ],
+            "title": "Dimension",
+            "type": "string"
+          },
+          "overridden_rule_ids": {
+            "default": [],
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            "title": "Overridden Rule Ids",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "VALUE",
+              "GAP",
+              "NOT_APPLICABLE",
+              "CONFLICT",
+              "INCONCLUSIVE",
+              "ERROR"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "unsupported_clause_ids": {
+            "default": [],
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            "title": "Unsupported Clause Ids",
+            "type": "array"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "enum": [
+                  "allow",
+                  "deny"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "required",
+                  "not_required"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "none",
+                  "manager",
+                  "director",
+                  "finance"
+                ],
+                "type": "string"
+              },
+              {
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Value"
+          }
+        },
+        "required": [
+          "dimension",
+          "status"
+        ],
+        "title": "DimensionResult",
+        "type": "object"
+      },
+      "Effect": {
+        "additionalProperties": false,
+        "properties": {
+          "dimension": {
+            "enum": [
+              "eligibility",
+              "receipt_requirement",
+              "approval_requirement",
+              "claim_cap_minor",
+              "daily_category_cap_minor"
+            ],
+            "title": "Dimension",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "enum": [
+                  "allow",
+                  "deny"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "required",
+                  "not_required"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "none",
+                  "manager",
+                  "director",
+                  "finance"
+                ],
+                "type": "string"
+              },
+              {
+                "minimum": 0,
+                "type": "integer"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "required": [
+          "dimension",
+          "value"
+        ],
+        "title": "Effect",
+        "type": "object"
+      },
+      "EffectStateCounts": {
+        "additionalProperties": false,
+        "properties": {
+          "CONFLICT": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Conflict",
+            "type": "integer"
+          },
+          "ERROR": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Error",
+            "type": "integer"
+          },
+          "GAP": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Gap",
+            "type": "integer"
+          },
+          "INCONCLUSIVE": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Inconclusive",
+            "type": "integer"
+          },
+          "NOT_APPLICABLE": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Not Applicable",
+            "type": "integer"
+          },
+          "VALUE": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Value",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "title": "EffectStateCounts",
+        "type": "object"
+      },
+      "FindingDecision": {
+        "additionalProperties": false,
+        "properties": {
+          "decision": {
+            "enum": [
+              "accept",
+              "reject"
+            ],
+            "title": "Decision",
+            "type": "string"
+          },
+          "finding_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Finding Id",
+            "type": "string"
+          },
+          "reviewer_severity": {
+            "anyOf": [
+              {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high",
+                  "critical"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Reviewer Severity"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "finding_id",
+          "decision"
+        ],
+        "title": "FindingDecision",
+        "type": "object"
+      },
+      "FindingSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "dimension": {
+            "enum": [
+              "eligibility",
+              "receipt_requirement",
+              "approval_requirement",
+              "claim_cap_minor",
+              "daily_category_cap_minor"
+            ],
+            "title": "Dimension",
+            "type": "string"
+          },
+          "finding_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Finding Id",
+            "type": "string"
+          },
+          "finding_type": {
+            "enum": [
+              "structural_gap",
+              "conflict",
+              "intent_breach",
+              "regression",
+              "unsupported_clause",
+              "potential_loophole"
+            ],
+            "title": "Finding Type",
+            "type": "string"
+          },
+          "review_status": {
+            "enum": [
+              "pending",
+              "accepted",
+              "rejected"
+            ],
+            "title": "Review Status",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "severity": {
+            "anyOf": [
+              {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high",
+                  "critical"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Severity"
+          },
+          "summary": {
+            "minLength": 1,
+            "title": "Summary",
+            "type": "string"
+          },
+          "witness_count": {
+            "minimum": 0,
+            "title": "Witness Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "finding_id",
+          "finding_type",
+          "dimension",
+          "summary",
+          "review_status",
+          "witness_count"
+        ],
+        "title": "FindingSummary",
+        "type": "object"
+      },
+      "FindingsConfirmation": {
+        "additionalProperties": false,
+        "properties": {
+          "finding_ids": {
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            "title": "Finding Ids",
+            "type": "array"
+          },
+          "kind": {
+            "const": "findings",
+            "default": "findings",
+            "title": "Kind",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "finding_ids"
+        ],
+        "title": "FindingsConfirmation",
+        "type": "object"
+      },
+      "HealthResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "engine_version": {
+            "minLength": 1,
+            "title": "Engine Version",
+            "type": "string"
+          },
+          "provider_configured": {
+            "title": "Provider Configured",
+            "type": "boolean"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "degraded"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "provider_configured",
+          "engine_version"
+        ],
+        "title": "HealthResponse",
+        "type": "object"
+      },
+      "HoldoutEvidenceSummary": {
+        "additionalProperties": false,
+        "description": "The only holdout evidence shape: aggregate counts with no case identifiers.\n\nProjectors must route all private clauses, rejections and traces here, never\ninto the visible evidence collections or free-text summaries/events.",
+        "properties": {
+          "baseline_effect_states": {
+            "$ref": "#/components/schemas/EffectStateCounts"
+          },
+          "partition": {
+            "const": "holdout",
+            "default": "holdout",
+            "title": "Partition",
+            "type": "string"
+          },
+          "rejected_rule_count": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Rejected Rule Count",
+            "type": "integer"
+          },
+          "rejected_scenario_count": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Rejected Scenario Count",
+            "type": "integer"
+          },
+          "revised_effect_states": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EffectStateCounts"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "scenario_count": {
+            "default": 0,
+            "maximum": 15,
+            "minimum": 0,
+            "title": "Scenario Count",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "unsupported_clause_count": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Unsupported Clause Count",
+            "type": "integer"
+          }
+        },
+        "title": "HoldoutEvidenceSummary",
+        "type": "object"
+      },
+      "InputHashes": {
+        "additionalProperties": false,
+        "properties": {
+          "contract_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Contract Sha256",
+            "type": "string"
+          },
+          "engine_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Engine Sha256",
+            "type": "string"
+          },
+          "policy_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Policy Sha256",
+            "type": "string"
+          },
+          "run_manifest_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Run Manifest Sha256",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "suite_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Suite Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "policy_sha256",
+          "contract_sha256",
+          "suite_sha256",
+          "engine_sha256",
+          "run_manifest_sha256"
+        ],
+        "title": "InputHashes",
+        "type": "object"
+      },
+      "InvariantSummary": {
+        "additionalProperties": false,
+        "description": "Session intent for review/editing; no gold or mechanical oracle metadata.",
+        "properties": {
+          "assertion": {
+            "$ref": "#/components/schemas/AssertionContent"
+          },
+          "description": {
+            "minLength": 1,
+            "title": "Description",
+            "type": "string"
+          },
+          "invariant_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Invariant Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ],
+            "title": "Severity",
+            "type": "string"
+          },
+          "when": {
+            "items": {
+              "$ref": "#/components/schemas/Predicate"
+            },
+            "title": "When",
+            "type": "array"
+          }
+        },
+        "required": [
+          "invariant_id",
+          "description",
+          "when",
+          "assertion",
+          "severity"
+        ],
+        "title": "InvariantSummary",
+        "type": "object"
+      },
+      "OverrideRef": {
+        "additionalProperties": false,
+        "properties": {
+          "dimension": {
+            "enum": [
+              "eligibility",
+              "receipt_requirement",
+              "approval_requirement",
+              "claim_cap_minor",
+              "daily_category_cap_minor"
+            ],
+            "title": "Dimension",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "target_rule_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Target Rule Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dimension",
+          "target_rule_id"
+        ],
+        "title": "OverrideRef",
+        "type": "object"
+      },
+      "PatchAcceptanceCounts": {
+        "additionalProperties": false,
+        "properties": {
+          "baseline_gap_conflict_inconclusive_or_error": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Baseline Gap Conflict Inconclusive Or Error",
+            "type": "integer"
+          },
+          "fixed_target_findings": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Fixed Target Findings",
+            "type": "integer"
+          },
+          "holdout_regressions": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Holdout Regressions",
+            "type": "integer"
+          },
+          "new_failures_outside_targets": {
+            "default": 0,
+            "minimum": 0,
+            "title": "New Failures Outside Targets",
+            "type": "integer"
+          },
+          "protected_regressions": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Protected Regressions",
+            "type": "integer"
+          },
+          "revised_gap_conflict_inconclusive_or_error": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Revised Gap Conflict Inconclusive Or Error",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "target_findings": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Target Findings",
+            "type": "integer"
+          },
+          "unrelated_rule_changes": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Unrelated Rule Changes",
+            "type": "integer"
+          }
+        },
+        "title": "PatchAcceptanceCounts",
+        "type": "object"
+      },
+      "PatchAcceptanceReport": {
+        "additionalProperties": false,
+        "properties": {
+          "all_target_findings_fixed": {
+            "title": "All Target Findings Fixed",
+            "type": "boolean"
+          },
+          "baseline_inputs": {
+            "$ref": "#/components/schemas/InputHashes"
+          },
+          "counts": {
+            "$ref": "#/components/schemas/PatchAcceptanceCounts"
+          },
+          "holdout_not_worse": {
+            "title": "Holdout Not Worse",
+            "type": "boolean"
+          },
+          "no_increase_in_gap_conflict_inconclusive_or_error": {
+            "title": "No Increase In Gap Conflict Inconclusive Or Error",
+            "type": "boolean"
+          },
+          "patch_accepted": {
+            "title": "Patch Accepted",
+            "type": "boolean"
+          },
+          "revised_inputs": {
+            "$ref": "#/components/schemas/InputHashes"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "suite_hash_matches": {
+            "title": "Suite Hash Matches",
+            "type": "boolean"
+          },
+          "unrelated_rules_unchanged": {
+            "title": "Unrelated Rules Unchanged",
+            "type": "boolean"
+          },
+          "zero_new_failures_outside_targets": {
+            "title": "Zero New Failures Outside Targets",
+            "type": "boolean"
+          },
+          "zero_protected_regressions": {
+            "title": "Zero Protected Regressions",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "baseline_inputs",
+          "revised_inputs",
+          "suite_hash_matches",
+          "all_target_findings_fixed",
+          "zero_new_failures_outside_targets",
+          "zero_protected_regressions",
+          "no_increase_in_gap_conflict_inconclusive_or_error",
+          "unrelated_rules_unchanged",
+          "holdout_not_worse",
+          "patch_accepted"
+        ],
+        "title": "PatchAcceptanceReport",
+        "type": "object"
+      },
+      "Predicate": {
+        "additionalProperties": false,
+        "properties": {
+          "field": {
+            "anyOf": [
+              {
+                "enum": [
+                  "employee_role",
+                  "expense_category",
+                  "amount_minor",
+                  "destination_type",
+                  "booking_days_before",
+                  "receipt_present",
+                  "approval_roles_present",
+                  "prior_same_day_category_spend_minor"
+                ],
+                "type": "string"
+              },
+              {
+                "const": "daily_category_total_minor",
+                "type": "string"
+              }
+            ],
+            "title": "Field"
+          },
+          "operator": {
+            "enum": [
+              "eq",
+              "neq",
+              "in",
+              "not_in",
+              "lt",
+              "lte",
+              "gt",
+              "gte",
+              "contains"
+            ],
+            "title": "Operator",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "required": [
+          "field",
+          "operator",
+          "value"
+        ],
+        "title": "Predicate",
+        "type": "object"
+      },
+      "PredicateResult": {
+        "additionalProperties": false,
+        "properties": {
+          "matched": {
+            "title": "Matched",
+            "type": "boolean"
+          },
+          "predicate_index": {
+            "minimum": 0,
+            "title": "Predicate Index",
+            "type": "integer"
+          },
+          "rule_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Rule Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rule_id",
+          "predicate_index",
+          "matched"
+        ],
+        "title": "PredicateResult",
+        "type": "object"
+      },
+      "PublicComparisonMetrics": {
+        "additionalProperties": false,
+        "properties": {
+          "acceptance": {
+            "$ref": "#/components/schemas/PatchAcceptanceReport"
+          },
+          "assertion_transition_counts": {
+            "$ref": "#/components/schemas/AssertionTransitionCounts"
+          },
+          "baseline": {
+            "$ref": "#/components/schemas/PublicMetrics"
+          },
+          "new_failures_outside_targets": {
+            "minimum": 0,
+            "title": "New Failures Outside Targets",
+            "type": "integer"
+          },
+          "patch_accepted": {
+            "title": "Patch Accepted",
+            "type": "boolean"
+          },
+          "protected_regressions": {
+            "minimum": 0,
+            "title": "Protected Regressions",
+            "type": "integer"
+          },
+          "revised": {
+            "$ref": "#/components/schemas/PublicMetrics"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "baseline",
+          "revised",
+          "assertion_transition_counts",
+          "acceptance",
+          "patch_accepted",
+          "protected_regressions",
+          "new_failures_outside_targets"
+        ],
+        "title": "PublicComparisonMetrics",
+        "type": "object"
+      },
+      "PublicError": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "enum": [
+              "INVALID_INPUT",
+              "INVALID_STATE",
+              "INVALID_POLICY",
+              "INVALID_CITATION",
+              "MALFORMED_MODEL_OUTPUT",
+              "PROVIDER_UNAVAILABLE",
+              "COVERAGE_LIMIT_EXCEEDED",
+              "HASH_MISMATCH",
+              "REVISION_INVALID",
+              "PROSE_COMPILE_MISMATCH",
+              "RUN_NOT_FOUND",
+              "INTERNAL_ERROR"
+            ],
+            "title": "Code",
+            "type": "string"
+          },
+          "error_id": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Error Id"
+          },
+          "message": {
+            "minLength": 1,
+            "title": "Message",
+            "type": "string"
+          },
+          "retryable": {
+            "default": false,
+            "title": "Retryable",
+            "type": "boolean"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "PublicError",
+        "type": "object"
+      },
+      "PublicMetrics": {
+        "additionalProperties": false,
+        "properties": {
+          "assertion_pass_percent": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Assertion Pass Percent"
+          },
+          "assertions": {
+            "$ref": "#/components/schemas/AssertionCounts"
+          },
+          "effect_states": {
+            "$ref": "#/components/schemas/EffectStateCounts"
+          },
+          "scenario_count": {
+            "minimum": 0,
+            "title": "Scenario Count",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "unique_finding_count": {
+            "minimum": 0,
+            "title": "Unique Finding Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "scenario_count",
+          "effect_states",
+          "assertions",
+          "unique_finding_count"
+        ],
+        "title": "PublicMetrics",
+        "type": "object"
+      },
+      "RejectionEvidence": {
+        "additionalProperties": false,
+        "description": "Visible rejection; source_spans is empty when no policy source exists.",
+        "properties": {
+          "disposition": {
+            "enum": [
+              "excluded",
+              "merged_duplicate",
+              "rule_set_rejected"
+            ],
+            "title": "Disposition",
+            "type": "string"
+          },
+          "item_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Item Id",
+            "type": "string"
+          },
+          "item_kind": {
+            "enum": [
+              "rule",
+              "scenario"
+            ],
+            "title": "Item Kind",
+            "type": "string"
+          },
+          "partition": {
+            "const": "visible",
+            "default": "visible",
+            "title": "Partition",
+            "type": "string"
+          },
+          "reason_code": {
+            "enum": [
+              "invalid_citation",
+              "unsupported_vocabulary",
+              "unsupported_logic",
+              "invalid_rule",
+              "dangling_override",
+              "override_cycle",
+              "invalid_facts",
+              "invalid_assertion",
+              "duplicate",
+              "budget_exceeded",
+              "incompatible_assertions"
+            ],
+            "title": "Reason Code",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source_spans": {
+            "items": {
+              "$ref": "#/components/schemas/SourceSpan"
+            },
+            "title": "Source Spans",
+            "type": "array"
+          }
+        },
+        "required": [
+          "item_kind",
+          "item_id",
+          "source_spans",
+          "reason_code",
+          "disposition"
+        ],
+        "title": "RejectionEvidence",
+        "type": "object"
+      },
+      "ReplaceRuleOperation": {
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "minimum": 0,
+            "title": "Expected Revision",
+            "type": "integer"
+          },
+          "finding_ids": {
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Finding Ids",
+            "type": "array"
+          },
+          "kind": {
+            "const": "replace_rule",
+            "default": "replace_rule",
+            "title": "Kind",
+            "type": "string"
+          },
+          "rule": {
+            "$ref": "#/components/schemas/RevisionRuleDraft"
+          },
+          "rule_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Rule Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rule_id",
+          "expected_revision",
+          "rule",
+          "finding_ids"
+        ],
+        "title": "ReplaceRuleOperation",
+        "type": "object"
+      },
+      "RevisionConfirmation": {
+        "additionalProperties": false,
+        "properties": {
+          "draft_policy_wording": {
+            "minLength": 1,
+            "title": "Draft Policy Wording",
+            "type": "string"
+          },
+          "kind": {
+            "const": "revision",
+            "default": "revision",
+            "title": "Kind",
+            "type": "string"
+          },
+          "operations": {
+            "items": {
+              "$ref": "#/components/schemas/RevisionOperationSummary"
+            },
+            "maxItems": 3,
+            "minItems": 1,
+            "title": "Operations",
+            "type": "array"
+          },
+          "proposal_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Proposal Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "proposal_id",
+          "operations",
+          "draft_policy_wording"
+        ],
+        "title": "RevisionConfirmation",
+        "type": "object"
+      },
+      "RevisionOperationSummary": {
+        "additionalProperties": false,
+        "description": "Authoritative typed operation with the affected baseline rule for comparison.",
+        "properties": {
+          "before": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RuleSummary"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "operation": {
+            "discriminator": {
+              "mapping": {
+                "add_override": "#/components/schemas/AddOverrideOperation",
+                "add_rule": "#/components/schemas/AddRuleOperation",
+                "replace_rule": "#/components/schemas/ReplaceRuleOperation"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AddRuleOperation"
+              },
+              {
+                "$ref": "#/components/schemas/ReplaceRuleOperation"
+              },
+              {
+                "$ref": "#/components/schemas/AddOverrideOperation"
+              }
+            ],
+            "title": "Operation"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "operation"
+        ],
+        "title": "RevisionOperationSummary",
+        "type": "object"
+      },
+      "RevisionRuleDraft": {
+        "additionalProperties": false,
+        "description": "Proposed rule content. Confirmation provenance is assigned only on application.",
+        "properties": {
+          "description": {
+            "minLength": 1,
+            "title": "Description",
+            "type": "string"
+          },
+          "effects": {
+            "items": {
+              "$ref": "#/components/schemas/Effect"
+            },
+            "minItems": 1,
+            "title": "Effects",
+            "type": "array"
+          },
+          "overrides": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/OverrideRef"
+            },
+            "title": "Overrides",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "when": {
+            "items": {
+              "$ref": "#/components/schemas/Predicate"
+            },
+            "minItems": 1,
+            "title": "When",
+            "type": "array"
+          }
+        },
+        "required": [
+          "description",
+          "when",
+          "effects"
+        ],
+        "title": "RevisionRuleDraft",
+        "type": "object"
+      },
+      "RuleSummary": {
+        "additionalProperties": false,
+        "description": "Review of a server-held baseline rule with source citations.",
+        "properties": {
+          "citations": {
+            "items": {
+              "$ref": "#/components/schemas/TextRuleProvenance"
+            },
+            "minItems": 1,
+            "title": "Citations",
+            "type": "array"
+          },
+          "confidence_percent": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Confidence Percent"
+          },
+          "description": {
+            "minLength": 1,
+            "title": "Description",
+            "type": "string"
+          },
+          "effects": {
+            "items": {
+              "$ref": "#/components/schemas/Effect"
+            },
+            "minItems": 1,
+            "title": "Effects",
+            "type": "array"
+          },
+          "overrides": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/OverrideRef"
+            },
+            "title": "Overrides",
+            "type": "array"
+          },
+          "revision": {
+            "minimum": 0,
+            "title": "Revision",
+            "type": "integer"
+          },
+          "rule_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Rule Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "when": {
+            "items": {
+              "$ref": "#/components/schemas/Predicate"
+            },
+            "title": "When",
+            "type": "array"
+          }
+        },
+        "required": [
+          "rule_id",
+          "revision",
+          "description",
+          "when",
+          "effects",
+          "citations"
+        ],
+        "title": "RuleSummary",
+        "type": "object"
+      },
+      "RunEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "action_summary": {
+            "minLength": 1,
+            "title": "Action Summary",
+            "type": "string"
+          },
+          "artifact": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ArtifactRef"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "error_id": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Error Id"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "stage": {
+            "enum": [
+              "queued",
+              "ingesting",
+              "extracting",
+              "awaiting_contract",
+              "generating_initial_tests",
+              "provisional_execution",
+              "targeting_coverage",
+              "freezing_suite",
+              "baseline_execution",
+              "analyzing",
+              "awaiting_finding_review",
+              "drafting_revision",
+              "awaiting_revision_confirmation",
+              "applying_revision",
+              "retesting",
+              "complete",
+              "completed_no_findings",
+              "completed_no_revision",
+              "contract_rejected",
+              "revision_rejected",
+              "coverage_limit_exceeded",
+              "failed"
+            ],
+            "title": "Stage",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          }
+        },
+        "required": [
+          "timestamp",
+          "stage",
+          "action_summary"
+        ],
+        "title": "RunEvent",
+        "type": "object"
+      },
+      "RunView": {
+        "additionalProperties": false,
+        "properties": {
+          "allowed_actions": {
+            "default": [],
+            "items": {
+              "enum": [
+                "confirm_contract",
+                "reject_contract",
+                "select_findings",
+                "confirm_revision",
+                "reject_revision",
+                "delete_run"
+              ],
+              "type": "string"
+            },
+            "title": "Allowed Actions",
+            "type": "array"
+          },
+          "artifacts": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ArtifactSummary"
+            },
+            "title": "Artifacts",
+            "type": "array"
+          },
+          "baseline_metrics": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublicMetrics"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "comparison_metrics": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublicComparisonMetrics"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "coverage": {
+            "$ref": "#/components/schemas/CoverageCounters"
+          },
+          "decision_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Decision At"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublicError"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "events": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/RunEvent"
+            },
+            "title": "Events",
+            "type": "array"
+          },
+          "findings": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/FindingSummary"
+            },
+            "title": "Findings",
+            "type": "array"
+          },
+          "holdout_evidence": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HoldoutEvidenceSummary"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "mode": {
+            "enum": [
+              "live",
+              "cached"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "pending_confirmation": {
+            "anyOf": [
+              {
+                "discriminator": {
+                  "mapping": {
+                    "contract": "#/components/schemas/ContractConfirmation",
+                    "findings": "#/components/schemas/FindingsConfirmation",
+                    "revision": "#/components/schemas/RevisionConfirmation"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ContractConfirmation"
+                  },
+                  {
+                    "$ref": "#/components/schemas/FindingsConfirmation"
+                  },
+                  {
+                    "$ref": "#/components/schemas/RevisionConfirmation"
+                  }
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Pending Confirmation"
+          },
+          "rejections": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/RejectionEvidence"
+            },
+            "title": "Rejections",
+            "type": "array"
+          },
+          "run_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Run Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "stage": {
+            "enum": [
+              "queued",
+              "ingesting",
+              "extracting",
+              "awaiting_contract",
+              "generating_initial_tests",
+              "provisional_execution",
+              "targeting_coverage",
+              "freezing_suite",
+              "baseline_execution",
+              "analyzing",
+              "awaiting_finding_review",
+              "drafting_revision",
+              "awaiting_revision_confirmation",
+              "applying_revision",
+              "retesting",
+              "complete",
+              "completed_no_findings",
+              "completed_no_revision",
+              "contract_rejected",
+              "revision_rejected",
+              "coverage_limit_exceeded",
+              "failed"
+            ],
+            "title": "Stage",
+            "type": "string"
+          },
+          "terminal_status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "complete",
+                  "completed_no_findings",
+                  "completed_no_revision",
+                  "contract_rejected",
+                  "revision_rejected",
+                  "coverage_limit_exceeded",
+                  "failed"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Terminal Status"
+          },
+          "traces": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/VisibleTraceSummary"
+            },
+            "title": "Traces",
+            "type": "array"
+          },
+          "unsupported_clauses": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/UnsupportedClauseEvidence"
+            },
+            "title": "Unsupported Clauses",
+            "type": "array"
+          }
+        },
+        "required": [
+          "run_id",
+          "stage",
+          "mode"
+        ],
+        "title": "RunView",
+        "type": "object"
+      },
+      "SelectFindingsRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "decisions": {
+            "items": {
+              "$ref": "#/components/schemas/FindingDecision"
+            },
+            "minItems": 1,
+            "title": "Decisions",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "decisions"
+        ],
+        "title": "SelectFindingsRequest",
+        "type": "object"
+      },
+      "SourceSpan": {
+        "additionalProperties": false,
+        "properties": {
+          "end": {
+            "minimum": 0,
+            "title": "End",
+            "type": "integer"
+          },
+          "page": {
+            "minimum": 1,
+            "title": "Page",
+            "type": "integer"
+          },
+          "quote": {
+            "minLength": 1,
+            "title": "Quote",
+            "type": "string"
+          },
+          "quote_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Quote Sha256",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "section": {
+            "anyOf": [
+              {
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Section"
+          },
+          "start": {
+            "minimum": 0,
+            "title": "Start",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "page",
+          "start",
+          "end",
+          "quote",
+          "quote_sha256"
+        ],
+        "title": "SourceSpan",
+        "type": "object"
+      },
+      "TextRuleProvenance": {
+        "additionalProperties": false,
+        "properties": {
+          "citation_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Citation Id",
+            "type": "string"
+          },
+          "kind": {
+            "const": "text_citation",
+            "default": "text_citation",
+            "title": "Kind",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "span": {
+            "$ref": "#/components/schemas/SourceSpan"
+          }
+        },
+        "required": [
+          "citation_id",
+          "span"
+        ],
+        "title": "TextRuleProvenance",
+        "type": "object"
+      },
+      "UnsupportedClauseEvidence": {
+        "additionalProperties": false,
+        "description": "Visible-policy evidence only; private clauses contribute to holdout counts.",
+        "properties": {
+          "affected_dimensions": {
+            "items": {
+              "enum": [
+                "eligibility",
+                "receipt_requirement",
+                "approval_requirement",
+                "claim_cap_minor",
+                "daily_category_cap_minor"
+              ],
+              "type": "string"
+            },
+            "minLength": 1,
+            "title": "Affected Dimensions",
+            "type": "array",
+            "uniqueItems": true
+          },
+          "clause_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Clause Id",
+            "type": "string"
+          },
+          "disposition": {
+            "enum": [
+              "pending_review",
+              "retained_inconclusive",
+              "excluded"
+            ],
+            "title": "Disposition",
+            "type": "string"
+          },
+          "partition": {
+            "const": "visible",
+            "default": "visible",
+            "title": "Partition",
+            "type": "string"
+          },
+          "reason_code": {
+            "enum": [
+              "unsupported_vocabulary",
+              "unsupported_logic",
+              "ambiguous_language",
+              "invalid_citation",
+              "unsupported_aggregation",
+              "unsupported_currency"
+            ],
+            "title": "Reason Code",
+            "type": "string"
+          },
+          "review_status": {
+            "default": "provisional",
+            "enum": [
+              "provisional",
+              "session_confirmed"
+            ],
+            "title": "Review Status",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "span": {
+            "$ref": "#/components/schemas/SourceSpan"
+          },
+          "when_hint": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Predicate"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "When Hint"
+          }
+        },
+        "required": [
+          "clause_id",
+          "span",
+          "reason_code",
+          "affected_dimensions",
+          "disposition"
+        ],
+        "title": "UnsupportedClauseEvidence",
+        "type": "object"
+      },
+      "VisibleTraceSummary": {
+        "additionalProperties": false,
+        "description": "Visible execution evidence, never facts, assertion answers, or holdout rows.",
+        "properties": {
+          "compliance_values": {
+            "items": {
+              "$ref": "#/components/schemas/ComplianceResult"
+            },
+            "title": "Compliance Values",
+            "type": "array"
+          },
+          "fired_rule_ids": {
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            "title": "Fired Rule Ids",
+            "type": "array"
+          },
+          "partition": {
+            "const": "visible",
+            "default": "visible",
+            "title": "Partition",
+            "type": "string"
+          },
+          "phase": {
+            "enum": [
+              "baseline",
+              "revised"
+            ],
+            "title": "Phase",
+            "type": "string"
+          },
+          "predicate_results": {
+            "items": {
+              "$ref": "#/components/schemas/PredicateResult"
+            },
+            "title": "Predicate Results",
+            "type": "array"
+          },
+          "resolved_effects": {
+            "items": {
+              "$ref": "#/components/schemas/DimensionResult"
+            },
+            "title": "Resolved Effects",
+            "type": "array"
+          },
+          "scenario_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Scenario Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source_citations": {
+            "items": {
+              "$ref": "#/components/schemas/SourceSpan"
+            },
+            "title": "Source Citations",
+            "type": "array"
+          },
+          "trace_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Trace Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "scenario_id",
+          "phase",
+          "trace_sha256",
+          "fired_rule_ids",
+          "predicate_results",
+          "resolved_effects",
+          "compliance_values",
+          "source_citations"
+        ],
+        "title": "VisibleTraceSummary",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "PolicyFuzz API",
+    "version": "1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "operationId": "health",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          }
+        }
+      }
+    },
+    "/api/v1/runs": {
+      "post": {
+        "operationId": "create_run",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRunRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateRunResponse"
+                }
+              }
+            },
+            "description": "Accepted"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          }
+        }
+      }
+    },
+    "/api/v1/runs/{run_id}": {
+      "delete": {
+        "operationId": "delete_run",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteRunResponse"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          }
+        }
+      },
+      "get": {
+        "operationId": "get_run",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunView"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          }
+        }
+      }
+    },
+    "/api/v1/runs/{run_id}/confirm-contract": {
+      "post": {
+        "operationId": "confirm_contract",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmContractRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunView"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          }
+        }
+      }
+    },
+    "/api/v1/runs/{run_id}/confirm-revision": {
+      "post": {
+        "operationId": "confirm_revision",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmRevisionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunView"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          }
+        }
+      }
+    },
+    "/api/v1/runs/{run_id}/select-findings": {
+      "post": {
+        "operationId": "select_findings",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SelectFindingsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunView"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/PublicError"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured public application error"
+          }
+        }
+      }
+    }
+  }
+}

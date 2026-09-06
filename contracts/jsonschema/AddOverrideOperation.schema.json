@@ -1,0 +1,58 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "dimension": {
+      "enum": [
+        "eligibility",
+        "receipt_requirement",
+        "approval_requirement",
+        "claim_cap_minor",
+        "daily_category_cap_minor"
+      ],
+      "title": "Dimension",
+      "type": "string"
+    },
+    "finding_ids": {
+      "items": {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Finding Ids",
+      "type": "array"
+    },
+    "kind": {
+      "const": "add_override",
+      "default": "add_override",
+      "title": "Kind",
+      "type": "string"
+    },
+    "rule_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Rule Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "target_rule_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Target Rule Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "rule_id",
+    "dimension",
+    "target_rule_id",
+    "finding_ids"
+  ],
+  "title": "AddOverrideOperation",
+  "type": "object"
+}

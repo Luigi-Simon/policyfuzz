@@ -1,0 +1,133 @@
+{
+  "$defs": {
+    "InputHashes": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Contract Sha256",
+          "type": "string"
+        },
+        "engine_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Engine Sha256",
+          "type": "string"
+        },
+        "policy_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "run_manifest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Run Manifest Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "suite_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Suite Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_sha256",
+        "contract_sha256",
+        "suite_sha256",
+        "engine_sha256",
+        "run_manifest_sha256"
+      ],
+      "title": "InputHashes",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "benchmark_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Benchmark Id",
+      "type": "string"
+    },
+    "f1_percent": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "F1 Percent"
+    },
+    "false_negatives": {
+      "minimum": 0,
+      "title": "False Negatives",
+      "type": "integer"
+    },
+    "false_positives": {
+      "minimum": 0,
+      "title": "False Positives",
+      "type": "integer"
+    },
+    "inputs": {
+      "$ref": "#/$defs/InputHashes"
+    },
+    "precision_percent": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Precision Percent"
+    },
+    "recall_percent": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Recall Percent"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "true_positives": {
+      "minimum": 0,
+      "title": "True Positives",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "benchmark_id",
+    "inputs",
+    "true_positives",
+    "false_positives",
+    "false_negatives"
+  ],
+  "title": "BenchmarkScore",
+  "type": "object"
+}

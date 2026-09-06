@@ -1,5 +1,11 @@
 """Public version-1 domain contracts. Import contracts from this module."""
 
+from .benchmark import (
+    BenchmarkCorrectedSemantics,
+    BenchmarkExpectedRule,
+    BenchmarkSourceLabel,
+    BenchmarkSourceLabels,
+)
 from .common import (
     ApprovalRequirementValue,
     ApprovalRole,
@@ -184,9 +190,13 @@ __all__ = [
     "AssertionStatusValue",
     "AssertionTransition",
     "AssertionTransitionCounts",
+    "BenchmarkCorrectedSemantics",
     "BenchmarkDefect",
+    "BenchmarkExpectedRule",
     "BenchmarkManifest",
     "BenchmarkScore",
+    "BenchmarkSourceLabel",
+    "BenchmarkSourceLabels",
     "CompareRevisionRequest",
     "ComparisonBundle",
     "CompilePolicyRequest",

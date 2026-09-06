@@ -1,0 +1,52 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "baseline_citation_ids": {
+      "items": {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Baseline Citation Ids",
+      "type": "array"
+    },
+    "confirmed_at": {
+      "format": "date-time",
+      "title": "Confirmed At",
+      "type": "string"
+    },
+    "kind": {
+      "const": "session_revision",
+      "default": "session_revision",
+      "title": "Kind",
+      "type": "string"
+    },
+    "operation_index": {
+      "maximum": 2,
+      "minimum": 0,
+      "title": "Operation Index",
+      "type": "integer"
+    },
+    "proposal_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Proposal Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "proposal_id",
+    "operation_index",
+    "confirmed_at",
+    "baseline_citation_ids"
+  ],
+  "title": "SessionRevisionProvenance",
+  "type": "object"
+}

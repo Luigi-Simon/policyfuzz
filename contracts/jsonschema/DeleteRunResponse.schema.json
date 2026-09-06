@@ -1,0 +1,28 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "deleted": {
+      "const": true,
+      "default": true,
+      "title": "Deleted",
+      "type": "boolean"
+    },
+    "run_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id"
+  ],
+  "title": "DeleteRunResponse",
+  "type": "object"
+}

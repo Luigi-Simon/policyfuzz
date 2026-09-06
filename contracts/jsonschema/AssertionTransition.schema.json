@@ -1,0 +1,61 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "after": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "INCONCLUSIVE",
+        "ERROR"
+      ],
+      "title": "After",
+      "type": "string"
+    },
+    "assertion_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Assertion Id",
+      "type": "string"
+    },
+    "before": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "INCONCLUSIVE",
+        "ERROR"
+      ],
+      "title": "Before",
+      "type": "string"
+    },
+    "protected": {
+      "title": "Protected",
+      "type": "boolean"
+    },
+    "scenario_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Scenario Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "targeted": {
+      "title": "Targeted",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "scenario_id",
+    "assertion_id",
+    "before",
+    "after",
+    "protected",
+    "targeted"
+  ],
+  "title": "AssertionTransition",
+  "type": "object"
+}

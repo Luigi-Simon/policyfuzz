@@ -1,0 +1,250 @@
+{
+  "$defs": {
+    "AssertionTransition": {
+      "additionalProperties": false,
+      "properties": {
+        "after": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "INCONCLUSIVE",
+            "ERROR"
+          ],
+          "title": "After",
+          "type": "string"
+        },
+        "assertion_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Assertion Id",
+          "type": "string"
+        },
+        "before": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "INCONCLUSIVE",
+            "ERROR"
+          ],
+          "title": "Before",
+          "type": "string"
+        },
+        "protected": {
+          "title": "Protected",
+          "type": "boolean"
+        },
+        "scenario_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Scenario Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "targeted": {
+          "title": "Targeted",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "scenario_id",
+        "assertion_id",
+        "before",
+        "after",
+        "protected",
+        "targeted"
+      ],
+      "title": "AssertionTransition",
+      "type": "object"
+    },
+    "AssertionTransitionCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "fail_to_fail": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Fail To Fail",
+          "type": "integer"
+        },
+        "fail_to_pass": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Fail To Pass",
+          "type": "integer"
+        },
+        "inconclusive_or_error": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Inconclusive Or Error",
+          "type": "integer"
+        },
+        "pass_to_fail": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Pass To Fail",
+          "type": "integer"
+        },
+        "pass_to_pass": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Pass To Pass",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "title": "AssertionTransitionCounts",
+      "type": "object"
+    },
+    "EffectStateCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "CONFLICT": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Conflict",
+          "type": "integer"
+        },
+        "ERROR": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Error",
+          "type": "integer"
+        },
+        "GAP": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Gap",
+          "type": "integer"
+        },
+        "INCONCLUSIVE": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Inconclusive",
+          "type": "integer"
+        },
+        "NOT_APPLICABLE": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Not Applicable",
+          "type": "integer"
+        },
+        "VALUE": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Value",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "title": "EffectStateCounts",
+      "type": "object"
+    },
+    "InputHashes": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Contract Sha256",
+          "type": "string"
+        },
+        "engine_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Engine Sha256",
+          "type": "string"
+        },
+        "policy_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "run_manifest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Run Manifest Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "suite_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Suite Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_sha256",
+        "contract_sha256",
+        "suite_sha256",
+        "engine_sha256",
+        "run_manifest_sha256"
+      ],
+      "title": "InputHashes",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "assertion_transition_counts": {
+      "$ref": "#/$defs/AssertionTransitionCounts"
+    },
+    "assertion_transitions": {
+      "items": {
+        "$ref": "#/$defs/AssertionTransition"
+      },
+      "title": "Assertion Transitions",
+      "type": "array"
+    },
+    "baseline_effect_states": {
+      "$ref": "#/$defs/EffectStateCounts"
+    },
+    "baseline_inputs": {
+      "$ref": "#/$defs/InputHashes"
+    },
+    "report_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Report Id",
+      "type": "string"
+    },
+    "revised_effect_states": {
+      "$ref": "#/$defs/EffectStateCounts"
+    },
+    "revised_inputs": {
+      "$ref": "#/$defs/InputHashes"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "report_id",
+    "baseline_inputs",
+    "revised_inputs",
+    "baseline_effect_states",
+    "revised_effect_states",
+    "assertion_transition_counts",
+    "assertion_transitions"
+  ],
+  "title": "RegressionReport",
+  "type": "object"
+}

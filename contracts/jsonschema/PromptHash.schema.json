@@ -1,0 +1,28 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "prompt_name": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Prompt Name",
+      "type": "string"
+    },
+    "prompt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Prompt Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "prompt_name",
+    "prompt_sha256"
+  ],
+  "title": "PromptHash",
+  "type": "object"
+}

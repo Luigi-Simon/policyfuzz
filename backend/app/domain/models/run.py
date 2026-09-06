@@ -48,6 +48,7 @@ from .policy import (
     UnsupportedClause,
 )
 from .revision import (
+    AssertionTransitionCounts,
     ComparisonBundle,
     FindingDecision,
     PatchAcceptanceReport,
@@ -238,9 +239,20 @@ class PublicMetrics(StrictModel):
 class PublicComparisonMetrics(StrictModel):
     baseline: PublicMetrics
     revised: PublicMetrics
+    assertion_transition_counts: AssertionTransitionCounts
+    acceptance: PatchAcceptanceReport
     patch_accepted: bool
     protected_regressions: NonNegativeInt
     new_failures_outside_targets: NonNegativeInt
+
+    @model_validator(mode="after")
+    def consistent_acceptance_evidence(self) -> "PublicComparisonMetrics":
+        if self.patch_accepted != self.acceptance.patch_accepted:
+            raise ValueError("patch_accepted must match acceptance")
+        for field in ("protected_regressions", "new_failures_outside_targets"):
+            if getattr(self, field) != getattr(self.acceptance.counts, field):
+                raise ValueError(f"{field} must match acceptance counts")
+        return self
 
 
 class ContractConfirmation(StrictModel):

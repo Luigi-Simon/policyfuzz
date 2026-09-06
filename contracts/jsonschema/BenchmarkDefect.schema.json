@@ -1,0 +1,186 @@
+{
+  "$defs": {
+    "SourceSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "minimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "page": {
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "quote": {
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        },
+        "quote_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Quote Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "page",
+        "start",
+        "end",
+        "quote",
+        "quote_sha256"
+      ],
+      "title": "SourceSpan",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "defect_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Defect Id",
+      "type": "string"
+    },
+    "dimension": {
+      "enum": [
+        "eligibility",
+        "receipt_requirement",
+        "approval_requirement",
+        "claim_cap_minor",
+        "daily_category_cap_minor"
+      ],
+      "title": "Dimension",
+      "type": "string"
+    },
+    "expected_finding_fingerprint_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Expected Finding Fingerprint Sha256"
+    },
+    "finding_type": {
+      "enum": [
+        "structural_gap",
+        "conflict",
+        "intent_breach",
+        "regression",
+        "unsupported_clause",
+        "potential_loophole"
+      ],
+      "title": "Finding Type",
+      "type": "string"
+    },
+    "partition": {
+      "default": "visible",
+      "enum": [
+        "visible",
+        "holdout"
+      ],
+      "title": "Partition",
+      "type": "string"
+    },
+    "permitted_witness_ids": {
+      "default": [],
+      "items": {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Permitted Witness Ids",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "semantic_signature_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Semantic Signature Sha256"
+    },
+    "severity": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "title": "Severity",
+      "type": "string"
+    },
+    "source_spans": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/SourceSpan"
+      },
+      "title": "Source Spans",
+      "type": "array"
+    },
+    "target_ids": {
+      "items": {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Target Ids",
+      "type": "array"
+    },
+    "unsupported_clause": {
+      "default": false,
+      "title": "Unsupported Clause",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "defect_id",
+    "finding_type",
+    "dimension",
+    "target_ids",
+    "severity"
+  ],
+  "title": "BenchmarkDefect",
+  "type": "object"
+}

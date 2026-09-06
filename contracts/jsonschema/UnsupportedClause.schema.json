@@ -1,0 +1,215 @@
+{
+  "$defs": {
+    "Predicate": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "anyOf": [
+            {
+              "enum": [
+                "employee_role",
+                "expense_category",
+                "amount_minor",
+                "destination_type",
+                "booking_days_before",
+                "receipt_present",
+                "approval_roles_present",
+                "prior_same_day_category_spend_minor"
+              ],
+              "type": "string"
+            },
+            {
+              "const": "daily_category_total_minor",
+              "type": "string"
+            }
+          ],
+          "title": "Field"
+        },
+        "operator": {
+          "enum": [
+            "eq",
+            "neq",
+            "in",
+            "not_in",
+            "lt",
+            "lte",
+            "gt",
+            "gte",
+            "contains"
+          ],
+          "title": "Operator",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "field",
+        "operator",
+        "value"
+      ],
+      "title": "Predicate",
+      "type": "object"
+    },
+    "SourceSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "minimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "page": {
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "quote": {
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        },
+        "quote_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Quote Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "page",
+        "start",
+        "end",
+        "quote",
+        "quote_sha256"
+      ],
+      "title": "SourceSpan",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "affected_dimensions": {
+      "items": {
+        "enum": [
+          "eligibility",
+          "receipt_requirement",
+          "approval_requirement",
+          "claim_cap_minor",
+          "daily_category_cap_minor"
+        ],
+        "type": "string"
+      },
+      "minLength": 1,
+      "title": "Affected Dimensions",
+      "type": "array",
+      "uniqueItems": true
+    },
+    "clause_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Clause Id",
+      "type": "string"
+    },
+    "reason_code": {
+      "enum": [
+        "unsupported_vocabulary",
+        "unsupported_logic",
+        "ambiguous_language",
+        "invalid_citation",
+        "unsupported_aggregation",
+        "unsupported_currency"
+      ],
+      "title": "Reason Code",
+      "type": "string"
+    },
+    "review_status": {
+      "default": "provisional",
+      "enum": [
+        "provisional",
+        "session_confirmed"
+      ],
+      "title": "Review Status",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "span": {
+      "$ref": "#/$defs/SourceSpan"
+    },
+    "when_hint": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/Predicate"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "When Hint"
+    }
+  },
+  "required": [
+    "clause_id",
+    "span",
+    "reason_code",
+    "affected_dimensions"
+  ],
+  "title": "UnsupportedClause",
+  "type": "object"
+}

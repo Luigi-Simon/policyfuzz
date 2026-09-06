@@ -1,0 +1,56 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "covered_invariants": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Covered Invariants",
+      "type": "integer"
+    },
+    "covered_predicate_branches": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Covered Predicate Branches",
+      "type": "integer"
+    },
+    "covered_rules": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Covered Rules",
+      "type": "integer"
+    },
+    "scenario_count": {
+      "default": 0,
+      "maximum": 15,
+      "minimum": 0,
+      "title": "Scenario Count",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "total_invariants": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Total Invariants",
+      "type": "integer"
+    },
+    "total_predicate_branches": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Total Predicate Branches",
+      "type": "integer"
+    },
+    "total_rules": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Total Rules",
+      "type": "integer"
+    }
+  },
+  "title": "CoverageCounters",
+  "type": "object"
+}

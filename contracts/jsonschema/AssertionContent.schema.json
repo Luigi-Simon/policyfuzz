@@ -1,0 +1,95 @@
+{
+  "additionalProperties": false,
+  "description": "Typed assertion content, without oracle origins or private label references.",
+  "properties": {
+    "assertion_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Assertion Id",
+      "type": "string"
+    },
+    "dimension": {
+      "enum": [
+        "eligibility",
+        "receipt_requirement",
+        "approval_requirement",
+        "claim_cap_minor",
+        "daily_category_cap_minor"
+      ],
+      "title": "Dimension",
+      "type": "string"
+    },
+    "expected_value": {
+      "anyOf": [
+        {
+          "enum": [
+            "allow",
+            "deny"
+          ],
+          "type": "string"
+        },
+        {
+          "enum": [
+            "required",
+            "not_required"
+          ],
+          "type": "string"
+        },
+        {
+          "enum": [
+            "none",
+            "manager",
+            "director",
+            "finance"
+          ],
+          "type": "string"
+        },
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "enum": [
+            "COMPLIANT",
+            "NONCOMPLIANT"
+          ],
+          "type": "string"
+        }
+      ],
+      "title": "Expected Value"
+    },
+    "operator": {
+      "enum": [
+        "eq",
+        "neq",
+        "lte",
+        "gte"
+      ],
+      "title": "Operator",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "target_kind": {
+      "enum": [
+        "effect_value",
+        "compliance_value"
+      ],
+      "title": "Target Kind",
+      "type": "string"
+    }
+  },
+  "required": [
+    "assertion_id",
+    "target_kind",
+    "dimension",
+    "operator",
+    "expected_value"
+  ],
+  "title": "AssertionContent",
+  "type": "object"
+}

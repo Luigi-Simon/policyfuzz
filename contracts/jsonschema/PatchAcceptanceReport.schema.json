@@ -1,0 +1,174 @@
+{
+  "$defs": {
+    "InputHashes": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Contract Sha256",
+          "type": "string"
+        },
+        "engine_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Engine Sha256",
+          "type": "string"
+        },
+        "policy_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "run_manifest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Run Manifest Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "suite_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Suite Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_sha256",
+        "contract_sha256",
+        "suite_sha256",
+        "engine_sha256",
+        "run_manifest_sha256"
+      ],
+      "title": "InputHashes",
+      "type": "object"
+    },
+    "PatchAcceptanceCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_gap_conflict_inconclusive_or_error": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Baseline Gap Conflict Inconclusive Or Error",
+          "type": "integer"
+        },
+        "fixed_target_findings": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Fixed Target Findings",
+          "type": "integer"
+        },
+        "holdout_regressions": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Holdout Regressions",
+          "type": "integer"
+        },
+        "new_failures_outside_targets": {
+          "default": 0,
+          "minimum": 0,
+          "title": "New Failures Outside Targets",
+          "type": "integer"
+        },
+        "protected_regressions": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Protected Regressions",
+          "type": "integer"
+        },
+        "revised_gap_conflict_inconclusive_or_error": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Revised Gap Conflict Inconclusive Or Error",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "target_findings": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Target Findings",
+          "type": "integer"
+        },
+        "unrelated_rule_changes": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Unrelated Rule Changes",
+          "type": "integer"
+        }
+      },
+      "title": "PatchAcceptanceCounts",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "all_target_findings_fixed": {
+      "title": "All Target Findings Fixed",
+      "type": "boolean"
+    },
+    "baseline_inputs": {
+      "$ref": "#/$defs/InputHashes"
+    },
+    "counts": {
+      "$ref": "#/$defs/PatchAcceptanceCounts"
+    },
+    "holdout_not_worse": {
+      "title": "Holdout Not Worse",
+      "type": "boolean"
+    },
+    "no_increase_in_gap_conflict_inconclusive_or_error": {
+      "title": "No Increase In Gap Conflict Inconclusive Or Error",
+      "type": "boolean"
+    },
+    "patch_accepted": {
+      "title": "Patch Accepted",
+      "type": "boolean"
+    },
+    "revised_inputs": {
+      "$ref": "#/$defs/InputHashes"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "suite_hash_matches": {
+      "title": "Suite Hash Matches",
+      "type": "boolean"
+    },
+    "unrelated_rules_unchanged": {
+      "title": "Unrelated Rules Unchanged",
+      "type": "boolean"
+    },
+    "zero_new_failures_outside_targets": {
+      "title": "Zero New Failures Outside Targets",
+      "type": "boolean"
+    },
+    "zero_protected_regressions": {
+      "title": "Zero Protected Regressions",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "baseline_inputs",
+    "revised_inputs",
+    "suite_hash_matches",
+    "all_target_findings_fixed",
+    "zero_new_failures_outside_targets",
+    "zero_protected_regressions",
+    "no_increase_in_gap_conflict_inconclusive_or_error",
+    "unrelated_rules_unchanged",
+    "holdout_not_worse",
+    "patch_accepted"
+  ],
+  "title": "PatchAcceptanceReport",
+  "type": "object"
+}

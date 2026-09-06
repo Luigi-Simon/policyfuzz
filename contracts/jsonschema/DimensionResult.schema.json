@@ -1,0 +1,142 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "applicable_rule_ids": {
+      "default": [],
+      "items": {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Applicable Rule Ids",
+      "type": "array"
+    },
+    "conflicting_values": {
+      "default": [],
+      "items": {
+        "anyOf": [
+          {
+            "enum": [
+              "allow",
+              "deny"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "required",
+              "not_required"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "none",
+              "manager",
+              "director",
+              "finance"
+            ],
+            "type": "string"
+          },
+          {
+            "minimum": 0,
+            "type": "integer"
+          }
+        ]
+      },
+      "title": "Conflicting Values",
+      "type": "array"
+    },
+    "dimension": {
+      "enum": [
+        "eligibility",
+        "receipt_requirement",
+        "approval_requirement",
+        "claim_cap_minor",
+        "daily_category_cap_minor"
+      ],
+      "title": "Dimension",
+      "type": "string"
+    },
+    "overridden_rule_ids": {
+      "default": [],
+      "items": {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Overridden Rule Ids",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "VALUE",
+        "GAP",
+        "NOT_APPLICABLE",
+        "CONFLICT",
+        "INCONCLUSIVE",
+        "ERROR"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "unsupported_clause_ids": {
+      "default": [],
+      "items": {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Unsupported Clause Ids",
+      "type": "array"
+    },
+    "value": {
+      "anyOf": [
+        {
+          "enum": [
+            "allow",
+            "deny"
+          ],
+          "type": "string"
+        },
+        {
+          "enum": [
+            "required",
+            "not_required"
+          ],
+          "type": "string"
+        },
+        {
+          "enum": [
+            "none",
+            "manager",
+            "director",
+            "finance"
+          ],
+          "type": "string"
+        },
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Value"
+    }
+  },
+  "required": [
+    "dimension",
+    "status"
+  ],
+  "title": "DimensionResult",
+  "type": "object"
+}

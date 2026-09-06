@@ -1,0 +1,132 @@
+{
+  "$defs": {
+    "ArtifactRef": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Artifact Sha256",
+          "type": "string"
+        },
+        "artifact_type": {
+          "enum": [
+            "policy_document",
+            "policy_ir",
+            "policy_contract",
+            "scenario_suite",
+            "evaluation_report",
+            "finding_report",
+            "revision_proposal",
+            "regression_report",
+            "patch_acceptance_report",
+            "comparison_bundle",
+            "metrics_report",
+            "benchmark_manifest",
+            "benchmark_score",
+            "coverage_snapshot",
+            "run_manifest"
+          ],
+          "title": "Artifact Type",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "semantic_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Semantic Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "artifact_type",
+        "artifact_sha256",
+        "semantic_sha256"
+      ],
+      "title": "ArtifactRef",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "action_summary": {
+      "minLength": 1,
+      "title": "Action Summary",
+      "type": "string"
+    },
+    "artifact": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "error_id": {
+      "anyOf": [
+        {
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error Id"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "stage": {
+      "enum": [
+        "queued",
+        "ingesting",
+        "extracting",
+        "awaiting_contract",
+        "generating_initial_tests",
+        "provisional_execution",
+        "targeting_coverage",
+        "freezing_suite",
+        "baseline_execution",
+        "analyzing",
+        "awaiting_finding_review",
+        "drafting_revision",
+        "awaiting_revision_confirmation",
+        "applying_revision",
+        "retesting",
+        "complete",
+        "completed_no_findings",
+        "completed_no_revision",
+        "contract_rejected",
+        "revision_rejected",
+        "coverage_limit_exceeded",
+        "failed"
+      ],
+      "title": "Stage",
+      "type": "string"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "title": "Timestamp",
+      "type": "string"
+    }
+  },
+  "required": [
+    "timestamp",
+    "stage",
+    "action_summary"
+  ],
+  "title": "RunEvent",
+  "type": "object"
+}

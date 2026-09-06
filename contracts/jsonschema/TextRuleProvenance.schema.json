@@ -1,0 +1,92 @@
+{
+  "$defs": {
+    "SourceSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "minimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "page": {
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "quote": {
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        },
+        "quote_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Quote Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "page",
+        "start",
+        "end",
+        "quote",
+        "quote_sha256"
+      ],
+      "title": "SourceSpan",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "citation_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Citation Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "text_citation",
+      "default": "text_citation",
+      "title": "Kind",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "span": {
+      "$ref": "#/$defs/SourceSpan"
+    }
+  },
+  "required": [
+    "citation_id",
+    "span"
+  ],
+  "title": "TextRuleProvenance",
+  "type": "object"
+}

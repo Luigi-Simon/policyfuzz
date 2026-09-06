@@ -1,0 +1,67 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "predicate_index": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Predicate Index"
+    },
+    "predicate_outcome": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Predicate Outcome"
+    },
+    "scenario_ids": {
+      "items": {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Scenario Ids",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "target_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Target Id",
+      "type": "string"
+    },
+    "target_kind": {
+      "enum": [
+        "rule",
+        "invariant",
+        "predicate_branch"
+      ],
+      "title": "Target Kind",
+      "type": "string"
+    }
+  },
+  "required": [
+    "target_kind",
+    "target_id",
+    "scenario_ids"
+  ],
+  "title": "CoverageEvidence",
+  "type": "object"
+}

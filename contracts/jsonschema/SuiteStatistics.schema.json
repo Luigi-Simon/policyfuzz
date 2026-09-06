@@ -1,0 +1,89 @@
+{
+  "$defs": {
+    "ScenarioRejection": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "duplicate_of": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Duplicate Of"
+        },
+        "reason_code": {
+          "enum": [
+            "invalid_facts",
+            "invalid_assertion",
+            "duplicate",
+            "budget_exceeded",
+            "incompatible_assertions"
+          ],
+          "title": "Reason Code",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "reason_code"
+      ],
+      "title": "ScenarioRejection",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "duplicate_count": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Duplicate Count",
+      "type": "integer"
+    },
+    "generated_count": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Generated Count",
+      "type": "integer"
+    },
+    "rejected_count": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Rejected Count",
+      "type": "integer"
+    },
+    "rejections": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ScenarioRejection"
+      },
+      "title": "Rejections",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "title": "SuiteStatistics",
+  "type": "object"
+}

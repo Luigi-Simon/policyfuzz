@@ -557,3 +557,80 @@ def test_revision_diff_rejects_mismatched_baseline_identity_or_revision(changes)
             operation=operation,
             before=models.RuleSummary(**(review_rule().model_dump() | changes)),
         )
+
+
+def public_comparison():
+    from .factories import make_inputs
+
+    metrics = models.PublicMetrics(
+        scenario_count=5,
+        effect_states=models.EffectStateCounts(VALUE=5),
+        assertions=models.AssertionCounts(passed=2, failed=2, inconclusive=1),
+        unique_finding_count=2,
+    )
+    acceptance = models.PatchAcceptanceReport(
+        baseline_inputs=make_inputs(),
+        revised_inputs=make_inputs(),
+        suite_hash_matches=True,
+        all_target_findings_fixed=True,
+        zero_new_failures_outside_targets=False,
+        zero_protected_regressions=False,
+        no_increase_in_gap_conflict_inconclusive_or_error=True,
+        unrelated_rules_unchanged=True,
+        holdout_not_worse=True,
+        patch_accepted=False,
+        counts=models.PatchAcceptanceCounts(
+            target_findings=1,
+            fixed_target_findings=1,
+            new_failures_outside_targets=1,
+            protected_regressions=1,
+        ),
+    )
+    return models.PublicComparisonMetrics(
+        baseline=metrics,
+        revised=metrics,
+        acceptance=acceptance,
+        assertion_transition_counts=models.AssertionTransitionCounts(
+            pass_to_pass=1,
+            fail_to_pass=1,
+            pass_to_fail=1,
+            fail_to_fail=1,
+            inconclusive_or_error=1,
+        ),
+        patch_accepted=False,
+        protected_regressions=1,
+        new_failures_outside_targets=1,
+    )
+
+
+def test_public_comparison_contains_safe_aggregate_transitions_and_acceptance():
+    comparison = public_comparison()
+    assert comparison.assertion_transition_counts.pass_to_fail == 1
+    assert comparison.acceptance.counts.protected_regressions == 1
+    assert (
+        models.PublicComparisonMetrics.model_validate_json(comparison.model_dump_json())
+        == comparison
+    )
+    definitions = RunView.model_json_schema()["$defs"]
+    assert {
+        "PatchAcceptanceReport",
+        "InputHashes",
+        "AssertionTransitionCounts",
+    } <= definitions.keys()
+    assert (
+        not {"AssertionTransition", "RegressionReport", "ComparisonBundle"}
+        & definitions.keys()
+    )
+
+
+@pytest.mark.parametrize(
+    "changes",
+    [
+        {"patch_accepted": True},
+        {"protected_regressions": 0},
+        {"new_failures_outside_targets": 0},
+    ],
+)
+def test_public_comparison_rejects_contradictory_duplicate_evidence(changes):
+    with pytest.raises(ValidationError, match="must match acceptance"):
+        models.PublicComparisonMetrics(**(public_comparison().model_dump() | changes))

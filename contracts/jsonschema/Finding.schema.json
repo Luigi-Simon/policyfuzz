@@ -1,0 +1,261 @@
+{
+  "$defs": {
+    "SourceSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "minimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "page": {
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "quote": {
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        },
+        "quote_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Quote Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "page",
+        "start",
+        "end",
+        "quote",
+        "quote_sha256"
+      ],
+      "title": "SourceSpan",
+      "type": "object"
+    },
+    "TraceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "scenario_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Scenario Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "trace_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Trace Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scenario_id",
+        "trace_sha256"
+      ],
+      "title": "TraceRef",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "assertion_id": {
+      "anyOf": [
+        {
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Assertion Id"
+    },
+    "citations": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/SourceSpan"
+      },
+      "title": "Citations",
+      "type": "array"
+    },
+    "dimension": {
+      "enum": [
+        "eligibility",
+        "receipt_requirement",
+        "approval_requirement",
+        "claim_cap_minor",
+        "daily_category_cap_minor"
+      ],
+      "title": "Dimension",
+      "type": "string"
+    },
+    "evidence_level": {
+      "enum": [
+        "mechanically_reproduced",
+        "session_confirmed",
+        "candidate"
+      ],
+      "title": "Evidence Level",
+      "type": "string"
+    },
+    "finding_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Finding Id",
+      "type": "string"
+    },
+    "finding_type": {
+      "enum": [
+        "structural_gap",
+        "conflict",
+        "intent_breach",
+        "regression",
+        "unsupported_clause",
+        "potential_loophole"
+      ],
+      "title": "Finding Type",
+      "type": "string"
+    },
+    "fingerprint_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Fingerprint Sha256",
+      "type": "string"
+    },
+    "invariant_id": {
+      "anyOf": [
+        {
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Invariant Id"
+    },
+    "review_status": {
+      "default": "pending",
+      "enum": [
+        "pending",
+        "accepted",
+        "rejected"
+      ],
+      "title": "Review Status",
+      "type": "string"
+    },
+    "rule_ids": {
+      "default": [],
+      "items": {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Rule Ids",
+      "type": "array"
+    },
+    "scenario_ids": {
+      "items": {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Scenario Ids",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "severity": {
+      "anyOf": [
+        {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Severity"
+    },
+    "severity_origin": {
+      "anyOf": [
+        {
+          "enum": [
+            "session_invariant",
+            "session_reviewer"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Severity Origin"
+    },
+    "traces": {
+      "items": {
+        "$ref": "#/$defs/TraceRef"
+      },
+      "minItems": 1,
+      "title": "Traces",
+      "type": "array"
+    }
+  },
+  "required": [
+    "finding_id",
+    "fingerprint_sha256",
+    "finding_type",
+    "evidence_level",
+    "scenario_ids",
+    "dimension",
+    "traces"
+  ],
+  "title": "Finding",
+  "type": "object"
+}

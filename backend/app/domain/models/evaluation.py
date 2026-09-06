@@ -240,6 +240,12 @@ class BenchmarkDefect(StrictModel):
     dimension: EffectDimensionValue
     target_ids: tuple[Identifier, ...]
     severity: Severity
+    source_spans: tuple[SourceSpan, ...] = ()
+    semantic_signature_sha256: Sha256 | None = None
+    permitted_witness_ids: tuple[Identifier, ...] = ()
+    expected_finding_fingerprint_sha256: Sha256 | None = None
+    partition: Literal["visible", "holdout"] = "visible"
+    unsupported_clause: bool = False
 
 
 class BenchmarkManifest(StrictModel):

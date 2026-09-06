@@ -1,0 +1,45 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "contract_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Contract Sha256",
+      "type": "string"
+    },
+    "engine_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Engine Sha256",
+      "type": "string"
+    },
+    "policy_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Policy Sha256",
+      "type": "string"
+    },
+    "run_manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Run Manifest Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "suite_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Suite Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "policy_sha256",
+    "contract_sha256",
+    "suite_sha256",
+    "engine_sha256",
+    "run_manifest_sha256"
+  ],
+  "title": "InputHashes",
+  "type": "object"
+}

@@ -1,0 +1,34 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "dimension": {
+      "enum": [
+        "eligibility",
+        "receipt_requirement",
+        "approval_requirement",
+        "claim_cap_minor",
+        "daily_category_cap_minor"
+      ],
+      "title": "Dimension",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "target_rule_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Target Rule Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "dimension",
+    "target_rule_id"
+  ],
+  "title": "OverrideRef",
+  "type": "object"
+}

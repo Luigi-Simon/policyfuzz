@@ -1,0 +1,164 @@
+{
+  "$defs": {
+    "GenerationConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "max_output_tokens": {
+          "default": 4096,
+          "minimum": 1,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "seed": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Seed"
+        },
+        "temperature_milli": {
+          "default": 0,
+          "maximum": 2000,
+          "minimum": 0,
+          "title": "Temperature Milli",
+          "type": "integer"
+        },
+        "top_p_percent": {
+          "default": 100,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Top P Percent",
+          "type": "integer"
+        }
+      },
+      "title": "GenerationConfig",
+      "type": "object"
+    },
+    "PromptHash": {
+      "additionalProperties": false,
+      "properties": {
+        "prompt_name": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Prompt Name",
+          "type": "string"
+        },
+        "prompt_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Prompt Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "prompt_name",
+        "prompt_sha256"
+      ],
+      "title": "PromptHash",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "engine_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Engine Sha256",
+      "type": "string"
+    },
+    "engine_version": {
+      "minLength": 1,
+      "title": "Engine Version",
+      "type": "string"
+    },
+    "generation_config": {
+      "$ref": "#/$defs/GenerationConfig"
+    },
+    "manifest_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Manifest Id",
+      "type": "string"
+    },
+    "mode": {
+      "enum": [
+        "live",
+        "cached"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "model_identifier": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Model Identifier",
+      "type": "string"
+    },
+    "prompt_hashes": {
+      "items": {
+        "$ref": "#/$defs/PromptHash"
+      },
+      "title": "Prompt Hashes",
+      "type": "array"
+    },
+    "provider": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Provider",
+      "type": "string"
+    },
+    "random_seed": {
+      "minimum": 0,
+      "title": "Random Seed",
+      "type": "integer"
+    },
+    "run_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "manifest_id",
+    "run_id",
+    "engine_version",
+    "engine_sha256",
+    "prompt_hashes",
+    "provider",
+    "model_identifier",
+    "generation_config",
+    "random_seed",
+    "started_at",
+    "mode"
+  ],
+  "title": "RunManifest",
+  "type": "object"
+}

@@ -1,0 +1,31 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "finding_ids": {
+      "items": {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Finding Ids",
+      "type": "array"
+    },
+    "kind": {
+      "const": "findings",
+      "default": "findings",
+      "title": "Kind",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "finding_ids"
+  ],
+  "title": "FindingsConfirmation",
+  "type": "object"
+}

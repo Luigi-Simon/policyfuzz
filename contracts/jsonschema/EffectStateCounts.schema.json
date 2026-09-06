@@ -1,0 +1,49 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "CONFLICT": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Conflict",
+      "type": "integer"
+    },
+    "ERROR": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Error",
+      "type": "integer"
+    },
+    "GAP": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Gap",
+      "type": "integer"
+    },
+    "INCONCLUSIVE": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Inconclusive",
+      "type": "integer"
+    },
+    "NOT_APPLICABLE": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Not Applicable",
+      "type": "integer"
+    },
+    "VALUE": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Value",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "title": "EffectStateCounts",
+  "type": "object"
+}

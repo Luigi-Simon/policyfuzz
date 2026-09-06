@@ -1,0 +1,87 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "amount_minor": {
+      "maximum": 10000000,
+      "minimum": 0,
+      "title": "Amount Minor",
+      "type": "integer"
+    },
+    "approval_roles_present": {
+      "items": {
+        "enum": [
+          "manager",
+          "director",
+          "finance"
+        ],
+        "type": "string"
+      },
+      "title": "Approval Roles Present",
+      "type": "array",
+      "uniqueItems": true
+    },
+    "booking_days_before": {
+      "maximum": 365,
+      "minimum": 0,
+      "title": "Booking Days Before",
+      "type": "integer"
+    },
+    "destination_type": {
+      "enum": [
+        "domestic",
+        "international"
+      ],
+      "title": "Destination Type",
+      "type": "string"
+    },
+    "employee_role": {
+      "enum": [
+        "employee",
+        "manager",
+        "director",
+        "executive"
+      ],
+      "title": "Employee Role",
+      "type": "string"
+    },
+    "expense_category": {
+      "enum": [
+        "meal",
+        "hotel",
+        "transport",
+        "airfare",
+        "incidental"
+      ],
+      "title": "Expense Category",
+      "type": "string"
+    },
+    "prior_same_day_category_spend_minor": {
+      "maximum": 10000000,
+      "minimum": 0,
+      "title": "Prior Same Day Category Spend Minor",
+      "type": "integer"
+    },
+    "receipt_present": {
+      "title": "Receipt Present",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "employee_role",
+    "expense_category",
+    "amount_minor",
+    "destination_type",
+    "booking_days_before",
+    "receipt_present",
+    "approval_roles_present",
+    "prior_same_day_category_spend_minor"
+  ],
+  "title": "ScenarioFacts",
+  "type": "object"
+}

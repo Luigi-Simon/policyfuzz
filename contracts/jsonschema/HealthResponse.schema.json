@@ -1,0 +1,35 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "engine_version": {
+      "minLength": 1,
+      "title": "Engine Version",
+      "type": "string"
+    },
+    "provider_configured": {
+      "title": "Provider Configured",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "ok",
+        "degraded"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "provider_configured",
+    "engine_version"
+  ],
+  "title": "HealthResponse",
+  "type": "object"
+}

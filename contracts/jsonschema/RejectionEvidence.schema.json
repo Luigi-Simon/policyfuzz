@@ -1,0 +1,134 @@
+{
+  "$defs": {
+    "SourceSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "minimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "page": {
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "quote": {
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        },
+        "quote_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Quote Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "page",
+        "start",
+        "end",
+        "quote",
+        "quote_sha256"
+      ],
+      "title": "SourceSpan",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Visible rejection; source_spans is empty when no policy source exists.",
+  "properties": {
+    "disposition": {
+      "enum": [
+        "excluded",
+        "merged_duplicate",
+        "rule_set_rejected"
+      ],
+      "title": "Disposition",
+      "type": "string"
+    },
+    "item_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Item Id",
+      "type": "string"
+    },
+    "item_kind": {
+      "enum": [
+        "rule",
+        "scenario"
+      ],
+      "title": "Item Kind",
+      "type": "string"
+    },
+    "partition": {
+      "const": "visible",
+      "default": "visible",
+      "title": "Partition",
+      "type": "string"
+    },
+    "reason_code": {
+      "enum": [
+        "invalid_citation",
+        "unsupported_vocabulary",
+        "unsupported_logic",
+        "invalid_rule",
+        "dangling_override",
+        "override_cycle",
+        "invalid_facts",
+        "invalid_assertion",
+        "duplicate",
+        "budget_exceeded",
+        "incompatible_assertions"
+      ],
+      "title": "Reason Code",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_spans": {
+      "items": {
+        "$ref": "#/$defs/SourceSpan"
+      },
+      "title": "Source Spans",
+      "type": "array"
+    }
+  },
+  "required": [
+    "item_kind",
+    "item_id",
+    "source_spans",
+    "reason_code",
+    "disposition"
+  ],
+  "title": "RejectionEvidence",
+  "type": "object"
+}

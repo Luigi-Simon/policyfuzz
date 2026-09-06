@@ -1,0 +1,87 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "dimension": {
+      "enum": [
+        "eligibility",
+        "receipt_requirement",
+        "approval_requirement",
+        "claim_cap_minor",
+        "daily_category_cap_minor"
+      ],
+      "title": "Dimension",
+      "type": "string"
+    },
+    "finding_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Finding Id",
+      "type": "string"
+    },
+    "finding_type": {
+      "enum": [
+        "structural_gap",
+        "conflict",
+        "intent_breach",
+        "regression",
+        "unsupported_clause",
+        "potential_loophole"
+      ],
+      "title": "Finding Type",
+      "type": "string"
+    },
+    "review_status": {
+      "enum": [
+        "pending",
+        "accepted",
+        "rejected"
+      ],
+      "title": "Review Status",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "severity": {
+      "anyOf": [
+        {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Severity"
+    },
+    "summary": {
+      "minLength": 1,
+      "title": "Summary",
+      "type": "string"
+    },
+    "witness_count": {
+      "minimum": 0,
+      "title": "Witness Count",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "finding_id",
+    "finding_type",
+    "dimension",
+    "summary",
+    "review_status",
+    "witness_count"
+  ],
+  "title": "FindingSummary",
+  "type": "object"
+}

@@ -1,0 +1,224 @@
+{
+  "$defs": {
+    "AssertionContent": {
+      "additionalProperties": false,
+      "description": "Typed assertion content, without oracle origins or private label references.",
+      "properties": {
+        "assertion_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Assertion Id",
+          "type": "string"
+        },
+        "dimension": {
+          "enum": [
+            "eligibility",
+            "receipt_requirement",
+            "approval_requirement",
+            "claim_cap_minor",
+            "daily_category_cap_minor"
+          ],
+          "title": "Dimension",
+          "type": "string"
+        },
+        "expected_value": {
+          "anyOf": [
+            {
+              "enum": [
+                "allow",
+                "deny"
+              ],
+              "type": "string"
+            },
+            {
+              "enum": [
+                "required",
+                "not_required"
+              ],
+              "type": "string"
+            },
+            {
+              "enum": [
+                "none",
+                "manager",
+                "director",
+                "finance"
+              ],
+              "type": "string"
+            },
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "enum": [
+                "COMPLIANT",
+                "NONCOMPLIANT"
+              ],
+              "type": "string"
+            }
+          ],
+          "title": "Expected Value"
+        },
+        "operator": {
+          "enum": [
+            "eq",
+            "neq",
+            "lte",
+            "gte"
+          ],
+          "title": "Operator",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "target_kind": {
+          "enum": [
+            "effect_value",
+            "compliance_value"
+          ],
+          "title": "Target Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "assertion_id",
+        "target_kind",
+        "dimension",
+        "operator",
+        "expected_value"
+      ],
+      "title": "AssertionContent",
+      "type": "object"
+    },
+    "Predicate": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "anyOf": [
+            {
+              "enum": [
+                "employee_role",
+                "expense_category",
+                "amount_minor",
+                "destination_type",
+                "booking_days_before",
+                "receipt_present",
+                "approval_roles_present",
+                "prior_same_day_category_spend_minor"
+              ],
+              "type": "string"
+            },
+            {
+              "const": "daily_category_total_minor",
+              "type": "string"
+            }
+          ],
+          "title": "Field"
+        },
+        "operator": {
+          "enum": [
+            "eq",
+            "neq",
+            "in",
+            "not_in",
+            "lt",
+            "lte",
+            "gt",
+            "gte",
+            "contains"
+          ],
+          "title": "Operator",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "field",
+        "operator",
+        "value"
+      ],
+      "title": "Predicate",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Session intent for review/editing; no gold or mechanical oracle metadata.",
+  "properties": {
+    "assertion": {
+      "$ref": "#/$defs/AssertionContent"
+    },
+    "description": {
+      "minLength": 1,
+      "title": "Description",
+      "type": "string"
+    },
+    "invariant_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Invariant Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "title": "Severity",
+      "type": "string"
+    },
+    "when": {
+      "items": {
+        "$ref": "#/$defs/Predicate"
+      },
+      "title": "When",
+      "type": "array"
+    }
+  },
+  "required": [
+    "invariant_id",
+    "description",
+    "when",
+    "assertion",
+    "severity"
+  ],
+  "title": "InvariantSummary",
+  "type": "object"
+}

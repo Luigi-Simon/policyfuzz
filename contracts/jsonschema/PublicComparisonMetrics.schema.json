@@ -1,0 +1,400 @@
+{
+  "$defs": {
+    "AssertionCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Error",
+          "type": "integer"
+        },
+        "failed": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Failed",
+          "type": "integer"
+        },
+        "inconclusive": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Inconclusive",
+          "type": "integer"
+        },
+        "passed": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Passed",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "title": "AssertionCounts",
+      "type": "object"
+    },
+    "AssertionTransitionCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "fail_to_fail": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Fail To Fail",
+          "type": "integer"
+        },
+        "fail_to_pass": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Fail To Pass",
+          "type": "integer"
+        },
+        "inconclusive_or_error": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Inconclusive Or Error",
+          "type": "integer"
+        },
+        "pass_to_fail": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Pass To Fail",
+          "type": "integer"
+        },
+        "pass_to_pass": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Pass To Pass",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "title": "AssertionTransitionCounts",
+      "type": "object"
+    },
+    "EffectStateCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "CONFLICT": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Conflict",
+          "type": "integer"
+        },
+        "ERROR": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Error",
+          "type": "integer"
+        },
+        "GAP": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Gap",
+          "type": "integer"
+        },
+        "INCONCLUSIVE": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Inconclusive",
+          "type": "integer"
+        },
+        "NOT_APPLICABLE": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Not Applicable",
+          "type": "integer"
+        },
+        "VALUE": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Value",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "title": "EffectStateCounts",
+      "type": "object"
+    },
+    "InputHashes": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Contract Sha256",
+          "type": "string"
+        },
+        "engine_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Engine Sha256",
+          "type": "string"
+        },
+        "policy_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "run_manifest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Run Manifest Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "suite_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Suite Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_sha256",
+        "contract_sha256",
+        "suite_sha256",
+        "engine_sha256",
+        "run_manifest_sha256"
+      ],
+      "title": "InputHashes",
+      "type": "object"
+    },
+    "PatchAcceptanceCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_gap_conflict_inconclusive_or_error": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Baseline Gap Conflict Inconclusive Or Error",
+          "type": "integer"
+        },
+        "fixed_target_findings": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Fixed Target Findings",
+          "type": "integer"
+        },
+        "holdout_regressions": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Holdout Regressions",
+          "type": "integer"
+        },
+        "new_failures_outside_targets": {
+          "default": 0,
+          "minimum": 0,
+          "title": "New Failures Outside Targets",
+          "type": "integer"
+        },
+        "protected_regressions": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Protected Regressions",
+          "type": "integer"
+        },
+        "revised_gap_conflict_inconclusive_or_error": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Revised Gap Conflict Inconclusive Or Error",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "target_findings": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Target Findings",
+          "type": "integer"
+        },
+        "unrelated_rule_changes": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Unrelated Rule Changes",
+          "type": "integer"
+        }
+      },
+      "title": "PatchAcceptanceCounts",
+      "type": "object"
+    },
+    "PatchAcceptanceReport": {
+      "additionalProperties": false,
+      "properties": {
+        "all_target_findings_fixed": {
+          "title": "All Target Findings Fixed",
+          "type": "boolean"
+        },
+        "baseline_inputs": {
+          "$ref": "#/$defs/InputHashes"
+        },
+        "counts": {
+          "$ref": "#/$defs/PatchAcceptanceCounts"
+        },
+        "holdout_not_worse": {
+          "title": "Holdout Not Worse",
+          "type": "boolean"
+        },
+        "no_increase_in_gap_conflict_inconclusive_or_error": {
+          "title": "No Increase In Gap Conflict Inconclusive Or Error",
+          "type": "boolean"
+        },
+        "patch_accepted": {
+          "title": "Patch Accepted",
+          "type": "boolean"
+        },
+        "revised_inputs": {
+          "$ref": "#/$defs/InputHashes"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "suite_hash_matches": {
+          "title": "Suite Hash Matches",
+          "type": "boolean"
+        },
+        "unrelated_rules_unchanged": {
+          "title": "Unrelated Rules Unchanged",
+          "type": "boolean"
+        },
+        "zero_new_failures_outside_targets": {
+          "title": "Zero New Failures Outside Targets",
+          "type": "boolean"
+        },
+        "zero_protected_regressions": {
+          "title": "Zero Protected Regressions",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "baseline_inputs",
+        "revised_inputs",
+        "suite_hash_matches",
+        "all_target_findings_fixed",
+        "zero_new_failures_outside_targets",
+        "zero_protected_regressions",
+        "no_increase_in_gap_conflict_inconclusive_or_error",
+        "unrelated_rules_unchanged",
+        "holdout_not_worse",
+        "patch_accepted"
+      ],
+      "title": "PatchAcceptanceReport",
+      "type": "object"
+    },
+    "PublicMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "assertion_pass_percent": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Assertion Pass Percent"
+        },
+        "assertions": {
+          "$ref": "#/$defs/AssertionCounts"
+        },
+        "effect_states": {
+          "$ref": "#/$defs/EffectStateCounts"
+        },
+        "scenario_count": {
+          "minimum": 0,
+          "title": "Scenario Count",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unique_finding_count": {
+          "minimum": 0,
+          "title": "Unique Finding Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "scenario_count",
+        "effect_states",
+        "assertions",
+        "unique_finding_count"
+      ],
+      "title": "PublicMetrics",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "acceptance": {
+      "$ref": "#/$defs/PatchAcceptanceReport"
+    },
+    "assertion_transition_counts": {
+      "$ref": "#/$defs/AssertionTransitionCounts"
+    },
+    "baseline": {
+      "$ref": "#/$defs/PublicMetrics"
+    },
+    "new_failures_outside_targets": {
+      "minimum": 0,
+      "title": "New Failures Outside Targets",
+      "type": "integer"
+    },
+    "patch_accepted": {
+      "title": "Patch Accepted",
+      "type": "boolean"
+    },
+    "protected_regressions": {
+      "minimum": 0,
+      "title": "Protected Regressions",
+      "type": "integer"
+    },
+    "revised": {
+      "$ref": "#/$defs/PublicMetrics"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "baseline",
+    "revised",
+    "assertion_transition_counts",
+    "acceptance",
+    "patch_accepted",
+    "protected_regressions",
+    "new_failures_outside_targets"
+  ],
+  "title": "PublicComparisonMetrics",
+  "type": "object"
+}

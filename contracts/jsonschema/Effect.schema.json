@@ -1,0 +1,60 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "dimension": {
+      "enum": [
+        "eligibility",
+        "receipt_requirement",
+        "approval_requirement",
+        "claim_cap_minor",
+        "daily_category_cap_minor"
+      ],
+      "title": "Dimension",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "value": {
+      "anyOf": [
+        {
+          "enum": [
+            "allow",
+            "deny"
+          ],
+          "type": "string"
+        },
+        {
+          "enum": [
+            "required",
+            "not_required"
+          ],
+          "type": "string"
+        },
+        {
+          "enum": [
+            "none",
+            "manager",
+            "director",
+            "finance"
+          ],
+          "type": "string"
+        },
+        {
+          "minimum": 0,
+          "type": "integer"
+        }
+      ],
+      "title": "Value"
+    }
+  },
+  "required": [
+    "dimension",
+    "value"
+  ],
+  "title": "Effect",
+  "type": "object"
+}

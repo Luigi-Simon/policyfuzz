@@ -1,0 +1,38 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "dimension": {
+      "enum": [
+        "receipt_requirement",
+        "approval_requirement",
+        "claim_cap_minor",
+        "daily_category_cap_minor"
+      ],
+      "title": "Dimension",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "COMPLIANT",
+        "NONCOMPLIANT",
+        "NOT_APPLICABLE",
+        "INCONCLUSIVE",
+        "ERROR"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "dimension",
+    "status"
+  ],
+  "title": "ComplianceResult",
+  "type": "object"
+}
