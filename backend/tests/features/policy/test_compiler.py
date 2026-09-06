@@ -122,9 +122,18 @@ def _suggestions() -> InvariantSuggestions:
 @pytest.mark.asyncio
 async def test_llm_compiler_extracts_then_returns_provisional_suggestions() -> None:
     source = _request()
+    from app.features.policy.citations import build_citation_catalog
+
+    payload = source.extraction.model_dump(mode="json")
+    for index, rule in enumerate(payload["rules"]):
+        rule.pop("provenance")
+        rule["rule_handle"] = f"rule_{index}"
+        rule["citation_handle"] = (
+            build_citation_catalog(source.document).entries[0].citation_handle
+        )
     llm = ScriptedLLMClient(
         (
-            LLMResponse(output=source.extraction.model_dump(mode="json")),
+            LLMResponse(output=payload),
             LLMResponse(output=_suggestions().model_dump(mode="json")),
         )
     )

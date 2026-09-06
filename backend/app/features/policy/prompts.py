@@ -6,6 +6,7 @@ import json
 from dataclasses import dataclass
 
 from app.domain.models import PolicyDocument, PolicyIR
+from app.features.policy.citations import build_citation_catalog
 from app.features.policy.model_io import ModelPolicyExtraction
 
 _SYSTEM_INSTRUCTIONS = """You are the PolicyFuzz policy extraction agent.
@@ -16,19 +17,49 @@ Return structured JSON matching the supplied response schema. Propose at most
 12 executable travel-and-expense rules using only schema-supported predicate
 fields, operators, effects, enum values, integer SGD minor units, and explicit
 typed exceptions. Conditions are AND-only; expand OR language into separate
-rules. Every executable rule must include its exact source quote, one-based
-page number, document-global character offsets, and quote hash. Preserve vague,
-ambiguous, unsupported, or out-of-vocabulary language as an unsupported clause
-with an exact source citation instead of guessing.
+rules. Preserve strict numeric language: "above" and "more than" use gt;
+"below" and "fewer than" use lt; "at least" uses gte; "at most" uses lte.
+Do not add equality at an unmentioned boundary, change a strict comparison to
+an inclusive one, or add a rule to fill a boundary the source leaves unstated.
+
+Select each rule's `citation_handle` from the supplied citation_catalog.
+Each catalog entry contains an exact source quote with one-based page and
+document-global offsets. Python owns those offsets and hashes. Copy handles
+verbatim; do not compute hashes, offsets, or invent citations. Multiple rules
+expanded from the same source may reuse its citation_handle. A catalog entry
+may contain several clauses: interpret only explicit source language, retaining
+its conditions and exceptions. Headings and labels provide context; they do not
+by themselves create obligations or unsupported clauses. Cite the actual
+operative clause, not a heading or label alone.
+
+Preserve vague, ambiguous, unsupported, or
+out-of-vocabulary language as an unsupported clause with its citation_handle
+instead of guessing. Retain its explicitly stated scope in affected_dimensions
+and when_hint using supported predicates; do not broaden a scoped uncertainty.
+Include only effect dimensions directly implicated by that operative clause,
+not dimensions merely mentioned nearby or possible downstream consequences.
+Every unsupported clause must explicitly emit `when_hint`: use supported
+predicates for stated scope, and use null only when no stated scope is
+representable with supported fields. An explicit null is not a substitute for
+representable source scope.
 
 Assign every rule a unique `rule_handle` such as `rule_1`. Override
 `target_rule_id` values must use the referenced rule's local `rule_handle`, not
 a guessed final rule ID. Local handles are internal references only; Python
 assigns and rewrites final rule IDs after validating the complete rule graph.
+When a provision is expressly marked "normally" or "by default", represent
+stated specific exceptions as overriding that default on the affected dimension.
+Place the override on the winning specific rule, pointing to the superseded default.
+This establishes an override of that default only. Do not infer precedence
+between competing specific provisions unless the source explicitly states it.
+Overlap, specificity, or document order alone does not establish such precedence.
+Every rule must explicitly emit `overrides`: use an empty array only when no
+source-supported override applies. Never omit `overrides` or `when_hint`.
 
 Do not provide executable code. Do not assign authoritative verdicts, severity,
 metrics, confirmation status, policy approval, or legal conclusions. Descriptions
 must be plain-language candidate summaries traceable to the cited source.
+All proposed rules and clauses remain provisional candidates for human review.
 """
 
 
@@ -54,6 +85,7 @@ def build_policy_extraction_prompt(
 ) -> PolicyExtractionPrompt:
     """Build a deterministic prompt from Person 1's public contracts."""
 
+    catalog = build_citation_catalog(document)
     payload = {
         "document_id": document.document_id,
         "document_sha256": document.document_sha256,
@@ -64,9 +96,18 @@ def build_policy_extraction_prompt(
                 "page": page.page,
                 "start": page.start,
                 "end": page.end,
-                "text": page.text,
             }
             for page in document.pages
+        ],
+        "citation_catalog": [
+            {
+                "citation_handle": entry.citation_handle,
+                "page": entry.span.page,
+                "start": entry.span.start,
+                "end": entry.span.end,
+                "quote": entry.span.quote,
+            }
+            for entry in catalog.entries
         ],
     }
     return PolicyExtractionPrompt(

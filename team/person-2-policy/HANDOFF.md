@@ -1,5 +1,64 @@
 # Person 2 — Policy Intelligence handoff
 
+## Citation boundary correction — 2026-09-06
+
+Branch: `p2/fix-citation-metadata`. Changes are ready for Person 1's integration
+commit; Person 2 made no commit or live provider call.
+
+The recorded development diagnostic had 11 exact source quotes but incorrect
+model-authored hashes/offsets. The provider now selects Python-issued citation
+handles. Public `SourceSpan`, extraction/compiler APIs, exact validators, and
+deterministic fixture behavior remain unchanged.
+
+- `build_citation_catalog(document)` returns an immutable `CitationCatalog` with
+  ordered `(citation_handle, span)` entries and exact-membership `resolve(handle)`.
+  Handles bind the document content/layout and exact source location using
+  canonical SHA-256. Quotes/hashes/global offsets are derived by Python from
+  normalized bounded source; identical text at different locations stays distinct.
+- Private `ModelRuleDraft` carries semantic fields, required `rule_handle`, and
+  `citation_handle`; `ModelUnsupportedClause` carries its existing scope/reason
+  fields plus `citation_handle`. Neither exposes a public span/provenance alternative.
+  Python resolves handles, revalidates frozen public models, and checks the override
+  graph. Unknown/foreign citations and non-rule override aliases fail closed.
+- The prompt sends source quotes once in a catalog with page/global offsets.
+  Up to 512 nonempty lines stay separate; larger inputs group adjacent lines
+  without crossing pages or discarding tail content, yielding at most 532 entries
+  for a 50,000-character/20-page document. This is structural segmentation, not
+  clause interpretation. Long/grouped citations can cover multiple clauses.
+- One schema repair remains the maximum. Invalid citation handles, semantic
+  constraints, and invalid normalized graphs are terminal sanitized errors;
+  Python does not guess replacement citations or repair model semantics.
+
+Changed implementation: `citations.py`, `model_io.py`, `prompts.py`, and
+`extraction.py` under `backend/app/features/policy/`. Tests: new
+`test_citation_catalog.py`, updated `test_compiler.py`,
+`test_extraction_validation.py`, and `test_prompts.py` under the matching test
+directory. Documentation: this handoff and `prompt-requirements.md`.
+
+New provider fixture: `team/person-2-policy/fixtures/development-provider-extraction.json`.
+Person 1 should point `scripts/demo_support.py` at it. The existing
+`development-extraction.json` remains unchanged for deterministic APIs. Independent
+fixture review confirmed 10 rules, one unsupported clause, unchanged compiled rule
+IDs and unsupported content. Provider-derived citation IDs change complete artifact
+hashes, so Person 1 owns cache/evidence regeneration and integration checks.
+
+Verification (run from `backend`, using `.venv/bin/python`):
+
+- TDD: initial 16 catalog/wire regressions failed before implementation; further
+  failing regressions caught trusted long-source expansion and two override
+  normalization errors. The final catalog test file contains 20 cases.
+- `-m pytest tests/features/policy -q --tb=short`: **151 passed**.
+- `-m ruff check app/features/policy tests/features/policy`: **passed**.
+- `-m ruff format --check app/features/policy tests/features/policy`:
+  **26 files already formatted**.
+- The recorded diagnostic's original semantic fields hydrate into 10 rules and
+  one unsupported clause with all 11 exact citations in one fake provider response.
+
+Remaining limits: a valid citation handle proves source provenance, not semantic
+extraction quality or coverage. No policy wording, benchmark labels, blind data,
+scoring, confirmation, shared contracts, or provider integration was changed by
+Person 2. Person 1 owns full-backend verification and supervised live evidence.
+
 Status: Complete for Tasks 12–15 and Person 2's Task 21 ownership
 
 Current branch: `p2/refactor-complete-policy-intelligence`

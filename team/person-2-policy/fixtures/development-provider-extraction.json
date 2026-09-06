@@ -1,0 +1,298 @@
+{
+  "document_sha256": "4c194c07ac6de7044f0548771ea257cccd1e8d4d0a5b4d1a602e428ee3a66734",
+  "rules": [
+    {
+      "citation_handle": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+      "confidence_percent": 100,
+      "description": "Eligible categories",
+      "effects": [
+        {
+          "dimension": "eligibility",
+          "schema_version": "1.0",
+          "value": "allow"
+        }
+      ],
+      "overrides": [],
+      "rule_handle": "citation-eligible-categories",
+      "schema_version": "1.0",
+      "when": [
+        {
+          "field": "expense_category",
+          "operator": "in",
+          "schema_version": "1.0",
+          "value": [
+            "airfare",
+            "hotel",
+            "incidental",
+            "meal",
+            "transport"
+          ]
+        }
+      ]
+    },
+    {
+      "citation_handle": "cite-97d17f084746e1ffe4e45563835d95e931a990acbd6196cd9df6aa06514c3cdb",
+      "confidence_percent": 100,
+      "description": "Meal claim cap",
+      "effects": [
+        {
+          "dimension": "claim_cap_minor",
+          "schema_version": "1.0",
+          "value": 10000
+        }
+      ],
+      "overrides": [],
+      "rule_handle": "citation-meal-claim-cap",
+      "schema_version": "1.0",
+      "when": [
+        {
+          "field": "expense_category",
+          "operator": "eq",
+          "schema_version": "1.0",
+          "value": "meal"
+        }
+      ]
+    },
+    {
+      "citation_handle": "cite-7380f2a949391c17371d597cde865ca7b8c3396efbe23538f83391e4a5021e13",
+      "confidence_percent": 100,
+      "description": "Hotel claim cap",
+      "effects": [
+        {
+          "dimension": "claim_cap_minor",
+          "schema_version": "1.0",
+          "value": 25000
+        }
+      ],
+      "overrides": [],
+      "rule_handle": "citation-hotel-claim-cap",
+      "schema_version": "1.0",
+      "when": [
+        {
+          "field": "expense_category",
+          "operator": "eq",
+          "schema_version": "1.0",
+          "value": "hotel"
+        }
+      ]
+    },
+    {
+      "citation_handle": "cite-0af9d47e048bd7c89883ca5f403cee4a48a958511de58ab14743e1b506b80bb8",
+      "confidence_percent": 100,
+      "description": "Transport claim cap",
+      "effects": [
+        {
+          "dimension": "claim_cap_minor",
+          "schema_version": "1.0",
+          "value": 20000
+        }
+      ],
+      "overrides": [],
+      "rule_handle": "citation-transport-claim-cap",
+      "schema_version": "1.0",
+      "when": [
+        {
+          "field": "expense_category",
+          "operator": "eq",
+          "schema_version": "1.0",
+          "value": "transport"
+        }
+      ]
+    },
+    {
+      "citation_handle": "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57",
+      "confidence_percent": 100,
+      "description": "Receipt below 50",
+      "effects": [
+        {
+          "dimension": "receipt_requirement",
+          "schema_version": "1.0",
+          "value": "not_required"
+        }
+      ],
+      "overrides": [],
+      "rule_handle": "citation-receipt-below-50",
+      "schema_version": "1.0",
+      "when": [
+        {
+          "field": "amount_minor",
+          "operator": "lt",
+          "schema_version": "1.0",
+          "value": 5000
+        }
+      ]
+    },
+    {
+      "citation_handle": "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+      "confidence_percent": 100,
+      "description": "Receipt threshold",
+      "effects": [
+        {
+          "dimension": "receipt_requirement",
+          "schema_version": "1.0",
+          "value": "required"
+        }
+      ],
+      "overrides": [],
+      "rule_handle": "citation-receipt-threshold",
+      "schema_version": "1.0",
+      "when": [
+        {
+          "field": "amount_minor",
+          "operator": "gt",
+          "schema_version": "1.0",
+          "value": 5000
+        }
+      ]
+    },
+    {
+      "citation_handle": "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f",
+      "confidence_percent": 100,
+      "description": "Approval normal",
+      "effects": [
+        {
+          "dimension": "approval_requirement",
+          "schema_version": "1.0",
+          "value": "none"
+        }
+      ],
+      "overrides": [],
+      "rule_handle": "citation-approval-normal",
+      "schema_version": "1.0",
+      "when": [
+        {
+          "field": "expense_category",
+          "operator": "in",
+          "schema_version": "1.0",
+          "value": [
+            "airfare",
+            "hotel",
+            "incidental",
+            "meal",
+            "transport"
+          ]
+        }
+      ]
+    },
+    {
+      "citation_handle": "cite-947f2d4b77eca45e2827d13b71e31878d0f8f50ab0aee1b6f8983fdd0d47f83d",
+      "confidence_percent": 100,
+      "description": "Hotel below 250 no approval",
+      "effects": [
+        {
+          "dimension": "approval_requirement",
+          "schema_version": "1.0",
+          "value": "none"
+        }
+      ],
+      "overrides": [],
+      "rule_handle": "citation-hotel-below-250-no-approval",
+      "schema_version": "1.0",
+      "when": [
+        {
+          "field": "amount_minor",
+          "operator": "lt",
+          "schema_version": "1.0",
+          "value": 25000
+        },
+        {
+          "field": "expense_category",
+          "operator": "eq",
+          "schema_version": "1.0",
+          "value": "hotel"
+        }
+      ]
+    },
+    {
+      "citation_handle": "cite-308a22f94e3660867350e8cf00bf1da97effafce01b94c202d6a84a175ef576b",
+      "confidence_percent": 100,
+      "description": "International hotel approval",
+      "effects": [
+        {
+          "dimension": "approval_requirement",
+          "schema_version": "1.0",
+          "value": "manager"
+        }
+      ],
+      "overrides": [
+        {
+          "dimension": "approval_requirement",
+          "schema_version": "1.0",
+          "target_rule_id": "citation-approval-normal"
+        }
+      ],
+      "rule_handle": "citation-international-hotel-approval",
+      "schema_version": "1.0",
+      "when": [
+        {
+          "field": "expense_category",
+          "operator": "eq",
+          "schema_version": "1.0",
+          "value": "hotel"
+        },
+        {
+          "field": "destination_type",
+          "operator": "eq",
+          "schema_version": "1.0",
+          "value": "international"
+        }
+      ]
+    },
+    {
+      "citation_handle": "cite-cd30f251e2d67118f937900198186058076396564f9cde1d9d740a53cb38d38d",
+      "confidence_percent": 100,
+      "description": "Airfare short notice",
+      "effects": [
+        {
+          "dimension": "approval_requirement",
+          "schema_version": "1.0",
+          "value": "manager"
+        }
+      ],
+      "overrides": [
+        {
+          "dimension": "approval_requirement",
+          "schema_version": "1.0",
+          "target_rule_id": "citation-approval-normal"
+        }
+      ],
+      "rule_handle": "citation-airfare-short-notice",
+      "schema_version": "1.0",
+      "when": [
+        {
+          "field": "expense_category",
+          "operator": "eq",
+          "schema_version": "1.0",
+          "value": "airfare"
+        },
+        {
+          "field": "booking_days_before",
+          "operator": "lt",
+          "schema_version": "1.0",
+          "value": 14
+        }
+      ]
+    }
+  ],
+  "schema_version": "1.0",
+  "unsupported_clauses": [
+    {
+      "affected_dimensions": [
+        "eligibility"
+      ],
+      "citation_handle": "cite-527918f43932043004a9656c55d5315ddaf7da18f6ebff38b0c3b60b1b590893",
+      "clause_id": "unsupported-reasonable-incidental",
+      "reason_code": "ambiguous_language",
+      "review_status": "provisional",
+      "schema_version": "1.0",
+      "when_hint": [
+        {
+          "field": "expense_category",
+          "operator": "eq",
+          "schema_version": "1.0",
+          "value": "incidental"
+        }
+      ]
+    }
+  ]
+}

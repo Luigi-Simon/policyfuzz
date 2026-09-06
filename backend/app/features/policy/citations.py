@@ -5,12 +5,17 @@ from __future__ import annotations
 import hashlib
 import hmac
 import re
-from collections.abc import Sequence
-from dataclasses import dataclass
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass, field
+from math import ceil
+from types import MappingProxyType
 
+from app.core.hashing import canonical_sha256
 from app.domain.models import PolicyDocument, SourceSpan
+from app.features.policy.ingest import PolicyIngestionError, prepare_policy_pages
 
 _SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
+_CATALOG_LINE_BUDGET = 512
 
 
 class CitationValidationError(ValueError):
@@ -19,6 +24,104 @@ class CitationValidationError(ValueError):
     def __init__(self, code: str) -> None:
         self.code = code
         super().__init__(code)
+
+
+@dataclass(frozen=True, slots=True)
+class CitationCatalogEntry:
+    """One source-derived citation; the handle is bound to document and location."""
+
+    citation_handle: str
+    span: SourceSpan
+
+
+@dataclass(frozen=True, slots=True)
+class CitationCatalog:
+    """Private immutable source catalog, never accepted from a provider."""
+
+    entries: tuple[CitationCatalogEntry, ...]
+    _by_handle: Mapping[str, SourceSpan] = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        object.__setattr__(
+            self,
+            "_by_handle",
+            MappingProxyType(
+                {entry.citation_handle: entry.span for entry in self.entries}
+            ),
+        )
+
+    def resolve(self, handle: str) -> SourceSpan:
+        """Resolve exact membership only, without quote searches or fallback spans."""
+
+        try:
+            return self._by_handle[handle]
+        except KeyError:
+            raise CitationValidationError("UNKNOWN_CITATION_HANDLE") from None
+
+
+def build_citation_catalog(document: PolicyDocument) -> CitationCatalog:
+    """Partition bounded normalized source into exact, nonoverlapping citations.
+
+    Ordinary inputs retain one nonempty line per entry. Above 512 nonempty
+    lines, adjacent lines are grouped in source order without crossing pages or
+    dropping tail text. At most 512 + 20 entries cover a 50,000-character input.
+    Grouping is structural and never interprets or rewrites policy semantics.
+    """
+
+    try:
+        prepared = prepare_policy_pages(page.text for page in document.pages)
+    except PolicyIngestionError as exc:
+        raise CitationValidationError(exc.code) from None
+    for page, normalized in zip(document.pages, prepared.pages, strict=True):
+        if (
+            page.text != normalized.text
+            or page.start != normalized.start_offset
+            or page.end != normalized.end_offset
+        ):
+            raise CitationValidationError("INVALID_DOCUMENT_LAYOUT")
+
+    lines_by_page = []
+    for page in document.pages:
+        lines = []
+        local_start = 0
+        for line in page.text.split("\n"):
+            if line.strip():
+                lines.append((local_start, local_start + len(line)))
+            local_start += len(line) + 1
+        lines_by_page.append(lines)
+    group_size = max(1, ceil(sum(map(len, lines_by_page)) / _CATALOG_LINE_BUDGET))
+    # Include the actual page layout/content, not merely the declared hash.
+    document_binding = canonical_sha256(
+        {
+            "document_sha256": document.document_sha256,
+            "pages": document.pages,
+        }
+    )
+    entries = []
+    for page, lines in zip(document.pages, lines_by_page, strict=True):
+        for index in range(0, len(lines), group_size):
+            group = lines[index : index + group_size]
+            start, end = group[0][0], group[-1][1]
+            quote = page.text[start:end]
+            span = SourceSpan(
+                page=page.page,
+                start=page.start + start,
+                end=page.start + end,
+                quote=quote,
+                quote_sha256=hashlib.sha256(quote.encode("utf-8")).hexdigest(),
+            )
+            canonical = canonical_source_span(document, span)
+            handle = "cite-" + canonical_sha256(
+                {
+                    "document": document_binding,
+                    "page": canonical.page,
+                    "start": canonical.start,
+                    "end": canonical.end,
+                    "quote_sha256": canonical.quote_sha256,
+                }
+            )
+            entries.append(CitationCatalogEntry(citation_handle=handle, span=canonical))
+    return CitationCatalog(entries=tuple(entries))
 
 
 @dataclass(frozen=True, slots=True)

@@ -57,7 +57,7 @@ class DemoResponses:
         fixtures = ROOT / "team/person-2-policy/fixtures"
         self.outputs = {
             "policy_extraction": json.loads(
-                (fixtures / "development-extraction.json").read_text()
+                (fixtures / "development-provider-extraction.json").read_text()
             ),
             "invariant_suggestion": json.loads(
                 (fixtures / "development-invariant-suggestions.json").read_text()

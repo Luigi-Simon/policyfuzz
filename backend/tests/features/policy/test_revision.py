@@ -6,12 +6,16 @@ from app.core.artifacts import complete_payload_projection, semantic_payload_pro
 from app.core.fakes import ScriptedLLMClient
 from app.core.hashing import canonical_sha256
 from app.domain.models import (
+    AddOverrideOperation,
     AddRuleOperation,
     Assertion,
+    Effect,
     Finding,
     FindingDecision,
     FindingReport,
     LLMResponse,
+    OverrideRef,
+    Predicate,
     ProposeRevisionRequest,
     ReplaceRuleOperation,
     RevisionProposal,
@@ -31,13 +35,14 @@ from tests.domain.factories import (
     make_inputs,
     make_policy,
     make_policy_contract,
+    make_rule,
     make_scenario,
     make_scenario_suite,
 )
 
 
-def _request(*, evidence_level: str = "mechanically_reproduced"):
-    policy = make_policy()
+def _request(*, evidence_level: str = "mechanically_reproduced", policy=None):
+    policy = policy or make_policy()
     contract = make_policy_contract()
     rule_set_sha256 = canonical_sha256(semantic_payload_projection(policy))
     contract_sha256 = canonical_sha256(complete_payload_projection(contract))
@@ -122,6 +127,220 @@ def test_revision_rejects_stale_anchor() -> None:
 
     with pytest.raises(RevisionValidationError, match="STALE_ARTIFACT_ANCHOR"):
         validate_revision_proposal(request, proposal)
+
+
+def _semantic_replacement_request():
+    target = make_rule(
+        when=(
+            Predicate(
+                field="employee_role", operator="in", value=("employee", "manager")
+            ),
+            Predicate(field="amount_minor", operator="gt", value=100),
+        ),
+        effects=(
+            Effect(dimension="claim_cap_minor", value=5000),
+            Effect(dimension="approval_requirement", value="manager"),
+        ),
+        overrides=(
+            OverrideRef(dimension="claim_cap_minor", target_rule_id="base-cap"),
+            OverrideRef(
+                dimension="approval_requirement", target_rule_id="base-approval"
+            ),
+        ),
+    )
+    return _request(
+        policy=make_policy(
+            rules=(
+                target,
+                make_rule(rule_id="base-cap"),
+                make_rule(
+                    rule_id="base-approval",
+                    effects=(Effect(dimension="approval_requirement", value="none"),),
+                ),
+            )
+        )
+    )
+
+
+def _replacement_proposal(request, **changes):
+    target = request.policy.rules[0]
+    values = {
+        "description": "PRIVATE_DESCRIPTION_ONLY_CHANGE",
+        "when": target.when,
+        "effects": target.effects,
+        "overrides": target.overrides,
+    }
+    draft = RevisionRuleDraft(**(values | changes))
+    proposal = _proposal(request)
+    return proposal.model_copy(
+        update={
+            "operations": (proposal.operations[0].model_copy(update={"rule": draft}),),
+        }
+    )
+
+
+@pytest.mark.parametrize("reordered", [False, True])
+def test_revision_rejects_description_only_or_reordered_semantic_noop(reordered):
+    request = _semantic_replacement_request()
+    changes = {}
+    if reordered:
+        target = request.policy.rules[0]
+        changes = {
+            "when": (
+                target.when[1],
+                target.when[0].model_copy(
+                    update={"value": ("manager", "employee", "manager")}
+                ),
+                target.when[1],
+            ),
+            "effects": tuple(reversed(target.effects)),
+            "overrides": tuple(reversed(target.overrides)),
+        }
+    with pytest.raises(
+        RevisionValidationError, match="NO_OP_RULE_REPLACEMENT"
+    ) as caught:
+        validate_revision_proposal(request, _replacement_proposal(request, **changes))
+    assert "PRIVATE_DESCRIPTION_ONLY_CHANGE" not in str(caught.value)
+
+
+@pytest.mark.parametrize("field", ["when", "effects", "overrides"])
+def test_revision_accepts_actual_change_to_any_structured_rule_component(field):
+    request = _semantic_replacement_request()
+    if field == "overrides":
+        request = _with_conflict(request, rule_ids=("rule-meal", "base-approval"))
+    target = request.policy.rules[0]
+    changes = {
+        "when": (target.when[0], target.when[1].model_copy(update={"value": 101})),
+        "effects": (
+            target.effects[0].model_copy(update={"value": 4000}),
+            target.effects[1],
+        ),
+        "overrides": target.overrides[:1],
+    }
+    proposal = _replacement_proposal(request, **{field: changes[field]})
+    result = validate_revision_proposal(request, proposal)
+    assert getattr(result.proposal.operations[0].rule, field) == changes[field]
+
+
+def _with_conflict(request, **finding_changes):
+    finding = request.findings.findings[0].model_copy(
+        update={
+            "finding_type": "conflict",
+            "dimension": "approval_requirement",
+            "rule_ids": ("rule-meal", "competing-specific"),
+            **finding_changes,
+        }
+    )
+    return request.model_copy(
+        update={
+            "findings": request.findings.model_copy(update={"findings": (finding,)}),
+        }
+    )
+
+
+def _conflict_request():
+    base = _semantic_replacement_request().policy
+    competing = make_rule(
+        rule_id="competing-specific",
+        effects=(Effect(dimension="approval_requirement", value="director"),),
+    )
+    return _with_conflict(
+        _request(policy=base.model_copy(update={"rules": (*base.rules, competing)}))
+    )
+
+
+def test_added_gap_rule_cannot_add_redundant_overrides_to_boundary_rules():
+    receipt_rules = tuple(
+        make_rule(
+            rule_id=f"receipt-{operator}",
+            when=(Predicate(field="amount_minor", operator=operator, value=5000),),
+            effects=(Effect(dimension="receipt_requirement", value=value),),
+        )
+        for operator, value in (("lt", "not_required"), ("gt", "required"))
+    )
+    request = _with_conflict(
+        _request(policy=make_policy(rules=receipt_rules)),
+        finding_type="structural_gap",
+        dimension="receipt_requirement",
+        rule_ids=("receipt-lt", "receipt-gt"),
+    )
+    addition = AddRuleOperation(
+        rule_id="model-gap-rule",
+        rule=RevisionRuleDraft(
+            description="Receipt equality case",
+            when=(Predicate(field="amount_minor", operator="eq", value=5000),),
+            effects=(Effect(dimension="receipt_requirement", value="required"),),
+            overrides=tuple(
+                OverrideRef(
+                    dimension="receipt_requirement", target_rule_id=rule.rule_id
+                )
+                for rule in receipt_rules
+            ),
+        ),
+        finding_ids=("finding-1",),
+    )
+    proposal = _proposal(request).model_copy(update={"operations": (addition,)})
+    with pytest.raises(
+        RevisionValidationError, match="OVERRIDE_OUTSIDE_ACCEPTED_CONFLICT"
+    ):
+        validate_revision_proposal(request, proposal)
+
+
+def test_replacement_cannot_remove_default_edge_outside_accepted_conflict():
+    request = _conflict_request()
+    proposal = _replacement_proposal(
+        request, overrides=request.policy.rules[0].overrides[:1]
+    )
+    with pytest.raises(
+        RevisionValidationError, match="OVERRIDE_OUTSIDE_ACCEPTED_CONFLICT"
+    ):
+        validate_revision_proposal(request, proposal)
+
+
+@pytest.mark.parametrize("kind", ["replace_rule", "add_override"])
+def test_valid_conflict_override_preserves_unchanged_default_edges(kind):
+    request = _conflict_request()
+    edge = OverrideRef(
+        dimension="approval_requirement", target_rule_id="competing-specific"
+    )
+    existing = request.policy.rules[0].overrides
+    if kind == "replace_rule":
+        proposal = _replacement_proposal(request, overrides=(*existing, edge))
+    else:
+        operation = AddOverrideOperation(
+            rule_id="rule-meal",
+            dimension=edge.dimension,
+            target_rule_id=edge.target_rule_id,
+            finding_ids=("finding-1",),
+        )
+        proposal = _proposal(request).model_copy(update={"operations": (operation,)})
+    validated = validate_revision_proposal(request, proposal).proposal
+    operation = validated.operations[0]
+    assert operation.rule_id == "rule-meal"
+    if kind == "replace_rule":
+        assert operation.rule.overrides == (*existing, edge)
+    else:
+        assert operation.target_rule_id == "competing-specific"
+    assert request.policy.rules[0].overrides == existing
+
+
+@pytest.mark.parametrize("schema_repair", [False, True])
+async def test_semantic_noop_rejection_never_adds_a_model_repair(schema_repair):
+    request = _semantic_replacement_request()
+    response = LLMResponse(
+        output=_replacement_proposal(request).model_dump(mode="json")
+    )
+    responses = (
+        (LLMResponse(output={"invalid": "schema"}), response)
+        if schema_repair
+        else (response,)
+    )
+    llm = ScriptedLLMClient(responses)
+
+    with pytest.raises(RevisionValidationError, match="NO_OP_RULE_REPLACEMENT"):
+        await LLMRevisionPlanner(llm).propose(request)
+
+    assert len(llm.requests) == (2 if schema_repair else 1)
 
 
 def test_revision_rejects_unknown_or_stale_rule() -> None:
