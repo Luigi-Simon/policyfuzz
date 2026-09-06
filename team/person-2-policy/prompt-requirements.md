@@ -15,11 +15,15 @@ The current repository vocabulary remains the narrow travel-and-expense MVP. Pro
 - Request structured JSON only; never request executable code.
 - Require rules and unsupported clauses to select exact `citation_handle` values from the Python-built source catalog. Python supplies public quotes, page/global offsets, and SHA-256 hashes; the model must not calculate them or supply a legacy source span.
 - Give every rule a unique `rule_handle`; override targets use only that rule-handle namespace. Expanded OR rules may reuse one citation handle.
-- Preserve explicitly stated defaults, exceptions, and unsupported-clause scope without inventing precedence or broadening uncertainty.
+- Preserve numeric boundaries exactly: above/more than map to `gt`, below/fewer than to `lt`, at least to `gte`, and at most to `lte`. Do not add equality or new rules at unstated boundaries.
+- Treat headings and labels as context rather than standalone obligations or unsupported clauses; cite the actual operative clause.
+- A provision expressly marked normally/by default yields to stated specific exceptions on the affected dimension. This establishes precedence over that default only; competing specific provisions require explicit source precedence, never inference from overlap, specificity, or document order.
+- Keep unsupported-clause dimensions and supported `when_hint` predicates within the operative clause's actual uncertainty and stated scope; exclude nearby dimensions and hypothetical downstream effects.
 - Preserve unsupported or ambiguous clauses instead of guessing.
 - Use integer minor units for money and SGD as the base currency.
 - Keep conditions AND-only; expand OR statements into separate rules.
 - Do not assign authoritative verdicts, severity, metrics, or confirmation status.
+- Keep extraction provisional for human review; do not repair policy semantics heuristically.
 - Use plain-language summaries that a non-technical policy owner can review.
 - Keep output within the rule, character, and scenario limits supplied by the caller.
 
