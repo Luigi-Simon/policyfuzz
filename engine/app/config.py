@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     llm_timeout_seconds: float = 90.0
 
     data_dir: Path = Field(default=Path("./data"))
-    cors_origins: str = "http://localhost:5173,http://localhost:3000"
+    cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://127.0.0.1:3000"
 
     scenario_designer: str = ""
     evaluator: str = ""

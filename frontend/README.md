@@ -8,14 +8,22 @@ Updated for the second Stitch export: owner goals, affected groups, sourced assu
 
 From this directory:
 
-```powershell
+```bash
 npm ci
 npm run dev
 ```
 
 Open the local URL printed by Vite. Choose **Use sample policy**, review and confirm the interpretation, inspect scenarios, decide each finding, prepare a revision, and open the comparison.
 
-```powershell
+### Live engine mode
+
+1. Start the engine on port 8000 (`uvicorn app.main:app --host 127.0.0.1 --port 8000` from `engine/`).
+2. Copy `.env.example` to `.env` and set `VITE_DATA_MODE=http` (leave `VITE_API_BASE_URL` empty to use the Vite `/v1` proxy).
+3. Run `npm run dev` — Analyze / sample policy calls `POST /v1/runs`; revision calls `POST /v1/runs/{id}/revise`.
+
+Default without `.env` remains mock preview (used by tests).
+
+```bash
 npm run typecheck
 npm run test:run
 npm run build
