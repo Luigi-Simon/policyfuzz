@@ -1,0 +1,9 @@
+{
+  "archive_sha256": "eaa5a6ceca5bca8f6daaea4e28352b9ff4e03f938b2bfe7364ff5f23be06d483",
+  "created_at": "2026-09-06T05:33:09Z",
+  "custodian_role": "Person 5 — Product and demo lead",
+  "defect_count": 3,
+  "defect_ids_sha256": "9d0c751b39d309b11051533d329edb11370254cab45867bc37ea9a63034bbba2",
+  "manifest_sha256": "a0010d4cb7b7e1e0c27bf0126aa7393b389ea023e41b8a59220dbb9d670acf60",
+  "policy_sha256": "2b3aab98cb54a1e78c0cd1db4837b61021f245f99491eed757a3b93a10b1f407"
+}
