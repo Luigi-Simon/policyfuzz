@@ -5,9 +5,11 @@ from __future__ import annotations
 import hashlib
 from dataclasses import dataclass
 
+from app.core.hashing import canonical_sha256
 from app.domain.models import (
     PolicyDocument,
     PolicyExtraction,
+    Rule,
     RuleDraft,
     SourceSpan,
     TextRuleProvenance,
@@ -177,3 +179,41 @@ def parse_and_validate_policy_extraction(
         response_model=PolicyExtraction,
     )
     return validate_policy_extraction(document, extraction)
+
+
+def assign_baseline_rule_ids(
+    document: PolicyDocument,
+    drafts: tuple[RuleDraft, ...],
+) -> tuple[Rule, ...]:
+    """Assign stable IDs from rule semantics and verified source provenance."""
+
+    rules: list[Rule] = []
+    assigned_ids: set[str] = set()
+    for draft in drafts:
+        provenance = draft.provenance
+        if not isinstance(provenance, TextRuleProvenance):
+            raise ExtractionValidationError("INVALID_RULE_PROVENANCE")
+        validate_source_span(document, provenance.span)
+        signature = {
+            "when": draft.when,
+            "effects": draft.effects,
+            "overrides": draft.overrides,
+            "source_span_sha256": canonical_sha256(provenance.span),
+        }
+        rule_id = f"rule-{canonical_sha256(signature)}"
+        if rule_id in assigned_ids:
+            raise ExtractionValidationError("DUPLICATE_RULE_ID")
+        assigned_ids.add(rule_id)
+        rules.append(
+            Rule(
+                rule_id=rule_id,
+                revision=0,
+                description=draft.description,
+                when=draft.when,
+                effects=draft.effects,
+                overrides=draft.overrides,
+                provenance=provenance,
+                confidence_percent=draft.confidence_percent,
+            )
+        )
+    return tuple(rules)

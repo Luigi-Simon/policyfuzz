@@ -21,6 +21,15 @@ Current branch: `p2/test-extraction-fixtures`
 - `to_policy_pages(prepared) -> tuple[PolicyPage, ...]` maps normalized prepared
   pages into Person 1's immutable contract without constructing or hashing a
   `PolicyDocument`.
+- `ingest_policy_text(title, text, source_type) -> PolicyDocument` constructs a
+  normalized, bounded document with a content-derived ID and the raw UTF-8
+  source hash required by Person 1's contract.
+- `load_bundled_policy(path) -> PolicyDocument` provides the same contract for
+  checked-in synthetic policy samples.
+- `assign_baseline_rule_ids(document, drafts) -> tuple[Rule, ...]` validates
+  citations and assigns full canonical hashes over rule semantics plus the
+  canonical source-span hash. Display wording, confidence, and model-supplied
+  citation IDs do not influence semantic identity.
 
 Existing foundation remains available for normalized bounded ingestion, strict
 typed JSON parsing, primitive citation validation, and bounded policy retrieval.
@@ -36,6 +45,7 @@ typed JSON parsing, primitive citation validation, and bounded policy retrieval.
 - `backend/app/features/policy/ingest.py`
 - `backend/tests/features/policy/test_ingest.py`
 - `backend/tests/features/policy/test_extraction_fixtures.py`
+- `backend/tests/features/policy/test_rule_ids.py`
 - `team/person-2-policy/fake-llm-responses.json`
 - `team/person-2-policy/HANDOFF.md`
 
@@ -59,6 +69,11 @@ typed JSON parsing, primitive citation validation, and bounded policy retrieval.
   13-rule overflow, and OR expansion into two distinct AND-only rules.
 - Prepared page text and global offsets transfer directly into `PolicyPage`;
   this adapter does not calculate or accept a document hash.
+- Contract document identity is calculated from normalized source text using
+  ordinary raw UTF-8 SHA-256, as required by `contracts/README.md`; structured
+  rule signatures use `app.core.hashing.canonical_sha256` exclusively.
+- Baseline rule IDs exclude model-authored display metadata, use revision zero,
+  reject invalid citations, and reject duplicate semantic/span identities.
 
 ## Commands and results
 
@@ -77,7 +92,11 @@ typed JSON parsing, primitive citation validation, and bounded policy retrieval.
   no:cacheprovider tests/features/policy/test_ingest.py
   tests/features/policy/test_extraction_fixtures.py -q` — **22 passed**.
 - Current Person 2 suite with fixtures: **80 passed**.
-- Current full backend: **392 passed, the same 3 Person 1-owned failures**
+- Document/rule-ID RED: focused collection failed for missing
+  `ingest_policy_text` and `assign_baseline_rule_ids`.
+- Document/rule-ID GREEN: focused suite **22 passed**; current complete Person 2
+  suite **89 passed**.
+- Current full backend: **401 passed, the same 3 Person 1-owned failures**
   described above.
 - Full backend after that rebase: **382 passed, 3 failed**. The failures are in
   Person 1-owned Task 2/3 checks: enum construction, committed schema drift,
@@ -88,11 +107,27 @@ typed JSON parsing, primitive citation validation, and bounded policy retrieval.
 
 ## Remaining integration limitations
 
-- Person 1's canonical hashing helper is now present. This work intentionally
-  stops at `PolicyPage` mapping as scoped; final `PolicyDocument` construction
-  and stable rule IDs remain a later integration step.
+- Person 1's canonical hashing helper is integrated for stable baseline rule
+  identity, and contract-backed `PolicyDocument` construction is complete.
 - The one-repair model workflow and end-to-end `extract_policy(...)` still
   require Person 1's public LLM request/response/operation types and
   `app.domain.protocols.LLMClient` from Task 4.
 - No live model was called. No shared contracts, dependencies, API, workflow,
   fuzzing, evaluation, frontend, blind data, or submission files were changed.
+
+## Request to Person 1
+
+Please complete Task 4 and freeze the shared integration interfaces:
+
+1. Publish `app.domain.protocols.LLMClient` and `PolicyCompiler`.
+2. Publish the typed LLM request, response, operation, and error contracts.
+3. Publish the scripted/fake client and retry behavior for feature tests.
+4. Confirm the provider-neutral request shape that carries our separated system
+   prompt, policy payload, and response schema.
+
+This is Person 1's responsibility because these modules are shared integration
+surfaces and root configuration. Person 2 must not create competing protocols,
+provider adapters, dependency changes, or workflow contracts. Once frozen,
+Person 2 can connect the completed deterministic ingestion, citation checks,
+prompt builder, and rule-ID assignment to the one-repair extraction workflow;
+Person 3 can then consume the validated extraction output.

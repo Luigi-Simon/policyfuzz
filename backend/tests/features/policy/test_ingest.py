@@ -1,3 +1,4 @@
+import hashlib
 from pathlib import Path
 
 import pytest
@@ -7,6 +8,8 @@ from app.features.policy.ingest import (
     MAX_PDF_PAGES,
     MAX_POLICY_CHARS,
     PolicyIngestionError,
+    ingest_policy_text,
+    load_bundled_policy,
     load_bundled_policy_text,
     prepare_policy_pages,
     prepare_policy_text,
@@ -66,6 +69,59 @@ def test_prepared_pages_map_to_person_1_policy_page_contract() -> None:
         PolicyPage(page=2, text="Second page", start=11, end=22),
     )
     assert all(isinstance(page, PolicyPage) for page in pages)
+
+
+def test_ingest_policy_text_builds_deterministic_contract_document() -> None:
+    document = ingest_policy_text(
+        title="Cafe policy",
+        text="Café\r\nreceipt e\u0301vidence",
+        source_type="pasted_text",
+    )
+    normalized = "Café\nreceipt évidence"
+
+    assert document.pages == (
+        PolicyPage(page=1, text=normalized, start=0, end=len(normalized)),
+    )
+    assert document.document_sha256 == hashlib.sha256(
+        normalized.encode("utf-8")
+    ).hexdigest()
+    assert document.document_id == f"document-{document.document_sha256}"
+
+
+def test_document_content_identity_ignores_title_and_source_label() -> None:
+    pasted = ingest_policy_text(
+        title="First title",
+        text="Receipts required.",
+        source_type="pasted_text",
+    )
+    bundled = ingest_policy_text(
+        title="Second title",
+        text="Receipts required.",
+        source_type="bundled_sample",
+    )
+
+    assert pasted.document_sha256 == bundled.document_sha256
+    assert pasted.document_id == bundled.document_id
+
+
+def test_ingest_policy_text_rejects_unsupported_source_type() -> None:
+    with pytest.raises(PolicyIngestionError, match="UNSUPPORTED_SOURCE_TYPE"):
+        ingest_policy_text(
+            title="Policy",
+            text="Receipts required.",
+            source_type="pdf",  # type: ignore[arg-type]
+        )
+
+
+def test_load_bundled_policy_builds_contract_document(tmp_path: Path) -> None:
+    path = tmp_path / "development-policy.txt"
+    path.write_text("Receipts\r\nrequired.", encoding="utf-8")
+
+    document = load_bundled_policy(path)
+
+    assert document.title == "development-policy"
+    assert document.source_type == "bundled_sample"
+    assert document.pages[0].text == "Receipts\nrequired."
 
 
 def test_prepare_policy_pages_rejects_too_many_pages() -> None:

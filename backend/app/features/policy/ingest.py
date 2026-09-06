@@ -1,21 +1,19 @@
-"""Safe preparation of policy text and contract-backed page mapping.
-
-This module deliberately stops before constructing a ``PolicyDocument`` because
-document identity and canonical hashing are a separate integration boundary.
-"""
+"""Safe preparation and contract-backed construction of policy documents."""
 
 from __future__ import annotations
 
+import hashlib
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
-import unicodedata
+from typing import Iterable, Literal
 
-from app.domain.models import PolicyPage
+from app.domain.models import PolicyDocument, PolicyPage
 
 
 MAX_POLICY_CHARS = 50_000
 MAX_PDF_PAGES = 20
+SourceType = Literal["pasted_text", "bundled_sample"]
 
 
 class PolicyIngestionError(ValueError):
@@ -142,4 +140,53 @@ def to_policy_pages(prepared: PreparedPolicyText) -> tuple[PolicyPage, ...]:
             end=page.end_offset,
         )
         for page in prepared.pages
+    )
+
+
+def _document_from_prepared(
+    *,
+    title: str,
+    prepared: PreparedPolicyText,
+    source_type: SourceType,
+) -> PolicyDocument:
+    if not isinstance(title, str) or not title.strip():
+        raise PolicyIngestionError("EMPTY_POLICY_TITLE")
+    if source_type not in ("pasted_text", "bundled_sample"):
+        raise PolicyIngestionError("UNSUPPORTED_SOURCE_TYPE")
+
+    normalized_title = _normalize(title)
+    document_sha256 = hashlib.sha256(prepared.text.encode("utf-8")).hexdigest()
+    return PolicyDocument(
+        document_id=f"document-{document_sha256}",
+        title=normalized_title,
+        source_type=source_type,
+        pages=to_policy_pages(prepared),
+        document_sha256=document_sha256,
+    )
+
+
+def ingest_policy_text(
+    *,
+    title: str,
+    text: str,
+    source_type: SourceType,
+) -> PolicyDocument:
+    """Normalize bounded text and create Person 1's document contract."""
+
+    if source_type not in ("pasted_text", "bundled_sample"):
+        raise PolicyIngestionError("UNSUPPORTED_SOURCE_TYPE")
+    return _document_from_prepared(
+        title=title,
+        prepared=prepare_policy_text(text),
+        source_type=source_type,
+    )
+
+
+def load_bundled_policy(path: Path) -> PolicyDocument:
+    """Load a UTF-8 sample and create a deterministically identified document."""
+
+    return _document_from_prepared(
+        title=path.stem,
+        prepared=load_bundled_policy_text(path),
+        source_type="bundled_sample",
     )
