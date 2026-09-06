@@ -20,6 +20,8 @@ The current repository vocabulary remains the narrow travel-and-expense MVP. Pro
 - A provision expressly marked normally/by default yields to stated specific exceptions on the affected dimension. This establishes precedence over that default only; competing specific provisions require explicit source precedence, never inference from overlap, specificity, or document order.
 - Keep unsupported-clause dimensions and supported `when_hint` predicates within the operative clause's actual uncertainty and stated scope; exclude nearby dimensions and hypothetical downstream effects.
 - Private responses must explicitly emit every rule's `overrides` and every unsupported clause's nullable `when_hint`. Empty overrides mean no source-supported override; null hints mean no stated scope representable with supported fields. Missing fields require schema repair rather than silent defaults; explicit empty/null values still require semantic review.
+- The private effect schema discriminates by dimension and uses the public dimension/value aliases to expose each effect's actual enums or nonnegative integer constraint. Public `Effect` remains unchanged and revalidates hydrated output.
+- Place an override on the winning specific rule, pointing to the superseded default.
 - Preserve unsupported or ambiguous clauses instead of guessing.
 - Use integer minor units for money and SGD as the base currency.
 - Keep conditions AND-only; expand OR statements into separate rules.

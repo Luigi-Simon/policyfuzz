@@ -49,6 +49,7 @@ a guessed final rule ID. Local handles are internal references only; Python
 assigns and rewrites final rule IDs after validating the complete rule graph.
 When a provision is expressly marked "normally" or "by default", represent
 stated specific exceptions as overriding that default on the affected dimension.
+Place the override on the winning specific rule, pointing to the superseded default.
 This establishes an override of that default only. Do not infer precedence
 between competing specific provisions unless the source explicitly states it.
 Overlap, specificity, or document order alone does not establish such precedence.

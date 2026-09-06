@@ -349,7 +349,7 @@ def _unsupported_logic_clause(
     index: int,
     existing_ids: set[str],
 ) -> UnsupportedClause:
-    """Preserve a validly cited rule whose override dependency was excluded."""
+    """Preserve a validly cited rule excluded from the executable baseline."""
 
     provenance = rule.provenance
     if not isinstance(provenance, TextRuleProvenance):
@@ -475,6 +475,15 @@ def validate_policy_extraction(
             )
         )
 
+    unsupported.extend(
+        _unsupported_logic_clause(
+            document,
+            rule,
+            index=index,
+            existing_ids=existing_ids,
+        )
+        for index, rule in citation_valid[max_rules:]
+    )
     accepted_with_indexes = _close_override_dependencies(
         document,
         citation_valid[:max_rules],

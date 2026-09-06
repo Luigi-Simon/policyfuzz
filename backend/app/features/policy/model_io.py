@@ -5,16 +5,55 @@ from typing import Annotated, Literal
 from pydantic import Field, model_validator
 
 from app.domain.models import (
-    Effect,
+    ApprovalRequirementValue,
+    EffectDimension,
     EffectDimensions,
+    EligibilityValue,
     Identifier,
     NonEmptyText,
+    NonNegativeInt,
     OverrideRef,
     Percentage,
     Predicate,
+    ReceiptRequirementValue,
     Sha256,
     StrictModel,
 )
+
+
+class ModelEligibilityEffect(StrictModel):
+    dimension: Literal[EffectDimension.ELIGIBILITY]
+    value: EligibilityValue
+
+
+class ModelReceiptEffect(StrictModel):
+    dimension: Literal[EffectDimension.RECEIPT_REQUIREMENT]
+    value: ReceiptRequirementValue
+
+
+class ModelApprovalEffect(StrictModel):
+    dimension: Literal[EffectDimension.APPROVAL_REQUIREMENT]
+    value: ApprovalRequirementValue
+
+
+class ModelClaimCapEffect(StrictModel):
+    dimension: Literal[EffectDimension.CLAIM_CAP_MINOR]
+    value: NonNegativeInt
+
+
+class ModelDailyCategoryCapEffect(StrictModel):
+    dimension: Literal[EffectDimension.DAILY_CATEGORY_CAP_MINOR]
+    value: NonNegativeInt
+
+
+ModelEffect = Annotated[
+    ModelEligibilityEffect
+    | ModelReceiptEffect
+    | ModelApprovalEffect
+    | ModelClaimCapEffect
+    | ModelDailyCategoryCapEffect,
+    Field(discriminator="dimension"),
+]
 
 
 class ModelRuleDraft(StrictModel):
@@ -24,7 +63,7 @@ class ModelRuleDraft(StrictModel):
     citation_handle: Identifier
     description: NonEmptyText
     when: tuple[Predicate, ...]
-    effects: Annotated[tuple[Effect, ...], Field(min_length=1)]
+    effects: Annotated[tuple[ModelEffect, ...], Field(min_length=1)]
     overrides: tuple[OverrideRef, ...] = Field(
         ...,
         description=(
@@ -75,4 +114,9 @@ class ModelPolicyExtraction(StrictModel):
         return self
 
 
-__all__ = ["ModelPolicyExtraction", "ModelRuleDraft", "ModelUnsupportedClause"]
+__all__ = [
+    "ModelEffect",
+    "ModelPolicyExtraction",
+    "ModelRuleDraft",
+    "ModelUnsupportedClause",
+]
