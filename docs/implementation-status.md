@@ -35,17 +35,25 @@ examples in the older plan differ.
 
 ## Verified application checks
 
-- Backend: **1,438 tests passed**; Ruff check/format passed for 162 Python files.
+- Backend: **1,470 tests passed**; Ruff check/format passed for 164 backend Python files.
 - Frontend: **108 tests passed**; generated-type drift, type checking and production build passed.
-- Shared scripts: 13 files passed Ruff check/format; caption generator: two tests passed.
+- Setup checker: ten tests passed; its Ruff check/format and local mock/cached checks passed.
+  Earlier shared-script and caption-generator checks remain in the historical verification record.
 - Contracts: all **111 schemas**, OpenAPI and the canonical view fixture match generated output.
 - Actual TCP API create/read/completed replay/delete checks passed within the backend suite.
 - Current engine replay: **three identical executions**; development/control labels verify independently.
 - Draft PDF: **nine pages**. Final submission checks intentionally reject absent final media and evidence.
 
-The machine-readable application verification record is
-[`implementation-verification.json`](../team/person-1-integration/evidence/implementation-verification.json).
+The latest machine-readable application verification record is
+[`demo-readiness-verification.json`](../team/person-1-integration/evidence/demo-readiness-verification.json).
+The earlier [`implementation-verification.json`](../team/person-1-integration/evidence/implementation-verification.json)
+is retained as historical evidence.
 It is explicitly separate from Gate B and final submission approval.
+
+The demo-readiness follow-up preserves Person 2's latest validation fixes and makes
+accepted contract/finding confirmations return active progress before model calls finish.
+Polling, schemas and direct offline coordinator behavior are preserved. See the
+[rehearsal guide](demo-day-guide.md) for setup and the live/cached/mock distinction.
 
 ## Evidence and limits
 

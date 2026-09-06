@@ -38,10 +38,40 @@ and cannot satisfy that headline gate. The old plan's direct blind-scoring comma
 not by itself finish benchmark acceptance.
 
 The task-by-task release status is recorded in `docs/implementation-status.md`.
-Current checks: 1,438 backend tests, 108 frontend tests, production build, 111-schema drift,
+Current checks: 1,470 backend tests, 108 frontend tests, production build, 111-schema drift,
 three-run replay and independent public benchmark verification all pass. See the explicitly
-non-Gate-B `team/person-1-integration/evidence/implementation-verification.json`. Historical
+non-Gate-B `team/person-1-integration/evidence/demo-readiness-verification.json`. Historical
 verification below remains dated evidence, not the current complete-suite test count.
+
+## Demo-readiness follow-up — 2026-09-06
+
+The latest Person 2 validation work at `5f77c44` is preserved. Application change
+`584b92415c5f0cddafb458b94d8d11b9090685bb` matches the locally reviewed tree
+`429160ebf516d64caec97adf3a84d5e512703180`.
+
+- Contract/finding HTTP confirmations now validate and persist their decision before
+  submitting an owned continuation through `AppContainer.submit`. They return the active
+  `RunView` promptly; clients poll for the next confirmation or terminal state.
+- Optional internal `schedule` callbacks on `RunCoordinator.confirm_contract` and
+  `select_findings` preserve await-to-completion semantics for direct callers by default.
+  Frozen HTTP schemas/status codes and specialist protocols are unchanged.
+- Event-gated tests reproduce the former blocking requests and cover duplicate/stale
+  commands, request cancellation, scoped planner ownership, safe failure, deletion,
+  expiry and shutdown. The direct offline flow and replay still pass.
+- `scripts/check_setup.py --mode mock|cached|live` checks local prerequisites and
+  configuration without contacting a provider or loading `.env`. It returns exit 0/1;
+  it does not verify key validity, model access, account quota, ports or browser behavior.
+- `docs/demo-day-guide.md` supplies Windows commands, safe local key entry, a labelled
+  fallback, a rehearsal sequence, judging questions and the remaining evidence checklist.
+- CI adds real Windows setup checks alongside the Linux application job. The actual
+  result is recorded in the linked verification file; it is not a Windows browser test.
+
+Changed application paths: `backend/app/{api/routes.py,container.py,workflow/coordinator.py}`.
+Corresponding API tests, `backend/tests/integration/test_check_setup.py`, the setup script,
+root README and CI, rehearsal guide and this handoff are the complete follow-up surface.
+No live provider, browser acceptance, blind eligibility, human review or final media
+approval is claimed by this preparation work. Earlier evidence is retained in
+`implementation-verification.json`.
 
 ## Historical Task 19 handoff
 

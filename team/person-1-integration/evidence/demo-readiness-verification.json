@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0",
+  "status": "passed",
+  "scope": "Demo-readiness application checks; not live-provider, browser, Gate B or final submission acceptance",
+  "application_commit": "584b92415c5f0cddafb458b94d8d11b9090685bb",
+  "local_verification_commit": "b31c790a5743eceb628e7573ede55045d8de1aaf",
+  "application_tree": "429160ebf516d64caec97adf3a84d5e512703180",
+  "parent_team_commit": "5f77c44d5bf5bedf3da6ff8ff7f68ae64b418c0a",
+  "checks": [
+    {
+      "name": "Backend tests",
+      "command": "backend/.venv/bin/python -m pytest backend/tests -q",
+      "passed": 1470,
+      "exit_code": 0
+    },
+    {
+      "name": "Frontend tests",
+      "command": "npm --prefix frontend run test:run",
+      "passed": 108,
+      "exit_code": 0
+    },
+    {
+      "name": "Ruff lint and format",
+      "scope": "backend/app, backend/tests and scripts/check_setup.py",
+      "files_format_checked": 165,
+      "exit_code": 0
+    },
+    {
+      "name": "Generated contracts",
+      "schemas": 111,
+      "exit_code": 0
+    },
+    {
+      "name": "Frontend generated types, typecheck and build",
+      "exit_code": 0
+    },
+    {
+      "name": "Offline real-stage smoke",
+      "provider_mode": "scripted",
+      "actual_provider_calls": 0,
+      "scenarios": 10,
+      "baseline_defects": 3,
+      "remaining_defects": 0,
+      "patch_accepted": true,
+      "suite_sha256": "da14acf2f24997f73cca5c4f786e150ba3f02eadd46ef6a6cf19aa576b49af8c",
+      "exit_code": 0
+    },
+    {
+      "name": "Replay",
+      "identical_executions": 3,
+      "exit_code": 0
+    },
+    {
+      "name": "Public synthetic benchmarks",
+      "human_reviewed": false,
+      "exit_code": 0
+    },
+    {
+      "name": "Setup checker",
+      "tests": 10,
+      "modes_executed": [
+        "mock",
+        "cached"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "github_actions": {
+    "run_id": 34033336848,
+    "url": "https://github.com/Luigi-Simon/policyfuzz/actions/runs/34033336848",
+    "head_sha": "584b92415c5f0cddafb458b94d8d11b9090685bb",
+    "conclusion": "success",
+    "jobs": [
+      "core",
+      "windows-setup"
+    ],
+    "windows_scope": "Native Windows setup unit tests and actual mock/cached setup CLI; no browser"
+  },
+  "reviews": {
+    "checker": "approved; platform risk resolved by actual Windows CI",
+    "guide": "approved after cwd and Python-version clarification",
+    "whole_change": "approved; no important findings"
+  },
+  "pending": [
+    "Live model credentials and actual provider run",
+    "Browser interaction and viewport acceptance",
+    "Independent benchmark semantics and manual reviews",
+    "First-run blind discovery reconciliation",
+    "Gate B, release freeze and final media"
+  ],
+  "publication_note": "GitHub tree exactly matches local reviewed application tree. This evidence file and accompanying handoff/status edits are documentation-only additions after application verification."
+}
