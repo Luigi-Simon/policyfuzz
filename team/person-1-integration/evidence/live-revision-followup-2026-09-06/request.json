@@ -1,0 +1,1344 @@
+{
+  "schema_version": "1.0",
+  "policy": {
+    "schema_version": "1.0",
+    "policy_id": "policy-bf2a185a06d02aee79acb230ef20d1ad15bf8ce3d876d8aafc27c03ee8900615",
+    "document_sha256": "4c194c07ac6de7044f0548771ea257cccd1e8d4d0a5b4d1a602e428ee3a66734",
+    "kind": "compiled_baseline",
+    "review_status": "session_confirmed",
+    "base_currency": "SGD",
+    "rules": [
+      {
+        "schema_version": "1.0",
+        "description": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "in",
+            "value": [
+              "airfare",
+              "hotel",
+              "incidental",
+              "meal",
+              "transport"
+            ]
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "value": "allow"
+          }
+        ],
+        "overrides": [],
+        "provenance": {
+          "schema_version": "1.0",
+          "kind": "text_citation",
+          "citation_id": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+          "span": {
+            "schema_version": "1.0",
+            "page": 1,
+            "start": 119,
+            "end": 241,
+            "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+            "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+            "section": null
+          }
+        },
+        "confidence_percent": null,
+        "rule_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+        "revision": 0
+      },
+      {
+        "schema_version": "1.0",
+        "description": "Meal claims have a per-claim cap of SGD 100.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "meal"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "value": 10000
+          }
+        ],
+        "overrides": [],
+        "provenance": {
+          "schema_version": "1.0",
+          "kind": "text_citation",
+          "citation_id": "cite-97d17f084746e1ffe4e45563835d95e931a990acbd6196cd9df6aa06514c3cdb",
+          "span": {
+            "schema_version": "1.0",
+            "page": 1,
+            "start": 257,
+            "end": 301,
+            "quote": "Meal claims have a per-claim cap of SGD 100.",
+            "quote_sha256": "6be28fb33e2dbb55da3b93195f9d877fe0c4ce6d002c05a68f0c138cda7ebb04",
+            "section": null
+          }
+        },
+        "confidence_percent": null,
+        "rule_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+        "revision": 0
+      },
+      {
+        "schema_version": "1.0",
+        "description": "Hotel claims have a per-claim cap of SGD 250.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "hotel"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "value": 25000
+          }
+        ],
+        "overrides": [],
+        "provenance": {
+          "schema_version": "1.0",
+          "kind": "text_citation",
+          "citation_id": "cite-7380f2a949391c17371d597cde865ca7b8c3396efbe23538f83391e4a5021e13",
+          "span": {
+            "schema_version": "1.0",
+            "page": 1,
+            "start": 302,
+            "end": 347,
+            "quote": "Hotel claims have a per-claim cap of SGD 250.",
+            "quote_sha256": "b0dc146bd671169b5b56a66703ea1023533817a75b745a3787a86394ccde4ac2",
+            "section": null
+          }
+        },
+        "confidence_percent": null,
+        "rule_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+        "revision": 0
+      },
+      {
+        "schema_version": "1.0",
+        "description": "Transport claims have a per-claim cap of SGD 200.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "transport"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "value": 20000
+          }
+        ],
+        "overrides": [],
+        "provenance": {
+          "schema_version": "1.0",
+          "kind": "text_citation",
+          "citation_id": "cite-0af9d47e048bd7c89883ca5f403cee4a48a958511de58ab14743e1b506b80bb8",
+          "span": {
+            "schema_version": "1.0",
+            "page": 1,
+            "start": 348,
+            "end": 397,
+            "quote": "Transport claims have a per-claim cap of SGD 200.",
+            "quote_sha256": "06a6c2867710eaac615d068d654e15251609922b094f89e4707902fe61804623",
+            "section": null
+          }
+        },
+        "confidence_percent": null,
+        "rule_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+        "revision": 0
+      },
+      {
+        "schema_version": "1.0",
+        "description": "Receipts are not required for claims below SGD 50.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "amount_minor",
+            "operator": "lt",
+            "value": 5000
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "value": "not_required"
+          }
+        ],
+        "overrides": [],
+        "provenance": {
+          "schema_version": "1.0",
+          "kind": "text_citation",
+          "citation_id": "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57",
+          "span": {
+            "schema_version": "1.0",
+            "page": 1,
+            "start": 408,
+            "end": 458,
+            "quote": "Receipts are not required for claims below SGD 50.",
+            "quote_sha256": "881e4b4c701a197a86eacc3c3687c477889c523c77887f7725b33aab2e4552af",
+            "section": null
+          }
+        },
+        "confidence_percent": null,
+        "rule_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+        "revision": 0
+      },
+      {
+        "schema_version": "1.0",
+        "description": "Receipts are required for claims above SGD 50.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "amount_minor",
+            "operator": "gt",
+            "value": 5000
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "value": "required"
+          }
+        ],
+        "overrides": [],
+        "provenance": {
+          "schema_version": "1.0",
+          "kind": "text_citation",
+          "citation_id": "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+          "span": {
+            "schema_version": "1.0",
+            "page": 1,
+            "start": 459,
+            "end": 505,
+            "quote": "Receipts are required for claims above SGD 50.",
+            "quote_sha256": "5e3bce25baf9b207405c128376a8cdea3f7370df89911446c5be4dc980331d70",
+            "section": null
+          }
+        },
+        "confidence_percent": null,
+        "rule_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+        "revision": 0
+      },
+      {
+        "schema_version": "1.0",
+        "description": "Approval is normally not required for a claim.",
+        "when": [],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "value": "none"
+          }
+        ],
+        "overrides": [],
+        "provenance": {
+          "schema_version": "1.0",
+          "kind": "text_citation",
+          "citation_id": "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f",
+          "span": {
+            "schema_version": "1.0",
+            "page": 1,
+            "start": 517,
+            "end": 563,
+            "quote": "Approval is normally not required for a claim.",
+            "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+            "section": null
+          }
+        },
+        "confidence_percent": null,
+        "rule_id": "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+        "revision": 0
+      },
+      {
+        "schema_version": "1.0",
+        "description": "Hotel claims below SGD 250 require no approval, regardless of destination.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "amount_minor",
+            "operator": "lt",
+            "value": 25000
+          },
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "hotel"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "value": "none"
+          }
+        ],
+        "overrides": [
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "target_rule_id": "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+          }
+        ],
+        "provenance": {
+          "schema_version": "1.0",
+          "kind": "text_citation",
+          "citation_id": "cite-947f2d4b77eca45e2827d13b71e31878d0f8f50ab0aee1b6f8983fdd0d47f83d",
+          "span": {
+            "schema_version": "1.0",
+            "page": 1,
+            "start": 564,
+            "end": 638,
+            "quote": "Hotel claims below SGD 250 require no approval, regardless of destination.",
+            "quote_sha256": "f9c18c5f04f1d6883ddc9e4fff7bace998426bb0d87c6811dc07310c58274d4b",
+            "section": null
+          }
+        },
+        "confidence_percent": null,
+        "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+        "revision": 0
+      },
+      {
+        "schema_version": "1.0",
+        "description": "International hotel claims require manager approval.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "hotel"
+          },
+          {
+            "schema_version": "1.0",
+            "field": "destination_type",
+            "operator": "eq",
+            "value": "international"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "value": "manager"
+          }
+        ],
+        "overrides": [
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "target_rule_id": "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+          }
+        ],
+        "provenance": {
+          "schema_version": "1.0",
+          "kind": "text_citation",
+          "citation_id": "cite-308a22f94e3660867350e8cf00bf1da97effafce01b94c202d6a84a175ef576b",
+          "span": {
+            "schema_version": "1.0",
+            "page": 1,
+            "start": 639,
+            "end": 691,
+            "quote": "International hotel claims require manager approval.",
+            "quote_sha256": "547747bdbeeafa8ed3a320309706fdcb344121fc4d7eaa4f080e0b511207c0a9",
+            "section": null
+          }
+        },
+        "confidence_percent": null,
+        "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+        "revision": 0
+      },
+      {
+        "schema_version": "1.0",
+        "description": "Airfare booked fewer than 14 days before travel requires manager approval.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "airfare"
+          },
+          {
+            "schema_version": "1.0",
+            "field": "booking_days_before",
+            "operator": "lt",
+            "value": 14
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "value": "manager"
+          }
+        ],
+        "overrides": [
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "target_rule_id": "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+          }
+        ],
+        "provenance": {
+          "schema_version": "1.0",
+          "kind": "text_citation",
+          "citation_id": "cite-cd30f251e2d67118f937900198186058076396564f9cde1d9d740a53cb38d38d",
+          "span": {
+            "schema_version": "1.0",
+            "page": 1,
+            "start": 692,
+            "end": 766,
+            "quote": "Airfare booked fewer than 14 days before travel requires manager approval.",
+            "quote_sha256": "f4e9c7a9c0d6a1dfc2022cd40e8b3e524bbd6cc562962ba0d13af5d154f0a3fb",
+            "section": null
+          }
+        },
+        "confidence_percent": null,
+        "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+        "revision": 0
+      }
+    ],
+    "unsupported_clauses": [
+      {
+        "schema_version": "1.0",
+        "clause_id": "unsupported_1",
+        "span": {
+          "schema_version": "1.0",
+          "page": 1,
+          "start": 789,
+          "end": 838,
+          "quote": "Reasonable incidental expenses may be reimbursed.",
+          "quote_sha256": "136526213606e56fa63342c1a468d6c9c3659ba560040a8662f465739dd0bb3c",
+          "section": null
+        },
+        "reason_code": "ambiguous_language",
+        "affected_dimensions": [
+          "eligibility"
+        ],
+        "when_hint": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "incidental"
+          }
+        ],
+        "review_status": "session_confirmed"
+      }
+    ]
+  },
+  "contract": {
+    "schema_version": "1.0",
+    "contract_id": "contract-0186b97f69aa99b1c7ea786ae50a6e76d1d40dbbe9a2bc3df092bd2923439166",
+    "required_dimensions": [
+      "eligibility"
+    ],
+    "invariants": [
+      {
+        "schema_version": "1.0",
+        "invariant_id": "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a",
+        "description": "Claims at SGD 50 require a receipt.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "amount_minor",
+            "operator": "eq",
+            "value": 5000
+          }
+        ],
+        "assertion": {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "required",
+          "origin": "session_confirmed",
+          "source_invariant_id": "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a",
+          "gold_label_id": null,
+          "mechanical_relation_id": null
+        },
+        "severity": "medium",
+        "origin": "session_confirmed"
+      },
+      {
+        "schema_version": "1.0",
+        "invariant_id": "invariant-c59c930b5dc65af6216031b7dd91f54d03dc6fda5986833053a6583757deca7b",
+        "description": "International hotel claims require manager approval.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "hotel"
+          },
+          {
+            "schema_version": "1.0",
+            "field": "destination_type",
+            "operator": "eq",
+            "value": "international"
+          }
+        ],
+        "assertion": {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-9064ea7cd3d412361f35d9cdfde7d93180f1eb106607527132234a16d7ddc1c8",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "manager",
+          "origin": "session_confirmed",
+          "source_invariant_id": "invariant-c59c930b5dc65af6216031b7dd91f54d03dc6fda5986833053a6583757deca7b",
+          "gold_label_id": null,
+          "mechanical_relation_id": null
+        },
+        "severity": "high",
+        "origin": "session_confirmed"
+      },
+      {
+        "schema_version": "1.0",
+        "invariant_id": "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+        "description": "Meal spending is capped at SGD 100 per day.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "meal"
+          }
+        ],
+        "assertion": {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+          "target_kind": "effect_value",
+          "dimension": "daily_category_cap_minor",
+          "operator": "lte",
+          "expected_value": 10000,
+          "origin": "session_confirmed",
+          "source_invariant_id": "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+          "gold_label_id": null,
+          "mechanical_relation_id": null
+        },
+        "severity": "high",
+        "origin": "session_confirmed"
+      }
+    ]
+  },
+  "suite": {
+    "schema_version": "1.0",
+    "suite_id": "suite-571aee5c-d6cc-49ab-b56e-54be55c092ca",
+    "content_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+    "seed": 42,
+    "document_sha256": "4c194c07ac6de7044f0548771ea257cccd1e8d4d0a5b4d1a602e428ee3a66734",
+    "policy_contract_sha256": "6a6f394b31579ecda93ce243a3ec30f60b7f0c04ea361d27386d537101acbc16",
+    "rule_set_sha256": "65a100e6f76d3451ddda2c1c7b3ae85af1149e6f9ef97863dac3f978ec93d8d2",
+    "engine_version": "1.0.0",
+    "scenarios": [
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+        "category": "adversarial",
+        "origins": [
+          "llm_exploratory",
+          "session"
+        ],
+        "facts": {
+          "schema_version": "1.0",
+          "employee_role": "employee",
+          "expense_category": "meal",
+          "amount_minor": 8000,
+          "destination_type": "domestic",
+          "booking_days_before": 2,
+          "receipt_present": false,
+          "approval_roles_present": [
+            "manager"
+          ],
+          "prior_same_day_category_spend_minor": 2000
+        },
+        "target_rule_ids": [
+          "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28"
+        ],
+        "target_invariant_ids": [
+          "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e"
+        ],
+        "assertions": [
+          {
+            "schema_version": "1.0",
+            "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+            "target_kind": "effect_value",
+            "dimension": "daily_category_cap_minor",
+            "operator": "lte",
+            "expected_value": 10000,
+            "origin": "session_confirmed",
+            "source_invariant_id": "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+            "gold_label_id": null,
+            "mechanical_relation_id": null
+          }
+        ],
+        "protected": true,
+        "partition": "visible"
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+        "category": "normal",
+        "origins": [
+          "llm_exploratory",
+          "session"
+        ],
+        "facts": {
+          "schema_version": "1.0",
+          "employee_role": "manager",
+          "expense_category": "hotel",
+          "amount_minor": 12000,
+          "destination_type": "international",
+          "booking_days_before": 10,
+          "receipt_present": true,
+          "approval_roles_present": [
+            "finance",
+            "manager"
+          ],
+          "prior_same_day_category_spend_minor": 0
+        },
+        "target_rule_ids": [
+          "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+          "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+          "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9"
+        ],
+        "target_invariant_ids": [
+          "invariant-c59c930b5dc65af6216031b7dd91f54d03dc6fda5986833053a6583757deca7b"
+        ],
+        "assertions": [
+          {
+            "schema_version": "1.0",
+            "assertion_id": "assertion-9064ea7cd3d412361f35d9cdfde7d93180f1eb106607527132234a16d7ddc1c8",
+            "target_kind": "effect_value",
+            "dimension": "approval_requirement",
+            "operator": "eq",
+            "expected_value": "manager",
+            "origin": "session_confirmed",
+            "source_invariant_id": "invariant-c59c930b5dc65af6216031b7dd91f54d03dc6fda5986833053a6583757deca7b",
+            "gold_label_id": null,
+            "mechanical_relation_id": null
+          }
+        ],
+        "protected": true,
+        "partition": "visible"
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+        "category": "boundary",
+        "origins": [
+          "session",
+          "mechanical"
+        ],
+        "facts": {
+          "schema_version": "1.0",
+          "employee_role": "employee",
+          "expense_category": "meal",
+          "amount_minor": 5001,
+          "destination_type": "domestic",
+          "booking_days_before": 14,
+          "receipt_present": true,
+          "approval_roles_present": [],
+          "prior_same_day_category_spend_minor": 0
+        },
+        "target_rule_ids": [
+          "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+          "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+        ],
+        "target_invariant_ids": [
+          "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+          "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a"
+        ],
+        "assertions": [
+          {
+            "schema_version": "1.0",
+            "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+            "target_kind": "effect_value",
+            "dimension": "daily_category_cap_minor",
+            "operator": "lte",
+            "expected_value": 10000,
+            "origin": "session_confirmed",
+            "source_invariant_id": "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+            "gold_label_id": null,
+            "mechanical_relation_id": null
+          }
+        ],
+        "protected": true,
+        "partition": "visible"
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+        "category": "boundary",
+        "origins": [
+          "session",
+          "mechanical"
+        ],
+        "facts": {
+          "schema_version": "1.0",
+          "employee_role": "employee",
+          "expense_category": "meal",
+          "amount_minor": 5000,
+          "destination_type": "domestic",
+          "booking_days_before": 14,
+          "receipt_present": true,
+          "approval_roles_present": [],
+          "prior_same_day_category_spend_minor": 0
+        },
+        "target_rule_ids": [
+          "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+          "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+          "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+          "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28"
+        ],
+        "target_invariant_ids": [
+          "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+          "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a"
+        ],
+        "assertions": [
+          {
+            "schema_version": "1.0",
+            "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+            "target_kind": "effect_value",
+            "dimension": "daily_category_cap_minor",
+            "operator": "lte",
+            "expected_value": 10000,
+            "origin": "session_confirmed",
+            "source_invariant_id": "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+            "gold_label_id": null,
+            "mechanical_relation_id": null
+          },
+          {
+            "schema_version": "1.0",
+            "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+            "target_kind": "effect_value",
+            "dimension": "receipt_requirement",
+            "operator": "eq",
+            "expected_value": "required",
+            "origin": "session_confirmed",
+            "source_invariant_id": "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a",
+            "gold_label_id": null,
+            "mechanical_relation_id": null
+          }
+        ],
+        "protected": true,
+        "partition": "visible"
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+        "category": "normal",
+        "origins": [
+          "session",
+          "mechanical"
+        ],
+        "facts": {
+          "schema_version": "1.0",
+          "employee_role": "employee",
+          "expense_category": "hotel",
+          "amount_minor": 5000,
+          "destination_type": "domestic",
+          "booking_days_before": 14,
+          "receipt_present": true,
+          "approval_roles_present": [],
+          "prior_same_day_category_spend_minor": 0
+        },
+        "target_rule_ids": [
+          "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+          "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9"
+        ],
+        "target_invariant_ids": [
+          "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a"
+        ],
+        "assertions": [
+          {
+            "schema_version": "1.0",
+            "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+            "target_kind": "effect_value",
+            "dimension": "receipt_requirement",
+            "operator": "eq",
+            "expected_value": "required",
+            "origin": "session_confirmed",
+            "source_invariant_id": "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a",
+            "gold_label_id": null,
+            "mechanical_relation_id": null
+          }
+        ],
+        "protected": true,
+        "partition": "visible"
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+        "category": "boundary",
+        "origins": [
+          "session",
+          "mechanical"
+        ],
+        "facts": {
+          "schema_version": "1.0",
+          "employee_role": "employee",
+          "expense_category": "airfare",
+          "amount_minor": 5000,
+          "destination_type": "domestic",
+          "booking_days_before": 15,
+          "receipt_present": true,
+          "approval_roles_present": [],
+          "prior_same_day_category_spend_minor": 0
+        },
+        "target_rule_ids": [
+          "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b"
+        ],
+        "target_invariant_ids": [
+          "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a"
+        ],
+        "assertions": [
+          {
+            "schema_version": "1.0",
+            "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+            "target_kind": "effect_value",
+            "dimension": "receipt_requirement",
+            "operator": "eq",
+            "expected_value": "required",
+            "origin": "session_confirmed",
+            "source_invariant_id": "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a",
+            "gold_label_id": null,
+            "mechanical_relation_id": null
+          }
+        ],
+        "protected": true,
+        "partition": "visible"
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+        "category": "boundary",
+        "origins": [
+          "session",
+          "mechanical"
+        ],
+        "facts": {
+          "schema_version": "1.0",
+          "employee_role": "employee",
+          "expense_category": "airfare",
+          "amount_minor": 5000,
+          "destination_type": "domestic",
+          "booking_days_before": 14,
+          "receipt_present": true,
+          "approval_roles_present": [],
+          "prior_same_day_category_spend_minor": 0
+        },
+        "target_rule_ids": [
+          "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b"
+        ],
+        "target_invariant_ids": [
+          "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a"
+        ],
+        "assertions": [
+          {
+            "schema_version": "1.0",
+            "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+            "target_kind": "effect_value",
+            "dimension": "receipt_requirement",
+            "operator": "eq",
+            "expected_value": "required",
+            "origin": "session_confirmed",
+            "source_invariant_id": "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a",
+            "gold_label_id": null,
+            "mechanical_relation_id": null
+          }
+        ],
+        "protected": true,
+        "partition": "visible"
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+        "category": "boundary",
+        "origins": [
+          "session",
+          "mechanical"
+        ],
+        "facts": {
+          "schema_version": "1.0",
+          "employee_role": "employee",
+          "expense_category": "meal",
+          "amount_minor": 4999,
+          "destination_type": "domestic",
+          "booking_days_before": 14,
+          "receipt_present": true,
+          "approval_roles_present": [],
+          "prior_same_day_category_spend_minor": 0
+        },
+        "target_rule_ids": [
+          "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+          "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+        ],
+        "target_invariant_ids": [
+          "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+          "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a"
+        ],
+        "assertions": [
+          {
+            "schema_version": "1.0",
+            "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+            "target_kind": "effect_value",
+            "dimension": "daily_category_cap_minor",
+            "operator": "lte",
+            "expected_value": 10000,
+            "origin": "session_confirmed",
+            "source_invariant_id": "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+            "gold_label_id": null,
+            "mechanical_relation_id": null
+          }
+        ],
+        "protected": true,
+        "partition": "visible"
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+        "category": "normal",
+        "origins": [
+          "session",
+          "mechanical"
+        ],
+        "facts": {
+          "schema_version": "1.0",
+          "employee_role": "employee",
+          "expense_category": "transport",
+          "amount_minor": 5000,
+          "destination_type": "domestic",
+          "booking_days_before": 14,
+          "receipt_present": true,
+          "approval_roles_present": [],
+          "prior_same_day_category_spend_minor": 0
+        },
+        "target_rule_ids": [
+          "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514"
+        ],
+        "target_invariant_ids": [
+          "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a"
+        ],
+        "assertions": [
+          {
+            "schema_version": "1.0",
+            "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+            "target_kind": "effect_value",
+            "dimension": "receipt_requirement",
+            "operator": "eq",
+            "expected_value": "required",
+            "origin": "session_confirmed",
+            "source_invariant_id": "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a",
+            "gold_label_id": null,
+            "mechanical_relation_id": null
+          }
+        ],
+        "protected": true,
+        "partition": "visible"
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9",
+        "category": "normal",
+        "origins": [
+          "session",
+          "mechanical"
+        ],
+        "facts": {
+          "schema_version": "1.0",
+          "employee_role": "employee",
+          "expense_category": "airfare",
+          "amount_minor": 5000,
+          "destination_type": "domestic",
+          "booking_days_before": 0,
+          "receipt_present": true,
+          "approval_roles_present": [],
+          "prior_same_day_category_spend_minor": 0
+        },
+        "target_rule_ids": [
+          "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b"
+        ],
+        "target_invariant_ids": [
+          "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a"
+        ],
+        "assertions": [
+          {
+            "schema_version": "1.0",
+            "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+            "target_kind": "effect_value",
+            "dimension": "receipt_requirement",
+            "operator": "eq",
+            "expected_value": "required",
+            "origin": "session_confirmed",
+            "source_invariant_id": "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a",
+            "gold_label_id": null,
+            "mechanical_relation_id": null
+          }
+        ],
+        "protected": true,
+        "partition": "visible"
+      }
+    ],
+    "statistics": {
+      "schema_version": "1.0",
+      "generated_count": 31,
+      "rejected_count": 21,
+      "duplicate_count": 15,
+      "rejections": [
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-01a205f1b96652dd7a7e7e86d4451ae2009036229e3bab4f999effdc661cf65b",
+          "reason_code": "duplicate",
+          "duplicate_of": "candidate-d8b31ef74fff6a61fda0564a9bfd21e84f86eb0e156cab83ec2148d1810c9fae"
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-1abde8fa939e83714b2a9573f9fb983b6b2bf1cc6a2950b0ace2d30bad79d5d1",
+          "reason_code": "duplicate",
+          "duplicate_of": "candidate-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05"
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-1bcb09de51f79dc11e7390f58efdef85ecadc00567bfc2575ad6723819f36ede",
+          "reason_code": "duplicate",
+          "duplicate_of": "candidate-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05"
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-449de5b8f7ecaa01aa96d9c94db0f720eb23b084f66e539cf7374018b2f4db0f",
+          "reason_code": "duplicate",
+          "duplicate_of": "candidate-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-5feeefa85d65fd85548467d6bc08e079a64e402a16ceaf80945854437c341411",
+          "reason_code": "duplicate",
+          "duplicate_of": "candidate-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60"
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-62f8b23c6b9300b219718b8af8795324bcb8fcc47c62eefaeeeccea42ee8d168",
+          "reason_code": "budget_exceeded",
+          "duplicate_of": null
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-889fc45326429b1f2766ff005da4ae5a7df5d34cb9cf10baa28c37df747a9316",
+          "reason_code": "duplicate",
+          "duplicate_of": "candidate-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05"
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-9a9ee24ff4c45676ea410d270211f1761d62b7f969dfb50765957d8513133143",
+          "reason_code": "budget_exceeded",
+          "duplicate_of": null
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-b3a7f2c700e4ee72ee0e27f27d28e2a6fef6fea93d1730bd26a65a9dd252b08b",
+          "reason_code": "budget_exceeded",
+          "duplicate_of": null
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-b3ba04e701b1833de4545eeab4d0fb2b2380446cd8a4633bb1a96969bf2c5142",
+          "reason_code": "duplicate",
+          "duplicate_of": "candidate-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-b5f59e5151b45e3d8e788bd0cee48865a3b477b655b0c0dad7d5702728173392",
+          "reason_code": "duplicate",
+          "duplicate_of": "candidate-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60"
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-cfffcb91fe53438ea8eccc65e6db674e6fd60757dc8c81bbbefaac855852e30b",
+          "reason_code": "budget_exceeded",
+          "duplicate_of": null
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-d34d7639f49b0dccc8b8c6b1bc62cb5df4795c2264e537ed6f73ed1485a50b03",
+          "reason_code": "duplicate",
+          "duplicate_of": "candidate-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-d5439ad82b7b91a06a59aac9db6d6db3743aae4a0d05eeadb3d69e3084da1592",
+          "reason_code": "duplicate",
+          "duplicate_of": "candidate-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60"
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-d8139fb9a1ea34af36aa22a9dab4cf51b08f1be5f3795a929134db0fadaf26d3",
+          "reason_code": "duplicate",
+          "duplicate_of": "candidate-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60"
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-d8b31ef74fff6a61fda0564a9bfd21e84f86eb0e156cab83ec2148d1810c9fae",
+          "reason_code": "budget_exceeded",
+          "duplicate_of": null
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-d9e0a513577618bbe9e474b53b5fa522d41e8839ed421ff978d0511d61aa863c",
+          "reason_code": "duplicate",
+          "duplicate_of": "candidate-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-de5fae7c805d248827e0b65a9f12fe8e44989b692d614d2cbb4f7459235492fe",
+          "reason_code": "budget_exceeded",
+          "duplicate_of": null
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-e44d19a7677743e8b7b743c7d165fe9268788efe4b6a9ffea4c240059f320a9e",
+          "reason_code": "duplicate",
+          "duplicate_of": "candidate-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60"
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-ed1cac2ef2fb67dc296c65ba545c2e0383598e4d72c9d40318e9ebda238ab221",
+          "reason_code": "duplicate",
+          "duplicate_of": "candidate-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60"
+        },
+        {
+          "schema_version": "1.0",
+          "candidate_id": "candidate-f7b0bd9e7adabd8e8dd56c53ab9a5e2bd9a3fb74156e7967933707930cabd9d5",
+          "reason_code": "duplicate",
+          "duplicate_of": "candidate-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60"
+        }
+      ]
+    }
+  },
+  "findings": {
+    "schema_version": "1.0",
+    "report_id": "findings-71afd5a41c0163863183dbbf1fc17b3cd3ee0ab341758e6ac449359c5db1a6ef",
+    "inputs": {
+      "schema_version": "1.0",
+      "policy_sha256": "e2245adff79cbde310c097ff570b0fc1f98af040211bc636eaf8581d5838d6e9",
+      "contract_sha256": "6a6f394b31579ecda93ce243a3ec30f60b7f0c04ea361d27386d537101acbc16",
+      "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+      "engine_sha256": "a8f373b2922f6c5d7f29a6064bde8f0379d727cb4bfea320c9fbb45f748afe42",
+      "run_manifest_sha256": "1d355bb543cac1c2802afbfa939d28fd5c090a2ed0a4867f69876e87a7611e42"
+    },
+    "findings": [
+      {
+        "schema_version": "1.0",
+        "finding_id": "finding-395e1dd4d17223c58a023ca7f7b279f9f8093ece0cb7b2281c255c1585d30841",
+        "fingerprint_sha256": "395e1dd4d17223c58a023ca7f7b279f9f8093ece0cb7b2281c255c1585d30841",
+        "finding_type": "intent_breach",
+        "evidence_level": "session_confirmed",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+        ],
+        "rule_ids": [],
+        "invariant_id": "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+        "assertion_id": null,
+        "dimension": "daily_category_cap_minor",
+        "traces": [
+          {
+            "schema_version": "1.0",
+            "scenario_id": "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "trace_sha256": "01988645fba0b777abf70e4cae4154520e06508e9bb1b686de9a08e5aa65ad30"
+          },
+          {
+            "schema_version": "1.0",
+            "scenario_id": "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "trace_sha256": "3941375cb82711c05906708ea48ab1c94e62bf287e3e00e7c4715729fbe15170"
+          },
+          {
+            "schema_version": "1.0",
+            "scenario_id": "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "trace_sha256": "c3664ab9f149d4f32c89b46d245fccc5953b1be3fb9ef36ee0b1d6cc89fd462d"
+          },
+          {
+            "schema_version": "1.0",
+            "scenario_id": "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "trace_sha256": "7d8f1556a4f71219cc392bf89ad09147901e17740e8f50f7b7e470d7ed7566e6"
+          }
+        ],
+        "citations": [],
+        "review_status": "accepted",
+        "severity": "high",
+        "severity_origin": "session_invariant"
+      },
+      {
+        "schema_version": "1.0",
+        "finding_id": "finding-7c0e953fdd9a9f544fd71eaf3742bef8faceeb427d77a8710ccb92c452f0bde5",
+        "fingerprint_sha256": "7c0e953fdd9a9f544fd71eaf3742bef8faceeb427d77a8710ccb92c452f0bde5",
+        "finding_type": "conflict",
+        "evidence_level": "mechanically_reproduced",
+        "scenario_ids": [
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7"
+        ],
+        "rule_ids": [
+          "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+          "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2"
+        ],
+        "invariant_id": null,
+        "assertion_id": null,
+        "dimension": "approval_requirement",
+        "traces": [
+          {
+            "schema_version": "1.0",
+            "scenario_id": "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "trace_sha256": "c6d5628d82718e717ec081aa4e860c7cb2df8d152db9079890b671b0ec7e0cf1"
+          }
+        ],
+        "citations": [
+          {
+            "schema_version": "1.0",
+            "page": 1,
+            "start": 564,
+            "end": 638,
+            "quote": "Hotel claims below SGD 250 require no approval, regardless of destination.",
+            "quote_sha256": "f9c18c5f04f1d6883ddc9e4fff7bace998426bb0d87c6811dc07310c58274d4b",
+            "section": null
+          },
+          {
+            "schema_version": "1.0",
+            "page": 1,
+            "start": 639,
+            "end": 691,
+            "quote": "International hotel claims require manager approval.",
+            "quote_sha256": "547747bdbeeafa8ed3a320309706fdcb344121fc4d7eaa4f080e0b511207c0a9",
+            "section": null
+          }
+        ],
+        "review_status": "accepted",
+        "severity": "high",
+        "severity_origin": "session_reviewer"
+      },
+      {
+        "schema_version": "1.0",
+        "finding_id": "finding-bb045ddfae7a2c575858637394f4b296bdf57f430dbf768c12e182eec941d34e",
+        "fingerprint_sha256": "bb045ddfae7a2c575858637394f4b296bdf57f430dbf768c12e182eec941d34e",
+        "finding_type": "structural_gap",
+        "evidence_level": "mechanically_reproduced",
+        "scenario_ids": [
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "rule_ids": [
+          "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+          "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+        ],
+        "invariant_id": null,
+        "assertion_id": null,
+        "dimension": "receipt_requirement",
+        "traces": [
+          {
+            "schema_version": "1.0",
+            "scenario_id": "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "trace_sha256": "c3664ab9f149d4f32c89b46d245fccc5953b1be3fb9ef36ee0b1d6cc89fd462d"
+          },
+          {
+            "schema_version": "1.0",
+            "scenario_id": "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "trace_sha256": "ae825a0a5196aecbafb9b2515b339bbc44efbf1e85acddaa3816c9500560b806"
+          },
+          {
+            "schema_version": "1.0",
+            "scenario_id": "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "trace_sha256": "bb7f3a2c00266e19c12a91b42b53d64e9a9883fda8a8f9aec829fa3e49db4490"
+          },
+          {
+            "schema_version": "1.0",
+            "scenario_id": "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "trace_sha256": "e80cfab46036b47a8760f8b88153e54f088dcb517dc3ee25ba38558b1988b847"
+          },
+          {
+            "schema_version": "1.0",
+            "scenario_id": "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "trace_sha256": "5f7472fe189e9d02c13849823e6f5c94779917a46601b9dfab59d2c332d4a084"
+          },
+          {
+            "schema_version": "1.0",
+            "scenario_id": "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9",
+            "trace_sha256": "4fe2f3c4568b9574be91a74165646e67524316249e6a040f79d2161d70acd987"
+          }
+        ],
+        "citations": [
+          {
+            "schema_version": "1.0",
+            "page": 1,
+            "start": 459,
+            "end": 505,
+            "quote": "Receipts are required for claims above SGD 50.",
+            "quote_sha256": "5e3bce25baf9b207405c128376a8cdea3f7370df89911446c5be4dc980331d70",
+            "section": null
+          },
+          {
+            "schema_version": "1.0",
+            "page": 1,
+            "start": 408,
+            "end": 458,
+            "quote": "Receipts are not required for claims below SGD 50.",
+            "quote_sha256": "881e4b4c701a197a86eacc3c3687c477889c523c77887f7725b33aab2e4552af",
+            "section": null
+          }
+        ],
+        "review_status": "accepted",
+        "severity": "medium",
+        "severity_origin": "session_reviewer"
+      }
+    ]
+  },
+  "decisions": [
+    {
+      "schema_version": "1.0",
+      "finding_id": "finding-395e1dd4d17223c58a023ca7f7b279f9f8093ece0cb7b2281c255c1585d30841",
+      "decision": "accept",
+      "reviewer_severity": null
+    },
+    {
+      "schema_version": "1.0",
+      "finding_id": "finding-7c0e953fdd9a9f544fd71eaf3742bef8faceeb427d77a8710ccb92c452f0bde5",
+      "decision": "accept",
+      "reviewer_severity": "high"
+    },
+    {
+      "schema_version": "1.0",
+      "finding_id": "finding-bb045ddfae7a2c575858637394f4b296bdf57f430dbf768c12e182eec941d34e",
+      "decision": "accept",
+      "reviewer_severity": "medium"
+    }
+  ],
+  "document_sha256": "4c194c07ac6de7044f0548771ea257cccd1e8d4d0a5b4d1a602e428ee3a66734",
+  "rule_set_sha256": "65a100e6f76d3451ddda2c1c7b3ae85af1149e6f9ef97863dac3f978ec93d8d2",
+  "policy_contract_sha256": "6a6f394b31579ecda93ce243a3ec30f60b7f0c04ea361d27386d537101acbc16",
+  "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839"
+}

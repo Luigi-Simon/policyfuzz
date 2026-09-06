@@ -1,0 +1,72 @@
+{
+  "kind": "assistant_operated_synthetic_live_rehearsal",
+  "source_commit": "fe02ff75c8b1bcabe002fe1d0a03f758249ab707",
+  "local_commit_with_identical_tree": "dd5d7ab04cbe3639994693f6319df5b57b020378",
+  "source_tree": "de76432922056f4027e2a3dce09dd5a12c4dc30d",
+  "started_at": "2026-09-06T15:58:51.801929+00:00",
+  "transport": "in-process ASGI HTTP routes with live provider transport",
+  "policy": "bundled development-policy",
+  "confirmation_source": "assistant review against authored public development intent",
+  "human_benchmark_approval": false,
+  "blind_scoring_eligible": false,
+  "browser_acceptance": false,
+  "provider_attempts": [
+    {
+      "operation": "policy_extraction",
+      "repair_attempt": 0,
+      "status": "success",
+      "usage": {
+        "schema_version": "1.0",
+        "input_tokens": 2921,
+        "output_tokens": 1495,
+        "repair_calls": 0,
+        "transport_retries": 0
+      },
+      "duration_seconds": 15.718
+    },
+    {
+      "operation": "policy_extraction",
+      "repair_attempt": 1,
+      "status": "success",
+      "usage": {
+        "schema_version": "1.0",
+        "input_tokens": 3011,
+        "output_tokens": 2223,
+        "repair_calls": 1,
+        "transport_retries": 0
+      },
+      "duration_seconds": 9.665
+    }
+  ],
+  "http_actions": [
+    {
+      "path": "/api/v1/runs",
+      "status": 202,
+      "duration_seconds": 0.019
+    }
+  ],
+  "stage_history": [
+    {
+      "stage": "extracting",
+      "elapsed_seconds": 0.411
+    },
+    {
+      "stage": "failed",
+      "elapsed_seconds": 26.077
+    }
+  ],
+  "model": "gpt-4.1",
+  "run_id": "3e09d50b-9d24-45db-9424-73e5fbc83efc",
+  "last_stage": "failed",
+  "public_error": {
+    "schema_version": "1.0",
+    "code": "MALFORMED_MODEL_OUTPUT",
+    "message": "A generated result could not be validated.",
+    "error_id": null,
+    "retryable": false
+  },
+  "status": "blocked",
+  "sdk_errors": [],
+  "duration_seconds": 26.079,
+  "finished_at": "2026-09-06T15:59:17.876746+00:00"
+}

@@ -1,0 +1,13 @@
+{
+  "kind": "assistant_structured_revision_review",
+  "status": "approved_for_frozen_suite_retest",
+  "operations": 3,
+  "resulting_rules": 11,
+  "changes": [
+    "International hotel rule overrides only the accepted conflicting low-value hotel rule; existing default edge retained.",
+    "Receipt required boundary changes from gt5000 to gte5000.",
+    "Meal-scoped daily cap10000 added."
+  ],
+  "wording_status": "AI generated and unverified",
+  "human_benchmark_approval": false
+}

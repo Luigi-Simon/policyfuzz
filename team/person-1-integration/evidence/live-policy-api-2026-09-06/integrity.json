@@ -1,0 +1,11 @@
+{
+  "algorithm": "SHA-256",
+  "files": {
+    "contract-review-view.json": "22a59ce230240afcf0105ef0b5185275e0dae066d82eab5b841371a02cb914ee",
+    "finding-review-view.json": "4a8d8e511599c0bd33153ef0fa58d34c9bacd05bb7c94b3b5c403a0a621d940c",
+    "revision-review-view.json": "d8bbc0b9f17b416b531d982520b40f5ab93c67b05b3ac77bbefca6c2840aab48",
+    "run-record.json": "548b5dfce462a70b9ed56ae91573f8460bb619f9b682a67c3ed1ec58f43c3e95",
+    "semantic-review.json": "32d1ec42bb5b662acc32222b47cf64222081d369044766f4161a56f397b9ec5c",
+    "summary.json": "82490397199f340be74a2969c42249054b28390f00f15b34aeedff0379ea9102"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "kind": "assistant_semantic_review",
+  "status": "not_confirmed",
+  "issues": [
+    "Provider returned 13 rules after splitting eligibility; incidental eligibility was absent, and the existing 12-rule limit dropped the short-notice airfare rule without an unsupported entry.",
+    "Low-value hotel rule invents precedence over the international-hotel requirement.",
+    "Required fields are present but default-exception links and incidental unsupported scope remain semantically incorrect."
+  ],
+  "contract_actions_submitted": 0,
+  "conclusion": "Explicit wire completeness does not establish semantic correctness. No further prompt tuning in this change.",
+  "not_human_benchmark_approval": true,
+  "provider_rule_count": 13,
+  "compiled_rule_count": 12,
+  "exact_citations_validated": 13,
+  "independent_agent_review": true
+}

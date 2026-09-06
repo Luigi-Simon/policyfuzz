@@ -35,7 +35,7 @@ examples in the older plan differ.
 
 ## Verified application checks
 
-- Backend: **1,476 tests passed** after the merged startup-check follow-up; the merge CI passed.
+- Backend: **1,524 tests passed** after Person 2 citation, response-schema and rule-limit corrections, including **179 policy tests**.
 - Frontend: **108 tests passed**; generated-type drift, type checking and production build passed.
 - Setup checker: sixteen tests passed; its Ruff check/format and offline cached/live probes passed.
   Earlier shared-script and caption-generator checks remain in the historical verification record.
@@ -45,7 +45,8 @@ examples in the older plan differ.
 - Draft PDF: **nine pages**. Final submission checks intentionally reject absent final media and evidence.
 
 The latest machine-readable application verification record is
-[`demo-readiness-verification.json`](../team/person-1-integration/evidence/demo-readiness-verification.json).
+[`p2-citation-verification.json`](../team/person-1-integration/evidence/p2-citation-verification.json).
+The earlier [`demo-readiness-verification.json`](../team/person-1-integration/evidence/demo-readiness-verification.json) remains historical evidence.
 The earlier [`implementation-verification.json`](../team/person-1-integration/evidence/implementation-verification.json)
 is retained as historical evidence.
 It is explicitly separate from Gate B and final submission approval.
@@ -94,11 +95,14 @@ an independently verified reconciliation procedure is supplied.
 5. Produce the final nine-page PDF, video and captions; verify and package them
    at the final tag, then publish the release. Drafts do not satisfy these gates.
 
-Live-provider authentication succeeded during the synthetic rehearsal on 2026-09-06.
-The full run stopped at extraction after the first output and its allowed repair
-failed validation. A separate diagnostic reproduced invalid citation hashes and
-offsets. Person 2's citation metadata fix is required before live acceptance can
-continue. See the [reproduction and handoff](../team/person-1-integration/live-extraction-handoff.md).
+Live-provider authentication and source-reviewed extraction now have recorded
+synthetic evidence. The API run reached ten scenarios and three findings; its
+incomplete revision was safely rejected before application. A same-input live revision follow-up
+now fixes three defects to zero and passes all seven checks on the identical
+ten-case suite. It is a production-stage follow-up, not a replacement full API or
+browser run; every earlier failure remains preserved. See the
+[live verification record](../team/person-1-integration/live-extraction-handoff.md)
+for the exact model, commit, scope and result of each attempt.
 
 The application can be developed and rehearsed now. Pending evidence has not been
 replaced with invented approvals, a final release tag, or simulated footage.

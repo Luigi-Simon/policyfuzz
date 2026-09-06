@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0",
+  "proposal_id": "proposal-817b3aac3b7dffe940eae8c86773e663c6e9578adbcd75499267b1f8dcf80a08",
+  "document_sha256": "4c194c07ac6de7044f0548771ea257cccd1e8d4d0a5b4d1a602e428ee3a66734",
+  "rule_set_sha256": "65a100e6f76d3451ddda2c1c7b3ae85af1149e6f9ef97863dac3f978ec93d8d2",
+  "policy_contract_sha256": "6a6f394b31579ecda93ce243a3ec30f60b7f0c04ea361d27386d537101acbc16",
+  "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+  "accepted_finding_ids": [
+    "finding-395e1dd4d17223c58a023ca7f7b279f9f8093ece0cb7b2281c255c1585d30841",
+    "finding-7c0e953fdd9a9f544fd71eaf3742bef8faceeb427d77a8710ccb92c452f0bde5",
+    "finding-bb045ddfae7a2c575858637394f4b296bdf57f430dbf768c12e182eec941d34e"
+  ],
+  "operations": [
+    {
+      "schema_version": "1.0",
+      "kind": "add_rule",
+      "rule_id": "rule-e97765bc6d5af5d54105d23ec90320de7d4307b54cba7bb5ef51820578441f43",
+      "rule": {
+        "schema_version": "1.0",
+        "description": "Receipts are required for claims at or above SGD 50 (explicitly covers the SGD 50 boundary).",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "amount_minor",
+            "operator": "eq",
+            "value": 5000
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "value": "required"
+          }
+        ],
+        "overrides": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "target_rule_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "target_rule_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+          }
+        ]
+      },
+      "finding_ids": [
+        "finding-bb045ddfae7a2c575858637394f4b296bdf57f430dbf768c12e182eec941d34e"
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "kind": "replace_rule",
+      "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+      "expected_revision": 0,
+      "rule": {
+        "schema_version": "1.0",
+        "description": "Hotel claims below SGD 250 require no approval, except where a more specific hotel approval rule applies (e.g., international hotel).",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "amount_minor",
+            "operator": "lt",
+            "value": 25000
+          },
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "hotel"
+          },
+          {
+            "schema_version": "1.0",
+            "field": "destination_type",
+            "operator": "neq",
+            "value": "international"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "value": "none"
+          }
+        ],
+        "overrides": [
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "target_rule_id": "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+          }
+        ]
+      },
+      "finding_ids": [
+        "finding-7c0e953fdd9a9f544fd71eaf3742bef8faceeb427d77a8710ccb92c452f0bde5"
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "kind": "add_rule",
+      "rule_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+      "rule": {
+        "schema_version": "1.0",
+        "description": "Meal spending is capped at SGD 100 per day (daily category cap).",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "meal"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "value": 10000
+          }
+        ],
+        "overrides": []
+      },
+      "finding_ids": [
+        "finding-395e1dd4d17223c58a023ca7f7b279f9f8093ece0cb7b2281c255c1585d30841"
+      ]
+    }
+  ],
+  "draft_policy_wording": "[AI-GENERATED, UNVERIFIED] (Draft) Receipts: A receipt is required for claims of SGD 50 or more.\n(Draft) Approvals: International hotel claims require manager approval. Domestic hotel claims below SGD 250 require no approval.\n(Draft) Meals: Total meal spending is capped at SGD 100 per day."
+}

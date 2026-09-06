@@ -1,0 +1,15 @@
+{
+  "kind": "assistant_semantic_review",
+  "status": "not_confirmed",
+  "independent_agent_review": true,
+  "exact_citations_validated": 11,
+  "issues": [
+    "Above SGD 50 was translated as gte 5000 rather than gt 5000.",
+    "Both manager exceptions omit the explicit normally-default override.",
+    "Unsupported clause cites a section heading instead of the operative incidental sentence.",
+    "Unsupported scope broadens to all five dimensions with no category condition."
+  ],
+  "contract_actions_submitted": 0,
+  "conclusion": "Citation metadata fix works, but this provisional baseline must not be confirmed.",
+  "not_human_benchmark_approval": true
+}

@@ -43,6 +43,16 @@ three-run replay and independent public benchmark verification all pass. See the
 non-Gate-B `team/person-1-integration/evidence/demo-readiness-verification.json`. Historical
 verification below remains dated evidence, not the current complete-suite test count.
 
+## Person 2 live hardening — 2026-09-06
+
+Person 1 integrated the revised provider fixture with the actual workflow/API.
+Current verification is **1,524 backend tests**, **179 policy tests**, unchanged
+**111 public schemas**, Ruff/format, the scripted three-defect-to-zero workflow,
+and the existing three-pass replay. Independent code reviews found no blockers.
+See [verification](evidence/p2-citation-verification.json) and the
+[live investigation](live-extraction-handoff.md) for source-bound evidence.
+Earlier counts and startup/extraction failures below remain historical records.
+
 ## Isolated startup diagnostics — 2026-09-06
 
 Update: PR #1 is merged at `931e67b0b8f57bbb0180c42213c416d6c6f5a031` and

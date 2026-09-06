@@ -1,0 +1,1303 @@
+{
+  "schema_version": "1.0",
+  "baseline_inputs": {
+    "schema_version": "1.0",
+    "policy_sha256": "e2245adff79cbde310c097ff570b0fc1f98af040211bc636eaf8581d5838d6e9",
+    "contract_sha256": "6a6f394b31579ecda93ce243a3ec30f60b7f0c04ea361d27386d537101acbc16",
+    "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+    "engine_sha256": "a8f373b2922f6c5d7f29a6064bde8f0379d727cb4bfea320c9fbb45f748afe42",
+    "run_manifest_sha256": "1d355bb543cac1c2802afbfa939d28fd5c090a2ed0a4867f69876e87a7611e42"
+  },
+  "revised_inputs": {
+    "schema_version": "1.0",
+    "policy_sha256": "4501f7678b5a762d94b837e9a4eab1684a7f97f10adbaa1ef453daa66a309168",
+    "contract_sha256": "6a6f394b31579ecda93ce243a3ec30f60b7f0c04ea361d27386d537101acbc16",
+    "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+    "engine_sha256": "a8f373b2922f6c5d7f29a6064bde8f0379d727cb4bfea320c9fbb45f748afe42",
+    "run_manifest_sha256": "1d355bb543cac1c2802afbfa939d28fd5c090a2ed0a4867f69876e87a7611e42"
+  },
+  "regression": {
+    "schema_version": "1.0",
+    "report_id": "regression-6974fe2bbe249a380cc36c2c7a58453a8b382bb41c04a5eeea8a01d6a5552404",
+    "baseline_inputs": {
+      "schema_version": "1.0",
+      "policy_sha256": "e2245adff79cbde310c097ff570b0fc1f98af040211bc636eaf8581d5838d6e9",
+      "contract_sha256": "6a6f394b31579ecda93ce243a3ec30f60b7f0c04ea361d27386d537101acbc16",
+      "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+      "engine_sha256": "a8f373b2922f6c5d7f29a6064bde8f0379d727cb4bfea320c9fbb45f748afe42",
+      "run_manifest_sha256": "1d355bb543cac1c2802afbfa939d28fd5c090a2ed0a4867f69876e87a7611e42"
+    },
+    "revised_inputs": {
+      "schema_version": "1.0",
+      "policy_sha256": "4501f7678b5a762d94b837e9a4eab1684a7f97f10adbaa1ef453daa66a309168",
+      "contract_sha256": "6a6f394b31579ecda93ce243a3ec30f60b7f0c04ea361d27386d537101acbc16",
+      "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+      "engine_sha256": "a8f373b2922f6c5d7f29a6064bde8f0379d727cb4bfea320c9fbb45f748afe42",
+      "run_manifest_sha256": "1d355bb543cac1c2802afbfa939d28fd5c090a2ed0a4867f69876e87a7611e42"
+    },
+    "baseline_effect_states": {
+      "schema_version": "1.0",
+      "VALUE": 30,
+      "GAP": 10,
+      "NOT_APPLICABLE": 9,
+      "CONFLICT": 1,
+      "INCONCLUSIVE": 0,
+      "ERROR": 0
+    },
+    "revised_effect_states": {
+      "schema_version": "1.0",
+      "VALUE": 41,
+      "GAP": 0,
+      "NOT_APPLICABLE": 9,
+      "CONFLICT": 0,
+      "INCONCLUSIVE": 0,
+      "ERROR": 0
+    },
+    "assertion_transition_counts": {
+      "schema_version": "1.0",
+      "pass_to_pass": 0,
+      "fail_to_pass": 0,
+      "pass_to_fail": 0,
+      "fail_to_fail": 0,
+      "inconclusive_or_error": 11
+    },
+    "assertion_transitions": [
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+        "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+        "before": "INCONCLUSIVE",
+        "after": "PASS",
+        "protected": true,
+        "targeted": true
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+        "assertion_id": "assertion-9064ea7cd3d412361f35d9cdfde7d93180f1eb106607527132234a16d7ddc1c8",
+        "before": "INCONCLUSIVE",
+        "after": "PASS",
+        "protected": true,
+        "targeted": false
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+        "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+        "before": "INCONCLUSIVE",
+        "after": "PASS",
+        "protected": true,
+        "targeted": true
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+        "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+        "before": "INCONCLUSIVE",
+        "after": "PASS",
+        "protected": true,
+        "targeted": true
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+        "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+        "before": "INCONCLUSIVE",
+        "after": "PASS",
+        "protected": true,
+        "targeted": false
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+        "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+        "before": "INCONCLUSIVE",
+        "after": "PASS",
+        "protected": true,
+        "targeted": false
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+        "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+        "before": "INCONCLUSIVE",
+        "after": "PASS",
+        "protected": true,
+        "targeted": false
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+        "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+        "before": "INCONCLUSIVE",
+        "after": "PASS",
+        "protected": true,
+        "targeted": false
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+        "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+        "before": "INCONCLUSIVE",
+        "after": "PASS",
+        "protected": true,
+        "targeted": true
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+        "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+        "before": "INCONCLUSIVE",
+        "after": "PASS",
+        "protected": true,
+        "targeted": false
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9",
+        "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+        "before": "INCONCLUSIVE",
+        "after": "PASS",
+        "protected": true,
+        "targeted": false
+      }
+    ]
+  },
+  "acceptance": {
+    "schema_version": "1.0",
+    "baseline_inputs": {
+      "schema_version": "1.0",
+      "policy_sha256": "e2245adff79cbde310c097ff570b0fc1f98af040211bc636eaf8581d5838d6e9",
+      "contract_sha256": "6a6f394b31579ecda93ce243a3ec30f60b7f0c04ea361d27386d537101acbc16",
+      "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+      "engine_sha256": "a8f373b2922f6c5d7f29a6064bde8f0379d727cb4bfea320c9fbb45f748afe42",
+      "run_manifest_sha256": "1d355bb543cac1c2802afbfa939d28fd5c090a2ed0a4867f69876e87a7611e42"
+    },
+    "revised_inputs": {
+      "schema_version": "1.0",
+      "policy_sha256": "4501f7678b5a762d94b837e9a4eab1684a7f97f10adbaa1ef453daa66a309168",
+      "contract_sha256": "6a6f394b31579ecda93ce243a3ec30f60b7f0c04ea361d27386d537101acbc16",
+      "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+      "engine_sha256": "a8f373b2922f6c5d7f29a6064bde8f0379d727cb4bfea320c9fbb45f748afe42",
+      "run_manifest_sha256": "1d355bb543cac1c2802afbfa939d28fd5c090a2ed0a4867f69876e87a7611e42"
+    },
+    "suite_hash_matches": true,
+    "all_target_findings_fixed": true,
+    "zero_new_failures_outside_targets": true,
+    "zero_protected_regressions": true,
+    "no_increase_in_gap_conflict_inconclusive_or_error": true,
+    "unrelated_rules_unchanged": true,
+    "holdout_not_worse": true,
+    "patch_accepted": true,
+    "counts": {
+      "schema_version": "1.0",
+      "target_findings": 3,
+      "fixed_target_findings": 3,
+      "new_failures_outside_targets": 0,
+      "protected_regressions": 0,
+      "baseline_gap_conflict_inconclusive_or_error": 11,
+      "revised_gap_conflict_inconclusive_or_error": 0,
+      "unrelated_rule_changes": 0,
+      "holdout_regressions": 0
+    }
+  },
+  "baseline_metrics": {
+    "schema_version": "1.0",
+    "inputs": {
+      "schema_version": "1.0",
+      "policy_sha256": "e2245adff79cbde310c097ff570b0fc1f98af040211bc636eaf8581d5838d6e9",
+      "contract_sha256": "6a6f394b31579ecda93ce243a3ec30f60b7f0c04ea361d27386d537101acbc16",
+      "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+      "engine_sha256": "a8f373b2922f6c5d7f29a6064bde8f0379d727cb4bfea320c9fbb45f748afe42",
+      "run_manifest_sha256": "1d355bb543cac1c2802afbfa939d28fd5c090a2ed0a4867f69876e87a7611e42"
+    },
+    "scenario_count": 10,
+    "effect_states": {
+      "schema_version": "1.0",
+      "VALUE": 30,
+      "GAP": 10,
+      "NOT_APPLICABLE": 9,
+      "CONFLICT": 1,
+      "INCONCLUSIVE": 0,
+      "ERROR": 0
+    },
+    "assertions": {
+      "schema_version": "1.0",
+      "passed": 0,
+      "failed": 0,
+      "inconclusive": 11,
+      "error": 0
+    },
+    "unique_finding_count": 3,
+    "coverage": {
+      "schema_version": "1.0",
+      "total_rules": 10,
+      "covered_rules": 10,
+      "total_invariants": 3,
+      "covered_invariants": 3,
+      "total_predicate_branches": 24,
+      "covered_predicate_branches": 22,
+      "evidence": [
+        {
+          "schema_version": "1.0",
+          "target_kind": "invariant",
+          "target_id": "invariant-c59c930b5dc65af6216031b7dd91f54d03dc6fda5986833053a6583757deca7b",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "invariant",
+          "target_id": "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "invariant",
+          "target_id": "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a",
+          "scenario_ids": [
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 1,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7"
+          ],
+          "predicate_index": 1,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 1,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+          ],
+          "predicate_index": 1,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+          "scenario_ids": [
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+          "scenario_ids": [
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6"
+          ],
+          "predicate_index": 1,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 1,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+          "scenario_ids": [
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+          "scenario_ids": [
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+          "scenario_ids": [
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+          "scenario_ids": [
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+          "scenario_ids": [
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+          "scenario_ids": [
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        }
+      ],
+      "missing_rule_ids": [],
+      "missing_invariant_ids": [],
+      "targeted_cycles": 0,
+      "status": "satisfied"
+    },
+    "assertion_pass_percent": 0
+  },
+  "revised_metrics": {
+    "schema_version": "1.0",
+    "inputs": {
+      "schema_version": "1.0",
+      "policy_sha256": "4501f7678b5a762d94b837e9a4eab1684a7f97f10adbaa1ef453daa66a309168",
+      "contract_sha256": "6a6f394b31579ecda93ce243a3ec30f60b7f0c04ea361d27386d537101acbc16",
+      "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+      "engine_sha256": "a8f373b2922f6c5d7f29a6064bde8f0379d727cb4bfea320c9fbb45f748afe42",
+      "run_manifest_sha256": "1d355bb543cac1c2802afbfa939d28fd5c090a2ed0a4867f69876e87a7611e42"
+    },
+    "scenario_count": 10,
+    "effect_states": {
+      "schema_version": "1.0",
+      "VALUE": 41,
+      "GAP": 0,
+      "NOT_APPLICABLE": 9,
+      "CONFLICT": 0,
+      "INCONCLUSIVE": 0,
+      "ERROR": 0
+    },
+    "assertions": {
+      "schema_version": "1.0",
+      "passed": 11,
+      "failed": 0,
+      "inconclusive": 0,
+      "error": 0
+    },
+    "unique_finding_count": 0,
+    "coverage": {
+      "schema_version": "1.0",
+      "total_rules": 11,
+      "covered_rules": 11,
+      "total_invariants": 3,
+      "covered_invariants": 3,
+      "total_predicate_branches": 26,
+      "covered_predicate_branches": 24,
+      "evidence": [
+        {
+          "schema_version": "1.0",
+          "target_kind": "invariant",
+          "target_id": "invariant-c59c930b5dc65af6216031b7dd91f54d03dc6fda5986833053a6583757deca7b",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "invariant",
+          "target_id": "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "invariant",
+          "target_id": "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a",
+          "scenario_ids": [
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 1,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7"
+          ],
+          "predicate_index": 1,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 1,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+          ],
+          "predicate_index": 1,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+          "scenario_ids": [
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+          "scenario_ids": [
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6"
+          ],
+          "predicate_index": 1,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 1,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+          "scenario_ids": [
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+          "scenario_ids": [
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+          "scenario_ids": [
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": false
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "predicate_branch",
+          "target_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+          ],
+          "predicate_index": 0,
+          "predicate_outcome": true
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+          "scenario_ids": [
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+          "scenario_ids": [
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+          "scenario_ids": [
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+            "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+            "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+            "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+          "scenario_ids": [
+            "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        },
+        {
+          "schema_version": "1.0",
+          "target_kind": "rule",
+          "target_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+          "scenario_ids": [
+            "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+            "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+            "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+            "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+          ],
+          "predicate_index": null,
+          "predicate_outcome": null
+        }
+      ],
+      "missing_rule_ids": [],
+      "missing_invariant_ids": [],
+      "targeted_cycles": 0,
+      "status": "satisfied"
+    },
+    "assertion_pass_percent": 100
+  }
+}

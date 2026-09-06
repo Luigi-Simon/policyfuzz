@@ -1,0 +1,9 @@
+{
+  "kind": "assistant_schema_review",
+  "status": "failed_after_one_repair",
+  "initial_error": "operations.0.add_rule.rule:value_error (derived daily total used in executable rule)",
+  "repair_error": "operations:too_long (more than three operations)",
+  "applied": false,
+  "comparison_produced": false,
+  "same_request_as_prior_reviewed_api_run": true
+}

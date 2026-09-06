@@ -1,0 +1,35 @@
+{
+  "kind": "assistant_operated_live_revision_stage_followup",
+  "source_commit": "f6990df2036e4ed8bd6fcc9484e58c499eb874b5",
+  "source_tree": "e32409d130349d966a2903c9f6892afa8f307a65",
+  "based_on_run_id": "571aee5c-d6cc-49ab-b56e-54be55c092ca",
+  "original_api_run_status": "failed",
+  "model": "gpt-5.2",
+  "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+  "transport": "direct production revision stage with live provider; deterministic production evaluation stages",
+  "is_full_api_run": false,
+  "human_benchmark_approval": false,
+  "blind_scoring_eligible": false,
+  "browser_acceptance": false,
+  "provider_attempts": [
+    {
+      "operation": "revision_proposal",
+      "repair_attempt": 0,
+      "status": "success",
+      "usage": {
+        "schema_version": "1.0",
+        "input_tokens": 10391,
+        "output_tokens": 1099,
+        "repair_calls": 0,
+        "transport_retries": 0
+      },
+      "duration_seconds": 21.142
+    }
+  ],
+  "started_at": "2026-09-06T16:14:25.522267+00:00",
+  "confirmation_source": "assistant semantic review against preserved authored public intent",
+  "applied": false,
+  "status": "application_rejected",
+  "duration_seconds": 105.049,
+  "finished_at": "2026-09-06T16:16:10.525442+00:00"
+}

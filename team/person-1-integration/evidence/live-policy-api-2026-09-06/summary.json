@@ -1,0 +1,261 @@
+{
+  "kind": "assistant_operated_synthetic_live_rehearsal",
+  "source_commit": "f3962c64a548fe3bfd350654e95cd9612cf424d0",
+  "local_commit_with_identical_tree": "edbd9cc371c82bec9bd68d026f9fb3004d92299a",
+  "source_tree": "29d6c5db650049dbf8c143899d5ce53233ee5fc1",
+  "started_at": "2026-09-06T16:04:09.906859+00:00",
+  "transport": "in-process ASGI HTTP routes with live provider transport",
+  "policy": "bundled development-policy",
+  "confirmation_source": "assistant review against authored public development intent",
+  "human_benchmark_approval": false,
+  "blind_scoring_eligible": false,
+  "browser_acceptance": false,
+  "provider_attempts": [
+    {
+      "operation": "policy_extraction",
+      "repair_attempt": 0,
+      "status": "success",
+      "usage": {
+        "schema_version": "1.0",
+        "input_tokens": 3296,
+        "output_tokens": 1536,
+        "repair_calls": 0,
+        "transport_retries": 0
+      },
+      "duration_seconds": 23.459
+    },
+    {
+      "operation": "invariant_suggestion",
+      "repair_attempt": 0,
+      "status": "success",
+      "usage": {
+        "schema_version": "1.0",
+        "input_tokens": 3844,
+        "output_tokens": 660,
+        "repair_calls": 0,
+        "transport_retries": 0
+      },
+      "duration_seconds": 5.451
+    },
+    {
+      "operation": "scenario_generation",
+      "repair_attempt": 0,
+      "status": "success",
+      "usage": {
+        "schema_version": "1.0",
+        "input_tokens": 2145,
+        "output_tokens": 700,
+        "repair_calls": 0,
+        "transport_retries": 0
+      },
+      "duration_seconds": 20.198
+    },
+    {
+      "operation": "revision_proposal",
+      "repair_attempt": 0,
+      "status": "success",
+      "usage": {
+        "schema_version": "1.0",
+        "input_tokens": 10316,
+        "output_tokens": 1194,
+        "repair_calls": 0,
+        "transport_retries": 0
+      },
+      "duration_seconds": 24.111
+    },
+    {
+      "operation": "revision_proposal",
+      "repair_attempt": 1,
+      "status": "success",
+      "usage": {
+        "schema_version": "1.0",
+        "input_tokens": 10363,
+        "output_tokens": 1016,
+        "repair_calls": 1,
+        "transport_retries": 0
+      },
+      "duration_seconds": 6.244
+    }
+  ],
+  "http_actions": [
+    {
+      "path": "/api/v1/runs",
+      "status": 202,
+      "duration_seconds": 0.017
+    },
+    {
+      "path": "/api/v1/runs/571aee5c-d6cc-49ab-b56e-54be55c092ca/confirm-contract",
+      "status": 200,
+      "duration_seconds": 0.012
+    },
+    {
+      "path": "/api/v1/runs/571aee5c-d6cc-49ab-b56e-54be55c092ca/select-findings",
+      "status": 200,
+      "duration_seconds": 0.046
+    },
+    {
+      "path": "/api/v1/runs/571aee5c-d6cc-49ab-b56e-54be55c092ca/confirm-revision",
+      "status": 200,
+      "duration_seconds": 0.21
+    }
+  ],
+  "stage_history": [
+    {
+      "stage": "extracting",
+      "elapsed_seconds": 0.344
+    },
+    {
+      "stage": "awaiting_contract",
+      "elapsed_seconds": 29.53
+    },
+    {
+      "stage": "generating_initial_tests",
+      "elapsed_seconds": 82.633
+    },
+    {
+      "stage": "awaiting_finding_review",
+      "elapsed_seconds": 102.874
+    },
+    {
+      "stage": "drafting_revision",
+      "elapsed_seconds": 148.662
+    },
+    {
+      "stage": "awaiting_revision_confirmation",
+      "elapsed_seconds": 178.586
+    },
+    {
+      "stage": "failed",
+      "elapsed_seconds": 260.331
+    }
+  ],
+  "model": "gpt-4.1",
+  "run_id": "571aee5c-d6cc-49ab-b56e-54be55c092ca",
+  "last_stage": "failed",
+  "confirmation_actions": [
+    {
+      "endpoint": "confirm-contract",
+      "body": {
+        "decision": "confirm",
+        "baseline_policy_id": "policy-bf2a185a06d02aee79acb230ef20d1ad15bf8ce3d876d8aafc27c03ee8900615",
+        "baseline_policy_sha256": "95e9ba3ec5d2423b5996967ec91dd5d0bb237ef5a1fb310043374cfe8789bd19",
+        "invariants": [
+          {
+            "assertion": {
+              "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+              "dimension": "receipt_requirement",
+              "expected_value": "required",
+              "operator": "eq",
+              "schema_version": "1.0",
+              "target_kind": "effect_value"
+            },
+            "description": "Claims at SGD 50 require a receipt.",
+            "invariant_id": "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a",
+            "schema_version": "1.0",
+            "severity": "medium",
+            "when": [
+              {
+                "field": "amount_minor",
+                "operator": "eq",
+                "schema_version": "1.0",
+                "value": 5000
+              }
+            ]
+          },
+          {
+            "assertion": {
+              "assertion_id": "assertion-9064ea7cd3d412361f35d9cdfde7d93180f1eb106607527132234a16d7ddc1c8",
+              "dimension": "approval_requirement",
+              "expected_value": "manager",
+              "operator": "eq",
+              "schema_version": "1.0",
+              "target_kind": "effect_value"
+            },
+            "description": "International hotel claims require manager approval.",
+            "invariant_id": "invariant-c59c930b5dc65af6216031b7dd91f54d03dc6fda5986833053a6583757deca7b",
+            "schema_version": "1.0",
+            "severity": "high",
+            "when": [
+              {
+                "field": "expense_category",
+                "operator": "eq",
+                "schema_version": "1.0",
+                "value": "hotel"
+              },
+              {
+                "field": "destination_type",
+                "operator": "eq",
+                "schema_version": "1.0",
+                "value": "international"
+              }
+            ]
+          },
+          {
+            "assertion": {
+              "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+              "dimension": "daily_category_cap_minor",
+              "expected_value": 10000,
+              "operator": "lte",
+              "schema_version": "1.0",
+              "target_kind": "effect_value"
+            },
+            "description": "Meal spending is capped at SGD 100 per day.",
+            "invariant_id": "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+            "schema_version": "1.0",
+            "severity": "high",
+            "when": [
+              {
+                "field": "expense_category",
+                "operator": "eq",
+                "schema_version": "1.0",
+                "value": "meal"
+              }
+            ]
+          }
+        ],
+        "required_dimensions": [
+          "eligibility"
+        ]
+      }
+    },
+    {
+      "endpoint": "select-findings",
+      "body": {
+        "decisions": [
+          {
+            "finding_id": "finding-395e1dd4d17223c58a023ca7f7b279f9f8093ece0cb7b2281c255c1585d30841",
+            "decision": "accept"
+          },
+          {
+            "finding_id": "finding-7c0e953fdd9a9f544fd71eaf3742bef8faceeb427d77a8710ccb92c452f0bde5",
+            "decision": "accept",
+            "reviewer_severity": "high"
+          },
+          {
+            "finding_id": "finding-bb045ddfae7a2c575858637394f4b296bdf57f430dbf768c12e182eec941d34e",
+            "decision": "accept",
+            "reviewer_severity": "medium"
+          }
+        ]
+      }
+    },
+    {
+      "endpoint": "confirm-revision",
+      "body": {
+        "proposal_id": "proposal-3c32476269bc90243ad5b5f95382adf3913192ea7521443055a967709a2180b7",
+        "decision": "confirm"
+      }
+    }
+  ],
+  "public_error": {
+    "schema_version": "1.0",
+    "code": "REVISION_INVALID",
+    "message": "The proposed revision could not be applied.",
+    "error_id": null,
+    "retryable": false
+  },
+  "status": "blocked",
+  "sdk_errors": [],
+  "duration_seconds": 260.375,
+  "finished_at": "2026-09-06T16:08:30.277715+00:00"
+}

@@ -1,0 +1,39 @@
+{
+  "kind": "assistant_operated_live_revision_stage_followup",
+  "source_commit": "0fa1535c1777c3f7566728f851c5ab4bf9a1ab07",
+  "source_tree": "a0915fac87ed5d6ea3c7d9928a5e27b1b721087e",
+  "based_on_run_id": "571aee5c-d6cc-49ab-b56e-54be55c092ca",
+  "original_api_run_status": "failed",
+  "model": "gpt-5.2",
+  "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+  "transport": "direct production revision stage with live provider; deterministic production evaluation stages",
+  "is_full_api_run": false,
+  "human_benchmark_approval": false,
+  "blind_scoring_eligible": false,
+  "browser_acceptance": false,
+  "provider_attempts": [
+    {
+      "operation": "revision_proposal",
+      "repair_attempt": 0,
+      "status": "success",
+      "usage": {
+        "schema_version": "1.0",
+        "input_tokens": 10435,
+        "output_tokens": 937,
+        "repair_calls": 0,
+        "transport_retries": 0
+      },
+      "duration_seconds": 23.878
+    }
+  ],
+  "started_at": "2026-09-06T16:21:26.533078+00:00",
+  "confirmation_source": "assistant semantic review against preserved authored public intent",
+  "applied": true,
+  "status": "compared",
+  "patch_accepted": true,
+  "baseline_defects": 3,
+  "remaining_defects": 0,
+  "frozen_inputs_identical": true,
+  "duration_seconds": 56.331,
+  "finished_at": "2026-09-06T16:22:22.813086+00:00"
+}

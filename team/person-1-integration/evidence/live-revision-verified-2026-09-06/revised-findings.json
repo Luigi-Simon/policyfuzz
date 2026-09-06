@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "report_id": "findings-4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "inputs": {
+    "schema_version": "1.0",
+    "policy_sha256": "4501f7678b5a762d94b837e9a4eab1684a7f97f10adbaa1ef453daa66a309168",
+    "contract_sha256": "6a6f394b31579ecda93ce243a3ec30f60b7f0c04ea361d27386d537101acbc16",
+    "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+    "engine_sha256": "a8f373b2922f6c5d7f29a6064bde8f0379d727cb4bfea320c9fbb45f748afe42",
+    "run_manifest_sha256": "1d355bb543cac1c2802afbfa939d28fd5c090a2ed0a4867f69876e87a7611e42"
+  },
+  "findings": []
+}

@@ -1,5 +1,43 @@
 # Person 2 — Policy Intelligence handoff
 
+## Integration verification — 2026-09-06
+
+Implementation is merged into `main` through PR #2 at
+`a3e6c7f407b7c42b1c9c3a9b9d30864a3844b272`. The verified application
+commit is `0fa1535c1777c3f7566728f851c5ab4bf9a1ab07` (tree
+`a0915fac87ed5d6ea3c7d9928a5e27b1b721087e`). Person 1 integrated the provider fixture
+into the actual offline/API workflow. Shared public contracts remain frozen.
+
+- Python owns exact citation metadata; the model selects document-bound handles.
+- Private response fields require explicit exception links and unsupported scope.
+  A private discriminated effect schema imports the shared value types, so the
+  provider sees valid dimension/value pairs before the public validators run.
+- Valid rules beyond the twelve-rule cap remain cited, scoped, provisional
+  `unsupported_logic` evidence. Existing override-dependency closure is preserved.
+- Semantic no-op replacements are rejected before leaving Person 2. This includes
+  description-only edits and reordered equivalent predicates/effects/overrides.
+  Semantic failures are terminal; the one schema-repair budget is unchanged.
+- Changed override edges must belong to the targeted accepted conflict endpoints
+  and dimension; unrelated default edges must remain unchanged.
+- Generic guidance preserves strict boundaries and stated default exceptions;
+  schema-valid output still requires semantic review and can be rejected.
+
+Final checks: **1,524 backend tests**, **179 policy tests**, **111 schemas**, Ruff
+and formatting pass. Catalog (24), effect-schema (10) and rule-limit (3)
+regressions pass. Independent review reports no blockers. The actual-stage offline
+workflow retains ten scenarios and fixes three defects with zero provider calls.
+Earlier cached evidence remains an explicitly labelled historical recording.
+
+A fresh `gpt-5.2` revision-stage follow-up applied three structured operations and
+fixed **3/3 defects** on the original frozen ten-case suite. All seven acceptance
+checks pass; all eleven assertions move from inconclusive to pass. This is a
+follow-up to a preserved failed API run, not a new full API/browser acceptance run.
+
+Live attempts and their limitations are recorded in Person 1's
+[live investigation](../person-1-integration/live-extraction-handoff.md). Failed
+attempts are preserved; live semantic acceptance is separate from schema/citation
+validity, and no blind benchmark or human approval is claimed.
+
 ## Citation boundary correction — 2026-09-06
 
 Branch: `p2/fix-citation-metadata`. Changes are ready for Person 1's integration

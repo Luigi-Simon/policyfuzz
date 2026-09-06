@@ -1,0 +1,3092 @@
+{
+  "schema_version": "1.0",
+  "report_id": "evaluation-9e4984073269d19c7fdf45b3870910ceb5945e6903716d06b651f01fda5eb32c",
+  "inputs": {
+    "schema_version": "1.0",
+    "policy_sha256": "4501f7678b5a762d94b837e9a4eab1684a7f97f10adbaa1ef453daa66a309168",
+    "contract_sha256": "6a6f394b31579ecda93ce243a3ec30f60b7f0c04ea361d27386d537101acbc16",
+    "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+    "engine_sha256": "a8f373b2922f6c5d7f29a6064bde8f0379d727cb4bfea320c9fbb45f748afe42",
+    "run_manifest_sha256": "1d355bb543cac1c2802afbfa939d28fd5c090a2ed0a4867f69876e87a7611e42"
+  },
+  "engine_version": "1.0.0",
+  "results": [
+    {
+      "schema_version": "1.0",
+      "scenario_id": "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+        "fired_rule_ids": [
+          "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+          "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+          "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+          "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 1,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "NONCOMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "COMPLIANT"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "session_revision",
+            "proposal_id": "proposal-055dd1af9de30924be0a1dc5de93f7e4f4a02a3af31979be4715cbd7419f3ef2",
+            "operation_index": 1,
+            "confirmed_at": "2026-09-06T16:22:22.601134Z",
+            "baseline_citation_ids": [
+              "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+              "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57"
+            ]
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 119,
+              "end": 241,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-97d17f084746e1ffe4e45563835d95e931a990acbd6196cd9df6aa06514c3cdb",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 257,
+              "end": 301,
+              "quote": "Meal claims have a per-claim cap of SGD 100.",
+              "quote_sha256": "6be28fb33e2dbb55da3b93195f9d877fe0c4ce6d002c05a68f0c138cda7ebb04",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 517,
+              "end": 563,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "session_revision",
+            "proposal_id": "proposal-055dd1af9de30924be0a1dc5de93f7e4f4a02a3af31979be4715cbd7419f3ef2",
+            "operation_index": 2,
+            "confirmed_at": "2026-09-06T16:22:22.601134Z",
+            "baseline_citation_ids": [
+              "cite-0af9d47e048bd7c89883ca5f403cee4a48a958511de58ab14743e1b506b80bb8",
+              "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+              "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+              "cite-308a22f94e3660867350e8cf00bf1da97effafce01b94c202d6a84a175ef576b",
+              "cite-7380f2a949391c17371d597cde865ca7b8c3396efbe23538f83391e4a5021e13",
+              "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57",
+              "cite-947f2d4b77eca45e2827d13b71e31878d0f8f50ab0aee1b6f8983fdd0d47f83d",
+              "cite-97d17f084746e1ffe4e45563835d95e931a990acbd6196cd9df6aa06514c3cdb",
+              "cite-cd30f251e2d67118f937900198186058076396564f9cde1d9d740a53cb38d38d",
+              "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f"
+            ]
+          }
+        ],
+        "trace_sha256": "5a3e133f840e8f5ecd8c69e2c2e5afd4aaa9f923190a3c0226eea228a67312fd"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+          "status": "PASS",
+          "actual_value": 10000
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+        "fired_rule_ids": [
+          "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+          "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+          "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+          "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+          "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 1,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 1,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 1,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+            "predicate_index": 0,
+            "matched": false
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "manager",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+              "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+              "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+            ],
+            "overridden_rule_ids": [
+              "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+              "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+            ],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 25000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "session_revision",
+            "proposal_id": "proposal-055dd1af9de30924be0a1dc5de93f7e4f4a02a3af31979be4715cbd7419f3ef2",
+            "operation_index": 0,
+            "confirmed_at": "2026-09-06T16:22:22.601134Z",
+            "baseline_citation_ids": [
+              "cite-308a22f94e3660867350e8cf00bf1da97effafce01b94c202d6a84a175ef576b",
+              "cite-947f2d4b77eca45e2827d13b71e31878d0f8f50ab0aee1b6f8983fdd0d47f83d"
+            ]
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-7380f2a949391c17371d597cde865ca7b8c3396efbe23538f83391e4a5021e13",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 302,
+              "end": 347,
+              "quote": "Hotel claims have a per-claim cap of SGD 250.",
+              "quote_sha256": "b0dc146bd671169b5b56a66703ea1023533817a75b745a3787a86394ccde4ac2",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "session_revision",
+            "proposal_id": "proposal-055dd1af9de30924be0a1dc5de93f7e4f4a02a3af31979be4715cbd7419f3ef2",
+            "operation_index": 1,
+            "confirmed_at": "2026-09-06T16:22:22.601134Z",
+            "baseline_citation_ids": [
+              "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+              "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57"
+            ]
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 119,
+              "end": 241,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 517,
+              "end": 563,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-947f2d4b77eca45e2827d13b71e31878d0f8f50ab0aee1b6f8983fdd0d47f83d",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 564,
+              "end": 638,
+              "quote": "Hotel claims below SGD 250 require no approval, regardless of destination.",
+              "quote_sha256": "f9c18c5f04f1d6883ddc9e4fff7bace998426bb0d87c6811dc07310c58274d4b",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "f2def23e868365824a18fa106ea99bfc82de8a12b43fa8a9a0c3035e659f3a8f"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-9064ea7cd3d412361f35d9cdfde7d93180f1eb106607527132234a16d7ddc1c8",
+          "status": "PASS",
+          "actual_value": "manager"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+        "fired_rule_ids": [
+          "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+          "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+          "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+          "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "COMPLIANT"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "session_revision",
+            "proposal_id": "proposal-055dd1af9de30924be0a1dc5de93f7e4f4a02a3af31979be4715cbd7419f3ef2",
+            "operation_index": 1,
+            "confirmed_at": "2026-09-06T16:22:22.601134Z",
+            "baseline_citation_ids": [
+              "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+              "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57"
+            ]
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 119,
+              "end": 241,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-97d17f084746e1ffe4e45563835d95e931a990acbd6196cd9df6aa06514c3cdb",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 257,
+              "end": 301,
+              "quote": "Meal claims have a per-claim cap of SGD 100.",
+              "quote_sha256": "6be28fb33e2dbb55da3b93195f9d877fe0c4ce6d002c05a68f0c138cda7ebb04",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 517,
+              "end": 563,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "session_revision",
+            "proposal_id": "proposal-055dd1af9de30924be0a1dc5de93f7e4f4a02a3af31979be4715cbd7419f3ef2",
+            "operation_index": 2,
+            "confirmed_at": "2026-09-06T16:22:22.601134Z",
+            "baseline_citation_ids": [
+              "cite-0af9d47e048bd7c89883ca5f403cee4a48a958511de58ab14743e1b506b80bb8",
+              "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+              "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+              "cite-308a22f94e3660867350e8cf00bf1da97effafce01b94c202d6a84a175ef576b",
+              "cite-7380f2a949391c17371d597cde865ca7b8c3396efbe23538f83391e4a5021e13",
+              "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57",
+              "cite-947f2d4b77eca45e2827d13b71e31878d0f8f50ab0aee1b6f8983fdd0d47f83d",
+              "cite-97d17f084746e1ffe4e45563835d95e931a990acbd6196cd9df6aa06514c3cdb",
+              "cite-cd30f251e2d67118f937900198186058076396564f9cde1d9d740a53cb38d38d",
+              "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f"
+            ]
+          }
+        ],
+        "trace_sha256": "8e658b3d6160fd5424ed070b0132921697f5e5b997f1d560224e97f035fff325"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+          "status": "PASS",
+          "actual_value": 10000
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+        "fired_rule_ids": [
+          "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+          "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+          "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+          "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "COMPLIANT"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "session_revision",
+            "proposal_id": "proposal-055dd1af9de30924be0a1dc5de93f7e4f4a02a3af31979be4715cbd7419f3ef2",
+            "operation_index": 1,
+            "confirmed_at": "2026-09-06T16:22:22.601134Z",
+            "baseline_citation_ids": [
+              "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+              "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57"
+            ]
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 119,
+              "end": 241,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-97d17f084746e1ffe4e45563835d95e931a990acbd6196cd9df6aa06514c3cdb",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 257,
+              "end": 301,
+              "quote": "Meal claims have a per-claim cap of SGD 100.",
+              "quote_sha256": "6be28fb33e2dbb55da3b93195f9d877fe0c4ce6d002c05a68f0c138cda7ebb04",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 517,
+              "end": 563,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "session_revision",
+            "proposal_id": "proposal-055dd1af9de30924be0a1dc5de93f7e4f4a02a3af31979be4715cbd7419f3ef2",
+            "operation_index": 2,
+            "confirmed_at": "2026-09-06T16:22:22.601134Z",
+            "baseline_citation_ids": [
+              "cite-0af9d47e048bd7c89883ca5f403cee4a48a958511de58ab14743e1b506b80bb8",
+              "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+              "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+              "cite-308a22f94e3660867350e8cf00bf1da97effafce01b94c202d6a84a175ef576b",
+              "cite-7380f2a949391c17371d597cde865ca7b8c3396efbe23538f83391e4a5021e13",
+              "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57",
+              "cite-947f2d4b77eca45e2827d13b71e31878d0f8f50ab0aee1b6f8983fdd0d47f83d",
+              "cite-97d17f084746e1ffe4e45563835d95e931a990acbd6196cd9df6aa06514c3cdb",
+              "cite-cd30f251e2d67118f937900198186058076396564f9cde1d9d740a53cb38d38d",
+              "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f"
+            ]
+          }
+        ],
+        "trace_sha256": "95188938acae19b55785d8cf5de26b7ddd4d988fe99daf25f4ce8825c5c555f1"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+          "status": "PASS",
+          "actual_value": 10000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+        "fired_rule_ids": [
+          "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+          "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+          "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+          "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 1,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+            "predicate_index": 0,
+            "matched": false
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+              "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+            ],
+            "overridden_rule_ids": [
+              "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+            ],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 25000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-7380f2a949391c17371d597cde865ca7b8c3396efbe23538f83391e4a5021e13",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 302,
+              "end": 347,
+              "quote": "Hotel claims have a per-claim cap of SGD 250.",
+              "quote_sha256": "b0dc146bd671169b5b56a66703ea1023533817a75b745a3787a86394ccde4ac2",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "session_revision",
+            "proposal_id": "proposal-055dd1af9de30924be0a1dc5de93f7e4f4a02a3af31979be4715cbd7419f3ef2",
+            "operation_index": 1,
+            "confirmed_at": "2026-09-06T16:22:22.601134Z",
+            "baseline_citation_ids": [
+              "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+              "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57"
+            ]
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 119,
+              "end": 241,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 517,
+              "end": 563,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-947f2d4b77eca45e2827d13b71e31878d0f8f50ab0aee1b6f8983fdd0d47f83d",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 564,
+              "end": 638,
+              "quote": "Hotel claims below SGD 250 require no approval, regardless of destination.",
+              "quote_sha256": "f9c18c5f04f1d6883ddc9e4fff7bace998426bb0d87c6811dc07310c58274d4b",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "bdc665b7486c8f3d93ae9d4671a5eff45622a8431d2dba96e2558b2e44dd409f"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+        "fired_rule_ids": [
+          "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+          "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+            "predicate_index": 0,
+            "matched": false
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "NOT_APPLICABLE"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "session_revision",
+            "proposal_id": "proposal-055dd1af9de30924be0a1dc5de93f7e4f4a02a3af31979be4715cbd7419f3ef2",
+            "operation_index": 1,
+            "confirmed_at": "2026-09-06T16:22:22.601134Z",
+            "baseline_citation_ids": [
+              "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+              "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57"
+            ]
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 119,
+              "end": 241,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 517,
+              "end": 563,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "edaf0cf2b9ad69a31e59067b8f74ca626b94f7d8955d2873d1c1a3f52787be12"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+        "fired_rule_ids": [
+          "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+          "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+            "predicate_index": 0,
+            "matched": false
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "NOT_APPLICABLE"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "session_revision",
+            "proposal_id": "proposal-055dd1af9de30924be0a1dc5de93f7e4f4a02a3af31979be4715cbd7419f3ef2",
+            "operation_index": 1,
+            "confirmed_at": "2026-09-06T16:22:22.601134Z",
+            "baseline_citation_ids": [
+              "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+              "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57"
+            ]
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 119,
+              "end": 241,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 517,
+              "end": 563,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "ac2a618da3de682bc17cc04f130e08a510e12b3297063cdc92e745c9437aef3d"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+        "fired_rule_ids": [
+          "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+          "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+          "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+          "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "not_required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "COMPLIANT"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 119,
+              "end": 241,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-97d17f084746e1ffe4e45563835d95e931a990acbd6196cd9df6aa06514c3cdb",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 257,
+              "end": 301,
+              "quote": "Meal claims have a per-claim cap of SGD 100.",
+              "quote_sha256": "6be28fb33e2dbb55da3b93195f9d877fe0c4ce6d002c05a68f0c138cda7ebb04",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 517,
+              "end": 563,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "session_revision",
+            "proposal_id": "proposal-055dd1af9de30924be0a1dc5de93f7e4f4a02a3af31979be4715cbd7419f3ef2",
+            "operation_index": 2,
+            "confirmed_at": "2026-09-06T16:22:22.601134Z",
+            "baseline_citation_ids": [
+              "cite-0af9d47e048bd7c89883ca5f403cee4a48a958511de58ab14743e1b506b80bb8",
+              "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+              "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+              "cite-308a22f94e3660867350e8cf00bf1da97effafce01b94c202d6a84a175ef576b",
+              "cite-7380f2a949391c17371d597cde865ca7b8c3396efbe23538f83391e4a5021e13",
+              "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57",
+              "cite-947f2d4b77eca45e2827d13b71e31878d0f8f50ab0aee1b6f8983fdd0d47f83d",
+              "cite-97d17f084746e1ffe4e45563835d95e931a990acbd6196cd9df6aa06514c3cdb",
+              "cite-cd30f251e2d67118f937900198186058076396564f9cde1d9d740a53cb38d38d",
+              "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f"
+            ]
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 408,
+              "end": 458,
+              "quote": "Receipts are not required for claims below SGD 50.",
+              "quote_sha256": "881e4b4c701a197a86eacc3c3687c477889c523c77887f7725b33aab2e4552af",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "3e5ef53f428cafef7d913949d31faac2963ac85a2c1551e3c0e93d5191b20f8f"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+          "status": "PASS",
+          "actual_value": 10000
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+        "fired_rule_ids": [
+          "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+          "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+          "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+            "predicate_index": 0,
+            "matched": false
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 20000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "session_revision",
+            "proposal_id": "proposal-055dd1af9de30924be0a1dc5de93f7e4f4a02a3af31979be4715cbd7419f3ef2",
+            "operation_index": 1,
+            "confirmed_at": "2026-09-06T16:22:22.601134Z",
+            "baseline_citation_ids": [
+              "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+              "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57"
+            ]
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 119,
+              "end": 241,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 517,
+              "end": 563,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-0af9d47e048bd7c89883ca5f403cee4a48a958511de58ab14743e1b506b80bb8",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 348,
+              "end": 397,
+              "quote": "Transport claims have a per-claim cap of SGD 200.",
+              "quote_sha256": "06a6c2867710eaac615d068d654e15251609922b094f89e4707902fe61804623",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "92e32ec5e901355b86660672449d91d1862e31b44c460461f6c6752205e52f5a"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9",
+        "fired_rule_ids": [
+          "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+          "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+          "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+          "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+            "predicate_index": 1,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+            "predicate_index": 0,
+            "matched": false
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "manager",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+              "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b"
+            ],
+            "overridden_rule_ids": [
+              "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a"
+            ],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "NONCOMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "NOT_APPLICABLE"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "session_revision",
+            "proposal_id": "proposal-055dd1af9de30924be0a1dc5de93f7e4f4a02a3af31979be4715cbd7419f3ef2",
+            "operation_index": 1,
+            "confirmed_at": "2026-09-06T16:22:22.601134Z",
+            "baseline_citation_ids": [
+              "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+              "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57"
+            ]
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 119,
+              "end": 241,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 517,
+              "end": 563,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-cd30f251e2d67118f937900198186058076396564f9cde1d9d740a53cb38d38d",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 692,
+              "end": 766,
+              "quote": "Airfare booked fewer than 14 days before travel requires manager approval.",
+              "quote_sha256": "f4e9c7a9c0d6a1dfc2022cd40e8b3e524bbd6cc562962ba0d13af5d154f0a3fb",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "75979f0dfd32b60981afaa5b798ba640a25787f3eef9c3f4b0580428294ccb0c"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    }
+  ],
+  "coverage": {
+    "schema_version": "1.0",
+    "total_rules": 11,
+    "covered_rules": 11,
+    "total_invariants": 3,
+    "covered_invariants": 3,
+    "total_predicate_branches": 26,
+    "covered_predicate_branches": 24,
+    "evidence": [
+      {
+        "schema_version": "1.0",
+        "target_kind": "invariant",
+        "target_id": "invariant-c59c930b5dc65af6216031b7dd91f54d03dc6fda5986833053a6583757deca7b",
+        "scenario_ids": [
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "invariant",
+        "target_id": "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "invariant",
+        "target_id": "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a",
+        "scenario_ids": [
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+        "scenario_ids": [
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": 1,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+        "scenario_ids": [
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7"
+        ],
+        "predicate_index": 1,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": 1,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+        "scenario_ids": [
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+        ],
+        "predicate_index": 1,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+        "scenario_ids": [
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+        "scenario_ids": [
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+        "scenario_ids": [
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6"
+        ],
+        "predicate_index": 1,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": 1,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+        "scenario_ids": [
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+        "scenario_ids": [
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+        "scenario_ids": [
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+        "scenario_ids": [
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+        "scenario_ids": [
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-0f3815336e2f42720dbc11d4069a4b3adb61ccf8770334677356338fb435342c",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-15a5dcb3b8cbee6f0b4c8a77a7abb9dc144f57c27819e335a4a4cc8c01fe609c",
+        "scenario_ids": [
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-1f58d3910b8d29cac2edbfd00b7fa5904af70122d9e9479cedb36af5ff8d3ef2",
+        "scenario_ids": [
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+        "scenario_ids": [
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-5232a03f2b6a4a7969b5af92c833e8f80c7ed7fcaa05b42014f7f6bff1d0ff9b",
+        "scenario_ids": [
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+        "scenario_ids": [
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-12ce37d68eeeda388b3c27211e6abd1a22c7f42783f6c90263ffbd47951bacb7",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-5446d855f3e2f06a15a255724b3a4c3fd1dbc2e6616bcd59698f194f0a320acb",
+          "scenario-7458be506203e0ebf629942de03830d6ee41aa0d935ba9340e18e318604e3f51",
+          "scenario-8b3f3d7f0db098bd914d9c48a8826790f9e5be2b447bc00953a26839d4a3a9df",
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6",
+          "scenario-cfac4092c29c55b5f57841623a441af5eb7135bb610979902dba29b30f0b64b9"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+        "scenario_ids": [
+          "scenario-c851ec4a9faa8f1c578487cdac4635fb880e217c4453798e98c12676a8049bb6"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-f2d44e65c4199132d4b3fe06d82ca99ac950682c4e43098ba858078ce9fb7fdc",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+        "scenario_ids": [
+          "scenario-0fb0278191b660c95429b054918db80674a4b745dacbc5e8763485a17165e4a2",
+          "scenario-48eb387668f1315dc5eb5411ca3279fc81c2a51f91bf2e7749e919834a6c5c05",
+          "scenario-4954140747b743fe64d5779c166d1d53aa68960008de2710564059179fbe5d60",
+          "scenario-b481dce34a51d88d59966e31411a1fea658742a3db16e6e78a0b364a5f45743d"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      }
+    ],
+    "missing_rule_ids": [],
+    "missing_invariant_ids": [],
+    "targeted_cycles": 0,
+    "status": "satisfied"
+  }
+}

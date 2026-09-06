@@ -1,0 +1,14 @@
+{
+  "algorithm": "SHA-256",
+  "files": {
+    "application-result.json": "3df6f7d1de55e02241b4eea816db8db530b3dc163324f357a5bd14234fb617b5",
+    "comparison.json": "94e1ec8256f916a1a7a48672b8b7217eea355f9b677e524710675e9cc8c6d7df",
+    "proposal.json": "2d44f9885c676bd5b787e768190624824ea6d289e76c7a514376f34ce4cb4e16",
+    "provider-response-1.json": "18868d6acea99d530d7a8478191e250f645f2ef38db0ceaa755725f9c29cc0c1",
+    "request.json": "b4017c4b1ab3833814dccaeaa009f0dee2358d3a95b0b811a7f4a54e6a81d92f",
+    "revised-evaluation.json": "e97a57ef8116aef201284ec733facc682ffb4ed6ef94caee3b39f5a1a42030ed",
+    "revised-findings.json": "8f60689480104e180abb29cb4e2872557bebea34af8bc68f7670ebd2abb4fcf5",
+    "semantic-review.json": "45a7cfc88a76b9cd1444ed81a4953d8984c2b3f5c707634aa8b8d7b38c859936",
+    "summary.json": "e9f6da27ee436de04cb98d39e9cbada11162f85a988a97dd56dc62e712ec4c95"
+  }
+}

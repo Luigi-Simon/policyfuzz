@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0",
+  "run_id": "3e09d50b-9d24-45db-9424-73e5fbc83efc",
+  "stage": "failed",
+  "manifest": {
+    "schema_version": "1.0",
+    "manifest_id": "manifest-3e09d50b-9d24-45db-9424-73e5fbc83efc",
+    "run_id": "3e09d50b-9d24-45db-9424-73e5fbc83efc",
+    "engine_version": "1.0.0",
+    "engine_sha256": "a8f373b2922f6c5d7f29a6064bde8f0379d727cb4bfea320c9fbb45f748afe42",
+    "prompt_hashes": [
+      {
+        "schema_version": "1.0",
+        "prompt_name": "policy_prompt_source_v1",
+        "prompt_sha256": "6073c96e545e7929bbc5a00e90f7fff975257356fec8a2a73aeac89e56a28660"
+      },
+      {
+        "schema_version": "1.0",
+        "prompt_name": "revision_prompt_source_v1",
+        "prompt_sha256": "f0e0e4eb3f0eea607eaa728043589f129fc3a1da54fd840800040928ac319509"
+      },
+      {
+        "schema_version": "1.0",
+        "prompt_name": "fuzz_prompt_source_v1",
+        "prompt_sha256": "4e67e4f61602a14d740f59bbc083d459c568770bbdeafa667be98101380ec723"
+      }
+    ],
+    "provider": "openai",
+    "model_identifier": "gpt-4.1",
+    "generation_config": {
+      "schema_version": "1.0",
+      "temperature_milli": 0,
+      "top_p_percent": 100,
+      "max_output_tokens": 4096,
+      "seed": null
+    },
+    "random_seed": 42,
+    "started_at": "2026-09-06T15:58:52.194701Z",
+    "mode": "live"
+  },
+  "created_at": "2026-09-06T15:58:52.195398Z",
+  "expires_at": "2026-09-06T16:58:52.195398Z",
+  "artifacts": [
+    {
+      "schema_version": "1.0",
+      "artifact_type": "run_manifest",
+      "artifact_sha256": "ad7ba4521aa1b5b1af6ba8e909d880f70a1887dbba070b65d406d41924e5b032",
+      "semantic_sha256": "9be08b70c87f34a4e3063681b8b3c38715cae1bf8fccf68cd98cb7ecbc617d23",
+      "parent_hashes": [],
+      "run_manifest_id": "manifest-3e09d50b-9d24-45db-9424-73e5fbc83efc",
+      "payload": {
+        "schema_version": "1.0",
+        "manifest_id": "manifest-3e09d50b-9d24-45db-9424-73e5fbc83efc",
+        "run_id": "3e09d50b-9d24-45db-9424-73e5fbc83efc",
+        "engine_version": "1.0.0",
+        "engine_sha256": "a8f373b2922f6c5d7f29a6064bde8f0379d727cb4bfea320c9fbb45f748afe42",
+        "prompt_hashes": [
+          {
+            "schema_version": "1.0",
+            "prompt_name": "policy_prompt_source_v1",
+            "prompt_sha256": "6073c96e545e7929bbc5a00e90f7fff975257356fec8a2a73aeac89e56a28660"
+          },
+          {
+            "schema_version": "1.0",
+            "prompt_name": "revision_prompt_source_v1",
+            "prompt_sha256": "f0e0e4eb3f0eea607eaa728043589f129fc3a1da54fd840800040928ac319509"
+          },
+          {
+            "schema_version": "1.0",
+            "prompt_name": "fuzz_prompt_source_v1",
+            "prompt_sha256": "4e67e4f61602a14d740f59bbc083d459c568770bbdeafa667be98101380ec723"
+          }
+        ],
+        "provider": "openai",
+        "model_identifier": "gpt-4.1",
+        "generation_config": {
+          "schema_version": "1.0",
+          "temperature_milli": 0,
+          "top_p_percent": 100,
+          "max_output_tokens": 4096,
+          "seed": null
+        },
+        "random_seed": 42,
+        "started_at": "2026-09-06T15:58:52.194701Z",
+        "mode": "live"
+      }
+    },
+    {
+      "schema_version": "1.0",
+      "artifact_type": "policy_document",
+      "artifact_sha256": "b6404959e18430d1afeaf8461677b64ddb478d44c7b1cccab19f5e0bbd6b780c",
+      "semantic_sha256": "f565788841198482ce838d1592cf777fb44ee9abbfa898491e28e9244dc994fc",
+      "parent_hashes": [
+        "ad7ba4521aa1b5b1af6ba8e909d880f70a1887dbba070b65d406d41924e5b032"
+      ],
+      "run_manifest_id": "manifest-3e09d50b-9d24-45db-9424-73e5fbc83efc",
+      "payload": {
+        "schema_version": "1.0",
+        "document_id": "document-4c194c07ac6de7044f0548771ea257cccd1e8d4d0a5b4d1a602e428ee3a66734",
+        "title": "development-policy",
+        "source_type": "bundled_sample",
+        "pages": [
+          {
+            "schema_version": "1.0",
+            "page": 1,
+            "text": "SYNTHETIC HACKATHON SAMPLE — NOT COMPANY POLICY\nSynthetic Travel and Expense Policy — Development\n\nEligible categories\nMeal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.\n\nCategory caps\nMeal claims have a per-claim cap of SGD 100.\nHotel claims have a per-claim cap of SGD 250.\nTransport claims have a per-claim cap of SGD 200.\n\nReceipts\nReceipts are not required for claims below SGD 50.\nReceipts are required for claims above SGD 50.\n\nApprovals\nApproval is normally not required for a claim.\nHotel claims below SGD 250 require no approval, regardless of destination.\nInternational hotel claims require manager approval.\nAirfare booked fewer than 14 days before travel requires manager approval.\n\nUnsupported language\nReasonable incidental expenses may be reimbursed.\n",
+            "start": 0,
+            "end": 839
+          }
+        ],
+        "document_sha256": "4c194c07ac6de7044f0548771ea257cccd1e8d4d0a5b4d1a602e428ee3a66734"
+      }
+    }
+  ],
+  "events": [
+    {
+      "schema_version": "1.0",
+      "timestamp": "2026-09-06T15:58:52.197611Z",
+      "stage": "ingesting",
+      "action_summary": "Policy ingestion started.",
+      "artifact": null,
+      "error_id": null
+    },
+    {
+      "schema_version": "1.0",
+      "timestamp": "2026-09-06T15:58:52.198846Z",
+      "stage": "extracting",
+      "action_summary": "Policy extraction started.",
+      "artifact": {
+        "schema_version": "1.0",
+        "artifact_type": "policy_document",
+        "artifact_sha256": "b6404959e18430d1afeaf8461677b64ddb478d44c7b1cccab19f5e0bbd6b780c",
+        "semantic_sha256": "f565788841198482ce838d1592cf777fb44ee9abbfa898491e28e9244dc994fc"
+      },
+      "error_id": null
+    },
+    {
+      "schema_version": "1.0",
+      "timestamp": "2026-09-06T15:59:17.597759Z",
+      "stage": "failed",
+      "action_summary": "Run failed.",
+      "artifact": null,
+      "error_id": null
+    }
+  ],
+  "finding_decisions": [],
+  "decision_at": null,
+  "error": {
+    "schema_version": "1.0",
+    "code": "MALFORMED_MODEL_OUTPUT",
+    "message": "The workflow could not complete this stage.",
+    "error_id": null,
+    "retryable": false
+  }
+}

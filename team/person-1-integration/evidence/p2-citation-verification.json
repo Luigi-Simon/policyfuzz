@@ -1,0 +1,78 @@
+{
+  "kind": "application_verification_not_release_gate",
+  "source_commit": "0fa1535c1777c3f7566728f851c5ab4bf9a1ab07",
+  "source_tree": "a0915fac87ed5d6ea3c7d9928a5e27b1b721087e",
+  "date": "2026-09-06",
+  "checks": {
+    "backend_pytest": {
+      "passed": 1524,
+      "duration_seconds": 39.02
+    },
+    "policy_pytest": {
+      "passed": 179
+    },
+    "citation_catalog_regressions": {
+      "passed": 24
+    },
+    "ruff_check": "passed",
+    "ruff_format": {
+      "status": "passed",
+      "files": 168
+    },
+    "contract_drift": {
+      "status": "passed",
+      "schemas": 111
+    },
+    "offline_workflow": {
+      "status": "passed",
+      "scenarios": 10,
+      "baseline_defects": 3,
+      "remaining_defects": 0,
+      "patch_accepted": true,
+      "actual_provider_calls": 0,
+      "scripted_model_calls": 4,
+      "suite_sha256": "1e940319389dbf72e2ca09782cc4a7b35a4321cda5c8ed978e1871ec7f14cf18"
+    },
+    "cached_replay": {
+      "status": "passed",
+      "replays": 3,
+      "semantic_execution_sha256": "bab4805986a8d06b3bf80e923018d6f23091885880a21a8b255258189fb2310a"
+    },
+    "private_effect_schema_regressions": {
+      "passed": 10
+    },
+    "rule_limit_regressions": {
+      "passed": 3
+    },
+    "revision_tests": {
+      "passed": 27,
+      "new_no_op_cases": 7,
+      "new_override_scope_cases": 4
+    },
+    "github_ci": {
+      "status": "passed",
+      "application_head": "0fa1535c1777c3f7566728f851c5ab4bf9a1ab07",
+      "pull_request_run": 34045177149,
+      "push_run": 34045174593
+    }
+  },
+  "independent_code_review": "no_remaining_blockers",
+  "human_benchmark_approval": false,
+  "browser_acceptance": false,
+  "gate_b": false,
+  "final_release": false,
+  "live_revision_followup": {
+    "evidence_directory": "live-revision-verified-2026-09-06",
+    "model": "gpt-5.2",
+    "real_provider_calls": 1,
+    "schema_repairs": 0,
+    "baseline_defects": 3,
+    "remaining_defects": 0,
+    "acceptance_checks_passed": 7,
+    "frozen_suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+    "is_full_api_run": false
+  },
+  "merge_commit": "a3e6c7f407b7c42b1c9c3a9b9d30864a3844b272",
+  "pull_request": "https://github.com/Luigi-Simon/policyfuzz/pull/2",
+  "independent_live_evidence_review": "No blockers; source/revised policy, contract, suite and rule-set hashes recomputed, comparison anchors checked, and proposal scope independently revalidated. Revision-stage follow-up only."
+}

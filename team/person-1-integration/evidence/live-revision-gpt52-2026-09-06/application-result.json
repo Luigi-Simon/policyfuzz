@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "proposal_id": "proposal-817b3aac3b7dffe940eae8c86773e663c6e9578adbcd75499267b1f8dcf80a08",
+  "applied": false,
+  "revised_policy": null,
+  "changed_rule_ids": [],
+  "error": {
+    "schema_version": "1.0",
+    "code": "REVISION_INVALID",
+    "message": "Structured revision rejected: override change must stay within the accepted conflict endpoints",
+    "error_id": null,
+    "retryable": false
+  }
+}

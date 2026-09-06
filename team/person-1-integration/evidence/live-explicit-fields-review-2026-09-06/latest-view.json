@@ -1,0 +1,729 @@
+{
+  "schema_version": "1.0",
+  "run_id": "87ec1920-99a8-42e2-8d06-bb7d494189b6",
+  "stage": "awaiting_contract",
+  "allowed_actions": [
+    "confirm_contract",
+    "delete_run"
+  ],
+  "mode": "live",
+  "events": [
+    {
+      "schema_version": "1.0",
+      "timestamp": "2026-09-06T15:57:22.372760Z",
+      "stage": "ingesting",
+      "action_summary": "Policy ingestion started.",
+      "artifact": null,
+      "error_id": null
+    },
+    {
+      "schema_version": "1.0",
+      "timestamp": "2026-09-06T15:57:22.374252Z",
+      "stage": "extracting",
+      "action_summary": "Policy extraction started.",
+      "artifact": {
+        "schema_version": "1.0",
+        "artifact_type": "policy_document",
+        "artifact_sha256": "b6404959e18430d1afeaf8461677b64ddb478d44c7b1cccab19f5e0bbd6b780c",
+        "semantic_sha256": "f565788841198482ce838d1592cf777fb44ee9abbfa898491e28e9244dc994fc"
+      },
+      "error_id": null
+    },
+    {
+      "schema_version": "1.0",
+      "timestamp": "2026-09-06T15:58:01.236610Z",
+      "stage": "awaiting_contract",
+      "action_summary": "Review the policy contract and invariant severities.",
+      "artifact": {
+        "schema_version": "1.0",
+        "artifact_type": "policy_ir",
+        "artifact_sha256": "ede33b5758b5583ee79d0b9a51201e495770e0a7d57a8d2a8fb4b61bbf2c6219",
+        "semantic_sha256": "e13594e541779b1a2f801a386b202936bf7a9528e3e1403534c8453edec086ea"
+      },
+      "error_id": null
+    }
+  ],
+  "artifacts": [
+    {
+      "schema_version": "1.0",
+      "artifact": {
+        "schema_version": "1.0",
+        "artifact_type": "run_manifest",
+        "artifact_sha256": "888c22bcb1afdc035b6e30b16172ca48f5df051e12ea14d341605140481a20e4",
+        "semantic_sha256": "0f0186deef0ca88468a09855ecc9141827f1093ce754778c10a33548537a94bf"
+      },
+      "title": "Run configuration",
+      "item_count": null
+    },
+    {
+      "schema_version": "1.0",
+      "artifact": {
+        "schema_version": "1.0",
+        "artifact_type": "policy_document",
+        "artifact_sha256": "b6404959e18430d1afeaf8461677b64ddb478d44c7b1cccab19f5e0bbd6b780c",
+        "semantic_sha256": "f565788841198482ce838d1592cf777fb44ee9abbfa898491e28e9244dc994fc"
+      },
+      "title": "Policy source",
+      "item_count": null
+    },
+    {
+      "schema_version": "1.0",
+      "artifact": {
+        "schema_version": "1.0",
+        "artifact_type": "policy_ir",
+        "artifact_sha256": "ede33b5758b5583ee79d0b9a51201e495770e0a7d57a8d2a8fb4b61bbf2c6219",
+        "semantic_sha256": "e13594e541779b1a2f801a386b202936bf7a9528e3e1403534c8453edec086ea"
+      },
+      "title": "Compiled policy",
+      "item_count": 12
+    }
+  ],
+  "pending_confirmation": {
+    "schema_version": "1.0",
+    "kind": "contract",
+    "baseline_policy_id": "policy-c9e091fe4983a3a873e838ed6ba51ccc15f0f1221d28c4b697c08c3621dedebc",
+    "baseline_policy_sha256": "ede33b5758b5583ee79d0b9a51201e495770e0a7d57a8d2a8fb4b61bbf2c6219",
+    "document_sha256": "4c194c07ac6de7044f0548771ea257cccd1e8d4d0a5b4d1a602e428ee3a66734",
+    "rules": [
+      {
+        "schema_version": "1.0",
+        "rule_id": "rule-54cbc5e714927cd2322492182993f6d4f9aa237ad2df2341b5b5cde448004932",
+        "revision": 0,
+        "description": "Meal expenses are eligible for reimbursement when incurred for business travel.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "meal"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "value": "allow"
+          }
+        ],
+        "overrides": [],
+        "citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 119,
+              "end": 241,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          }
+        ],
+        "confidence_percent": 90
+      },
+      {
+        "schema_version": "1.0",
+        "rule_id": "rule-ad3a8f88613f55b7bce34adb4e7931499057882185f1857c53c233cc339d5cf2",
+        "revision": 0,
+        "description": "Hotel expenses are eligible for reimbursement when incurred for business travel.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "hotel"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "value": "allow"
+          }
+        ],
+        "overrides": [],
+        "citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 119,
+              "end": 241,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          }
+        ],
+        "confidence_percent": 90
+      },
+      {
+        "schema_version": "1.0",
+        "rule_id": "rule-c397599c8e5be6f5f17d416539dda757d9c8cc8d463b13893e2fb4e3470d3f27",
+        "revision": 0,
+        "description": "Transport expenses are eligible for reimbursement when incurred for business travel.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "transport"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "value": "allow"
+          }
+        ],
+        "overrides": [],
+        "citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 119,
+              "end": 241,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          }
+        ],
+        "confidence_percent": 90
+      },
+      {
+        "schema_version": "1.0",
+        "rule_id": "rule-4c15b9dd6005107030f555119c9b32be93522ae0e06e7447767da658ad23dc65",
+        "revision": 0,
+        "description": "Airfare expenses are eligible for reimbursement when incurred for business travel.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "airfare"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "value": "allow"
+          }
+        ],
+        "overrides": [],
+        "citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-105366f370c18d5485045c00a22b6e76746d9815b4edca0457b8b3016de6bdac",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 119,
+              "end": 241,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          }
+        ],
+        "confidence_percent": 90
+      },
+      {
+        "schema_version": "1.0",
+        "rule_id": "rule-fe8a3b25b4d2726a533367cb9d71efae21f0acc325c6381eb623dd8fb8e70a28",
+        "revision": 0,
+        "description": "Meal claims have a per-claim cap of SGD 100.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "meal"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "value": 10000
+          }
+        ],
+        "overrides": [],
+        "citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-97d17f084746e1ffe4e45563835d95e931a990acbd6196cd9df6aa06514c3cdb",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 257,
+              "end": 301,
+              "quote": "Meal claims have a per-claim cap of SGD 100.",
+              "quote_sha256": "6be28fb33e2dbb55da3b93195f9d877fe0c4ce6d002c05a68f0c138cda7ebb04",
+              "section": null
+            }
+          }
+        ],
+        "confidence_percent": 95
+      },
+      {
+        "schema_version": "1.0",
+        "rule_id": "rule-4a4996c88851df3603aab7a204fb76599444f5d35981d1e80a8ff1ebd340d9d9",
+        "revision": 0,
+        "description": "Hotel claims have a per-claim cap of SGD 250.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "hotel"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "value": 25000
+          }
+        ],
+        "overrides": [],
+        "citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-7380f2a949391c17371d597cde865ca7b8c3396efbe23538f83391e4a5021e13",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 302,
+              "end": 347,
+              "quote": "Hotel claims have a per-claim cap of SGD 250.",
+              "quote_sha256": "b0dc146bd671169b5b56a66703ea1023533817a75b745a3787a86394ccde4ac2",
+              "section": null
+            }
+          }
+        ],
+        "confidence_percent": 95
+      },
+      {
+        "schema_version": "1.0",
+        "rule_id": "rule-bef696fb25bcdea98713d175395899840ae74b771d83222092df24bce4355514",
+        "revision": 0,
+        "description": "Transport claims have a per-claim cap of SGD 200.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "transport"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "value": 20000
+          }
+        ],
+        "overrides": [],
+        "citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-0af9d47e048bd7c89883ca5f403cee4a48a958511de58ab14743e1b506b80bb8",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 348,
+              "end": 397,
+              "quote": "Transport claims have a per-claim cap of SGD 200.",
+              "quote_sha256": "06a6c2867710eaac615d068d654e15251609922b094f89e4707902fe61804623",
+              "section": null
+            }
+          }
+        ],
+        "confidence_percent": 95
+      },
+      {
+        "schema_version": "1.0",
+        "rule_id": "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+        "revision": 0,
+        "description": "Receipts are not required for claims below SGD 50.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "amount_minor",
+            "operator": "lt",
+            "value": 5000
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "value": "not_required"
+          }
+        ],
+        "overrides": [],
+        "citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-8f99612e62672f38588b4bfff9ab446cf30093c5d222a42ac17a4785a3292d57",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 408,
+              "end": 458,
+              "quote": "Receipts are not required for claims below SGD 50.",
+              "quote_sha256": "881e4b4c701a197a86eacc3c3687c477889c523c77887f7725b33aab2e4552af",
+              "section": null
+            }
+          }
+        ],
+        "confidence_percent": 95
+      },
+      {
+        "schema_version": "1.0",
+        "rule_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+        "revision": 0,
+        "description": "Receipts are required for claims above SGD 50.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "amount_minor",
+            "operator": "gt",
+            "value": 5000
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "value": "required"
+          }
+        ],
+        "overrides": [],
+        "citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-13599d9d566e1cc27fb71fe3d4eb380786b5e32d90c5b58a04cf2353179fbee7",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 459,
+              "end": 505,
+              "quote": "Receipts are required for claims above SGD 50.",
+              "quote_sha256": "5e3bce25baf9b207405c128376a8cdea3f7370df89911446c5be4dc980331d70",
+              "section": null
+            }
+          }
+        ],
+        "confidence_percent": 95
+      },
+      {
+        "schema_version": "1.0",
+        "rule_id": "rule-20b6c906000cdbdb4b5c6731272237346f70677989ec1c62196b3d6ffddc740a",
+        "revision": 0,
+        "description": "Approval is normally not required for a claim.",
+        "when": [],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "value": "none"
+          }
+        ],
+        "overrides": [],
+        "citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-ec9889d5cc575b3bba9e1403df68fdc631f8134688ad95cb556601164c8c771f",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 517,
+              "end": 563,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          }
+        ],
+        "confidence_percent": 90
+      },
+      {
+        "schema_version": "1.0",
+        "rule_id": "rule-b124ff3c1258a6119200dabee5fdfe0f2c00ba41d1a18dc119de24ae054e647e",
+        "revision": 0,
+        "description": "Hotel claims below SGD 250 require no approval, regardless of destination.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "amount_minor",
+            "operator": "lt",
+            "value": 25000
+          },
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "hotel"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "value": "none"
+          }
+        ],
+        "overrides": [
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "target_rule_id": "rule-251518c4504c2c2ca86426b95f0cae193eb46d87487762ca5f0f377c0aa66778"
+          }
+        ],
+        "citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-947f2d4b77eca45e2827d13b71e31878d0f8f50ab0aee1b6f8983fdd0d47f83d",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 564,
+              "end": 638,
+              "quote": "Hotel claims below SGD 250 require no approval, regardless of destination.",
+              "quote_sha256": "f9c18c5f04f1d6883ddc9e4fff7bace998426bb0d87c6811dc07310c58274d4b",
+              "section": null
+            }
+          }
+        ],
+        "confidence_percent": 95
+      },
+      {
+        "schema_version": "1.0",
+        "rule_id": "rule-251518c4504c2c2ca86426b95f0cae193eb46d87487762ca5f0f377c0aa66778",
+        "revision": 0,
+        "description": "International hotel claims require manager approval.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "hotel"
+          },
+          {
+            "schema_version": "1.0",
+            "field": "destination_type",
+            "operator": "eq",
+            "value": "international"
+          }
+        ],
+        "effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "value": "manager"
+          }
+        ],
+        "overrides": [],
+        "citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "cite-308a22f94e3660867350e8cf00bf1da97effafce01b94c202d6a84a175ef576b",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 639,
+              "end": 691,
+              "quote": "International hotel claims require manager approval.",
+              "quote_sha256": "547747bdbeeafa8ed3a320309706fdcb344121fc4d7eaa4f080e0b511207c0a9",
+              "section": null
+            }
+          }
+        ],
+        "confidence_percent": 95
+      }
+    ],
+    "invariants": [
+      {
+        "schema_version": "1.0",
+        "invariant_id": "invariant-66e4e2e326b244628355cd8cdb05dfc082dd0ab23b423ec6eaa3e41847e92fb8",
+        "description": "Meal expense claims must not exceed the per-claim cap of SGD 100.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "meal"
+          }
+        ],
+        "assertion": {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-ea6e65ae15172acb4efda63e4fcccec6816c40a02f7c09cc492c3ee7e68f2cd0",
+          "target_kind": "effect_value",
+          "dimension": "claim_cap_minor",
+          "operator": "lte",
+          "expected_value": 10000
+        },
+        "severity": "medium"
+      },
+      {
+        "schema_version": "1.0",
+        "invariant_id": "invariant-ca5664519a6b91fc57e311691963192e22d7a047423e2e7771bb09d0ebcd6b2c",
+        "description": "Hotel expense claims must not exceed the per-claim cap of SGD 250.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "hotel"
+          }
+        ],
+        "assertion": {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-49107ec1e78f0fe97571e3d452c5beb9e28f579132f61d9a80ccd9875a548595",
+          "target_kind": "effect_value",
+          "dimension": "claim_cap_minor",
+          "operator": "lte",
+          "expected_value": 25000
+        },
+        "severity": "medium"
+      },
+      {
+        "schema_version": "1.0",
+        "invariant_id": "invariant-f2a831c2767554e9e8fb6a836aa90f6b165dd6c6e43d6d771c5fbac6c5b7bcc4",
+        "description": "Transport expense claims must not exceed the per-claim cap of SGD 200.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "expense_category",
+            "operator": "eq",
+            "value": "transport"
+          }
+        ],
+        "assertion": {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-10400ec66153b17ac24fe98fe54ea0f4333f014b922c273a715d0cd4ba4450bd",
+          "target_kind": "effect_value",
+          "dimension": "claim_cap_minor",
+          "operator": "lte",
+          "expected_value": 20000
+        },
+        "severity": "medium"
+      },
+      {
+        "schema_version": "1.0",
+        "invariant_id": "invariant-3f5cd4891f86da38573e7f562f19aad1f3e2751ce166daee6b0d6e16dbbdac61",
+        "description": "Receipts are not required for claims below SGD 50.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "amount_minor",
+            "operator": "lt",
+            "value": 5000
+          }
+        ],
+        "assertion": {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-cd9f94241d4b60aa6967c043bb2674e0176658c7523746cb99a353ccea7fdd8e",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "not_required"
+        },
+        "severity": "medium"
+      },
+      {
+        "schema_version": "1.0",
+        "invariant_id": "invariant-f882b504b53fa25078809f8535f790e286896e5de7eefcde3f19d4b5687bf2ed",
+        "description": "Receipts are required for claims above SGD 50.",
+        "when": [
+          {
+            "schema_version": "1.0",
+            "field": "amount_minor",
+            "operator": "gt",
+            "value": 5000
+          }
+        ],
+        "assertion": {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-30ffb758994f205233f135e942bf6f7a6728ea649e0a7eb02caf867167da6154",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "required"
+        },
+        "severity": "medium"
+      }
+    ],
+    "required_dimensions": [
+      "claim_cap_minor",
+      "approval_requirement",
+      "eligibility",
+      "receipt_requirement"
+    ]
+  },
+  "coverage": {
+    "schema_version": "1.0",
+    "total_rules": 0,
+    "covered_rules": 0,
+    "total_invariants": 0,
+    "covered_invariants": 0,
+    "total_predicate_branches": 0,
+    "covered_predicate_branches": 0,
+    "scenario_count": 0
+  },
+  "findings": [],
+  "unsupported_clauses": [
+    {
+      "schema_version": "1.0",
+      "clause_id": "clause_1",
+      "span": {
+        "schema_version": "1.0",
+        "page": 1,
+        "start": 789,
+        "end": 838,
+        "quote": "Reasonable incidental expenses may be reimbursed.",
+        "quote_sha256": "136526213606e56fa63342c1a468d6c9c3659ba560040a8662f465739dd0bb3c",
+        "section": null
+      },
+      "reason_code": "ambiguous_language",
+      "affected_dimensions": [
+        "eligibility"
+      ],
+      "when_hint": null,
+      "review_status": "provisional",
+      "partition": "visible",
+      "disposition": "pending_review"
+    }
+  ],
+  "rejections": [],
+  "traces": [],
+  "holdout_evidence": null,
+  "baseline_metrics": null,
+  "comparison_metrics": null,
+  "terminal_status": null,
+  "error": null,
+  "decision_at": null
+}

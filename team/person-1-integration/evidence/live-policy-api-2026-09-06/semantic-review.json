@@ -1,0 +1,39 @@
+{
+  "kind": "assistant_semantic_review",
+  "independent_agent_review": true,
+  "baseline_status": "accepted_for_synthetic_rehearsal",
+  "exact_citations_validated": 11,
+  "rules_reviewed": 10,
+  "source_coverage": "supported statements present; no unsupported interpretations accepted",
+  "preserved_defects": [
+    "receipt equality gap",
+    "international hotel versus low-value hotel conflict",
+    "missing daily meal cap"
+  ],
+  "unsupported_scope": "incidental category and eligibility only",
+  "harmless_variation": "low-value hotel rule also explicitly overrides same-value normally-default rule",
+  "contract_intent_source": "authored public development confirmed-contract.json",
+  "not_human_benchmark_approval": true,
+  "finding_review": {
+    "accepted": 3,
+    "evidence_reviewed": "All four daily-cap witnesses, one hotel conflict witness, and six exactly-SGD50 receipt-gap witnesses match public authored intent.",
+    "structural_severities": {
+      "approval_requirement": "high",
+      "receipt_requirement": "medium"
+    }
+  },
+  "revision_review": {
+    "status": "incomplete_candidate_for_negative_acceptance_test",
+    "correct_operations": [
+      "meal daily cap 10000",
+      "exclude international destination from low-value hotel no-approval rule"
+    ],
+    "issue": "Receipt operation changes description only; executable conditions/effects/overrides are identical.",
+    "reason_for_assistant_confirmation": "Controlled synthetic negative test of deterministic frozen-suite acceptance checks; not approval of a complete policy fix."
+  },
+  "negative_test_outcome": {
+    "status": "application_rejected_before_retest",
+    "error_code": "REVISION_INVALID",
+    "retest_or_comparison_produced": false
+  }
+}

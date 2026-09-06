@@ -1,0 +1,48 @@
+{
+  "kind": "assistant_operated_live_revision_stage_followup",
+  "source_commit": "f6990df2036e4ed8bd6fcc9484e58c499eb874b5",
+  "source_tree": "e32409d130349d966a2903c9f6892afa8f307a65",
+  "based_on_run_id": "571aee5c-d6cc-49ab-b56e-54be55c092ca",
+  "original_api_run_status": "failed",
+  "model": "gpt-4.1",
+  "suite_sha256": "2282e9968e02d96e7011be45772f99633350ce06e895326ef79bb39206554839",
+  "transport": "direct production revision stage with live provider; deterministic production evaluation stages",
+  "is_full_api_run": false,
+  "human_benchmark_approval": false,
+  "blind_scoring_eligible": false,
+  "browser_acceptance": false,
+  "provider_attempts": [
+    {
+      "operation": "revision_proposal",
+      "repair_attempt": 0,
+      "status": "success",
+      "usage": {
+        "schema_version": "1.0",
+        "input_tokens": 10393,
+        "output_tokens": 1201,
+        "repair_calls": 0,
+        "transport_retries": 0
+      },
+      "duration_seconds": 19.3
+    },
+    {
+      "operation": "revision_proposal",
+      "repair_attempt": 1,
+      "status": "success",
+      "usage": {
+        "schema_version": "1.0",
+        "input_tokens": 10440,
+        "output_tokens": 1180,
+        "repair_calls": 1,
+        "transport_retries": 0
+      },
+      "duration_seconds": 6.107
+    }
+  ],
+  "started_at": "2026-09-06T16:12:33.613316+00:00",
+  "status": "failed",
+  "error_type": "ModelOutputValidationError",
+  "error_code": "SCHEMA_VALIDATION_FAILED",
+  "duration_seconds": 25.558,
+  "finished_at": "2026-09-06T16:12:59.124280+00:00"
+}

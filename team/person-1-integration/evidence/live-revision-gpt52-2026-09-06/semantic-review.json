@@ -1,0 +1,20 @@
+{
+  "kind": "assistant_structured_revision_review",
+  "independent_agent_review": true,
+  "status": "approved_for_frozen_suite_retest",
+  "operations": 3,
+  "resulting_rules": 12,
+  "reviewed_changes": [
+    "Receipt amount exactly5000 requiresreceipt; originalstrictlt/gt rulespreserved.",
+    "Low-value hotelnoapproval excludesinternational; existingmanagerrequirement remains.",
+    "Meal-only dailycategorycap10000 added."
+  ],
+  "harmless_variation": "Receipt equality rule includes nonmatching redundant override targets.",
+  "wording_status": "AI generated and unverified",
+  "human_benchmark_approval": false,
+  "application_contract_result": {
+    "applied": false,
+    "reason": "Redundant receipt override edges violate the requirement that changed override endpoints belong to an accepted conflict.",
+    "correction_to_review": "No source-semantic blocker was found, but applicability under the strict patch contract was not established by that review."
+  }
+}

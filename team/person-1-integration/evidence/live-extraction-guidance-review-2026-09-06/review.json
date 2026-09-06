@@ -1,0 +1,21 @@
+{
+  "kind": "assistant_semantic_review",
+  "status": "not_confirmed",
+  "independent_agent_review": true,
+  "exact_citations_validated": 11,
+  "improvements": [
+    "Strict receipt boundaries preserve the equality gap.",
+    "Unsupported clause now cites actual incidental sentence and only eligibility."
+  ],
+  "issues": [
+    "Both manager exceptions still omit the explicit normally-default override.",
+    "Incidental unsupported clause still omits its category scope, applying eligibility uncertainty globally."
+  ],
+  "contract_actions_submitted": 0,
+  "conclusion": "Private wire defaults silently accepted omitted override arrays; explicit null still broadened unsupported scope. Baseline must not be confirmed.",
+  "not_human_benchmark_approval": true,
+  "wire_observation": {
+    "omitted_rule_override_fields": 10,
+    "unsupported_when_hint": "explicit_null"
+  }
+}

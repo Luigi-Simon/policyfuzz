@@ -1,0 +1,65 @@
+{
+  "kind": "assistant_operated_synthetic_live_rehearsal",
+  "source_commit": "fe02ff75c8b1bcabe002fe1d0a03f758249ab707",
+  "local_commit_with_identical_tree": "dd5d7ab04cbe3639994693f6319df5b57b020378",
+  "source_tree": "de76432922056f4027e2a3dce09dd5a12c4dc30d",
+  "started_at": "2026-09-06T15:57:22.040484+00:00",
+  "transport": "in-process ASGI HTTP routes with live provider transport",
+  "policy": "bundled development-policy",
+  "confirmation_source": "assistant review against authored public development intent",
+  "human_benchmark_approval": false,
+  "blind_scoring_eligible": false,
+  "browser_acceptance": false,
+  "provider_attempts": [
+    {
+      "operation": "policy_extraction",
+      "repair_attempt": 0,
+      "status": "success",
+      "usage": {
+        "schema_version": "1.0",
+        "input_tokens": 2921,
+        "output_tokens": 1735,
+        "repair_calls": 0,
+        "transport_retries": 0
+      },
+      "duration_seconds": 33.815
+    },
+    {
+      "operation": "invariant_suggestion",
+      "repair_attempt": 0,
+      "status": "success",
+      "usage": {
+        "schema_version": "1.0",
+        "input_tokens": 4200,
+        "output_tokens": 538,
+        "repair_calls": 0,
+        "transport_retries": 0
+      },
+      "duration_seconds": 5.015
+    }
+  ],
+  "http_actions": [
+    {
+      "path": "/api/v1/runs",
+      "status": 202,
+      "duration_seconds": 0.016
+    }
+  ],
+  "stage_history": [
+    {
+      "stage": "extracting",
+      "elapsed_seconds": 0.345
+    },
+    {
+      "stage": "awaiting_contract",
+      "elapsed_seconds": 39.6
+    }
+  ],
+  "model": "gpt-4.1-mini",
+  "run_id": "87ec1920-99a8-42e2-8d06-bb7d494189b6",
+  "last_stage": "awaiting_contract",
+  "status": "stopped_for_review",
+  "sdk_errors": [],
+  "duration_seconds": 75.146,
+  "finished_at": "2026-09-06T15:58:37.182419+00:00"
+}

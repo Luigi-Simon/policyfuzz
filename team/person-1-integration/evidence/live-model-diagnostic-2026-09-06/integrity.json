@@ -1,0 +1,10 @@
+{
+  "algorithm": "SHA-256",
+  "files": {
+    "provider-response-1.json": "19d83c2fd2c85e9af5d4b9b2602cc6c383a2a505a61686bfd56475250aa39c35",
+    "provider-response-2.json": "87dd64cb3f2bdb47b9c6efd60f1b81c620f941ccfbbd1d1e7cf8d4cb8880ba63",
+    "review.json": "bae2f5502e7ee2a3c8295653f032f71715f26f77ae4ef734b9de467e1383a2e4",
+    "run-record.json": "bab9939d483facf1a6e767ee7d0f29327ba43637f4b58f654888e6ff6d5e01bd",
+    "summary.json": "0f2b98c3e8aafda923fb51e8cf25c4561e5cfb4abac3a31452537bc4f65a8857"
+  }
+}
