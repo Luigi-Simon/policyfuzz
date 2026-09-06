@@ -8,10 +8,13 @@ from app.core.hashing import canonical_sha256
 from app.domain.models import (
     AddRuleOperation,
     Assertion,
+    Effect,
     Finding,
     FindingDecision,
     FindingReport,
     LLMResponse,
+    OverrideRef,
+    Predicate,
     ProposeRevisionRequest,
     ReplaceRuleOperation,
     RevisionProposal,
@@ -31,13 +34,14 @@ from tests.domain.factories import (
     make_inputs,
     make_policy,
     make_policy_contract,
+    make_rule,
     make_scenario,
     make_scenario_suite,
 )
 
 
-def _request(*, evidence_level: str = "mechanically_reproduced"):
-    policy = make_policy()
+def _request(*, evidence_level: str = "mechanically_reproduced", policy=None):
+    policy = policy or make_policy()
     contract = make_policy_contract()
     rule_set_sha256 = canonical_sha256(semantic_payload_projection(policy))
     contract_sha256 = canonical_sha256(complete_payload_projection(contract))
@@ -122,6 +126,116 @@ def test_revision_rejects_stale_anchor() -> None:
 
     with pytest.raises(RevisionValidationError, match="STALE_ARTIFACT_ANCHOR"):
         validate_revision_proposal(request, proposal)
+
+
+def _semantic_replacement_request():
+    target = make_rule(
+        when=(
+            Predicate(
+                field="employee_role", operator="in", value=("employee", "manager")
+            ),
+            Predicate(field="amount_minor", operator="gt", value=100),
+        ),
+        effects=(
+            Effect(dimension="claim_cap_minor", value=5000),
+            Effect(dimension="approval_requirement", value="manager"),
+        ),
+        overrides=(
+            OverrideRef(dimension="claim_cap_minor", target_rule_id="base-cap"),
+            OverrideRef(
+                dimension="approval_requirement", target_rule_id="base-approval"
+            ),
+        ),
+    )
+    return _request(
+        policy=make_policy(
+            rules=(
+                target,
+                make_rule(rule_id="base-cap"),
+                make_rule(
+                    rule_id="base-approval",
+                    effects=(Effect(dimension="approval_requirement", value="none"),),
+                ),
+            )
+        )
+    )
+
+
+def _replacement_proposal(request, **changes):
+    target = request.policy.rules[0]
+    values = {
+        "description": "PRIVATE_DESCRIPTION_ONLY_CHANGE",
+        "when": target.when,
+        "effects": target.effects,
+        "overrides": target.overrides,
+    }
+    draft = RevisionRuleDraft(**(values | changes))
+    proposal = _proposal(request)
+    return proposal.model_copy(
+        update={
+            "operations": (proposal.operations[0].model_copy(update={"rule": draft}),),
+        }
+    )
+
+
+@pytest.mark.parametrize("reordered", [False, True])
+def test_revision_rejects_description_only_or_reordered_semantic_noop(reordered):
+    request = _semantic_replacement_request()
+    changes = {}
+    if reordered:
+        target = request.policy.rules[0]
+        changes = {
+            "when": (
+                target.when[1],
+                target.when[0].model_copy(
+                    update={"value": ("manager", "employee", "manager")}
+                ),
+                target.when[1],
+            ),
+            "effects": tuple(reversed(target.effects)),
+            "overrides": tuple(reversed(target.overrides)),
+        }
+    with pytest.raises(
+        RevisionValidationError, match="NO_OP_RULE_REPLACEMENT"
+    ) as caught:
+        validate_revision_proposal(request, _replacement_proposal(request, **changes))
+    assert "PRIVATE_DESCRIPTION_ONLY_CHANGE" not in str(caught.value)
+
+
+@pytest.mark.parametrize("field", ["when", "effects", "overrides"])
+def test_revision_accepts_actual_change_to_any_structured_rule_component(field):
+    request = _semantic_replacement_request()
+    target = request.policy.rules[0]
+    changes = {
+        "when": (target.when[0], target.when[1].model_copy(update={"value": 101})),
+        "effects": (
+            target.effects[0].model_copy(update={"value": 4000}),
+            target.effects[1],
+        ),
+        "overrides": target.overrides[:1],
+    }
+    proposal = _replacement_proposal(request, **{field: changes[field]})
+    result = validate_revision_proposal(request, proposal)
+    assert getattr(result.proposal.operations[0].rule, field) == changes[field]
+
+
+@pytest.mark.parametrize("schema_repair", [False, True])
+async def test_semantic_noop_rejection_never_adds_a_model_repair(schema_repair):
+    request = _semantic_replacement_request()
+    response = LLMResponse(
+        output=_replacement_proposal(request).model_dump(mode="json")
+    )
+    responses = (
+        (LLMResponse(output={"invalid": "schema"}), response)
+        if schema_repair
+        else (response,)
+    )
+    llm = ScriptedLLMClient(responses)
+
+    with pytest.raises(RevisionValidationError, match="NO_OP_RULE_REPLACEMENT"):
+        await LLMRevisionPlanner(llm).propose(request)
+
+    assert len(llm.requests) == (2 if schema_repair else 1)
 
 
 def test_revision_rejects_unknown_or_stale_rule() -> None:
