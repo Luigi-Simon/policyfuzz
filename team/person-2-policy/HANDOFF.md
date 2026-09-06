@@ -1,8 +1,8 @@
 # Person 2 — Policy Intelligence handoff
 
-Status: Deterministic Stage 1–2 foundation integrated with Person 1's Task 2 contracts
+Status: Deterministic Stage 1–2 foundation and extraction fixture suite complete
 
-Branch: `p2/feat-policy-stages-1-2`
+Current branch: `p2/test-extraction-fixtures`
 
 ## Public inputs and outputs
 
@@ -18,6 +18,9 @@ Branch: `p2/feat-policy-stages-1-2`
 - `build_policy_extraction_prompt(document) -> PolicyExtractionPrompt` returns
   separated system instructions, untrusted policy JSON, and a JSON schema
   generated directly from Person 1's `PolicyExtraction` contract.
+- `to_policy_pages(prepared) -> tuple[PolicyPage, ...]` maps normalized prepared
+  pages into Person 1's immutable contract without constructing or hashing a
+  `PolicyDocument`.
 
 Existing foundation remains available for normalized bounded ingestion, strict
 typed JSON parsing, primitive citation validation, and bounded policy retrieval.
@@ -30,6 +33,10 @@ typed JSON parsing, primitive citation validation, and bounded policy retrieval.
 - `backend/tests/features/policy/test_citations_contract_draft.py`
 - `backend/tests/features/policy/test_extraction_validation.py`
 - `backend/tests/features/policy/test_prompts.py`
+- `backend/app/features/policy/ingest.py`
+- `backend/tests/features/policy/test_ingest.py`
+- `backend/tests/features/policy/test_extraction_fixtures.py`
+- `team/person-2-policy/fake-llm-responses.json`
 - `team/person-2-policy/HANDOFF.md`
 
 ## Deterministic behavior and trust boundaries
@@ -47,6 +54,11 @@ typed JSON parsing, primitive citation validation, and bounded policy retrieval.
   separate AND-only rules, and unsupported language must not be guessed.
 - The prompt cannot assign authoritative verdicts, severity, metrics,
   confirmation, approval, or legal conclusions.
+- Synthetic fake outputs cover exact citations, invalid hashes and offsets,
+  unsupported clauses, invalid predicates and effects, prompt injection,
+  13-rule overflow, and OR expansion into two distinct AND-only rules.
+- Prepared page text and global offsets transfer directly into `PolicyPage`;
+  this adapter does not calculate or accept a document hash.
 
 ## Commands and results
 
@@ -60,6 +72,13 @@ typed JSON parsing, primitive citation validation, and bounded policy retrieval.
 - Person 2 suite after rebasing onto Person 1's Task 3 commit:
   `PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider
   tests/features/policy -q` — **70 passed**.
+- Fixture/mapping RED: collection failed because `to_policy_pages` did not exist.
+- Fixture/mapping GREEN: `PYTHONDONTWRITEBYTECODE=1 python -m pytest -p
+  no:cacheprovider tests/features/policy/test_ingest.py
+  tests/features/policy/test_extraction_fixtures.py -q` — **22 passed**.
+- Current Person 2 suite with fixtures: **80 passed**.
+- Current full backend: **392 passed, the same 3 Person 1-owned failures**
+  described above.
 - Full backend after that rebase: **382 passed, 3 failed**. The failures are in
   Person 1-owned Task 2/3 checks: enum construction, committed schema drift,
   and warning-free blind-validation stderr. The active environment emits a
@@ -69,8 +88,9 @@ typed JSON parsing, primitive citation validation, and bounded policy retrieval.
 
 ## Remaining integration limitations
 
-- Contract-backed `PolicyDocument` creation and stable rule IDs still require
-  Person 1's `app.core.hashing.canonical_sha256` from Task 3.
+- Person 1's canonical hashing helper is now present. This work intentionally
+  stops at `PolicyPage` mapping as scoped; final `PolicyDocument` construction
+  and stable rule IDs remain a later integration step.
 - The one-repair model workflow and end-to-end `extract_policy(...)` still
   require Person 1's public LLM request/response/operation types and
   `app.domain.protocols.LLMClient` from Task 4.

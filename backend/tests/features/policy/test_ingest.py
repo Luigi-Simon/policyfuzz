@@ -2,6 +2,7 @@ from pathlib import Path
 
 import pytest
 
+from app.domain.models import PolicyPage
 from app.features.policy.ingest import (
     MAX_PDF_PAGES,
     MAX_POLICY_CHARS,
@@ -9,6 +10,7 @@ from app.features.policy.ingest import (
     load_bundled_policy_text,
     prepare_policy_pages,
     prepare_policy_text,
+    to_policy_pages,
 )
 
 
@@ -52,6 +54,18 @@ def test_prepare_policy_pages_assigns_deterministic_global_offsets() -> None:
     assert prepared.pages[0].end_offset == len("First page\nline")
     assert prepared.pages[1].start_offset == len("First page\nline") + 1
     assert prepared.pages[1].end_offset == len(prepared.text)
+
+
+def test_prepared_pages_map_to_person_1_policy_page_contract() -> None:
+    prepared = prepare_policy_pages(("First page", "Second page"))
+
+    pages = to_policy_pages(prepared)
+
+    assert pages == (
+        PolicyPage(page=1, text="First page", start=0, end=10),
+        PolicyPage(page=2, text="Second page", start=11, end=22),
+    )
+    assert all(isinstance(page, PolicyPage) for page in pages)
 
 
 def test_prepare_policy_pages_rejects_too_many_pages() -> None:

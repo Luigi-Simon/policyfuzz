@@ -1,8 +1,7 @@
-"""Safe, contract-independent preparation of policy text.
+"""Safe preparation of policy text and contract-backed page mapping.
 
-This module deliberately stops before constructing shared domain models.  Person
-1 owns those contracts; the resulting ``PreparedPolicyText`` can be adapted to
-``PolicyDocument`` once the frozen shared model is available.
+This module deliberately stops before constructing a ``PolicyDocument`` because
+document identity and canonical hashing are a separate integration boundary.
 """
 
 from __future__ import annotations
@@ -11,6 +10,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 import unicodedata
+
+from app.domain.models import PolicyPage
 
 
 MAX_POLICY_CHARS = 50_000
@@ -128,3 +129,17 @@ def load_bundled_policy_text(path: Path) -> PreparedPolicyText:
     except OSError as exc:
         raise PolicyIngestionError("POLICY_FILE_READ_FAILED") from exc
     return prepare_policy_text(text)
+
+
+def to_policy_pages(prepared: PreparedPolicyText) -> tuple[PolicyPage, ...]:
+    """Map validated prepared pages into Person 1's immutable page contract."""
+
+    return tuple(
+        PolicyPage(
+            page=page.page_number,
+            text=page.text,
+            start=page.start_offset,
+            end=page.end_offset,
+        )
+        for page in prepared.pages
+    )
