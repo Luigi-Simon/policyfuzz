@@ -1,0 +1,10 @@
+Population seed: 100 random Singapore residents used as AI agents.
+
+Mix (approximate, not a real census file):
+- 86 Singapore citizens, 10 PRs, 4 work-pass holders (the last two groups are ineligible under the policy)
+- Ages 3–82; about 18 children under 21, 62 working-age adults, 20 seniors 65+
+- Housing: HDB 1–5 room, condo, landed; a few overseas Singaporeans
+- Income: no-income students, lower-income, PMETs, high-income
+- A small number of edge cases: deceased NRIC still in the file, duplicate claim attempt, dual citizen, guardian claiming for a child
+
+Groups: citizens, permanent_residents, work_pass, children, working_adults, seniors, overseas, guardians

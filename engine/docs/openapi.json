@@ -1,0 +1,2058 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Policy rehearsal engine",
+    "description": "Policy PDF \u2192 PolicyIR \u2192 Person 3 fuzz (\u226450 agents) + optional MiroFish swarm \u2192 EvaluationReport + PolicyEffectivenessReport (0\u2013100).",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/v1/runs": {
+      "post": {
+        "summary": "Create Run",
+        "operationId": "create_run_v1_runs_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_create_run_v1_runs_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunRecord"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "List Runs",
+        "operationId": "list_runs_v1_runs_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 50,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RunSummary"
+                  },
+                  "title": "Response List Runs V1 Runs Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/runs/{run_id}": {
+      "get": {
+        "summary": "Get Run",
+        "operationId": "get_run_v1_runs__run_id__get",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunRecord"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/runs/{run_id}/ir": {
+      "get": {
+        "summary": "Get Ir",
+        "operationId": "get_ir_v1_runs__run_id__ir_get",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyIR"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/runs/{run_id}/revise": {
+      "post": {
+        "summary": "Revise Run",
+        "operationId": "revise_run_v1_runs__run_id__revise_post",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviseBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunRecord"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/runs/{run_id}/scenarios": {
+      "post": {
+        "summary": "Attach Scenarios",
+        "description": "Person 3 posts their ScenarioSuite here.",
+        "operationId": "attach_scenarios_v1_runs__run_id__scenarios_post",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScenarioSuite"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunRecord"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get Scenarios",
+        "operationId": "get_scenarios_v1_runs__run_id__scenarios_get",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScenarioSuite"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/runs/{run_id}/mirofish": {
+      "get": {
+        "summary": "Get Mirofish Pack",
+        "operationId": "get_mirofish_pack_v1_runs__run_id__mirofish_get",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MiroFishPack"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Build Or Launch Mirofish",
+        "description": "Rebuild the MiroFish seed/prompt. Pass launch=true to POST into a running MiroFish.",
+        "operationId": "build_or_launch_mirofish_v1_runs__run_id__mirofish_post",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          },
+          {
+            "name": "launch",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Launch"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunRecord"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/runs/{run_id}/mirofish/seed.md": {
+      "get": {
+        "summary": "Get Mirofish Seed",
+        "operationId": "get_mirofish_seed_v1_runs__run_id__mirofish_seed_md_get",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/runs/{run_id}/evaluation": {
+      "get": {
+        "summary": "Get Evaluation",
+        "operationId": "get_evaluation_v1_runs__run_id__evaluation_get",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationReport"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/runs/{run_id}/effectiveness": {
+      "get": {
+        "summary": "Get Effectiveness",
+        "operationId": "get_effectiveness_v1_runs__run_id__effectiveness_get",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyEffectivenessReport"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/runs/{run_id}/rehearse": {
+      "post": {
+        "summary": "Rehearse Run",
+        "description": "Person 3: grade fuzz agents and optionally run the MiroFish swarm, then score 0\u2013100.",
+        "operationId": "rehearse_run_v1_runs__run_id__rehearse_post",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          },
+          {
+            "name": "swarm",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Swarm"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunRecord"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/contracts": {
+      "get": {
+        "summary": "Contracts",
+        "description": "JSON Schema handoff for the frontend and other roles.",
+        "operationId": "contracts_v1_contracts_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/download/api-docs.zip": {
+      "get": {
+        "summary": "Download Api Docs",
+        "description": "Zip of engine/docs \u2014 send this file to the frontend developer.",
+        "operationId": "download_api_docs_download_api_docs_zip_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActionSpec": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
+          },
+          "attributes": {
+            "items": {
+              "$ref": "#/components/schemas/AttributeSchema"
+            },
+            "type": "array",
+            "title": "Attributes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "ActionSpec",
+        "description": "An action a scenario may attempt (use_phone, confiscate, appeal, ...)."
+      },
+      "ActorType": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
+          },
+          "attributes": {
+            "items": {
+              "$ref": "#/components/schemas/AttributeSchema"
+            },
+            "type": "array",
+            "title": "Attributes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "ActorType"
+      },
+      "AgentInteraction": {
+        "properties": {
+          "agent": {
+            "type": "string",
+            "title": "Agent"
+          },
+          "platform": {
+            "type": "string",
+            "title": "Platform",
+            "default": ""
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "post"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "why_significant": {
+            "type": "string",
+            "title": "Why Significant",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "agent",
+          "text"
+        ],
+        "title": "AgentInteraction",
+        "description": "One notable swarm moment used to justify the score."
+      },
+      "AttributeSchema": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "value_type": {
+            "type": "string",
+            "enum": [
+              "string",
+              "integer",
+              "number",
+              "boolean",
+              "enum",
+              "datetime"
+            ],
+            "title": "Value Type",
+            "default": "string"
+          },
+          "enum_values": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Enum Values"
+          },
+          "minimum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minimum"
+          },
+          "maximum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Maximum"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "AttributeSchema",
+        "description": "Typed field person 3 should fill when synthesizing a scenario fact."
+      },
+      "AudienceSegment": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label",
+            "default": ""
+          },
+          "weight": {
+            "type": "number",
+            "title": "Weight",
+            "default": 1.0
+          },
+          "attributes": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Attributes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "title": "AudienceSegment",
+        "description": "One injectable audience slice (not tied to any jurisdiction)."
+      },
+      "Body_create_run_v1_runs_post": {
+        "properties": {
+          "file": {
+            "anyOf": [
+              {
+                "type": "string",
+                "contentMediaType": "application/octet-stream"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File",
+            "description": "Policy PDF, TXT, or MD"
+          },
+          "policy_text": {
+            "type": "string",
+            "title": "Policy Text",
+            "description": "Paste a policy if you are not uploading a file",
+            "default": ""
+          },
+          "seed_text": {
+            "type": "string",
+            "title": "Seed Text",
+            "default": ""
+          },
+          "population_size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Population Size"
+          },
+          "groups": {
+            "type": "string",
+            "title": "Groups",
+            "description": "Comma-separated audience groups",
+            "default": ""
+          },
+          "audience_json": {
+            "type": "string",
+            "title": "Audience Json",
+            "description": "Structured audience segments JSON: [{\"id\",\"label\",\"weight\",\"attributes\"}] or {segments:[...]}",
+            "default": ""
+          },
+          "locale": {
+            "type": "string",
+            "title": "Locale",
+            "description": "Optional locale / jurisdiction label for the audience",
+            "default": ""
+          },
+          "seed_file": {
+            "anyOf": [
+              {
+                "type": "string",
+                "contentMediaType": "application/octet-stream"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seed File",
+            "description": "Optional audience seed PDF/TXT/MD. Text is merged into seed_text."
+          }
+        },
+        "type": "object",
+        "title": "Body_create_run_v1_runs_post"
+      },
+      "ChangeLogEntry": {
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          },
+          "instruction": {
+            "type": "string",
+            "title": "Instruction"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "at": {
+            "type": "string",
+            "title": "At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "revision",
+          "instruction",
+          "summary"
+        ],
+        "title": "ChangeLogEntry"
+      },
+      "Citation": {
+        "properties": {
+          "document_id": {
+            "type": "string",
+            "title": "Document Id"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "section": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section"
+          },
+          "quote": {
+            "type": "string",
+            "title": "Quote"
+          },
+          "start_char": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Char"
+          },
+          "end_char": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Char"
+          }
+        },
+        "type": "object",
+        "required": [
+          "document_id",
+          "quote"
+        ],
+        "title": "Citation",
+        "description": "Pointer back to the source document. Quotes must be verbatim."
+      },
+      "CompiledIndex": {
+        "properties": {
+          "rules_by_actor": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Rules By Actor"
+          },
+          "parameters": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Parameters"
+          },
+          "fact_fields": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Fact Fields"
+          },
+          "open_question_rule_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Open Question Rule Ids"
+          }
+        },
+        "type": "object",
+        "title": "CompiledIndex",
+        "description": "Derived lookup tables. Rebuilt on every compile \u2014 do not edit by hand."
+      },
+      "EvaluationReport": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "title": "Schema Version",
+            "default": "1.0.0"
+          },
+          "report_id": {
+            "type": "string",
+            "title": "Report Id"
+          },
+          "policy_id": {
+            "type": "string",
+            "title": "Policy Id"
+          },
+          "policy_revision": {
+            "type": "integer",
+            "title": "Policy Revision"
+          },
+          "suite_id": {
+            "type": "string",
+            "title": "Suite Id"
+          },
+          "findings": {
+            "items": {
+              "$ref": "#/components/schemas/Finding"
+            },
+            "type": "array",
+            "title": "Findings"
+          },
+          "metrics": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Metrics"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "policy_id",
+          "policy_revision",
+          "suite_id"
+        ],
+        "title": "EvaluationReport",
+        "description": "Person 4 output. Integration stores it if an evaluator plugin is registered."
+      },
+      "Finding": {
+        "properties": {
+          "finding_id": {
+            "type": "string",
+            "title": "Finding Id"
+          },
+          "scenario_id": {
+            "type": "string",
+            "title": "Scenario Id"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "ambiguous",
+              "error"
+            ],
+            "title": "Verdict"
+          },
+          "rule_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Rule Ids"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "traces": {
+            "items": {
+              "$ref": "#/components/schemas/TraceStep"
+            },
+            "type": "array",
+            "title": "Traces"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scenario_id",
+          "verdict",
+          "summary"
+        ],
+        "title": "Finding"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "MiroFishLaunch": {
+        "properties": {
+          "attempted": {
+            "type": "boolean",
+            "title": "Attempted",
+            "default": false
+          },
+          "ok": {
+            "type": "boolean",
+            "title": "Ok",
+            "default": false
+          },
+          "project_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Id"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "mirofish_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mirofish Url"
+          },
+          "at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "At"
+          }
+        },
+        "type": "object",
+        "title": "MiroFishLaunch"
+      },
+      "MiroFishPack": {
+        "properties": {
+          "seed_filename": {
+            "type": "string",
+            "title": "Seed Filename",
+            "default": "mirofish_seed.md"
+          },
+          "seed_markdown": {
+            "type": "string",
+            "title": "Seed Markdown"
+          },
+          "simulation_requirement": {
+            "type": "string",
+            "title": "Simulation Requirement"
+          },
+          "population_size": {
+            "type": "integer",
+            "title": "Population Size",
+            "default": 0
+          },
+          "agent_count": {
+            "type": "integer",
+            "title": "Agent Count",
+            "default": 0
+          },
+          "launch": {
+            "$ref": "#/components/schemas/MiroFishLaunch"
+          },
+          "built_at": {
+            "type": "string",
+            "title": "Built At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "seed_markdown",
+          "simulation_requirement"
+        ],
+        "title": "MiroFishPack",
+        "description": "Handoff from this engine to MiroFish: a population seed + sim prompt."
+      },
+      "Obligation": {
+        "properties": {
+          "modality": {
+            "type": "string",
+            "enum": [
+              "must",
+              "must_not",
+              "may",
+              "should"
+            ],
+            "title": "Modality"
+          },
+          "action": {
+            "type": "string",
+            "title": "Action"
+          },
+          "assignee": {
+            "type": "string",
+            "title": "Assignee",
+            "default": "actor"
+          },
+          "details": {
+            "type": "string",
+            "title": "Details",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "modality",
+          "action"
+        ],
+        "title": "Obligation"
+      },
+      "PolicyDocument": {
+        "properties": {
+          "document_id": {
+            "type": "string",
+            "title": "Document Id"
+          },
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "media_type": {
+            "type": "string",
+            "title": "Media Type",
+            "default": "application/pdf"
+          },
+          "page_count": {
+            "type": "integer",
+            "title": "Page Count",
+            "default": 0
+          },
+          "text": {
+            "type": "string",
+            "title": "Text",
+            "default": ""
+          },
+          "pages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Pages"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "filename"
+        ],
+        "title": "PolicyDocument",
+        "description": "Ingested source. Person 2 starts here."
+      },
+      "PolicyEffectivenessReport": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "title": "Schema Version",
+            "default": "1.0.0"
+          },
+          "report_id": {
+            "type": "string",
+            "title": "Report Id"
+          },
+          "policy_id": {
+            "type": "string",
+            "title": "Policy Id"
+          },
+          "policy_revision": {
+            "type": "integer",
+            "title": "Policy Revision"
+          },
+          "score": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Score"
+          },
+          "justification": {
+            "type": "string",
+            "title": "Justification"
+          },
+          "highlights": {
+            "items": {
+              "$ref": "#/components/schemas/AgentInteraction"
+            },
+            "type": "array",
+            "title": "Highlights"
+          },
+          "recommended_actions": {
+            "items": {
+              "$ref": "#/components/schemas/RevisionHint"
+            },
+            "type": "array",
+            "title": "Recommended Actions"
+          },
+          "swarm_used": {
+            "type": "boolean",
+            "title": "Swarm Used",
+            "default": false
+          },
+          "metrics": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Metrics"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "policy_id",
+          "policy_revision",
+          "score",
+          "justification"
+        ],
+        "title": "PolicyEffectivenessReport",
+        "description": "0\u2013100 score of how well the inputted policy would work, plus why."
+      },
+      "PolicyIR": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "title": "Schema Version",
+            "default": "1.0.0"
+          },
+          "policy_id": {
+            "type": "string",
+            "title": "Policy Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "jurisdiction": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Jurisdiction"
+          },
+          "source": {
+            "$ref": "#/components/schemas/PolicyDocument"
+          },
+          "actor_types": {
+            "items": {
+              "$ref": "#/components/schemas/ActorType"
+            },
+            "type": "array",
+            "title": "Actor Types"
+          },
+          "actions": {
+            "items": {
+              "$ref": "#/components/schemas/ActionSpec"
+            },
+            "type": "array",
+            "title": "Actions"
+          },
+          "rules": {
+            "items": {
+              "$ref": "#/components/schemas/Rule"
+            },
+            "type": "array",
+            "title": "Rules"
+          },
+          "glossary": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Glossary"
+          },
+          "open_questions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Open Questions"
+          },
+          "conflicts": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Conflicts"
+          },
+          "index": {
+            "$ref": "#/components/schemas/CompiledIndex"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision",
+            "default": 1
+          },
+          "parent_revision": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Revision"
+          },
+          "change_log": {
+            "items": {
+              "$ref": "#/components/schemas/ChangeLogEntry"
+            },
+            "type": "array",
+            "title": "Change Log"
+          },
+          "compiled_at": {
+            "type": "string",
+            "title": "Compiled At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "source"
+        ],
+        "title": "PolicyIR",
+        "description": "Compiled policy. This is the handoff from person 2 to person 3."
+      },
+      "Predicate": {
+        "properties": {
+          "field": {
+            "type": "string",
+            "title": "Field"
+          },
+          "op": {
+            "type": "string",
+            "enum": [
+              "eq",
+              "neq",
+              "in",
+              "not_in",
+              "gt",
+              "gte",
+              "lt",
+              "lte",
+              "exists",
+              "matches",
+              "between"
+            ],
+            "title": "Op",
+            "default": "eq"
+          },
+          "value": {
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": [
+          "field"
+        ],
+        "title": "Predicate",
+        "description": "Atomic condition, evaluable against scenario.facts.\n\n`field` uses dotted paths into the scenario fact bag, for example:\n  actor.role, actor.grade, action.name, context.location, context.time"
+      },
+      "ReviseBody": {
+        "properties": {
+          "instruction": {
+            "type": "string",
+            "title": "Instruction"
+          }
+        },
+        "type": "object",
+        "required": [
+          "instruction"
+        ],
+        "title": "ReviseBody"
+      },
+      "RevisionHint": {
+        "properties": {
+          "rule_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Rule Ids"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "clarify",
+              "tighten",
+              "carve_out",
+              "add_rule",
+              "communicate"
+            ],
+            "title": "Action"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          }
+        },
+        "type": "object",
+        "required": [
+          "action",
+          "summary"
+        ],
+        "title": "RevisionHint",
+        "description": "Smallest useful change for Person 2's repair agent / the human editor."
+      },
+      "Rule": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "statement": {
+            "type": "string",
+            "title": "Statement"
+          },
+          "citations": {
+            "items": {
+              "$ref": "#/components/schemas/Citation"
+            },
+            "type": "array",
+            "title": "Citations"
+          },
+          "applies_to": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Applies To"
+          },
+          "when": {
+            "items": {
+              "$ref": "#/components/schemas/Predicate"
+            },
+            "type": "array",
+            "title": "When"
+          },
+          "then": {
+            "items": {
+              "$ref": "#/components/schemas/Obligation"
+            },
+            "type": "array",
+            "title": "Then"
+          },
+          "except_when": {
+            "items": {
+              "$ref": "#/components/schemas/Predicate"
+            },
+            "type": "array",
+            "title": "Except When"
+          },
+          "parameters": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Parameters"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low"
+            ],
+            "title": "Severity",
+            "default": "medium"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags"
+          },
+          "ambiguity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ambiguity"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "statement"
+        ],
+        "title": "Rule"
+      },
+      "RunRecord": {
+        "properties": {
+          "run_id": {
+            "type": "string",
+            "title": "Run Id"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "ingesting",
+              "extracting",
+              "compiling",
+              "compiled",
+              "generating_scenarios",
+              "scenarios_ready",
+              "evaluating",
+              "rehearsing",
+              "completed",
+              "failed"
+            ],
+            "title": "Status",
+            "default": "pending"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "default": ""
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "seed": {
+            "$ref": "#/components/schemas/SeedSpec"
+          },
+          "document": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PolicyDocument"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "ir": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PolicyIR"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "suite": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ScenarioSuite"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evaluation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EvaluationReport"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "effectiveness": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PolicyEffectivenessReport"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "mirofish": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MiroFishPack"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "extra": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Extra"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "title": "RunRecord"
+      },
+      "RunSummary": {
+        "properties": {
+          "run_id": {
+            "type": "string",
+            "title": "Run Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "policy_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Policy Id"
+          },
+          "policy_revision": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Policy Revision"
+          },
+          "rule_count": {
+            "type": "integer",
+            "title": "Rule Count",
+            "default": 0
+          },
+          "scenario_count": {
+            "type": "integer",
+            "title": "Scenario Count",
+            "default": 0
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "run_id",
+          "status",
+          "message"
+        ],
+        "title": "RunSummary"
+      },
+      "Scenario": {
+        "properties": {
+          "scenario_id": {
+            "type": "string",
+            "title": "Scenario Id"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "normal",
+              "boundary",
+              "adversarial",
+              "targeted"
+            ],
+            "title": "Kind"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "narrative": {
+            "type": "string",
+            "title": "Narrative",
+            "default": ""
+          },
+          "facts": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Facts"
+          },
+          "targeted_rule_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Targeted Rule Ids"
+          },
+          "expected_outcome": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "compliant",
+                  "violation",
+                  "exception",
+                  "ambiguous"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Outcome"
+          },
+          "notes": {
+            "type": "string",
+            "title": "Notes",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "kind",
+          "title"
+        ],
+        "title": "Scenario",
+        "description": "One test case against PolicyIR.\n\n`facts` must be fillable from PolicyIR.actor_types / actions / index.fact_fields\nso person 4 can evaluate predicates without extra interpretation."
+      },
+      "ScenarioSuite": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "title": "Schema Version",
+            "default": "1.0.0"
+          },
+          "suite_id": {
+            "type": "string",
+            "title": "Suite Id"
+          },
+          "policy_id": {
+            "type": "string",
+            "title": "Policy Id"
+          },
+          "policy_revision": {
+            "type": "integer",
+            "title": "Policy Revision"
+          },
+          "seed": {
+            "type": "string",
+            "title": "Seed"
+          },
+          "population_size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Population Size"
+          },
+          "scenarios": {
+            "items": {
+              "$ref": "#/components/schemas/Scenario"
+            },
+            "type": "array",
+            "title": "Scenarios"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "policy_id",
+          "policy_revision",
+          "seed"
+        ],
+        "title": "ScenarioSuite",
+        "description": "Person 3 output: PolicyIR + seed \u2192 ScenarioSuite."
+      },
+      "SeedSpec": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Text",
+            "default": ""
+          },
+          "population_size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Population Size"
+          },
+          "groups": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Groups"
+          },
+          "segments": {
+            "items": {
+              "$ref": "#/components/schemas/AudienceSegment"
+            },
+            "type": "array",
+            "title": "Segments"
+          },
+          "locale": {
+            "type": "string",
+            "title": "Locale",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "SeedSpec",
+        "description": "Population / personality seed for person 3.\n\nIntegration stores this with the run. Person 3 reads it from GET /v1/runs/{id}.\nPrefer `segments` for structured audience injection; `text` remains freeform notes\nfor MiroFish prose. `groups` is a shorthand that still works without segments."
+      },
+      "TraceStep": {
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "title": "Rule Id"
+          },
+          "matched": {
+            "type": "boolean",
+            "title": "Matched"
+          },
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "rule_id",
+          "matched"
+        ],
+        "title": "TraceStep"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

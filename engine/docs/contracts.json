@@ -1,0 +1,2480 @@
+{
+  "PolicyDocument": {
+    "description": "Ingested source. Person 2 starts here.",
+    "properties": {
+      "document_id": {
+        "title": "Document Id",
+        "type": "string"
+      },
+      "filename": {
+        "title": "Filename",
+        "type": "string"
+      },
+      "media_type": {
+        "default": "application/pdf",
+        "title": "Media Type",
+        "type": "string"
+      },
+      "page_count": {
+        "default": 0,
+        "title": "Page Count",
+        "type": "integer"
+      },
+      "text": {
+        "default": "",
+        "title": "Text",
+        "type": "string"
+      },
+      "pages": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Pages",
+        "type": "array"
+      },
+      "created_at": {
+        "title": "Created At",
+        "type": "string"
+      }
+    },
+    "required": [
+      "filename"
+    ],
+    "title": "PolicyDocument",
+    "type": "object"
+  },
+  "PolicyIR": {
+    "$defs": {
+      "ActionSpec": {
+        "description": "An action a scenario may attempt (use_phone, confiscate, appeal, ...).",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "attributes": {
+            "items": {
+              "$ref": "#/$defs/AttributeSchema"
+            },
+            "title": "Attributes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "ActionSpec",
+        "type": "object"
+      },
+      "ActorType": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "attributes": {
+            "items": {
+              "$ref": "#/$defs/AttributeSchema"
+            },
+            "title": "Attributes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "ActorType",
+        "type": "object"
+      },
+      "AttributeSchema": {
+        "description": "Typed field person 3 should fill when synthesizing a scenario fact.",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "value_type": {
+            "default": "string",
+            "enum": [
+              "string",
+              "integer",
+              "number",
+              "boolean",
+              "enum",
+              "datetime"
+            ],
+            "title": "Value Type",
+            "type": "string"
+          },
+          "enum_values": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Enum Values"
+          },
+          "minimum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Minimum"
+          },
+          "maximum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Maximum"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "AttributeSchema",
+        "type": "object"
+      },
+      "ChangeLogEntry": {
+        "properties": {
+          "revision": {
+            "title": "Revision",
+            "type": "integer"
+          },
+          "instruction": {
+            "title": "Instruction",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "at": {
+            "title": "At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "revision",
+          "instruction",
+          "summary"
+        ],
+        "title": "ChangeLogEntry",
+        "type": "object"
+      },
+      "Citation": {
+        "description": "Pointer back to the source document. Quotes must be verbatim.",
+        "properties": {
+          "document_id": {
+            "title": "Document Id",
+            "type": "string"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Page"
+          },
+          "section": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Section"
+          },
+          "quote": {
+            "title": "Quote",
+            "type": "string"
+          },
+          "start_char": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Start Char"
+          },
+          "end_char": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "End Char"
+          }
+        },
+        "required": [
+          "document_id",
+          "quote"
+        ],
+        "title": "Citation",
+        "type": "object"
+      },
+      "CompiledIndex": {
+        "description": "Derived lookup tables. Rebuilt on every compile \u2014 do not edit by hand.",
+        "properties": {
+          "rules_by_actor": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "title": "Rules By Actor",
+            "type": "object"
+          },
+          "parameters": {
+            "additionalProperties": true,
+            "title": "Parameters",
+            "type": "object"
+          },
+          "fact_fields": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Fact Fields",
+            "type": "array"
+          },
+          "open_question_rule_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Open Question Rule Ids",
+            "type": "array"
+          }
+        },
+        "title": "CompiledIndex",
+        "type": "object"
+      },
+      "Obligation": {
+        "properties": {
+          "modality": {
+            "enum": [
+              "must",
+              "must_not",
+              "may",
+              "should"
+            ],
+            "title": "Modality",
+            "type": "string"
+          },
+          "action": {
+            "title": "Action",
+            "type": "string"
+          },
+          "assignee": {
+            "default": "actor",
+            "title": "Assignee",
+            "type": "string"
+          },
+          "details": {
+            "default": "",
+            "title": "Details",
+            "type": "string"
+          }
+        },
+        "required": [
+          "modality",
+          "action"
+        ],
+        "title": "Obligation",
+        "type": "object"
+      },
+      "PolicyDocument": {
+        "description": "Ingested source. Person 2 starts here.",
+        "properties": {
+          "document_id": {
+            "title": "Document Id",
+            "type": "string"
+          },
+          "filename": {
+            "title": "Filename",
+            "type": "string"
+          },
+          "media_type": {
+            "default": "application/pdf",
+            "title": "Media Type",
+            "type": "string"
+          },
+          "page_count": {
+            "default": 0,
+            "title": "Page Count",
+            "type": "integer"
+          },
+          "text": {
+            "default": "",
+            "title": "Text",
+            "type": "string"
+          },
+          "pages": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Pages",
+            "type": "array"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "filename"
+        ],
+        "title": "PolicyDocument",
+        "type": "object"
+      },
+      "Predicate": {
+        "description": "Atomic condition, evaluable against scenario.facts.\n\n`field` uses dotted paths into the scenario fact bag, for example:\n  actor.role, actor.grade, action.name, context.location, context.time",
+        "properties": {
+          "field": {
+            "title": "Field",
+            "type": "string"
+          },
+          "op": {
+            "default": "eq",
+            "enum": [
+              "eq",
+              "neq",
+              "in",
+              "not_in",
+              "gt",
+              "gte",
+              "lt",
+              "lte",
+              "exists",
+              "matches",
+              "between"
+            ],
+            "title": "Op",
+            "type": "string"
+          },
+          "value": {
+            "default": null,
+            "title": "Value"
+          }
+        },
+        "required": [
+          "field"
+        ],
+        "title": "Predicate",
+        "type": "object"
+      },
+      "Rule": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          },
+          "citations": {
+            "items": {
+              "$ref": "#/$defs/Citation"
+            },
+            "title": "Citations",
+            "type": "array"
+          },
+          "applies_to": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Applies To",
+            "type": "array"
+          },
+          "when": {
+            "items": {
+              "$ref": "#/$defs/Predicate"
+            },
+            "title": "When",
+            "type": "array"
+          },
+          "then": {
+            "items": {
+              "$ref": "#/$defs/Obligation"
+            },
+            "title": "Then",
+            "type": "array"
+          },
+          "except_when": {
+            "items": {
+              "$ref": "#/$defs/Predicate"
+            },
+            "title": "Except When",
+            "type": "array"
+          },
+          "parameters": {
+            "additionalProperties": true,
+            "title": "Parameters",
+            "type": "object"
+          },
+          "severity": {
+            "default": "medium",
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low"
+            ],
+            "title": "Severity",
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "ambiguity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Ambiguity"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "statement"
+        ],
+        "title": "Rule",
+        "type": "object"
+      }
+    },
+    "description": "Compiled policy. This is the handoff from person 2 to person 3.",
+    "properties": {
+      "schema_version": {
+        "default": "1.0.0",
+        "title": "Schema Version",
+        "type": "string"
+      },
+      "policy_id": {
+        "title": "Policy Id",
+        "type": "string"
+      },
+      "title": {
+        "title": "Title",
+        "type": "string"
+      },
+      "jurisdiction": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Jurisdiction"
+      },
+      "source": {
+        "$ref": "#/$defs/PolicyDocument"
+      },
+      "actor_types": {
+        "items": {
+          "$ref": "#/$defs/ActorType"
+        },
+        "title": "Actor Types",
+        "type": "array"
+      },
+      "actions": {
+        "items": {
+          "$ref": "#/$defs/ActionSpec"
+        },
+        "title": "Actions",
+        "type": "array"
+      },
+      "rules": {
+        "items": {
+          "$ref": "#/$defs/Rule"
+        },
+        "title": "Rules",
+        "type": "array"
+      },
+      "glossary": {
+        "additionalProperties": {
+          "type": "string"
+        },
+        "title": "Glossary",
+        "type": "object"
+      },
+      "open_questions": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Open Questions",
+        "type": "array"
+      },
+      "conflicts": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Conflicts",
+        "type": "array"
+      },
+      "index": {
+        "$ref": "#/$defs/CompiledIndex"
+      },
+      "revision": {
+        "default": 1,
+        "title": "Revision",
+        "type": "integer"
+      },
+      "parent_revision": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Parent Revision"
+      },
+      "change_log": {
+        "items": {
+          "$ref": "#/$defs/ChangeLogEntry"
+        },
+        "title": "Change Log",
+        "type": "array"
+      },
+      "compiled_at": {
+        "title": "Compiled At",
+        "type": "string"
+      }
+    },
+    "required": [
+      "title",
+      "source"
+    ],
+    "title": "PolicyIR",
+    "type": "object"
+  },
+  "SeedSpec": {
+    "$defs": {
+      "AudienceSegment": {
+        "description": "One injectable audience slice (not tied to any jurisdiction).",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "label": {
+            "default": "",
+            "title": "Label",
+            "type": "string"
+          },
+          "weight": {
+            "default": 1.0,
+            "title": "Weight",
+            "type": "number"
+          },
+          "attributes": {
+            "additionalProperties": true,
+            "title": "Attributes",
+            "type": "object"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "title": "AudienceSegment",
+        "type": "object"
+      }
+    },
+    "description": "Population / personality seed for person 3.\n\nIntegration stores this with the run. Person 3 reads it from GET /v1/runs/{id}.\nPrefer `segments` for structured audience injection; `text` remains freeform notes\nfor MiroFish prose. `groups` is a shorthand that still works without segments.",
+    "properties": {
+      "text": {
+        "default": "",
+        "title": "Text",
+        "type": "string"
+      },
+      "population_size": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Population Size"
+      },
+      "groups": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Groups",
+        "type": "array"
+      },
+      "segments": {
+        "items": {
+          "$ref": "#/$defs/AudienceSegment"
+        },
+        "title": "Segments",
+        "type": "array"
+      },
+      "locale": {
+        "default": "",
+        "title": "Locale",
+        "type": "string"
+      }
+    },
+    "title": "SeedSpec",
+    "type": "object"
+  },
+  "AudienceSegment": {
+    "description": "One injectable audience slice (not tied to any jurisdiction).",
+    "properties": {
+      "id": {
+        "title": "Id",
+        "type": "string"
+      },
+      "label": {
+        "default": "",
+        "title": "Label",
+        "type": "string"
+      },
+      "weight": {
+        "default": 1.0,
+        "title": "Weight",
+        "type": "number"
+      },
+      "attributes": {
+        "additionalProperties": true,
+        "title": "Attributes",
+        "type": "object"
+      }
+    },
+    "required": [
+      "id"
+    ],
+    "title": "AudienceSegment",
+    "type": "object"
+  },
+  "ScenarioSuite": {
+    "$defs": {
+      "Scenario": {
+        "description": "One test case against PolicyIR.\n\n`facts` must be fillable from PolicyIR.actor_types / actions / index.fact_fields\nso person 4 can evaluate predicates without extra interpretation.",
+        "properties": {
+          "scenario_id": {
+            "title": "Scenario Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "normal",
+              "boundary",
+              "adversarial",
+              "targeted"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "narrative": {
+            "default": "",
+            "title": "Narrative",
+            "type": "string"
+          },
+          "facts": {
+            "additionalProperties": true,
+            "title": "Facts",
+            "type": "object"
+          },
+          "targeted_rule_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Targeted Rule Ids",
+            "type": "array"
+          },
+          "expected_outcome": {
+            "anyOf": [
+              {
+                "enum": [
+                  "compliant",
+                  "violation",
+                  "exception",
+                  "ambiguous"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Expected Outcome"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "title"
+        ],
+        "title": "Scenario",
+        "type": "object"
+      }
+    },
+    "description": "Person 3 output: PolicyIR + seed \u2192 ScenarioSuite.",
+    "properties": {
+      "schema_version": {
+        "default": "1.0.0",
+        "title": "Schema Version",
+        "type": "string"
+      },
+      "suite_id": {
+        "title": "Suite Id",
+        "type": "string"
+      },
+      "policy_id": {
+        "title": "Policy Id",
+        "type": "string"
+      },
+      "policy_revision": {
+        "title": "Policy Revision",
+        "type": "integer"
+      },
+      "seed": {
+        "title": "Seed",
+        "type": "string"
+      },
+      "population_size": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Population Size"
+      },
+      "scenarios": {
+        "items": {
+          "$ref": "#/$defs/Scenario"
+        },
+        "title": "Scenarios",
+        "type": "array"
+      },
+      "created_at": {
+        "title": "Created At",
+        "type": "string"
+      }
+    },
+    "required": [
+      "policy_id",
+      "policy_revision",
+      "seed"
+    ],
+    "title": "ScenarioSuite",
+    "type": "object"
+  },
+  "RunRecord": {
+    "$defs": {
+      "ActionSpec": {
+        "description": "An action a scenario may attempt (use_phone, confiscate, appeal, ...).",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "attributes": {
+            "items": {
+              "$ref": "#/$defs/AttributeSchema"
+            },
+            "title": "Attributes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "ActionSpec",
+        "type": "object"
+      },
+      "ActorType": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "attributes": {
+            "items": {
+              "$ref": "#/$defs/AttributeSchema"
+            },
+            "title": "Attributes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "ActorType",
+        "type": "object"
+      },
+      "AgentInteraction": {
+        "description": "One notable swarm moment used to justify the score.",
+        "properties": {
+          "agent": {
+            "title": "Agent",
+            "type": "string"
+          },
+          "platform": {
+            "default": "",
+            "title": "Platform",
+            "type": "string"
+          },
+          "kind": {
+            "default": "post",
+            "title": "Kind",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "why_significant": {
+            "default": "",
+            "title": "Why Significant",
+            "type": "string"
+          }
+        },
+        "required": [
+          "agent",
+          "text"
+        ],
+        "title": "AgentInteraction",
+        "type": "object"
+      },
+      "AttributeSchema": {
+        "description": "Typed field person 3 should fill when synthesizing a scenario fact.",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "value_type": {
+            "default": "string",
+            "enum": [
+              "string",
+              "integer",
+              "number",
+              "boolean",
+              "enum",
+              "datetime"
+            ],
+            "title": "Value Type",
+            "type": "string"
+          },
+          "enum_values": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Enum Values"
+          },
+          "minimum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Minimum"
+          },
+          "maximum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Maximum"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "AttributeSchema",
+        "type": "object"
+      },
+      "AudienceSegment": {
+        "description": "One injectable audience slice (not tied to any jurisdiction).",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "label": {
+            "default": "",
+            "title": "Label",
+            "type": "string"
+          },
+          "weight": {
+            "default": 1.0,
+            "title": "Weight",
+            "type": "number"
+          },
+          "attributes": {
+            "additionalProperties": true,
+            "title": "Attributes",
+            "type": "object"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "title": "AudienceSegment",
+        "type": "object"
+      },
+      "ChangeLogEntry": {
+        "properties": {
+          "revision": {
+            "title": "Revision",
+            "type": "integer"
+          },
+          "instruction": {
+            "title": "Instruction",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "at": {
+            "title": "At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "revision",
+          "instruction",
+          "summary"
+        ],
+        "title": "ChangeLogEntry",
+        "type": "object"
+      },
+      "Citation": {
+        "description": "Pointer back to the source document. Quotes must be verbatim.",
+        "properties": {
+          "document_id": {
+            "title": "Document Id",
+            "type": "string"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Page"
+          },
+          "section": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Section"
+          },
+          "quote": {
+            "title": "Quote",
+            "type": "string"
+          },
+          "start_char": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Start Char"
+          },
+          "end_char": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "End Char"
+          }
+        },
+        "required": [
+          "document_id",
+          "quote"
+        ],
+        "title": "Citation",
+        "type": "object"
+      },
+      "CompiledIndex": {
+        "description": "Derived lookup tables. Rebuilt on every compile \u2014 do not edit by hand.",
+        "properties": {
+          "rules_by_actor": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "title": "Rules By Actor",
+            "type": "object"
+          },
+          "parameters": {
+            "additionalProperties": true,
+            "title": "Parameters",
+            "type": "object"
+          },
+          "fact_fields": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Fact Fields",
+            "type": "array"
+          },
+          "open_question_rule_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Open Question Rule Ids",
+            "type": "array"
+          }
+        },
+        "title": "CompiledIndex",
+        "type": "object"
+      },
+      "EvaluationReport": {
+        "description": "Person 4 output. Integration stores it if an evaluator plugin is registered.",
+        "properties": {
+          "schema_version": {
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "report_id": {
+            "title": "Report Id",
+            "type": "string"
+          },
+          "policy_id": {
+            "title": "Policy Id",
+            "type": "string"
+          },
+          "policy_revision": {
+            "title": "Policy Revision",
+            "type": "integer"
+          },
+          "suite_id": {
+            "title": "Suite Id",
+            "type": "string"
+          },
+          "findings": {
+            "items": {
+              "$ref": "#/$defs/Finding"
+            },
+            "title": "Findings",
+            "type": "array"
+          },
+          "metrics": {
+            "additionalProperties": true,
+            "title": "Metrics",
+            "type": "object"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "policy_id",
+          "policy_revision",
+          "suite_id"
+        ],
+        "title": "EvaluationReport",
+        "type": "object"
+      },
+      "Finding": {
+        "properties": {
+          "finding_id": {
+            "title": "Finding Id",
+            "type": "string"
+          },
+          "scenario_id": {
+            "title": "Scenario Id",
+            "type": "string"
+          },
+          "verdict": {
+            "enum": [
+              "pass",
+              "fail",
+              "ambiguous",
+              "error"
+            ],
+            "title": "Verdict",
+            "type": "string"
+          },
+          "rule_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Rule Ids",
+            "type": "array"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "traces": {
+            "items": {
+              "$ref": "#/$defs/TraceStep"
+            },
+            "title": "Traces",
+            "type": "array"
+          }
+        },
+        "required": [
+          "scenario_id",
+          "verdict",
+          "summary"
+        ],
+        "title": "Finding",
+        "type": "object"
+      },
+      "MiroFishLaunch": {
+        "properties": {
+          "attempted": {
+            "default": false,
+            "title": "Attempted",
+            "type": "boolean"
+          },
+          "ok": {
+            "default": false,
+            "title": "Ok",
+            "type": "boolean"
+          },
+          "project_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Project Id"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Error"
+          },
+          "mirofish_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Mirofish Url"
+          },
+          "at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "At"
+          }
+        },
+        "title": "MiroFishLaunch",
+        "type": "object"
+      },
+      "MiroFishPack": {
+        "description": "Handoff from this engine to MiroFish: a population seed + sim prompt.",
+        "properties": {
+          "seed_filename": {
+            "default": "mirofish_seed.md",
+            "title": "Seed Filename",
+            "type": "string"
+          },
+          "seed_markdown": {
+            "title": "Seed Markdown",
+            "type": "string"
+          },
+          "simulation_requirement": {
+            "title": "Simulation Requirement",
+            "type": "string"
+          },
+          "population_size": {
+            "default": 0,
+            "title": "Population Size",
+            "type": "integer"
+          },
+          "agent_count": {
+            "default": 0,
+            "title": "Agent Count",
+            "type": "integer"
+          },
+          "launch": {
+            "$ref": "#/$defs/MiroFishLaunch"
+          },
+          "built_at": {
+            "title": "Built At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seed_markdown",
+          "simulation_requirement"
+        ],
+        "title": "MiroFishPack",
+        "type": "object"
+      },
+      "Obligation": {
+        "properties": {
+          "modality": {
+            "enum": [
+              "must",
+              "must_not",
+              "may",
+              "should"
+            ],
+            "title": "Modality",
+            "type": "string"
+          },
+          "action": {
+            "title": "Action",
+            "type": "string"
+          },
+          "assignee": {
+            "default": "actor",
+            "title": "Assignee",
+            "type": "string"
+          },
+          "details": {
+            "default": "",
+            "title": "Details",
+            "type": "string"
+          }
+        },
+        "required": [
+          "modality",
+          "action"
+        ],
+        "title": "Obligation",
+        "type": "object"
+      },
+      "PolicyDocument": {
+        "description": "Ingested source. Person 2 starts here.",
+        "properties": {
+          "document_id": {
+            "title": "Document Id",
+            "type": "string"
+          },
+          "filename": {
+            "title": "Filename",
+            "type": "string"
+          },
+          "media_type": {
+            "default": "application/pdf",
+            "title": "Media Type",
+            "type": "string"
+          },
+          "page_count": {
+            "default": 0,
+            "title": "Page Count",
+            "type": "integer"
+          },
+          "text": {
+            "default": "",
+            "title": "Text",
+            "type": "string"
+          },
+          "pages": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Pages",
+            "type": "array"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "filename"
+        ],
+        "title": "PolicyDocument",
+        "type": "object"
+      },
+      "PolicyEffectivenessReport": {
+        "description": "0\u2013100 score of how well the inputted policy would work, plus why.",
+        "properties": {
+          "schema_version": {
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "report_id": {
+            "title": "Report Id",
+            "type": "string"
+          },
+          "policy_id": {
+            "title": "Policy Id",
+            "type": "string"
+          },
+          "policy_revision": {
+            "title": "Policy Revision",
+            "type": "integer"
+          },
+          "score": {
+            "maximum": 100,
+            "minimum": 0,
+            "title": "Score",
+            "type": "integer"
+          },
+          "justification": {
+            "title": "Justification",
+            "type": "string"
+          },
+          "highlights": {
+            "items": {
+              "$ref": "#/$defs/AgentInteraction"
+            },
+            "title": "Highlights",
+            "type": "array"
+          },
+          "recommended_actions": {
+            "items": {
+              "$ref": "#/$defs/RevisionHint"
+            },
+            "title": "Recommended Actions",
+            "type": "array"
+          },
+          "swarm_used": {
+            "default": false,
+            "title": "Swarm Used",
+            "type": "boolean"
+          },
+          "metrics": {
+            "additionalProperties": true,
+            "title": "Metrics",
+            "type": "object"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "policy_id",
+          "policy_revision",
+          "score",
+          "justification"
+        ],
+        "title": "PolicyEffectivenessReport",
+        "type": "object"
+      },
+      "PolicyIR": {
+        "description": "Compiled policy. This is the handoff from person 2 to person 3.",
+        "properties": {
+          "schema_version": {
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "policy_id": {
+            "title": "Policy Id",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "jurisdiction": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Jurisdiction"
+          },
+          "source": {
+            "$ref": "#/$defs/PolicyDocument"
+          },
+          "actor_types": {
+            "items": {
+              "$ref": "#/$defs/ActorType"
+            },
+            "title": "Actor Types",
+            "type": "array"
+          },
+          "actions": {
+            "items": {
+              "$ref": "#/$defs/ActionSpec"
+            },
+            "title": "Actions",
+            "type": "array"
+          },
+          "rules": {
+            "items": {
+              "$ref": "#/$defs/Rule"
+            },
+            "title": "Rules",
+            "type": "array"
+          },
+          "glossary": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Glossary",
+            "type": "object"
+          },
+          "open_questions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Open Questions",
+            "type": "array"
+          },
+          "conflicts": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Conflicts",
+            "type": "array"
+          },
+          "index": {
+            "$ref": "#/$defs/CompiledIndex"
+          },
+          "revision": {
+            "default": 1,
+            "title": "Revision",
+            "type": "integer"
+          },
+          "parent_revision": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Parent Revision"
+          },
+          "change_log": {
+            "items": {
+              "$ref": "#/$defs/ChangeLogEntry"
+            },
+            "title": "Change Log",
+            "type": "array"
+          },
+          "compiled_at": {
+            "title": "Compiled At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "source"
+        ],
+        "title": "PolicyIR",
+        "type": "object"
+      },
+      "Predicate": {
+        "description": "Atomic condition, evaluable against scenario.facts.\n\n`field` uses dotted paths into the scenario fact bag, for example:\n  actor.role, actor.grade, action.name, context.location, context.time",
+        "properties": {
+          "field": {
+            "title": "Field",
+            "type": "string"
+          },
+          "op": {
+            "default": "eq",
+            "enum": [
+              "eq",
+              "neq",
+              "in",
+              "not_in",
+              "gt",
+              "gte",
+              "lt",
+              "lte",
+              "exists",
+              "matches",
+              "between"
+            ],
+            "title": "Op",
+            "type": "string"
+          },
+          "value": {
+            "default": null,
+            "title": "Value"
+          }
+        },
+        "required": [
+          "field"
+        ],
+        "title": "Predicate",
+        "type": "object"
+      },
+      "RevisionHint": {
+        "description": "Smallest useful change for Person 2's repair agent / the human editor.",
+        "properties": {
+          "rule_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Rule Ids",
+            "type": "array"
+          },
+          "action": {
+            "enum": [
+              "clarify",
+              "tighten",
+              "carve_out",
+              "add_rule",
+              "communicate"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "summary"
+        ],
+        "title": "RevisionHint",
+        "type": "object"
+      },
+      "Rule": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          },
+          "citations": {
+            "items": {
+              "$ref": "#/$defs/Citation"
+            },
+            "title": "Citations",
+            "type": "array"
+          },
+          "applies_to": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Applies To",
+            "type": "array"
+          },
+          "when": {
+            "items": {
+              "$ref": "#/$defs/Predicate"
+            },
+            "title": "When",
+            "type": "array"
+          },
+          "then": {
+            "items": {
+              "$ref": "#/$defs/Obligation"
+            },
+            "title": "Then",
+            "type": "array"
+          },
+          "except_when": {
+            "items": {
+              "$ref": "#/$defs/Predicate"
+            },
+            "title": "Except When",
+            "type": "array"
+          },
+          "parameters": {
+            "additionalProperties": true,
+            "title": "Parameters",
+            "type": "object"
+          },
+          "severity": {
+            "default": "medium",
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low"
+            ],
+            "title": "Severity",
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "ambiguity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Ambiguity"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "statement"
+        ],
+        "title": "Rule",
+        "type": "object"
+      },
+      "Scenario": {
+        "description": "One test case against PolicyIR.\n\n`facts` must be fillable from PolicyIR.actor_types / actions / index.fact_fields\nso person 4 can evaluate predicates without extra interpretation.",
+        "properties": {
+          "scenario_id": {
+            "title": "Scenario Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "normal",
+              "boundary",
+              "adversarial",
+              "targeted"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "narrative": {
+            "default": "",
+            "title": "Narrative",
+            "type": "string"
+          },
+          "facts": {
+            "additionalProperties": true,
+            "title": "Facts",
+            "type": "object"
+          },
+          "targeted_rule_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Targeted Rule Ids",
+            "type": "array"
+          },
+          "expected_outcome": {
+            "anyOf": [
+              {
+                "enum": [
+                  "compliant",
+                  "violation",
+                  "exception",
+                  "ambiguous"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Expected Outcome"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "title"
+        ],
+        "title": "Scenario",
+        "type": "object"
+      },
+      "ScenarioSuite": {
+        "description": "Person 3 output: PolicyIR + seed \u2192 ScenarioSuite.",
+        "properties": {
+          "schema_version": {
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "suite_id": {
+            "title": "Suite Id",
+            "type": "string"
+          },
+          "policy_id": {
+            "title": "Policy Id",
+            "type": "string"
+          },
+          "policy_revision": {
+            "title": "Policy Revision",
+            "type": "integer"
+          },
+          "seed": {
+            "title": "Seed",
+            "type": "string"
+          },
+          "population_size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Population Size"
+          },
+          "scenarios": {
+            "items": {
+              "$ref": "#/$defs/Scenario"
+            },
+            "title": "Scenarios",
+            "type": "array"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "policy_id",
+          "policy_revision",
+          "seed"
+        ],
+        "title": "ScenarioSuite",
+        "type": "object"
+      },
+      "SeedSpec": {
+        "description": "Population / personality seed for person 3.\n\nIntegration stores this with the run. Person 3 reads it from GET /v1/runs/{id}.\nPrefer `segments` for structured audience injection; `text` remains freeform notes\nfor MiroFish prose. `groups` is a shorthand that still works without segments.",
+        "properties": {
+          "text": {
+            "default": "",
+            "title": "Text",
+            "type": "string"
+          },
+          "population_size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Population Size"
+          },
+          "groups": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Groups",
+            "type": "array"
+          },
+          "segments": {
+            "items": {
+              "$ref": "#/$defs/AudienceSegment"
+            },
+            "title": "Segments",
+            "type": "array"
+          },
+          "locale": {
+            "default": "",
+            "title": "Locale",
+            "type": "string"
+          }
+        },
+        "title": "SeedSpec",
+        "type": "object"
+      },
+      "TraceStep": {
+        "properties": {
+          "rule_id": {
+            "title": "Rule Id",
+            "type": "string"
+          },
+          "matched": {
+            "title": "Matched",
+            "type": "boolean"
+          },
+          "detail": {
+            "default": "",
+            "title": "Detail",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rule_id",
+          "matched"
+        ],
+        "title": "TraceStep",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "run_id": {
+        "title": "Run Id",
+        "type": "string"
+      },
+      "status": {
+        "default": "pending",
+        "enum": [
+          "pending",
+          "ingesting",
+          "extracting",
+          "compiling",
+          "compiled",
+          "generating_scenarios",
+          "scenarios_ready",
+          "evaluating",
+          "rehearsing",
+          "completed",
+          "failed"
+        ],
+        "title": "Status",
+        "type": "string"
+      },
+      "message": {
+        "default": "",
+        "title": "Message",
+        "type": "string"
+      },
+      "error": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Error"
+      },
+      "seed": {
+        "$ref": "#/$defs/SeedSpec"
+      },
+      "document": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/PolicyDocument"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "ir": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/PolicyIR"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "suite": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/ScenarioSuite"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "evaluation": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/EvaluationReport"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "effectiveness": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/PolicyEffectivenessReport"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "mirofish": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/MiroFishPack"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "extra": {
+        "additionalProperties": true,
+        "title": "Extra",
+        "type": "object"
+      },
+      "created_at": {
+        "title": "Created At",
+        "type": "string"
+      },
+      "updated_at": {
+        "title": "Updated At",
+        "type": "string"
+      }
+    },
+    "title": "RunRecord",
+    "type": "object"
+  },
+  "EvaluationReport": {
+    "$defs": {
+      "Finding": {
+        "properties": {
+          "finding_id": {
+            "title": "Finding Id",
+            "type": "string"
+          },
+          "scenario_id": {
+            "title": "Scenario Id",
+            "type": "string"
+          },
+          "verdict": {
+            "enum": [
+              "pass",
+              "fail",
+              "ambiguous",
+              "error"
+            ],
+            "title": "Verdict",
+            "type": "string"
+          },
+          "rule_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Rule Ids",
+            "type": "array"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "traces": {
+            "items": {
+              "$ref": "#/$defs/TraceStep"
+            },
+            "title": "Traces",
+            "type": "array"
+          }
+        },
+        "required": [
+          "scenario_id",
+          "verdict",
+          "summary"
+        ],
+        "title": "Finding",
+        "type": "object"
+      },
+      "TraceStep": {
+        "properties": {
+          "rule_id": {
+            "title": "Rule Id",
+            "type": "string"
+          },
+          "matched": {
+            "title": "Matched",
+            "type": "boolean"
+          },
+          "detail": {
+            "default": "",
+            "title": "Detail",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rule_id",
+          "matched"
+        ],
+        "title": "TraceStep",
+        "type": "object"
+      }
+    },
+    "description": "Person 4 output. Integration stores it if an evaluator plugin is registered.",
+    "properties": {
+      "schema_version": {
+        "default": "1.0.0",
+        "title": "Schema Version",
+        "type": "string"
+      },
+      "report_id": {
+        "title": "Report Id",
+        "type": "string"
+      },
+      "policy_id": {
+        "title": "Policy Id",
+        "type": "string"
+      },
+      "policy_revision": {
+        "title": "Policy Revision",
+        "type": "integer"
+      },
+      "suite_id": {
+        "title": "Suite Id",
+        "type": "string"
+      },
+      "findings": {
+        "items": {
+          "$ref": "#/$defs/Finding"
+        },
+        "title": "Findings",
+        "type": "array"
+      },
+      "metrics": {
+        "additionalProperties": true,
+        "title": "Metrics",
+        "type": "object"
+      },
+      "created_at": {
+        "title": "Created At",
+        "type": "string"
+      }
+    },
+    "required": [
+      "policy_id",
+      "policy_revision",
+      "suite_id"
+    ],
+    "title": "EvaluationReport",
+    "type": "object"
+  },
+  "PolicyEffectivenessReport": {
+    "$defs": {
+      "AgentInteraction": {
+        "description": "One notable swarm moment used to justify the score.",
+        "properties": {
+          "agent": {
+            "title": "Agent",
+            "type": "string"
+          },
+          "platform": {
+            "default": "",
+            "title": "Platform",
+            "type": "string"
+          },
+          "kind": {
+            "default": "post",
+            "title": "Kind",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "why_significant": {
+            "default": "",
+            "title": "Why Significant",
+            "type": "string"
+          }
+        },
+        "required": [
+          "agent",
+          "text"
+        ],
+        "title": "AgentInteraction",
+        "type": "object"
+      },
+      "RevisionHint": {
+        "description": "Smallest useful change for Person 2's repair agent / the human editor.",
+        "properties": {
+          "rule_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Rule Ids",
+            "type": "array"
+          },
+          "action": {
+            "enum": [
+              "clarify",
+              "tighten",
+              "carve_out",
+              "add_rule",
+              "communicate"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "summary"
+        ],
+        "title": "RevisionHint",
+        "type": "object"
+      }
+    },
+    "description": "0\u2013100 score of how well the inputted policy would work, plus why.",
+    "properties": {
+      "schema_version": {
+        "default": "1.0.0",
+        "title": "Schema Version",
+        "type": "string"
+      },
+      "report_id": {
+        "title": "Report Id",
+        "type": "string"
+      },
+      "policy_id": {
+        "title": "Policy Id",
+        "type": "string"
+      },
+      "policy_revision": {
+        "title": "Policy Revision",
+        "type": "integer"
+      },
+      "score": {
+        "maximum": 100,
+        "minimum": 0,
+        "title": "Score",
+        "type": "integer"
+      },
+      "justification": {
+        "title": "Justification",
+        "type": "string"
+      },
+      "highlights": {
+        "items": {
+          "$ref": "#/$defs/AgentInteraction"
+        },
+        "title": "Highlights",
+        "type": "array"
+      },
+      "recommended_actions": {
+        "items": {
+          "$ref": "#/$defs/RevisionHint"
+        },
+        "title": "Recommended Actions",
+        "type": "array"
+      },
+      "swarm_used": {
+        "default": false,
+        "title": "Swarm Used",
+        "type": "boolean"
+      },
+      "metrics": {
+        "additionalProperties": true,
+        "title": "Metrics",
+        "type": "object"
+      },
+      "created_at": {
+        "title": "Created At",
+        "type": "string"
+      }
+    },
+    "required": [
+      "policy_id",
+      "policy_revision",
+      "score",
+      "justification"
+    ],
+    "title": "PolicyEffectivenessReport",
+    "type": "object"
+  },
+  "MiroFishPack": {
+    "$defs": {
+      "MiroFishLaunch": {
+        "properties": {
+          "attempted": {
+            "default": false,
+            "title": "Attempted",
+            "type": "boolean"
+          },
+          "ok": {
+            "default": false,
+            "title": "Ok",
+            "type": "boolean"
+          },
+          "project_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Project Id"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Error"
+          },
+          "mirofish_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Mirofish Url"
+          },
+          "at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "At"
+          }
+        },
+        "title": "MiroFishLaunch",
+        "type": "object"
+      }
+    },
+    "description": "Handoff from this engine to MiroFish: a population seed + sim prompt.",
+    "properties": {
+      "seed_filename": {
+        "default": "mirofish_seed.md",
+        "title": "Seed Filename",
+        "type": "string"
+      },
+      "seed_markdown": {
+        "title": "Seed Markdown",
+        "type": "string"
+      },
+      "simulation_requirement": {
+        "title": "Simulation Requirement",
+        "type": "string"
+      },
+      "population_size": {
+        "default": 0,
+        "title": "Population Size",
+        "type": "integer"
+      },
+      "agent_count": {
+        "default": 0,
+        "title": "Agent Count",
+        "type": "integer"
+      },
+      "launch": {
+        "$ref": "#/$defs/MiroFishLaunch"
+      },
+      "built_at": {
+        "title": "Built At",
+        "type": "string"
+      }
+    },
+    "required": [
+      "seed_markdown",
+      "simulation_requirement"
+    ],
+    "title": "MiroFishPack",
+    "type": "object"
+  }
+}
