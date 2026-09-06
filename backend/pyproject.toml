@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "PolicyFuzz contract-first backend"
 requires-python = ">=3.12"
 dependencies = [
+  "boto3",
   "fastapi",
   "pydantic>=2",
   "pydantic-settings",

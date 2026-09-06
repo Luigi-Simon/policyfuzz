@@ -93,7 +93,7 @@ class AppContainer:
 
     @property
     def provider_configured(self) -> bool:
-        return bool(self.settings.llm_model and self.settings.openai_api_key)
+        return _provider_is_configured(self.settings)
 
     async def execute(self, run_id: str, work: Callable[[], Awaitable[T]]) -> T:
         if self.scenario_scope is None:
@@ -171,6 +171,14 @@ def make_manifest_factory(
     return factory
 
 
+def _provider_is_configured(settings: Settings) -> bool:
+    if not settings.llm_model:
+        return False
+    if settings.llm_provider == "openai":
+        return bool(settings.openai_api_key)
+    return bool(settings.aws_region)
+
+
 def build_container(
     settings: Settings | None = None,
     *,
@@ -195,12 +203,17 @@ def build_container(
     settings = settings if settings is not None else Settings()
     clock = clock if clock is not None else SystemClock()
     close_provider = None
-    configured = bool(settings.llm_model and settings.openai_api_key)
+    configured = _provider_is_configured(settings)
     supplied_llm = llm is not None
     if llm is None and settings.app_mode == "live" and configured:
-        from app.core.llm_openai import OpenAILLMClient
+        if settings.llm_provider == "openai":
+            from app.core.llm_openai import OpenAILLMClient
 
-        adapter = OpenAILLMClient.from_settings(settings)
+            adapter = OpenAILLMClient.from_settings(settings)
+        else:
+            from app.core.llm_bedrock import BedrockLLMClient
+
+            adapter = BedrockLLMClient.from_settings(settings)
         close_provider = adapter.aclose
         llm = adapter
     if llm is None:

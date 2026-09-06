@@ -2,7 +2,7 @@
 
 from typing import Annotated, Literal
 
-from pydantic import Field, SecretStr, field_validator
+from pydantic import AliasChoices, Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -26,12 +26,16 @@ class Settings(BaseSettings):
     max_policy_chars: Annotated[int, Field(ge=1, le=50_000)] = Field(
         default=50_000, validation_alias="MAX_POLICY_CHARS"
     )
-    llm_provider: Literal["openai"] = Field(
+    llm_provider: Literal["openai", "bedrock"] = Field(
         default="openai", validation_alias="LLM_PROVIDER"
     )
     llm_model: str | None = Field(default=None, validation_alias="LLM_MODEL")
     openai_api_key: SecretStr | None = Field(
         default=None, validation_alias="OPENAI_API_KEY", repr=False
+    )
+    aws_region: str = Field(
+        default="us-east-1",
+        validation_alias=AliasChoices("AWS_REGION", "AWS_DEFAULT_REGION"),
     )
     llm_timeout_seconds: Annotated[float, Field(gt=0, le=120, allow_inf_nan=False)] = (
         Field(default=30.0, validation_alias="LLM_TIMEOUT_SECONDS")
@@ -52,6 +56,16 @@ class Settings(BaseSettings):
             return value if value.get_secret_value().strip() else None
         if isinstance(value, str):
             return value if value.strip() else None
+        return value
+
+    @field_validator("aws_region", mode="before")
+    @classmethod
+    def normalize_aws_region(cls, value: object) -> object:
+        if isinstance(value, str):
+            stripped = value.strip()
+            if not stripped:
+                raise ValueError("AWS region must not be blank")
+            return stripped
         return value
 
 

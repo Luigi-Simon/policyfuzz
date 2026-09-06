@@ -16,6 +16,8 @@ def test_settings_defaults_are_cached_and_do_not_require_credentials(
         "LLM_PROVIDER",
         "LLM_MODEL",
         "OPENAI_API_KEY",
+        "AWS_REGION",
+        "AWS_DEFAULT_REGION",
         "LLM_TIMEOUT_SECONDS",
     ):
         monkeypatch.delenv(name, raising=False)
@@ -28,6 +30,7 @@ def test_settings_defaults_are_cached_and_do_not_require_credentials(
     assert settings.llm_provider == "openai"
     assert settings.llm_model is None
     assert settings.openai_api_key is None
+    assert settings.aws_region == "us-east-1"
     assert settings.llm_timeout_seconds == 30
 
 
@@ -40,6 +43,7 @@ def test_settings_use_documented_environment_aliases(
     monkeypatch.setenv("LLM_PROVIDER", "openai")
     monkeypatch.setenv("LLM_MODEL", "synthetic-model")
     monkeypatch.setenv("OPENAI_API_KEY", "synthetic-secret")
+    monkeypatch.setenv("AWS_REGION", "ap-southeast-1")
     monkeypatch.setenv("LLM_TIMEOUT_SECONDS", "12.5")
 
     settings = Settings()
@@ -50,6 +54,7 @@ def test_settings_use_documented_environment_aliases(
     assert settings.llm_model == "synthetic-model"
     assert settings.openai_api_key is not None
     assert settings.openai_api_key.get_secret_value() == "synthetic-secret"
+    assert settings.aws_region == "ap-southeast-1"
     assert settings.llm_timeout_seconds == 12.5
     assert "synthetic-secret" not in repr(settings)
 
@@ -66,6 +71,22 @@ def test_blank_optional_provider_values_normalize_to_none(
     assert settings.openai_api_key is None
 
 
+def test_settings_accept_bedrock_provider() -> None:
+    settings = Settings(llm_provider="bedrock", llm_model="amazon.synthetic-v1:0")
+
+    assert settings.llm_provider == "bedrock"
+    assert settings.aws_region == "us-east-1"
+
+
+def test_settings_accept_standard_aws_default_region_alias(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv("AWS_REGION", raising=False)
+    monkeypatch.setenv("AWS_DEFAULT_REGION", "ap-southeast-1")
+
+    assert Settings().aws_region == "ap-southeast-1"
+
+
 @pytest.mark.parametrize(
     ("field", "value"),
     [
@@ -75,6 +96,8 @@ def test_blank_optional_provider_values_normalize_to_none(
         ("max_policy_chars", 0),
         ("max_policy_chars", 50_001),
         ("llm_provider", "other"),
+        ("aws_region", ""),
+        ("aws_region", "   "),
         ("llm_timeout_seconds", 0),
         ("llm_timeout_seconds", 121),
     ],

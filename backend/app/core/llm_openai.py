@@ -12,6 +12,14 @@ from app.core.errors import LLMConfigurationError, LLMTransportError
 from app.domain.models import GenerationUsage, LLMError, LLMRequest, LLMResponse
 
 _UNTRUSTED_INPUT_LABEL = "UNTRUSTED_JSON_INPUT:\n"
+_NO_SAMPLING_PREFIXES = ("gpt-5", "gpt-6", "o1", "o3", "o4")
+_NONE_REASONING_PREFIXES = (
+    "gpt-5.1",
+    "gpt-5.2",
+    "gpt-5.4",
+    "gpt-5.5",
+    "gpt-5.6",
+)
 
 
 class _Completions(Protocol):
@@ -32,6 +40,34 @@ class _AsyncSDK(Protocol):
 
 def _transport_error(code: str, request: LLMRequest) -> LLMTransportError:
     return LLMTransportError(LLMError(code=code, operation=request.operation))
+
+
+def openai_strict_schema(source: dict[str, object]) -> dict[str, object]:
+    """Return an OpenAI strict-mode schema without mutating the domain schema."""
+
+    def normalize(value: object) -> object:
+        if isinstance(value, list):
+            return [normalize(item) for item in value]
+        if not isinstance(value, dict):
+            return value
+
+        normalized: dict[str, object] = {}
+        for key, item in value.items():
+            if key in {"default", "discriminator"}:
+                continue
+            normalized["anyOf" if key == "oneOf" else key] = normalize(item)
+
+        if normalized.get("type") == "object":
+            properties = normalized.get("properties")
+            if isinstance(properties, dict):
+                normalized["required"] = list(properties)
+                normalized["additionalProperties"] = False
+        return normalized
+
+    schema = normalize(deepcopy(source))
+    if not isinstance(schema, dict):
+        raise LLMConfigurationError() from None
+    return schema
 
 
 class OpenAILLMClient:
@@ -106,7 +142,7 @@ class OpenAILLMClient:
         return instance
 
     async def complete_json(self, request: LLMRequest) -> LLMResponse:
-        schema = deepcopy(request.response_schema)
+        schema = openai_strict_schema(request.response_schema)
         kwargs: dict[str, object] = {
             "model": self._model,
             "messages": [
@@ -121,17 +157,20 @@ class OpenAILLMClient:
                 "json_schema": {
                     "name": request.response_schema_name,
                     "schema": schema,
-                    "strict": False,
+                    "strict": True,
                 },
             },
             "max_completion_tokens": request.generation_config.max_output_tokens,
-            "temperature": request.generation_config.temperature_milli / 1000,
-            "top_p": request.generation_config.top_p_percent / 100,
             "stream": False,
             "store": False,
         }
-        if request.generation_config.seed is not None:
-            kwargs["seed"] = request.generation_config.seed
+        if self._model.startswith(_NONE_REASONING_PREFIXES):
+            kwargs["reasoning_effort"] = "none"
+        if not self._model.startswith(_NO_SAMPLING_PREFIXES):
+            kwargs["temperature"] = request.generation_config.temperature_milli / 1000
+            kwargs["top_p"] = request.generation_config.top_p_percent / 100
+            if request.generation_config.seed is not None:
+                kwargs["seed"] = request.generation_config.seed
         try:
             completion = await self._sdk_client.chat.completions.create(**kwargs)
         except asyncio.CancelledError:
@@ -204,4 +243,4 @@ class OpenAILLMClient:
         await self.aclose()
 
 
-__all__ = ["OpenAILLMClient"]
+__all__ = ["OpenAILLMClient", "openai_strict_schema"]

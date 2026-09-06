@@ -30,15 +30,20 @@ def test_known_errors_map_to_fixed_public_errors() -> None:
         "schema_version": "1.0",
         "code": "PROVIDER_UNAVAILABLE",
         "message": "The model provider is unavailable.",
-        "error_id": None,
+        "error_id": "provider-timeout",
         "retryable": True,
     }
-    assert to_public_error(transport("authentication")).retryable is False
+    authentication = to_public_error(transport("authentication"))
+    assert authentication.error_id == "provider-authentication"
+    assert authentication.retryable is False
+    assert to_public_error(transport("invalid_request")).error_id == (
+        "provider-invalid-request"
+    )
     assert to_public_error(LLMConfigurationError()).model_dump() == {
         "schema_version": "1.0",
         "code": "PROVIDER_UNAVAILABLE",
         "message": "The model provider is not configured.",
-        "error_id": None,
+        "error_id": "provider-configuration",
         "retryable": False,
     }
 

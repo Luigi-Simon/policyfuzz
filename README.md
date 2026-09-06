@@ -50,13 +50,66 @@ To use the authored interface fixtures instead, set `VITE_DATA_MODE=mock` before
 
 ## Live hosted-model setup
 
-Set `APP_MODE=live`, `LLM_PROVIDER=openai`, `LLM_MODEL` to a model available to your project, and `OPENAI_API_KEY` in the backend process environment, then restart it. Keep the browser in HTTP mode. Pasted text is sent to the configured provider after the required acknowledgement. Never commit a key or a real policy. No credentials are needed for tests, replay or CI.
+Install the backend once, then use the live launcher from the repository root:
+
+```bash
+python3 -m venv backend/.venv
+backend/.venv/bin/python -m pip install -e './backend[dev]'
+backend/.venv/bin/python scripts/run_live_backend.py
+```
+
+The default provider is OpenAI. The launcher asks for its API key with hidden
+input, stores nothing, selects live mode, and starts the backend on
+`http://127.0.0.1:8000`. It defaults to `gpt-5.6-luna`; select another model
+available to your OpenAI project with `--model MODEL_ID`.
+
+To use the student AWS sandbox instead, first copy the three temporary export
+commands from **AWS access portal > Accounts > Access keys** into the same
+terminal. They set `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and
+`AWS_SESSION_TOKEN`. Then run:
+
+```bash
+backend/.venv/bin/python scripts/run_live_backend.py --provider bedrock
+```
+
+Bedrock defaults to `amazon.nova-lite-v1:0` in `us-east-1`. Nova Lite is used
+because PolicyFuzz requires a deeply nested structured result; Nova Micro remains
+available as an explicit lower-cost option. Override either
+value when required by the sandbox:
+
+```bash
+backend/.venv/bin/python scripts/run_live_backend.py \
+  --provider bedrock \
+  --model MODEL_ID \
+  --aws-region us-east-1
+```
+
+The AWS SDK also accepts its standard profile and workload credential sources.
+Student sandbox credentials expire after 12 hours, so retrieve fresh exports
+when AWS reports an expired token. For either provider, keep the browser in HTTP
+mode:
+
+```bash
+cd frontend
+npm ci
+VITE_DATA_MODE=http npm run dev
+```
+
+Pasted text is sent to the configured provider only after the required
+non-confidential acknowledgement. Never commit a key or a real policy. No
+credentials are needed for tests, replay, cached mode or CI. Advanced users may
+set `APP_MODE=live`, `LLM_PROVIDER`, `LLM_MODEL`, and the selected provider's
+credentials directly in the backend process environment.
 
 | Variable | Purpose |
 | --- | --- |
 | `APP_MODE` | `cached` or `live` backend execution |
-| `OPENAI_API_KEY` | Server-side provider credential |
-| `LLM_PROVIDER` | Supported hosted provider |
+| `OPENAI_API_KEY` | OpenAI server-side credential; never used by Bedrock |
+| `AWS_ACCESS_KEY_ID` | Bedrock credential supplied through the AWS SDK chain |
+| `AWS_SECRET_ACCESS_KEY` | Bedrock secret supplied through the AWS SDK chain |
+| `AWS_SESSION_TOKEN` | Temporary Bedrock session token from the student sandbox |
+| `AWS_REGION` | Bedrock runtime region; defaults to `us-east-1` |
+| `LLM_PROVIDER` | `openai` or `bedrock` |
 | `LLM_MODEL` | Model identifier configured for the provider project |
 | `LLM_TIMEOUT_SECONDS` | Per-attempt transport timeout |
 | `RUN_TTL_SECONDS` | Run retention, at most 3,600 seconds |

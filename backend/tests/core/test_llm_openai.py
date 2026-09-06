@@ -1,3 +1,4 @@
+from copy import deepcopy
 from types import SimpleNamespace
 
 import httpx
@@ -6,7 +7,7 @@ import pytest
 
 from app.core.config import Settings
 from app.core.errors import LLMConfigurationError, LLMTransportError
-from app.core.llm_openai import OpenAILLMClient
+from app.core.llm_openai import OpenAILLMClient, openai_strict_schema
 from app.domain.models import GenerationConfig, GenerationUsage, LLMRequest
 
 
@@ -93,6 +94,13 @@ async def test_openai_adapter_sends_exact_safe_wire_contract_without_mutating_sc
 
     response = await client.complete_json(original)
 
+    strict_schema = {
+        "type": "object",
+        "properties": {"rules": {"type": "array"}},
+        "required": ["rules"],
+        "additionalProperties": False,
+    }
+
     assert sdk.options == [{"max_retries": 0, "timeout": 12.5}]
     assert sdk.completions.calls == [
         {
@@ -109,8 +117,8 @@ async def test_openai_adapter_sends_exact_safe_wire_contract_without_mutating_sc
                 "type": "json_schema",
                 "json_schema": {
                     "name": "policy_extraction_v1",
-                    "schema": schema_snapshot,
-                    "strict": False,
+                    "schema": strict_schema,
+                    "strict": True,
                 },
             },
             "max_completion_tokens": 123,
@@ -126,6 +134,65 @@ async def test_openai_adapter_sends_exact_safe_wire_contract_without_mutating_sc
     assert response.usage == GenerationUsage(input_tokens=11, output_tokens=7)
 
 
+def test_openai_strict_schema_normalizes_nested_objects_and_unions() -> None:
+    source = {
+        "$defs": {
+            "Evidence": {
+                "type": "object",
+                "properties": {
+                    "kind": {"type": "string", "default": "quoted"},
+                    "note": {
+                        "anyOf": [{"type": "string"}, {"type": "null"}],
+                        "default": None,
+                    },
+                },
+                "required": ["kind"],
+            }
+        },
+        "type": "object",
+        "properties": {
+            "evidence": {
+                "oneOf": [
+                    {"$ref": "#/$defs/Evidence"},
+                    {"type": "null"},
+                ],
+                "discriminator": {"propertyName": "kind"},
+            }
+        },
+    }
+    snapshot = deepcopy(source)
+
+    normalized = openai_strict_schema(source)
+
+    assert normalized == {
+        "$defs": {
+            "Evidence": {
+                "type": "object",
+                "properties": {
+                    "kind": {"type": "string"},
+                    "note": {
+                        "anyOf": [{"type": "string"}, {"type": "null"}]
+                    },
+                },
+                "required": ["kind", "note"],
+                "additionalProperties": False,
+            }
+        },
+        "type": "object",
+        "properties": {
+            "evidence": {
+                "anyOf": [
+                    {"$ref": "#/$defs/Evidence"},
+                    {"type": "null"},
+                ]
+            }
+        },
+        "required": ["evidence"],
+        "additionalProperties": False,
+    }
+    assert source == snapshot
+
+
 @pytest.mark.asyncio
 async def test_openai_adapter_omits_seed_and_passes_malformed_stopped_content() -> None:
     sdk = FakeSDK(completion(content="{malformed"))
@@ -138,6 +205,21 @@ async def test_openai_adapter_omits_seed_and_passes_malformed_stopped_content() 
     assert "seed" not in sdk.completions.calls[0]
     assert response.output == "{malformed"
     assert response.usage.repair_calls == 1
+
+
+@pytest.mark.asyncio
+async def test_openai_adapter_uses_reasoning_compatible_gpt5_parameters() -> None:
+    sdk = FakeSDK(completion())
+
+    await OpenAILLMClient(
+        model="gpt-5.6-luna", timeout_seconds=30, sdk_client=sdk
+    ).complete_json(request())
+
+    call = sdk.completions.calls[0]
+    assert call["reasoning_effort"] == "none"
+    assert "temperature" not in call
+    assert "top_p" not in call
+    assert "seed" not in call
 
 
 @pytest.mark.asyncio

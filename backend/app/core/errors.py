@@ -32,6 +32,7 @@ def to_public_error(error: Exception) -> PublicError:
         return PublicError(
             code="PROVIDER_UNAVAILABLE",
             message="The model provider is not configured.",
+            error_id="provider-configuration",
             retryable=False,
         )
     if isinstance(error, LLMTransportError):
@@ -44,6 +45,7 @@ def to_public_error(error: Exception) -> PublicError:
         return PublicError(
             code="PROVIDER_UNAVAILABLE",
             message="The model provider is unavailable.",
+            error_id=f"provider-{error.error.code.replace('_', '-')}",
             retryable=error.error.code in {"timeout", "rate_limit", "unavailable"},
         )
     return PublicError(

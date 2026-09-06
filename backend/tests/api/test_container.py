@@ -135,6 +135,42 @@ async def test_unconfigured_live_graph_starts_with_safe_health_and_create_failur
         assert response.json()["error"]["code"] == "PROVIDER_UNAVAILABLE"
 
 
+async def test_bedrock_live_graph_uses_bedrock_adapter(
+    monkeypatch,
+):
+    from app.container import build_container
+
+    closed = []
+
+    class FakeAdapter:
+        async def complete_json(self, request):
+            raise AssertionError(
+                "No provider call is expected while building the graph"
+            )
+
+        async def aclose(self):
+            closed.append(True)
+
+    adapter = FakeAdapter()
+    monkeypatch.setattr(
+        "app.core.llm_bedrock.BedrockLLMClient.from_settings",
+        lambda settings: adapter,
+    )
+    container = build_container(
+        Settings(
+            app_mode="live",
+            llm_provider="bedrock",
+            llm_model="amazon.synthetic-v1:0",
+            aws_region="us-east-1",
+        )
+    )
+
+    assert container.provider_configured is True
+    assert container.settings.llm_provider == "bedrock"
+    await container.aclose()
+    assert closed == [True]
+
+
 async def test_missing_and_corrupt_recorded_cache_are_safe(tmp_path):
     from app.container import build_container
 

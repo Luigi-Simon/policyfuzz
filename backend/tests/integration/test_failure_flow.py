@@ -2,7 +2,8 @@ import asyncio
 
 import pytest
 
-from app.domain.models import ConfirmRevisionRequest
+from app.core.errors import LLMTransportError
+from app.domain.models import ConfirmRevisionRequest, LLMError
 from app.workflow.errors import RunNotFoundError, WorkflowError
 from app.workflow.fake_stages import (
     FakeEvaluationEngine,
@@ -89,6 +90,29 @@ async def test_later_provider_failure_preserves_completed_baseline():
     assert view.stage == "failed" and view.baseline_metrics is not None
     assert all(a in after.artifacts for a in before.artifacts)
     assert "PRIVATE" not in view.model_dump_json()
+
+
+@pytest.mark.asyncio
+async def test_provider_failure_preserves_safe_diagnostic_classification():
+    coordinator, _fakes = harness(
+        policy_compiler=FakePolicyCompiler(
+            [
+                LLMTransportError(
+                    LLMError(code="authentication", operation="policy_extraction")
+                )
+            ]
+        )
+    )
+
+    created = await coordinator.create_run(request())
+    await coordinator.start(created.run_id)
+    view = await coordinator.get_run(created.run_id)
+
+    assert view.stage == "failed"
+    assert view.error is not None
+    assert view.error.code == "PROVIDER_UNAVAILABLE"
+    assert view.error.error_id == "provider-authentication"
+    assert view.error.retryable is False
 
 
 @pytest.mark.asyncio

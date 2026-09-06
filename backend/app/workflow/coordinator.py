@@ -262,6 +262,7 @@ class RunCoordinator:
         public = PublicError(
             code=public.code,
             message="The workflow could not complete this stage.",
+            error_id=public.error_id,
             retryable=public.retryable,
         )
         try:
