@@ -1,0 +1,64 @@
+{
+  "kind": "offline_startup_checks_not_gate_b",
+  "date": "2026-09-06",
+  "base_commit": "971a866cf001f69921998661b7f4966906212c47",
+  "branch": "p1/fix-offline-startup-checks",
+  "source_sha256": {
+    "scripts/check_setup.py": "034cc16bd9453b4ebf333a4c76133233ea313607adaeb1aeb6cdaecf920de14d",
+    "backend/tests/integration/test_check_setup.py": "7f973c4a0a0c7fe8ead5c6c91869129007396270dd070b4e64c91faf26460ce8",
+    ".github/workflows/ci.yml": "5afffbca6af8da12a0bfdb9dfaf1ba2570571a5fc1899f77266637630f8abbd2"
+  },
+  "checks": [
+    {
+      "command": "backend/.venv/bin/python -m pytest backend/tests -q --tb=short",
+      "exit_code": 0,
+      "passed": 1476
+    },
+    {
+      "command": "backend/.venv/bin/python -m pytest backend/tests/integration/test_check_setup.py -q --tb=short",
+      "exit_code": 0,
+      "passed": 16
+    },
+    {
+      "command": "backend/.venv/bin/python -m ruff check scripts/check_setup.py backend/tests/integration/test_check_setup.py",
+      "exit_code": 0
+    },
+    {
+      "command": "backend/.venv/bin/python -m ruff format --check scripts/check_setup.py backend/tests/integration/test_check_setup.py",
+      "exit_code": 0
+    },
+    {
+      "command": "backend/.venv/bin/python scripts/validate_contracts.py",
+      "exit_code": 0,
+      "schemas": 111
+    },
+    {
+      "command": "backend/.venv/bin/python scripts/replay_check.py",
+      "exit_code": 0,
+      "replays": 3,
+      "semantic_execution_sha256": "bab4805986a8d06b3bf80e923018d6f23091885880a21a8b255258189fb2310a"
+    },
+    {
+      "command": "backend/.venv/bin/python scripts/check_setup.py --mode cached",
+      "exit_code": 0
+    },
+    {
+      "command": "OPENAI_API_KEY=policyfuzz-offline-probe LLM_MODEL=offline-probe backend/.venv/bin/python scripts/check_setup.py --mode live",
+      "exit_code": 0
+    }
+  ],
+  "sdk_manual_probe": {
+    "credential": "dummy",
+    "initialized_and_closed": true,
+    "socket_connections_blocked": true,
+    "connection_attempts": 0
+  },
+  "independent_review": "approved; no blockers or important issues",
+  "scope": "Person 1 setup, tests, CI and docs only; no runtime API, contract, dependency, feature or frontend changes",
+  "limitations": [
+    "Live-provider authentication not tested",
+    "Frontend and browser not tested locally for this change",
+    "New GitHub CI results not part of this local evidence",
+    "No blind benchmark, human approval, release freeze or final-media acceptance claimed"
+  ]
+}

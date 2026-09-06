@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import asyncio
 import importlib.util
 import os
 import re
@@ -38,6 +39,8 @@ class CheckEnvironment:
         find_spec: Callable[[str], object | None],
         environ: Mapping[str, str],
         settings_factory: Callable[..., Any],
+        provider_probe: Callable[[], None],
+        cached_probe: Callable[[Path], None],
     ) -> None:
         self.root = root
         self.python_version = python_version
@@ -46,6 +49,29 @@ class CheckEnvironment:
         self.find_spec = find_spec
         self.environ = environ
         self.settings_factory = settings_factory
+        self.provider_probe = provider_probe
+        self.cached_probe = cached_probe
+
+
+def _probe_cached_record(path: Path) -> None:
+    """Apply the same read-only evidence validation used by cached run creation."""
+    from app.domain.models import RunRecord
+    from app.workflow.validation import validate_cached_record
+
+    validate_cached_record(RunRecord.model_validate_json(path.read_bytes()))
+
+
+def _probe_provider_runtime() -> None:
+    """Construct and close the SDK transport without a request or real credential."""
+    import openai
+
+    async def probe() -> None:
+        client = openai.AsyncOpenAI(
+            api_key="policyfuzz-offline-probe", max_retries=0, timeout=1.0
+        )
+        await client.close()
+
+    asyncio.run(probe())
 
 
 def _default_environment() -> CheckEnvironment:
@@ -65,6 +91,8 @@ def _default_environment() -> CheckEnvironment:
         find_spec=importlib.util.find_spec,
         environ=os.environ,
         settings_factory=load_settings,
+        provider_probe=_probe_provider_runtime,
+        cached_probe=_probe_cached_record,
     )
 
 
@@ -98,6 +126,7 @@ def run_checks(mode: str, env: CheckEnvironment) -> tuple[int, list[str]]:
     """Return an exit status and safe human-readable diagnostic lines."""
     lines = [f"PolicyFuzz setup check (mode: {mode})"]
     failures = 0
+    backend_ready = False
 
     backend_mode = mode in ("cached", "live")
     if backend_mode:
@@ -172,11 +201,33 @@ def run_checks(mode: str, env: CheckEnvironment) -> tuple[int, list[str]]:
                     )
                 )
             else:
+                backend_ready = True
                 lines.append(
                     _status(
                         True, f"Backend Settings validate for requested {mode} mode"
                     )
                 )
+                if mode == "live":
+                    try:
+                        env.provider_probe()
+                    except Exception:  # noqa: BLE001 - proxy errors may contain secrets
+                        failures += 1
+                        lines.append(
+                            _status(
+                                False,
+                                "OpenAI client could not initialize locally; check backend "
+                                "dependencies and proxy settings. A SOCKS proxy requires "
+                                "socksio in the backend virtual environment",
+                            )
+                        )
+                    else:
+                        lines.append(
+                            _status(
+                                True,
+                                "OpenAI client initialized and closed with a dummy key; "
+                                "no API request was made",
+                            )
+                        )
 
     if mode == "cached":
         cache_ok = all((env.root / relative).is_file() for relative in CACHED_FILES)
@@ -189,6 +240,22 @@ def run_checks(mode: str, env: CheckEnvironment) -> tuple[int, list[str]]:
                 else "Restore the bundled cached demo files from the repository",
             )
         )
+        if cache_ok and backend_ready:
+            try:
+                env.cached_probe(env.root / "samples/cached-demo/run-record.json")
+            except Exception:  # noqa: BLE001 - never expose malformed artifact contents
+                failures += 1
+                lines.append(
+                    _status(
+                        False,
+                        "Cached demo record is invalid; restore the bundled cache from "
+                        "the same repository version and run scripts/replay_check.py",
+                    )
+                )
+            else:
+                lines.append(
+                    _status(True, "Cached demo record and evidence links validate")
+                )
         policy_ok = (env.root / DEVELOPMENT_POLICY).is_file()
         failures += not policy_ok
         lines.append(

@@ -21,6 +21,11 @@ jobs:
       - run: python -m pip install -e './backend[dev]'
       - run: npm --prefix frontend ci
       - run: python scripts/check_setup.py --mode cached
+      - name: Check live SDK startup offline
+        run: python scripts/check_setup.py --mode live
+        env:
+          OPENAI_API_KEY: policyfuzz-offline-probe
+          LLM_MODEL: offline-probe
       - run: python -m ruff check scripts/check_setup.py
       - run: python -m ruff format --check scripts/check_setup.py
       - run: python -m ruff check backend/app backend/tests
@@ -51,6 +56,11 @@ jobs:
       - run: python -m pytest backend/tests/integration/test_check_setup.py -q
       - run: python scripts/check_setup.py --mode mock
       - run: python scripts/check_setup.py --mode cached
+      - name: Check live SDK startup offline
+        run: python scripts/check_setup.py --mode live
+        env:
+          OPENAI_API_KEY: policyfuzz-offline-probe
+          LLM_MODEL: offline-probe
   submission:
     if: startsWith(github.ref, 'refs/tags/demo-v')
     needs: core

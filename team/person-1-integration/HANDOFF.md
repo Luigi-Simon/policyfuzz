@@ -38,10 +38,34 @@ and cannot satisfy that headline gate. The old plan's direct blind-scoring comma
 not by itself finish benchmark acceptance.
 
 The task-by-task release status is recorded in `docs/implementation-status.md`.
-Current checks: 1,470 backend tests, 108 frontend tests, production build, 111-schema drift,
+Published baseline checks: 1,470 backend tests, 108 frontend tests, production build, 111-schema drift,
 three-run replay and independent public benchmark verification all pass. See the explicitly
 non-Gate-B `team/person-1-integration/evidence/demo-readiness-verification.json`. Historical
 verification below remains dated evidence, not the current complete-suite test count.
+
+## Isolated startup diagnostics — 2026-09-06
+
+Branch `p1/fix-offline-startup-checks` adds only Person 1 setup diagnostics, tests,
+CI and documentation. It is a separate reviewable change from `main`; no teammate
+branch, feature implementation, frontend, dependency or frozen contract is edited.
+
+- Cached setup now parses and validates the recorded run with the same evidence-graph
+  validator used by cached run creation. Existing filenames alone no longer establish
+  readiness. The three-pass engine replay remains a separate check.
+- Live setup initializes and closes the SDK with an explicit dummy key to detect local
+  transport failures, including missing SOCKS support. It makes no API request, never
+  passes a configured real key to the SDK, and suppresses raw exception details.
+- Linux and Windows CI run that offline startup probe with dummy environment values.
+  The guide explains optional SOCKS dependency setup and damaged-cache recovery.
+- Fresh local verification: **1,476 backend tests**, including **16 setup checks**,
+  changed-file Ruff/format, **111 schemas** and the **three-pass replay** all pass.
+  The real SDK initialized/closed with socket connections blocked and made zero
+  connection attempts. Independent review found no blockers or important issues.
+
+See `evidence/startup-checks-verification.json` for commands and source hashes. This
+is offline preparation, not live-provider authentication, browser acceptance, a blind
+benchmark, Gate B or media approval. Frontend behavior is unchanged and was not
+retested locally for this change; CI retains the full frontend gates.
 
 ## Demo-readiness follow-up — 2026-09-06
 

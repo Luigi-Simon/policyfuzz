@@ -48,6 +48,8 @@ def environment(checker, tmp_path, *, settings_factory=None, run=None, **overrid
         "environ": {},
         "settings_factory": settings_factory
         or (lambda **kwargs: SimpleNamespace(**kwargs)),
+        "provider_probe": lambda: None,
+        "cached_probe": lambda path: None,
     }
     values.update(overrides)
     return checker.CheckEnvironment(**values)
@@ -241,3 +243,101 @@ def test_missing_frontend_and_cached_files_block_with_remediation(tmp_path, caps
     assert "frontend" in output and "repository" in output
     assert "development policy" in output
     assert "npm ci" in output
+
+
+def test_live_sdk_startup_failure_blocks_without_leaking_details(tmp_path, capsys):
+    checker = load_checker()
+    sentinel = "sentinel-secret-in-proxy-error"
+
+    def broken_transport():
+        raise ImportError(f"SOCKS transport missing socksio: {sentinel}")
+
+    env = environment(
+        checker,
+        tmp_path,
+        environ={"OPENAI_API_KEY": sentinel, "LLM_MODEL": "synthetic-model"},
+        provider_probe=broken_transport,
+    )
+    assert checker.main(["--mode", "live"], env=env) == 1
+    captured = capsys.readouterr()
+    assert sentinel not in captured.out + captured.err
+    assert "proxy" in captured.out.lower()
+    assert "socksio" in captured.out.lower()
+
+
+def test_only_live_mode_initializes_provider_runtime(tmp_path):
+    checker = load_checker()
+    probes = []
+    env = environment(
+        checker,
+        tmp_path,
+        environ={"OPENAI_API_KEY": "sentinel", "LLM_MODEL": "synthetic-model"},
+        provider_probe=lambda: probes.append("initialized"),
+    )
+    assert checker.main(["--mode", "mock"], env=env) == 0
+    assert checker.main(["--mode", "cached"], env=env) == 0
+    assert probes == []
+    assert checker.main(["--mode", "live"], env=env) == 0
+    assert probes == ["initialized"]
+
+
+def test_runtime_probe_uses_dummy_credentials_and_closes_client(monkeypatch):
+    checker = load_checker()
+    import openai
+
+    calls = []
+    monkeypatch.setenv("OPENAI_API_KEY", "sentinel-must-not-reach-sdk")
+
+    class OfflineSDK:
+        def __init__(self, **kwargs):
+            calls.append(kwargs)
+
+        async def close(self):
+            calls.append("closed")
+
+    monkeypatch.setattr(openai, "AsyncOpenAI", OfflineSDK)
+    checker._probe_provider_runtime()
+    assert calls == [
+        {"api_key": "policyfuzz-offline-probe", "max_retries": 0, "timeout": 1.0},
+        "closed",
+    ]
+
+
+def test_malformed_cached_record_blocks_even_when_all_files_exist(tmp_path, capsys):
+    checker = load_checker()
+    env = environment(checker, tmp_path, cached_probe=checker._probe_cached_record)
+    assert checker.main(["--mode", "cached"], env=env) == 1
+    captured = capsys.readouterr()
+    assert "cached demo record is invalid" in captured.out.lower()
+    assert "traceback" not in captured.out + captured.err
+
+
+def test_cached_validation_is_skipped_in_other_modes_and_without_packages(tmp_path):
+    checker = load_checker()
+    probes = []
+    env = environment(
+        checker,
+        tmp_path,
+        environ={"OPENAI_API_KEY": "sentinel", "LLM_MODEL": "synthetic-model"},
+        cached_probe=lambda path: probes.append(path),
+    )
+    assert checker.main(["--mode", "mock"], env=env) == 0
+    assert checker.main(["--mode", "live"], env=env) == 0
+    env.find_spec = lambda name: None
+    assert checker.main(["--mode", "cached"], env=env) == 1
+    assert probes == []
+
+
+def test_bundled_cache_validation_is_offline_and_read_only(monkeypatch):
+    checker = load_checker()
+    import socket
+
+    def no_network(*args, **kwargs):
+        raise AssertionError("setup validation must not use the network")
+
+    monkeypatch.setattr(socket.socket, "connect", no_network)
+    monkeypatch.setattr(socket, "create_connection", no_network)
+    path = ROOT / "samples/cached-demo/run-record.json"
+    before = path.read_bytes()
+    checker._probe_cached_record(path)
+    assert path.read_bytes() == before
