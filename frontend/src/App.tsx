@@ -37,7 +37,7 @@ import {
   stages,
 } from './preview';
 import { isHttpMode } from './api/config';
-import { createRun, rehearseRun, reviseRun, EngineApiError } from './api/engineClient';
+import { createRun, rehearseRun, reviseRun, EngineApiError, userFacingEngineError } from './api/engineClient';
 import { buildRevisionInstruction, buildSeedText, mapRunToView } from './api/mapRun';
 import type { RunView, UiFinding, UiRule, UiScenario } from './api/types';
 
@@ -158,6 +158,28 @@ export default function App() {
   const [revisedScore, setRevisedScore] = useState<number | null>(null);
   const [statusMessage, setStatusMessage] = useState('');
   const dialog = useRef<HTMLDialogElement>(null);
+  const activeRequest = useRef<AbortController | null>(null);
+  const requestVersion = useRef(0);
+
+  const beginRequest = () => {
+    activeRequest.current?.abort();
+    const controller = new AbortController();
+    const version = ++requestVersion.current;
+    activeRequest.current = controller;
+    return {
+      signal: controller.signal,
+      isCurrent: () => requestVersion.current === version && !controller.signal.aborted,
+      finish: () => {
+        if (requestVersion.current === version) activeRequest.current = null;
+      },
+    };
+  };
+
+  const cancelRequests = () => {
+    requestVersion.current += 1;
+    activeRequest.current?.abort();
+    activeRequest.current = null;
+  };
 
   const live = isHttpMode && Boolean(runView.runId);
   const rules: UiRule[] = live ? runView.rules : mockRules;
@@ -170,6 +192,8 @@ export default function App() {
     if (trace !== null) dialog.current?.showModal();
     else dialog.current?.close();
   }, [trace]);
+
+  useEffect(() => () => cancelRequests(), []);
 
   // Mock-mode illustrative progress timer
   useEffect(() => {
@@ -197,6 +221,7 @@ export default function App() {
   };
 
   const runLive = async () => {
+    const request = beginRequest();
     setBusy(true);
     setProgress(0);
     setReached(1);
@@ -205,24 +230,35 @@ export default function App() {
     if (context.simulate && runView.runId) {
       setSimulationState('running');
       try {
-        const rehearsed = await rehearseRun(runView.runId, true);
-        const mapped = mapRunToView(rehearsed);
-        setRunView(mapped);
-        setBaselineScore(mapped.score);
-        setSimulationState(mapped.swarmUsed ? 'completed' : 'failed');
-        setStatusMessage(mapped.swarmUsed ? 'Swarm rehearsal complete' : 'Swarm unavailable — using fuzz results');
+        const rehearsed = await rehearseRun(runView.runId, true, request.signal);
+        if (!request.isCurrent()) return;
+        if (rehearsed.status === 'failed') {
+          setSimulationState('failed');
+          setStatusMessage('Swarm rehearsal failed — using prior fuzz evaluation results');
+        } else {
+          const mapped = mapRunToView(rehearsed);
+          setRunView(mapped);
+          setBaselineScore(mapped.score);
+          setSimulationState(mapped.swarmUsed ? 'completed' : 'failed');
+          setStatusMessage(mapped.swarmUsed ? 'Swarm rehearsal complete' : 'Swarm unavailable — using fuzz results');
+        }
       } catch {
+        if (!request.isCurrent()) return;
         setSimulationState('failed');
-        setStatusMessage('Swarm rehearsal failed — using fuzz evaluation results');
+        setStatusMessage('Swarm rehearsal failed — using prior fuzz evaluation results');
       }
     } else {
       setSimulationState(context.simulate ? 'not_run' : 'completed');
     }
-    setBusy(false);
-    setProgress(6);
+    if (request.isCurrent()) {
+      setBusy(false);
+      setProgress(6);
+    }
+    request.finish();
   };
 
   const reset = () => {
+    cancelRequests();
     setContext(defaultContext);
     setSimulationState('completed');
     setStep(0);
@@ -265,6 +301,7 @@ export default function App() {
   };
 
   const analyzeWithEngine = async (policyBody: string, policyTitle: string) => {
+    const request = beginRequest();
     setBusy(true);
     setError('');
     setStatusMessage('Calling engine: ingest → extract → fuzz → score…');
@@ -278,17 +315,21 @@ export default function App() {
           weight: 1,
           attributes: { context: g.context, relationship: g.relationship },
         }));
-      let record = await createRun({
-        policyText: policyBody,
-        title: policyTitle,
-        seedText,
-        populationSize: Math.min(50, Math.max(5, segments.length * 5 || 15)),
-        groups: segments.map((s) => s.id),
-        segments,
-        locale: 'any',
-      });
+      const record = await createRun(
+        {
+          policyText: policyBody,
+          title: policyTitle,
+          seedText,
+          populationSize: Math.min(50, Math.max(5, segments.length * 5 || 15)),
+          groups: segments.map((s) => s.id),
+          segments,
+          locale: 'any',
+        },
+        request.signal,
+      );
+      if (!request.isCurrent()) return;
       if (record.status === 'failed') {
-        throw new Error(record.error || record.message || 'Engine run failed');
+        throw new EngineApiError(200, record.error || record.message || '', 'run-failed');
       }
       const mapped = mapRunToView(record);
       setRunView(mapped);
@@ -307,18 +348,13 @@ export default function App() {
       setStatusMessage(`Engine run ${mapped.runId} · score ${mapped.score ?? 'n/a'}`);
       setSimulationState(context.simulate ? 'not_run' : 'completed');
     } catch (err) {
-      const message =
-        err instanceof EngineApiError
-          ? `Engine error (${err.status}): ${err.body.slice(0, 240)}`
-          : err instanceof Error
-            ? err.message
-            : 'Failed to reach the engine';
-      setError(
-        `${message}. Is the engine running on :8000? Start it with: uvicorn app.main:app --host 127.0.0.1 --port 8000`,
-      );
+      if (!request.isCurrent()) return;
+      setStatusMessage('');
+      setError(userFacingEngineError(err, 'Run'));
       setReview(false);
     } finally {
-      setBusy(false);
+      if (request.isCurrent()) setBusy(false);
+      request.finish();
     }
   };
 
@@ -355,6 +391,7 @@ export default function App() {
       setProgress(0);
       return;
     }
+    const request = beginRequest();
     setReached(3);
     setStep(3);
     setBusy(true);
@@ -362,23 +399,24 @@ export default function App() {
     setStatusMessage('Revising policy with the engine…');
     try {
       const instruction = buildRevisionInstruction(findings, accepted, intents);
-      const revised = await reviseRun(runView.runId, instruction);
+      const revised = await reviseRun(runView.runId, instruction, request.signal);
+      if (!request.isCurrent()) return;
+      if (revised.status === 'failed') {
+        throw new EngineApiError(200, revised.error || revised.message || '', 'run-failed');
+      }
       const mapped = mapRunToView(revised);
       setRevisedScore(mapped.score);
       setRunView(mapped);
       setStatusMessage(`Revised · score ${baselineScore ?? 'n/a'} → ${mapped.score ?? 'n/a'}`);
       setComplete(true);
     } catch (err) {
-      const message =
-        err instanceof EngineApiError
-          ? `Revision failed (${err.status}): ${err.body.slice(0, 240)}`
-          : err instanceof Error
-            ? err.message
-            : 'Revision failed';
-      setError(message);
+      if (!request.isCurrent()) return;
+      setStatusMessage('');
+      setError(userFacingEngineError(err, 'Revision'));
       setComplete(true);
     } finally {
-      setBusy(false);
+      if (request.isCurrent()) setBusy(false);
+      request.finish();
     }
   };
 
@@ -457,7 +495,7 @@ export default function App() {
           </div>
           <button className="danger subtle" onClick={() => setDeleting(!deleting)}>
             <Trash2 size={15} />
-            Delete run
+            {isHttpMode ? 'Clear view' : 'Delete run'}
           </button>
           <span className="avatar">FO</span>
         </div>
@@ -483,9 +521,13 @@ export default function App() {
       </header>
       {deleting && (
         <div className="deletebar" role="alert">
-          <span>Delete this {isHttpMode ? 'run' : 'preview'} and clear the policy text?</span>
+          <span>
+            {isHttpMode
+              ? 'Clear this browser view and policy text? Server run data will remain in the engine store.'
+              : 'Delete this preview and clear the policy text?'}
+          </span>
           <button className="danger" onClick={reset}>
-            Confirm deletion
+            {isHttpMode ? 'Confirm clear' : 'Confirm deletion'}
           </button>
           <button onClick={() => setDeleting(false)}>Cancel</button>
         </div>
@@ -1098,6 +1140,12 @@ export default function App() {
                   <p className="muted small">
                     {Object.keys(decisions).length}/{findings.length} findings reviewed · {accepted.length} accepted
                   </p>
+                  {isHttpMode && (
+                    <p className="muted small">
+                      Review choices are local to this browser. Accepted items are included in a revision instruction;
+                      the engine has no finding-decision endpoint.
+                    </p>
+                  )}
                 </div>
                 <Badge tone="warning">{proposal ? 'Proposal awaiting confirmation' : 'Review each finding'}</Badge>
               </Panel>
@@ -1115,10 +1163,10 @@ export default function App() {
                         {decisions[i] && (
                           <Badge tone={decisions[i] === 'accept' ? 'success' : 'neutral'}>
                             {decisions[i] === 'accept'
-                              ? 'Accepted'
+                              ? isHttpMode ? 'Accepted locally' : 'Accepted'
                               : decisions[i] === 'clarify'
-                                ? 'Needs clarification'
-                                : 'Rejected'}
+                                ? isHttpMode ? 'Clarification noted locally' : 'Needs clarification'
+                                : isHttpMode ? 'Rejected locally' : 'Rejected'}
                           </Badge>
                         )}
                       </div>
@@ -1187,10 +1235,10 @@ export default function App() {
                         )}
                         <div className="actions">
                           <button onClick={() => setDecisions({ ...decisions, [selected]: 'clarify' })}>
-                            Request clarification
+                            {isHttpMode ? 'Note clarification locally' : 'Request clarification'}
                           </button>
                           <button onClick={() => setDecisions({ ...decisions, [selected]: 'reject' })}>
-                            Reject finding
+                            {isHttpMode ? 'Reject finding locally' : 'Reject finding'}
                           </button>
                           <button
                             className="primary"
@@ -1198,7 +1246,7 @@ export default function App() {
                             onClick={() => setDecisions({ ...decisions, [selected]: 'accept' })}
                           >
                             <Check size={16} />
-                            Accept finding
+                            {isHttpMode ? 'Accept finding locally' : 'Accept finding'}
                           </button>
                         </div>
                       </div>

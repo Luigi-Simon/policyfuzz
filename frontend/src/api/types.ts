@@ -2,6 +2,18 @@
 
 export type ScenarioKind = 'normal' | 'boundary' | 'adversarial' | 'targeted';
 export type Verdict = 'pass' | 'fail' | 'ambiguous' | 'error';
+export type RunStatus =
+  | 'pending'
+  | 'ingesting'
+  | 'extracting'
+  | 'compiling'
+  | 'compiled'
+  | 'generating_scenarios'
+  | 'scenarios_ready'
+  | 'evaluating'
+  | 'rehearsing'
+  | 'completed'
+  | 'failed';
 
 export type Citation = {
   document_id: string;
@@ -129,7 +141,7 @@ export type SeedSpec = {
 
 export type RunRecord = {
   run_id: string;
-  status: string;
+  status: RunStatus;
   message?: string;
   error?: string | null;
   seed?: SeedSpec;

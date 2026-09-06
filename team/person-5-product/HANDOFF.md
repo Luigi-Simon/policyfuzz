@@ -1,52 +1,48 @@
-Status: Revised behavioral interface preview implemented; backend integration and remaining Person 5 tasks pending
+Status: Candidate benchmark sealed; temporary engine adapter hardened; final public API integration pending.
 
 ## Interfaces
 
-- Second Stitch export implemented: Setup & interpretation → Scenarios & behavior → Findings & revision → Comparison.
-- Added editable owner goals, affected groups, sourced/confirmed assumptions, optional simulation (off by default), simulated discussion states, conditional consequence panels, clarification decisions and fixed-action vs exploratory comparison.
-- Changed comparison inputs withhold like-for-like tables and the legacy sample success/safeguard sections.
-- `frontend/INTEGRATION.md` is the team-facing request for a revised contract and details contributions needed from Persons 1–4. It is not a frozen API schema.
-
-- User requested implementing their supplied Stitch design on 2026-09-05.
-- Four connected React views with UI-only illustrative data in `frontend/src/preview.ts`.
-- No backend imports, API contracts, or authoritative RunView fields have been invented. Person 1 must provide frozen OpenAPI, RunView JSON Schema, and canonical fixtures before generated types and live transport are added.
-- No changes to backend, shared contracts, benchmark artifacts, or blind materials.
+- Four connected React views retain the existing design, with mock mode as the default.
+- Opt-in HTTP mode uses the temporary engine `/v1` API for create, revise and rehearse; it is not the final Person 1 `/api/v1` integration.
+- Engine responses are runtime-validated, requests have a 120-second bound and cancellation, and reset/unmount/superseding actions cannot apply stale results.
+- In HTTP mode, Clear view only clears local state and explicitly leaves server data in the engine store. Finding decisions are explicitly local; accepted-item prose becomes a later revision instruction.
+- `frontend/INTEGRATION.md` records the remaining public contract, lifecycle and comparison dependencies.
+- The user delegated this Person 5 completion work to the assistant on 2026-09-06. A separate fresh custodian prepared the benchmark; Person 1 received public metadata only.
 
 ## Files
 
-- Revised-flow additions: `frontend/src/behavior.tsx`, `behavior.css`, `src/test/behavior.test.tsx`, `frontend/INTEGRATION.md`.
-- Shareable source package: `team/person-5-product/policyfuzz-frontend-handoff.zip` (frontend source, lockfile, tests, launch and integration notes; excludes dependencies and build output).
-
-- `frontend/package.json`, `package-lock.json`, `index.html`, `tsconfig.json`, `vite.config.ts`.
-- `frontend/src/main.tsx`, `App.tsx`, `preview.ts`, `styles.css`.
-- `frontend/src/test/setup.ts`, `app.test.tsx`.
-- `frontend/README.md` documents launch and integration boundaries.
-- Branch: `p5/feat-stitch-interface`. Changes are uncommitted for user review.
+- `submission/evidence/blind-seal.json`
+- `submission/evidence/blind-seal-provenance.json`
+- `submission/evidence/blind-custody-README.md`
+- `frontend/src/App.tsx`
+- `frontend/src/api/{engineClient,types}.ts`
+- `frontend/src/test/{engineClient.test.ts,httpApp.test.tsx}`
+- `frontend/{README,INTEGRATION}.md`
+- This handoff. Existing interface files and earlier history remain in Git.
 
 ## Commands
 
-- Revised-flow validation: 6 tests passed across 2 test files; explicit TypeScript check passed; production build verified.
-- New tests cover context collection, simulation off by default, enabled/failed discussion, hypothesis/consequence separation and changed comparison basis.
-
-- Dependency install: 162 packages added; npm reported zero vulnerabilities. System CA support was needed in this Windows environment.
-- `npm run test:run`: 3 tests passed. Covers required confirmation, full sample workflow, scenario filtering, evidence dialog, all finding decisions, successful/failed comparison, custom-input honesty, and confirmed deletion.
-- `npm run build`: TypeScript check and Vite production build passed during initial verification; final verification repeated after interaction fixes.
-- Local preview: `npm run dev`, http://127.0.0.1:5173/ responded HTTP 200.
-- Build/test tools required execution outside the sandbox because esbuild configuration reads were blocked by filesystem permissions.
+- Checkpoint verification: `backend/.venv/bin/python -m pytest backend/tests/integration/test_seal_blind_benchmark.py -q` — 14 passed.
+- Backend baseline before Task 2: `backend/.venv/bin/python -m pytest backend/tests -q` — 75 passed, 1 pre-existing shared-contract adapter skip.
+- Public seal verification checked exactly three defects, four SHA-256 fields, actual timestamps, matching provenance and absence of private contents. The existing sealing script is unchanged.
+- Frontend: `npm run test:run` — 29 passed across five files.
+- Frontend: `npm run typecheck` and `npm run build` — both passed.
+- Regression evidence: bypassing runtime validation caused six intended failures; removing reset cancellation caused one. Independent review then identified failed-rehearsal fallback and nested non-finite values; three new failure cases were reproduced before fixing them, and the final focused suite passed 19 tests.
+- No live model/provider calls or end-to-end live engine validation were performed for this handoff.
 
 ## Submission evidence
 
-- No benchmark or submission claims produced. All sample results visibly labelled “Mock preview — illustrative results”.
-- Supplied Stitch images inspected as design references. Responsive CSS implemented; no browser-based visual/accessibility audit claimed.
+- Public custody checkpoint published at `304145f2e35071135e7f43a7db1ba0383b858a4a`.
+- Private benchmark and companion files were preserved separately for later custody actions. No private policy, defect IDs, labels, corrected intent or examples enter this repository.
+- **Sealed late; delegated-agent authorship; independent human review pending. This is not approved gold scoring evidence and cannot establish a pre-development seal.** Full provenance, including the custodian's incidental adjacent planning-text read, is recorded in the public evidence files.
+- Custodian checks are internal consistency checks only, not application performance results.
 
 ## Limitations
 
-- Revised behavioral scope requires team approval of shared contracts and responsibilities, particularly the optional simulation service. No new service endpoints are invented here.
-- The optional social discussion is an illustrative UI playback. It does not call agents, predict behavior, or evaluate actions.
-
-- This is a design implementation, not completion of Tasks 22–23: generated contracts, real API transport, runtime RunView validation, actual polling, and engine results remain pending.
-- Custom policy text remains in browser memory and cannot be analyzed. Editing intent does not recompute sample outcomes; the evidence view explains this.
-- Mock timers illustrate progression. Effect-state counts, full hashes, and engine versions are shown as unavailable rather than fabricated.
-- The proposed changes are illustrative UI summaries, not executable patches. Real revision content and acceptance come from the backend.
-- Synthetic sample scenarios have illustrative summaries; passing cases do not yet contain full backend traces.
-- Blind custody gates, live/cached backend verification, deck, video, and submission verifier remain outstanding.
+- Original pre-feature-development seal timing cannot be restored. Evaluation reporting must retain the actual timing and authorship limitations.
+- Gate A2 remains a separate custody action after Person 1's schema work. Do not reveal/import the private benchmark before the planned code, prompt, provider and tooling freeze.
+- Final Tasks 22–23 remain dependent on the frozen public RunView, generated types/fixtures, public `/api/v1` endpoints, server decision/deletion commands, lifecycle polling and immutable comparison evidence.
+- Current engine operations are synchronous; no artificial polling or invented public API has been added.
+- There is no claim that local finding decisions are server-persisted, that Clear view deletes a server run, or that an engine effectiveness score proves the planned frozen-suite acceptance gates.
+- Optional behavioral simulation remains a temporary engine capability; the shared model scope continues to require Person 1 coordination.
+- Deck, final video, submission verification and final live/cached acceptance remain downstream deliverables requiring actual verified backend evidence.

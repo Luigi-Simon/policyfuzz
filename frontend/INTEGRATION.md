@@ -1,92 +1,51 @@
-# Revised PolicyFuzz frontend — team handoff
+# Frontend integration boundary
 
-## What you can use now
+## Current behavior
 
-The four-screen React/Vite interface follows the second Stitch export and the revised owner → behavior → consequences → revision journey. Start it with `npm ci` and `npm run dev` inside `frontend`. Choose **Use sample policy** and confirm the interpretation. Review findings individually; structural findings require severity. Clarification blocks revision until an accept/reject decision replaces it. All results are explicitly illustrative.
+Mock mode is the default and is the mode used by the component tests. It renders the complete four-screen interaction with illustrative local data and does not send policy text to a server.
 
-This document is a **request for contract agreement**, not an authoritative API schema. Person 1 remains the sole shared-contract owner. The current checkout has no OpenAPI, generated RunView types, or canonical response fixture. No teammate should import `src/preview.ts` or `src/behavior.tsx` as backend domain models.
+Setting `VITE_DATA_MODE=http` opts into a temporary, direct adapter to the checked-in engine sidecar. This path consumes the engine's `RunRecord` shape from `engine/app/contracts/` and calls `/v1` directly. It does not represent a frozen PolicyFuzz public contract.
 
-## Revised ownership and requested contributions
-
-| Owner | Needed for the revised flow | Deliver to Person 1 / frontend |
-|---|---|---|
-| Person 1 — integration | Expand creation, confirmation, projection, orchestration and comparison contracts; freeze a revised contract version | OpenAPI, JSON Schema, generated public fixtures, allowed actions, stage/error states, version anchors and complete sample responses |
-| Person 2 — policy | Keep source-derived rules separate from goals and assumptions; map owner-confirmed goals to supported constraints; propose revisions | Exact citations, unsupported clauses, interpretation review data, constraint provenance, structured change summaries and unverified prose |
-| Person 3 — scenarios | Generate role/context-based responses and alternative choices; optional bounded discussion simulation | Stable scenario/actor/action IDs, group and assumption links, public rationale, simulated discussion summaries, selected proposed actions, simulation status and limitations |
-| Person 4 — evaluation | Evaluate explicit proposed actions; compute conditional consequences; compare versions | Rule outcomes, traces, formula inputs/units, consequence provenance, independent assertions, fixed-action transitions, regression and comparison-validity results |
-| Person 5 — frontend | Render and collect decisions using the agreed contract | This interface, interaction tests, and a future generated-type HTTP adapter |
-
-The social simulation implementation owner and its execution limits need team agreement. Person 3 is the proposed owner based on scenario-generation responsibility; this handoff does not silently redefine other persons' charters.
-
-## Data each screen needs
-
-### 1. Setup and interpretation
-
-- Policy identity/title/source and text submission; full uploaded text must not return in the public RunView.
-- Goals: stable IDs, plain-language desired outcomes, owner confirmation, links to any supported machine-checkable constraints.
-- Affected groups: stable IDs, operational role, context and relationship to the policy. Avoid demographic stereotypes.
-- Assumptions: stable IDs, statement, source/rationale, confirmed/unconfirmed state and confirmation provenance.
-- Optional interaction-simulation setting, off by default.
-- Extracted rules, citations, unsupported clauses, confirmed interpretation, validation errors, and immutable setup revision/hash.
-- Specify whether an unconfirmed assumption blocks execution or is carried forward as uncertainty. This preview carries it forward visibly.
-
-### 2. Scenarios and behavior
-
-- Stable scenario ID, immutable input facts, actor/group IDs, category, triggering condition, linked goal/assumption/rule IDs.
-- Proposed choices/actions with stable action IDs, stated public rationale, dependencies and uncertainty. Do not provide unsupported likelihood percentages.
-- Simulation status: skipped/not run/running/completed/incomplete/failed; bounded turn count; simulated role labels; public summaries; action references; partial-result/error information.
-- Distinguish the original action from alternatives emerging from discussion. A discussion suggesting “ask a manager” must not be displayed as evidence for evaluation of a different “submit separately” action.
-- Action evaluation: the exact action evaluated, expected constraint/provenance, resolved rule outcomes, assertions, compliance and source-bearing trace.
-- Consequences: inputs, formula/method, units, calculated values, assumptions and conditions. A conditional SGD 10 reimbursement excess is not evidence that reimbursement occurred.
-
-### 3. Findings and revision
-
-- Finding ID, type, evidence level, review status, linked scenario/action/group/goal/assumption/rule IDs and tested policy version.
-- Behavioral hypotheses remain separate from mechanically reproduced defects. Assumption-validation candidates are not automatically scored findings.
-- Owner decisions: accept/reject/needs clarification, reviewer severity when appropriate, and clarification request status. Person 1 must specify whether clarification is a supported server action or a local pending state.
-- Proposal ID, anchored baseline/context/suite, targeted finding IDs, typed operations, unverified draft wording and confirm/reject actions.
-
-### 4. Comparison
-
-- Immutable basis: original and revised policy refs, scenario suite/facts, owner goals, groups, assumptions, engine version and simulation configuration/model/seed where applicable.
-- **Fixed-action comparison:** same action IDs and inputs evaluated against both versions, isolating rule changes.
-- **Behavioral comparison:** separate exploratory outputs when proposed responses are regenerated. Same starting scenarios do not imply identical resulting actions or causal proof.
-- Fixed, remaining, regressed/new, inconclusive and errored results, protected and aggregate holdout results, backend acceptance gates, metric numerators/denominators with N/A handling.
-- Explicit comparison validity. Changed assumptions or extra scenarios must be a separate cohort, not silently added to frozen-suite totals.
-
-## API connection
-
-Use the existing planned Person 1 surface as the starting point:
-
-| Action | Planned endpoint |
+| UI action | Current HTTP behavior |
 |---|---|
-| Create | `POST /api/v1/runs` |
-| Snapshot | `GET /api/v1/runs/{run_id}` |
-| Interpretation decision | `POST /api/v1/runs/{run_id}/confirm-contract` |
-| Finding decisions | `POST /api/v1/runs/{run_id}/select-findings` |
-| Revision decision/retest | `POST /api/v1/runs/{run_id}/confirm-revision` |
-| Delete | `DELETE /api/v1/runs/{run_id}` |
+| Analyze policy / use sample | `POST /v1/runs` as multipart form data |
+| Confirm contract | Uses the synchronous create result; optionally calls `POST /v1/runs/{id}/rehearse?swarm=true` |
+| Finding accept/reject/clarify | Browser state only; no server decision is recorded |
+| Confirm revision | Sends accepted finding summaries and intent text as the `instruction` to `POST /v1/runs/{id}/revise` |
+| Clear view | Cancels the active browser request and resets local state; server data remains |
 
-There are no separate Person 3 endpoints consumed by this frontend. Person 1 must decide whether optional simulation runs within orchestration or requires an additional command. Do not infer that the existing request schemas already support the new fields.
+Engine create, rehearse, and revise are synchronous endpoints. The frontend therefore waits for one bounded request and does not poll. Each request has a two-minute timeout, accepts a caller `AbortSignal`, and ignores a completion after reset or a newer request.
 
-After agreement: generate TypeScript from frozen OpenAPI, validate public RunView snapshots at runtime, add typed transports and error handling, then replace local preview state. Poll active stages at 1.5-second non-overlapping intervals; stop at confirmation/terminal stages, abort stale requests, and send current expected artifact hashes with decisions.
+Successful responses receive handwritten runtime validation before mapping. The validator checks the allowed engine run statuses and validates every nested field consumed by `mapRunToView`, including policy rules/citations/conditions/obligations, scenario kinds and facts, finding verdicts and traces, recommendation actions, booleans, arrays, objects, and finite integer scores/revisions. Invalid JSON or an incompatible response is shown as a concise public error; raw backend bodies remain available only on the internal error object.
 
-## Fixture requests / acceptance examples
+## UI data boundary
 
-Please provide: sample success with simulation off; success with simulation on; simulation failure with direct evaluation retained; incomplete discussion; unconfirmed assumption; unsupported interpretation; clarification-pending finding; revision rejected; failed safeguard; changed comparison basis; additional-scenario cohort; expired/deleted run.
+- `src/api/types.ts` describes only the subset of the engine `RunRecord` used by this temporary adapter.
+- `src/api/engineClient.ts` owns `/v1` requests, cancellation, timeout, validation, and concise error translation.
+- `src/api/mapRun.ts` projects a validated engine record into frontend display shapes.
+- `src/preview.ts` and static content in `src/behavior.tsx` are illustrative mock data, not backend models or benchmark evidence.
+- HTTP finding decisions are labelled local. The engine has no finding-decision endpoint.
+- HTTP clear is labelled **Clear view**. The engine has no run deletion endpoint.
 
-One complete fixture should link policy → confirmed goal → scenario → proposed action → evaluation → finding → revision → both comparison sections using stable IDs.
+The UI does not claim that its display `RunView` is the planned public `RunView`. No backend module is imported by the frontend.
 
-## Implementation map
+## Pending integration dependencies
 
-- `src/App.tsx`: original four-step shell, rule review, scenario table, finding decisions, revision and safeguards.
-- `src/behavior.tsx`: local setup form state, SetupEditor, BehaviorEvidence and BehavioralComparison components. These are presentation components, not backend contracts.
-- `src/preview.ts`: original illustrative rules/scenarios/findings.
-- `src/styles.css`, `src/behavior.css`: original Stitch palette and responsive extensions.
-- `src/test/`: component/integration tests using local fixtures; no provider calls.
+Person 1 still needs to provide and freeze:
 
-## Limits for the receiving team
+1. The public `/api/v1` orchestration surface and its public error rules.
+2. A versioned public `RunView` schema with stage, confirmation, terminal, and partial-result semantics.
+3. Generated TypeScript types/client configuration and a canonical completed fixture.
+4. Commands and concurrency rules for interpretation confirmation, finding decisions, revision confirmation, and deletion or retention.
+5. If orchestration is asynchronous, snapshot/polling semantics: allowed active states, interval, overall deadline, retry/backoff rules, cancellation, stale-write protection, and terminal errors.
+6. Stable identifiers and provenance linking policies, rules, scenarios, actions, evaluations, findings, revisions, and comparisons.
+7. Immutable comparison inputs and backend acceptance results for fixed-action and behavioral comparison views.
+8. Public redaction rules for uploaded policy content, source quotations, provider errors, prompts, and stored artifacts.
 
-No real extraction, behavior generation, social simulation, rule execution, calculated backend consequences, patch application, persistent storage, or live HTTP transport is implemented. Formula text uses fixed synthetic example inputs. Custom policy/context changes are not evaluated and are explicitly distinguished from sample evidence. Preview exports are labelled non-evidence. Browser visual/mobile QA and real backend integration still need joint verification.
+Until those dependencies exist, keep the direct engine adapter explicit and opt-in. Do not invent `/api/v1` endpoints, treat the handwritten types as generated public types, persist local finding choices by implication, or add artificial polling to the synchronous engine.
 
-The revised flow goes beyond the original approved design/plan. Person 1 should coordinate that scope revision before freezing contracts; this frontend handoff does not edit the shared plan or other owners' files.
+## Fixture needs for the future public contract
+
+The frozen contract should include examples for a normal completed run, a stage in progress, a public error, an unsupported interpretation, no reviewable findings, clarification pending, revision rejected, failed safeguards, changed comparison inputs, an additional-scenario cohort, cancellation, expiration, and deletion/retention behavior.
+
+One complete fixture should link policy → confirmed intent → scenario → evaluated action → finding → revision → fixed-action comparison using stable public IDs and source-bearing evidence.
