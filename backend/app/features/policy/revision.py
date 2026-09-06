@@ -13,6 +13,7 @@ from app.domain.models import (
     AddRuleOperation,
     Finding,
     LLMRequest,
+    OverrideRef,
     ProposeRevisionRequest,
     ReplaceRuleOperation,
     RevisionOperation,
@@ -105,6 +106,7 @@ def _normalize_operations(
     eligible_finding_ids: frozenset[str],
 ) -> tuple[RevisionOperation, ...]:
     rules = {rule.rule_id: rule for rule in request.policy.rules}
+    findings = {finding.finding_id: finding for finding in request.findings.findings}
     assigned_rule_ids = set(rules)
     changed_rule_ids: set[str] = set()
     targeted_finding_ids: set[str] = set()
@@ -153,6 +155,7 @@ def _normalize_operations(
         else:  # pragma: no cover - Pydantic's discriminated union prevents this.
             raise RevisionValidationError("UNSUPPORTED_REVISION_OPERATION")
 
+        _validate_override_changes(normalized[-1], rules=rules, findings=findings)
         changed_rule_id = normalized[-1].rule_id
         if changed_rule_id in changed_rule_ids:
             raise RevisionValidationError("RULE_REVISED_MULTIPLE_TIMES")
@@ -161,6 +164,39 @@ def _normalize_operations(
     if targeted_finding_ids != eligible_finding_ids:
         raise RevisionValidationError("UNTARGETED_ACCEPTED_FINDING")
     return tuple(normalized)
+
+
+def _validate_override_changes(
+    operation: RevisionOperation,
+    *,
+    rules: dict[str, Rule],
+    findings: dict[str, Finding],
+) -> None:
+    """Changed edges must stay within an operation's accepted conflict endpoints."""
+
+    targets = tuple(findings[finding_id] for finding_id in operation.finding_ids)
+    if isinstance(operation, AddOverrideOperation):
+        if any(finding.finding_type != "conflict" for finding in targets):
+            raise RevisionValidationError("OVERRIDE_OUTSIDE_ACCEPTED_CONFLICT")
+        changed_edges = {
+            OverrideRef(
+                dimension=operation.dimension, target_rule_id=operation.target_rule_id
+            )
+        }
+    else:
+        old = rules.get(operation.rule_id)
+        changed_edges = set(operation.rule.overrides) ^ set(
+            old.overrides if old else ()
+        )
+    for edge in changed_edges:
+        if not any(
+            finding.finding_type == "conflict"
+            and finding.dimension == edge.dimension
+            and operation.rule_id in finding.rule_ids
+            and edge.target_rule_id in finding.rule_ids
+            for finding in targets
+        ):
+            raise RevisionValidationError("OVERRIDE_OUTSIDE_ACCEPTED_CONFLICT")
 
 
 def _rule_semantic_signature(rule: Rule | RevisionRuleDraft) -> str:
@@ -305,6 +341,9 @@ change behavior. Select the target by matching its current conditions and
 effects to the accepted finding and visible facts; a related citation or
 summary alone is insufficient. Compare the replacement with the original
 structured rule and do not return an unchanged replacement.
+Preserve unchanged override edges. Add or remove override edges only between
+both rule endpoints of an accepted conflict targeted by that operation, in
+that conflict's dimension. Do not add override edges for gap or invariant fixes.
 """
     return RevisionPrompt(
         system_instructions=instructions,
