@@ -38,6 +38,10 @@ instead of guessing. Retain its explicitly stated scope in affected_dimensions
 and when_hint using supported predicates; do not broaden a scoped uncertainty.
 Include only effect dimensions directly implicated by that operative clause,
 not dimensions merely mentioned nearby or possible downstream consequences.
+Every unsupported clause must explicitly emit `when_hint`: use supported
+predicates for stated scope, and use null only when no stated scope is
+representable with supported fields. An explicit null is not a substitute for
+representable source scope.
 
 Assign every rule a unique `rule_handle` such as `rule_1`. Override
 `target_rule_id` values must use the referenced rule's local `rule_handle`, not
@@ -48,6 +52,8 @@ stated specific exceptions as overriding that default on the affected dimension.
 This establishes an override of that default only. Do not infer precedence
 between competing specific provisions unless the source explicitly states it.
 Overlap, specificity, or document order alone does not establish such precedence.
+Every rule must explicitly emit `overrides`: use an empty array only when no
+source-supported override applies. Never omit `overrides` or `when_hint`.
 
 Do not provide executable code. Do not assign authoritative verdicts, severity,
 metrics, confirmation status, policy approval, or legal conclusions. Descriptions

@@ -174,6 +174,61 @@ async def test_provider_full_span_payload_is_rejected_after_one_repair():
     assert len(llm.requests) == 2
 
 
+@pytest.mark.parametrize(
+    ("collection", "field"),
+    [("rules", "overrides"), ("unsupported_clauses", "when_hint")],
+)
+async def test_omitted_private_semantic_fields_stop_after_one_repair(collection, field):
+    document = _document()
+    payload = _payload(document)
+    payload[collection][0].pop(field)
+    llm = ScriptedLLMClient((LLMResponse(output=payload), LLMResponse(output=payload)))
+
+    with pytest.raises(ModelOutputValidationError) as caught:
+        await extract_policy(llm, CompilePolicyRequest(document=document))
+
+    assert caught.value.code == "SCHEMA_VALIDATION_FAILED"
+    assert caught.value.repair_attempted
+    assert (f"{collection}.0.{field}", "missing") in caught.value.issues
+    assert len(llm.requests) == 2
+    assert llm.requests[1].repair_attempt == 1
+
+
+async def test_explicit_empty_overrides_and_null_hint_are_valid_provider_choices():
+    document = _document()
+    llm = ScriptedLLMClient((LLMResponse(output=_payload(document)),))
+
+    extraction = await extract_policy(llm, CompilePolicyRequest(document=document))
+
+    assert all(rule.overrides == () for rule in extraction.rules)
+    assert extraction.unsupported_clauses[0].when_hint is None
+    assert len(llm.requests) == 1
+
+
+async def test_repair_requiring_explicit_fields_preserves_provider_scoped_hint():
+    document = _document(
+        "Meals or hotels require receipts.\nReasonable hotel costs may qualify."
+    )
+    initial = _payload(document)
+    initial["rules"][0].pop("overrides")
+    initial["unsupported_clauses"][0].pop("when_hint")
+    repaired = _payload(document)
+    repaired["unsupported_clauses"][0]["when_hint"] = [
+        {"field": "expense_category", "operator": "eq", "value": "hotel"}
+    ]
+    llm = ScriptedLLMClient((LLMResponse(output=initial), LLMResponse(output=repaired)))
+
+    extraction = await extract_policy(llm, CompilePolicyRequest(document=document))
+
+    hint = extraction.unsupported_clauses[0].when_hint
+    assert hint is not None
+    assert [(item.field, item.operator, item.value) for item in hint] == [
+        ("expense_category", "eq", "hotel")
+    ]
+    assert len(llm.requests) == 2
+    assert llm.requests[1].repair_attempt == 1
+
+
 async def test_provider_schema_repair_preserves_catalog_and_still_resolves_citations():
     document = _document()
     llm = ScriptedLLMClient(
@@ -284,6 +339,9 @@ async def test_diagnostic_source_quotes_can_be_selected_without_model_hashes_or_
     # A fake chooses verified source handles; no model semantics are corrected.
     for rule in diagnostic["rules"]:
         rule["citation_handle"] = by_quote[rule.pop("provenance")["span"]["quote"]]
+        # Preserve the legacy fixture's implicit empty override in the new wire
+        # format. This citation-only fake does not assert semantic completeness.
+        rule.setdefault("overrides", [])
     for clause in diagnostic["unsupported_clauses"]:
         clause["citation_handle"] = by_quote[clause.pop("span")["quote"]]
     llm = ScriptedLLMClient((LLMResponse(output=diagnostic),))

@@ -25,7 +25,15 @@ class ModelRuleDraft(StrictModel):
     description: NonEmptyText
     when: tuple[Predicate, ...]
     effects: Annotated[tuple[Effect, ...], Field(min_length=1)]
-    overrides: tuple[OverrideRef, ...] = ()
+    overrides: tuple[OverrideRef, ...] = Field(
+        ...,
+        description=(
+            "Explicit dimension-specific edges to local rule_handle targets. "
+            "Stated exceptions override the expressly marked default only; "
+            "competing specific rules require explicit source precedence. "
+            "Emit [] only when no source-supported override applies."
+        ),
+    )
     confidence_percent: Percentage | None = None
 
 
@@ -41,7 +49,14 @@ class ModelUnsupportedClause(StrictModel):
         "unsupported_currency",
     ]
     affected_dimensions: Annotated[EffectDimensions, Field(min_length=1)]
-    when_hint: tuple[Predicate, ...] | None = None
+    when_hint: tuple[Predicate, ...] | None = Field(
+        ...,
+        description=(
+            "Explicit supported predicates for this clause's stated scope. "
+            "Use null only when no stated scope is expressible with supported "
+            "fields; do not use null when representable source scope is stated."
+        ),
+    )
     review_status: Literal["provisional"] = "provisional"
 
 
