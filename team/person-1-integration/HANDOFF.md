@@ -1,7 +1,83 @@
 # Person 1 integration handoff
 
-Status: Task 4 shared interfaces and adapter infrastructure are complete and
-frozen as version `1.0`; see `contracts/freeze-v1.json` and the integration reference.
+Status: Task 19 workflow implementation and offline verification are complete.
+Task 4 remains frozen as version `1.0` and published at `323f06a`.
+
+## Task 19 interfaces
+
+Read `contracts/task19-workflow.md` for the coordinator constructor, state and
+retention rules, hash mapping, confirmation semantics, and specialist boundaries.
+
+- `app.workflow.coordinator.RunCoordinator` connects the frozen stage protocols.
+- `app.workflow.store.RunStore` provides per-run compare-and-swap mutations and
+  monotonic expiry; `app.workflow.types.StoredRun` is a private storage type.
+- `app.workflow.state_machine` owns legal transitions and allowed actions.
+- `app.workflow.views.to_run_view` constructs the existing public view explicitly.
+- `app.workflow.fake_stages` supplies scripted protocol fakes for offline tests.
+- `app.workflow.validation` checks stage evidence and cached replay anchors.
+
+No HTTP or shared schema migration is introduced by Task 19. In particular,
+the public command bodies retain their existing baseline policy hash, finding
+decisions, and proposal ID. Private store versions are not public response fields.
+
+## Task 19 verification
+
+Final full-suite verification at implementation commit `7beac49`:
+
+- `.venv/bin/python -m pytest -q` from `backend`: **1,125 passed**.
+- Final stage-entry wording regression suite: **535 passed**; its five changed
+  Python files passed Ruff check and format check.
+- Earlier store/state focused tests: **534 passed**; scripted fakes: **18 passed**.
+- Coordinator, public view, and four integration-flow files: **57 passed**.
+- Ruff check and format check: **20 owned Python files passed**.
+- Schema/OpenAPI and canonical completed-fixture drift checks: **passed**.
+- `npm run check:generated` from `frontend`: **passed**; existing npm environment
+  warning about `http-proxy` remains outside the changed source.
+- All **129 Task 4 frozen source/artifact hashes** remain unchanged.
+- Domain/core, specialist features/tests, frontend, samples, submission, and
+  backend dependencies are unchanged by this task.
+
+Store/state/fake and coordinator/view independent reviews are approved. All
+three orchestration findings were fixed and passed scoped re-review. The final
+whole-branch review and the scoped event-wording re-review are approved, with
+all findings addressed. Publication verifies the GitHub commit and tree against
+the reviewed local files.
+These tests validate orchestration with injected evidence; they do not establish
+live specialist or provider acceptance.
+
+Review regression tests cover unknown or substituted trace citations, appended
+or replaced cached suites that relabel private cases, private finding targets,
+stale coverage after adaptation, and truthful stage-entry events when an
+operation fails. Public evidence is bound to canonical
+policy provenance and the one frozen suite; later measured coverage supersedes
+earlier provisional snapshots.
+
+## Next integration steps
+
+1. Task 20 adds the FastAPI routes, task runner, dependency container, lifespan
+   cleanup, and safe status/error mapping around this coordinator. Cancel and
+   drain asynchronous jobs on expiry/shutdown; direct store cleanup only
+   invalidates outstanding writes.
+2. Person 2 completes the asynchronous policy/revision wrappers. Interactive
+   compilation must return three to five suggestions. The user confirms intent
+   and severity; provisional model output cannot create that authority.
+3. Person 3 supplies `ScenarioPlanner`. Its current sidecar client is a separate
+   adapter and does not satisfy the frozen scenario-generation interface.
+4. Person 4 supplies evaluation, finding analysis, deterministic metrics, patch
+   application, and comparison through the frozen interfaces.
+5. Task 21 records the real cached demonstration. Task 19 replay tests use
+   explicitly synthetic injected records, not measured production evidence.
+
+The revision planner is trusted Python code and receives canonical suite inputs
+for hash validation. Person 2 must remove holdout cases and gold labels/answers
+before calling the model. Workflow fake tests do not prove that adapter boundary.
+Live provider acceptance, the full application demo, benchmark human review,
+Gate B, and final recording remain pending.
+
+## Historical Task 4 record
+
+Task 4 shared interfaces and adapter infrastructure were completed and frozen as
+version `1.0`; see `contracts/freeze-v1.json` and the integration reference.
 
 ## Task 4 interfaces
 
@@ -58,11 +134,11 @@ The audit also identified two Person 2 trust-boundary follow-ups: reject or
 normalize model-authored unsupported-clause confirmation, and sanitize parser
 error chains/repair paths. These are feature work, not changes to the shared
 protocol. Session confirmation and reviewer-owned severity stay in Person 1's
-future coordinator/API flow.
+coordinator/API flow described above.
 
 Person 3 can implement the typed scenario planner; Person 4 retains deterministic
-evaluation/report/patch/comparison authority. Person 1 Tasks 19–20 still wire the
-coordinator and public API after specialists integrate. Final live acceptance,
+evaluation/report/patch/comparison authority. Person 1 Task 20 wires the
+public API and production container after the workflow is verified. Final live acceptance,
 benchmark human review, Gate B and submission recording remain pending.
 
 ## Historical Task 3 record
