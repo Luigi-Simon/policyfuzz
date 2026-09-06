@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "status": "passed",
   "scope": "application verification; not Gate B or final submission acceptance",
-  "application_commit": "e4d0db816fb1367bf64b05d523e05edbaa11425b",
+  "application_commit": "533c7671c0ce59ba77c6386c53dcfabfc25678ab",
   "recorded_at": "2026-09-06T11:18:49.512972+00:00",
   "checks": [
     {
@@ -116,5 +116,8 @@
     "verifier_reported_failures": 26
   },
   "live_provider_configured": false,
-  "headline_benchmark_eligible": false
+  "headline_benchmark_eligible": false,
+  "local_verification_commit": "e4d0db816fb1367bf64b05d523e05edbaa11425b",
+  "published_application_tree": "50370d1fdb333ff846ce6d81bdf27aed441525c5",
+  "publication_note": "GitHub integration preserves existing remote ancestry. The published application tree exactly matches reviewed local head 0a1e5a37e148775003a84c0028d5285d60361263; verification preceded this evidence-only GitHub reference update."
 }
