@@ -122,6 +122,10 @@ def test_development_fixture_citations_match_sample_policy() -> None:
         ).read_text(encoding="utf-8")
     )
 
+    assert expected["source_sha256"] == hashlib.sha256(
+        policy_text.encode("utf-8")
+    ).hexdigest()
+
     for rule in expected["rules"]:
         citation = rule["citation"]
         validate_citation(

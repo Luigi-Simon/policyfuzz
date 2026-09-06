@@ -182,6 +182,23 @@ def ingest_policy_text(
     )
 
 
+def ingest_policy_pages(
+    *,
+    title: str,
+    pages: Iterable[str],
+    source_type: SourceType,
+) -> PolicyDocument:
+    """Create a document from bounded, already-extracted page text."""
+
+    if source_type not in ("pasted_text", "bundled_sample"):
+        raise PolicyIngestionError("UNSUPPORTED_SOURCE_TYPE")
+    return _document_from_prepared(
+        title=title,
+        prepared=prepare_policy_pages(pages),
+        source_type=source_type,
+    )
+
+
 def load_bundled_policy(path: Path) -> PolicyDocument:
     """Load a UTF-8 sample and create a deterministically identified document."""
 

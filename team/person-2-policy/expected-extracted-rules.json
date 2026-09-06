@@ -1,5 +1,7 @@
 {
   "source_file": "samples/policies/development-policy.txt",
+  "source_sha256": "3f89eab4b69fbe5a189c6cdbf9503ca5d1114fbb1447159259593842e3b9bf17",
+  "review_status": "provisional_unverified_development_fixture",
   "rules": [
     {
       "temporary_id": "meal-daily-cap",

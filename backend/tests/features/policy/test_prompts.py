@@ -1,7 +1,10 @@
 import json
 
-from app.domain.models import PolicyDocument, PolicyExtraction, PolicyPage
-from app.features.policy.prompts import build_policy_extraction_prompt
+from app.domain.models import PolicyDocument, PolicyExtraction, PolicyIR, PolicyPage
+from app.features.policy.prompts import (
+    build_invariant_suggestion_prompt,
+    build_policy_extraction_prompt,
+)
 
 
 def _document(text: str = "Meals require receipts.") -> PolicyDocument:
@@ -42,3 +45,21 @@ def test_prompt_schema_is_derived_from_person_1_contract() -> None:
     assert json.loads(
         prompt.response_schema_json
     ) == PolicyExtraction.model_json_schema()
+
+
+def test_invariant_prompt_is_unverified_and_bounded() -> None:
+    policy = PolicyIR(
+        policy_id="policy-1",
+        document_sha256="a" * 64,
+        review_status="provisional",
+        rules=(),
+    )
+
+    prompt = build_invariant_suggestion_prompt(policy)
+
+    instructions = prompt.system_instructions.lower()
+    assert "three to five" in instructions
+    assert "daily_category_total_minor" in instructions
+    assert "unverified" in instructions
+    assert "must not" in instructions and "confirmed" in instructions
+    assert json.loads(prompt.policy_payload_json)["policy_id"] == "policy-1"

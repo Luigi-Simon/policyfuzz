@@ -9,6 +9,7 @@ from app.features.policy.ingest import (
     MAX_POLICY_CHARS,
     PolicyIngestionError,
     ingest_policy_text,
+    ingest_policy_pages,
     load_bundled_policy,
     load_bundled_policy_text,
     prepare_policy_pages,
@@ -122,6 +123,19 @@ def test_load_bundled_policy_builds_contract_document(tmp_path: Path) -> None:
     assert document.title == "development-policy"
     assert document.source_type == "bundled_sample"
     assert document.pages[0].text == "Receipts\nrequired."
+
+
+def test_ingest_policy_pages_preserves_global_offsets_and_content_hash() -> None:
+    document = ingest_policy_pages(
+        title="Two-page policy",
+        pages=("First page", "Second page"),
+        source_type="bundled_sample",
+    )
+
+    assert [(page.start, page.end) for page in document.pages] == [(0, 10), (11, 22)]
+    assert document.document_sha256 == hashlib.sha256(
+        b"First page\nSecond page"
+    ).hexdigest()
 
 
 def test_prepare_policy_pages_rejects_too_many_pages() -> None:

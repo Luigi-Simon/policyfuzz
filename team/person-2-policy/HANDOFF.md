@@ -1,8 +1,22 @@
 # Person 2 — Policy Intelligence handoff
 
-Status: Deterministic Stage 1–2 foundation and extraction fixture suite complete
+Status: Approximately 70% complete; all work independent of Task 4 is implemented
 
-Current branch: `p2/test-extraction-fixtures`
+Current branch: `p2/feat-deterministic-policy-pipeline`
+
+## Executive summary
+
+Person 2 now provides safe text and page ingestion, immutable `PolicyDocument`
+construction, exact citation validation, strict extraction parsing, deterministic
+rule and policy identities, provisional baseline compilation, bounded prompt
+preparation, accepted-visible-only revision inputs, and deterministic revision
+proposal validation. All model-shaped inputs remain untrusted; all consequential
+hashing, limits, provenance checks, and evidence filtering are deterministic.
+
+The only unfinished Person 2 runtime work is the actual provider-neutral model
+call and one-repair orchestration for extraction, invariant suggestions, and
+revision proposals. Those require Person 1's Task 4 shared protocols. Person 4
+continues to own revision application and evaluation.
 
 ## Public inputs and outputs
 
@@ -30,6 +44,18 @@ Current branch: `p2/test-extraction-fixtures`
   citations and assigns full canonical hashes over rule semantics plus the
   canonical source-span hash. Display wording, confidence, and model-supplied
   citation IDs do not influence semantic identity.
+- `compile_baseline_policy(request) -> PolicyCompilation` deterministically
+  assembles a provisional `PolicyIR`, preserves unsupported clauses, and reports
+  exclusions without invoking a model.
+- `build_invariant_suggestion_prompt(policy) -> InvariantSuggestionPrompt`
+  prepares three-to-five unverified suggestions without defining a competing
+  shared output contract.
+- `validate_revision_proposal(request, proposal) -> ValidatedRevisionProposal`
+  validates evidence eligibility, visible-only witnesses, artifact anchors,
+  rule targets and revisions, recomputes proposal/add-rule IDs, and labels draft
+  wording AI-generated and unverified.
+- `build_revision_prompt(request) -> RevisionPrompt` projects only accepted,
+  non-candidate findings and visible scenarios for the future model boundary.
 
 Existing foundation remains available for normalized bounded ingestion, strict
 typed JSON parsing, primitive citation validation, and bounded policy retrieval.
@@ -46,7 +72,15 @@ typed JSON parsing, primitive citation validation, and bounded policy retrieval.
 - `backend/tests/features/policy/test_ingest.py`
 - `backend/tests/features/policy/test_extraction_fixtures.py`
 - `backend/tests/features/policy/test_rule_ids.py`
+- `backend/app/features/policy/compiler.py`
+- `backend/app/features/policy/revision.py`
+- `backend/tests/features/policy/test_compiler.py`
+- `backend/tests/features/policy/test_revision.py`
+- `backend/tests/features/policy/test_pipeline.py`
+- `backend/tests/features/policy/test_prepared_fixtures.py`
 - `team/person-2-policy/fake-llm-responses.json`
+- `team/person-2-policy/invariant-suggestion-fixtures.json`
+- `team/person-2-policy/revision-proposal-fixtures.json`
 - `team/person-2-policy/HANDOFF.md`
 
 ## Deterministic behavior and trust boundaries
@@ -74,6 +108,12 @@ typed JSON parsing, primitive citation validation, and bounded policy retrieval.
   rule signatures use `app.core.hashing.canonical_sha256` exclusively.
 - Baseline rule IDs exclude model-authored display metadata, use revision zero,
   reject invalid citations, and reject duplicate semantic/span identities.
+- Revision inputs reject stale request/proposal anchors, candidate findings,
+  rejected decisions, holdout witnesses, unknown rules, stale revisions, and
+  invalid override dimensions. Proposal application remains outside Person 2.
+- Cross-process tests verify stable document, rule, and policy identities.
+- Development fixture metadata now records its exact source SHA-256 and remains
+  explicitly provisional and unverified.
 
 ## Commands and results
 
@@ -98,6 +138,12 @@ typed JSON parsing, primitive citation validation, and bounded policy retrieval.
   suite **89 passed**.
 - Current full backend: **401 passed, the same 3 Person 1-owned failures**
   described above.
+- Deterministic compiler/revision/pipeline RED: collection failed for the missing
+  compiler, invariant prompt, and revision modules.
+- Deterministic compiler/revision/pipeline GREEN: complete Person 2 suite
+  **109 passed**.
+- Current full backend: **421 passed, 3 failed**. The same Person 1-owned
+  enum/schema/warning failures remain under the active Pydantic environment.
 - Full backend after that rebase: **382 passed, 3 failed**. The failures are in
   Person 1-owned Task 2/3 checks: enum construction, committed schema drift,
   and warning-free blind-validation stderr. The active environment emits a
@@ -112,6 +158,11 @@ typed JSON parsing, primitive citation validation, and bounded policy retrieval.
 - The one-repair model workflow and end-to-end `extract_policy(...)` still
   require Person 1's public LLM request/response/operation types and
   `app.domain.protocols.LLMClient` from Task 4.
+- Person 1's present `InvariantDraft` requires session-confirmed assertions, so
+  invariant model-output validation intentionally remains fixtures and prompt
+  preparation until a provisional shared output shape is frozen.
+- Person 4 owns deterministic proposal application; Person 2 only validates and
+  prepares unverified proposals.
 - No live model was called. No shared contracts, dependencies, API, workflow,
   fuzzing, evaluation, frontend, blind data, or submission files were changed.
 
