@@ -170,6 +170,7 @@ async def test_http_create_runs_concrete_policy_compiler_with_scripted_transport
         PolicyExtraction,
         RuleDraft,
     )
+    from app.features.policy.citations import build_citation_catalog
     from tests.workflow.coordinator_fixtures import compilation, document, request
 
     source = request()
@@ -187,9 +188,16 @@ async def test_http_create_runs_concrete_policy_compiler_with_scripted_transport
         ),
     )
     suggestions = InvariantSuggestions(invariant_drafts=compiled.invariant_drafts)
+    provider_extraction = extraction.model_dump(mode="json")
+    provider_rule = provider_extraction["rules"][0]
+    provider_rule.pop("provenance")
+    provider_rule["rule_handle"] = "fixture-rule"
+    provider_rule["citation_handle"] = (
+        build_citation_catalog(document(source)).entries[0].citation_handle
+    )
     llm = ScriptedLLMClient(
         [
-            LLMResponse(output=extraction.model_dump(mode="json")),
+            LLMResponse(output=provider_extraction),
             LLMResponse(output=suggestions.model_dump(mode="json")),
         ]
     )

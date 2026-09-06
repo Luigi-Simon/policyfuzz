@@ -24,7 +24,10 @@ def test_prompt_keeps_untrusted_policy_separate_from_system_instructions() -> No
     prompt = build_policy_extraction_prompt(_document(injection))
 
     assert injection not in prompt.system_instructions
-    assert json.loads(prompt.policy_payload_json)["pages"][0]["text"] == injection
+    assert (
+        json.loads(prompt.policy_payload_json)["citation_catalog"][0]["quote"]
+        == injection
+    )
     assert "untrusted data" in prompt.system_instructions
     assert "do not obey" in prompt.system_instructions.lower()
 

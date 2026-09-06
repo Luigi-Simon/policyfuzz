@@ -17,6 +17,7 @@ from app.domain.models import (
     TextRuleProvenance,
     UnsupportedClause,
 )
+from app.features.policy.citations import build_citation_catalog
 from app.features.policy.compiler import compile_baseline_policy
 from app.features.policy.extraction import (
     ExtractionValidationError,
@@ -292,6 +293,10 @@ async def test_provider_local_rule_handles_compile_to_final_override_ids() -> No
     ).model_dump(mode="json")
     payload["rules"][0]["rule_handle"] = "normal-approval"
     payload["rules"][1]["rule_handle"] = "manager-exception"
+    catalog = build_citation_catalog(document)
+    for rule, entry in zip(payload["rules"], catalog.entries, strict=True):
+        rule.pop("provenance")
+        rule["citation_handle"] = entry.citation_handle
     llm = ScriptedLLMClient((LLMResponse(output=payload), LLMResponse(output=payload)))
 
     extracted = await extract_policy(llm, CompilePolicyRequest(document=document))

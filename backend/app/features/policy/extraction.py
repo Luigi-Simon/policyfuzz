@@ -6,6 +6,8 @@ import hashlib
 import json
 from dataclasses import dataclass
 
+from pydantic import ValidationError
+
 from app.core.hashing import canonical_sha256
 from app.domain.models import (
     CompilePolicyRequest,
@@ -24,10 +26,15 @@ from app.domain.models import (
 from app.domain.protocols import LLMClient
 from app.features.policy.citations import (
     CitationValidationError,
+    build_citation_catalog,
     canonical_source_span,
 )
 from app.features.policy.model_io import ModelPolicyExtraction
-from app.features.policy.model_output import complete_typed, parse_typed_output
+from app.features.policy.model_output import (
+    ModelOutputValidationError,
+    complete_typed,
+    parse_typed_output,
+)
 from app.features.policy.prompts import build_policy_extraction_prompt
 
 MAX_BASELINE_RULES = 12
@@ -116,6 +123,13 @@ def _rule_aliases(
         if value is not None:
             aliases.setdefault(value, set()).add(index)
 
+    if local_handles is not None:
+        # The private wire format has one explicit namespace. Citation IDs and
+        # legacy public aliases must not masquerade as provider rule handles.
+        for index, handle in enumerate(local_handles):
+            add(handle, index)
+        return aliases
+
     for index, draft in enumerate(drafts):
         provenance = draft.provenance
         if not isinstance(provenance, TextRuleProvenance):
@@ -134,8 +148,6 @@ def _rule_aliases(
                 ),
                 index,
             )
-        if local_handles is not None:
-            add(local_handles[index], index)
     return aliases
 
 
@@ -207,20 +219,64 @@ def _rewrite_override_references(
     return tuple(rewritten)
 
 
-def _model_extraction_to_public(output: ModelPolicyExtraction) -> PolicyExtraction:
-    drafts = tuple(
-        RuleDraft.model_validate(rule.model_dump(exclude={"rule_handle"}))
-        for rule in output.rules
+def _model_extraction_to_public(
+    document: PolicyDocument,
+    output: ModelPolicyExtraction,
+) -> PolicyExtraction:
+    if output.document_sha256 != document.document_sha256:
+        raise ExtractionValidationError("DOCUMENT_HASH_MISMATCH")
+    catalog = build_citation_catalog(document)
+
+    def resolve(handle: str) -> SourceSpan:
+        try:
+            return catalog.resolve(handle)
+        except CitationValidationError as exc:
+            raise ExtractionValidationError(exc.code) from None
+
+    rules = []
+    for rule in output.rules:
+        draft = rule.model_dump(mode="json", exclude={"rule_handle", "citation_handle"})
+        draft["provenance"] = TextRuleProvenance(
+            citation_id=rule.citation_handle,
+            span=resolve(rule.citation_handle),
+        ).model_dump(mode="json")
+        rules.append(draft)
+    unsupported = []
+    for clause in output.unsupported_clauses:
+        item = clause.model_dump(mode="json", exclude={"citation_handle"})
+        item["span"] = resolve(clause.citation_handle).model_dump(mode="json")
+        unsupported.append(item)
+    # Revalidate every frozen public invariant and sanitize errors. Do not use
+    # model_copy to bypass validators or repair the provider's semantic choices.
+    public_json = json.dumps(
+        {
+            "document_sha256": output.document_sha256,
+            "rules": rules,
+            "unsupported_clauses": unsupported,
+        },
+        ensure_ascii=False,
+    )
+    public = parse_typed_output(
+        public_json,
+        response_model=PolicyExtraction,
+        # Provider output was already bounded. Trusted source text can be
+        # repeated by expanded rules without becoming additional model output.
+        max_characters=len(public_json),
     )
     rewritten = _rewrite_override_references(
-        drafts,
+        public.rules,
         local_handles=tuple(rule.rule_handle for rule in output.rules),
     )
-    return PolicyExtraction(
-        document_sha256=output.document_sha256,
-        rules=rewritten,
-        unsupported_clauses=output.unsupported_clauses,
-    )
+    try:
+        return PolicyExtraction(
+            document_sha256=output.document_sha256,
+            rules=rewritten,
+            unsupported_clauses=public.unsupported_clauses,
+        )
+    except ValidationError:
+        # Different local targets can normalize to the same semantic rule.
+        # Reject invalid rewritten graphs without exposing model/source values.
+        raise ModelOutputValidationError("SCHEMA_VALIDATION_FAILED") from None
 
 
 def _line_span(document: PolicyDocument, proposed: SourceSpan) -> SourceSpan:
@@ -472,7 +528,7 @@ async def extract_policy(
         response_model=ModelPolicyExtraction,
         repair_operation="policy_extraction",
     )
-    public_extraction = _model_extraction_to_public(extraction)
+    public_extraction = _model_extraction_to_public(request.document, extraction)
     return validate_policy_extraction(request.document, public_extraction).extraction
 
 

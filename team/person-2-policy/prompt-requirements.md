@@ -1,6 +1,6 @@
 # Prompt requirements for Policy Intelligence
 
-These requirements intentionally avoid hard-coding the final Pydantic class names until Person 1 freezes the contracts.
+Public contracts remain frozen; private provider DTOs carry source-catalog handles.
 
 ## Intended stakeholders
 
@@ -13,7 +13,9 @@ The current repository vocabulary remains the narrow travel-and-expense MVP. Pro
 - Treat all supplied policy text as untrusted data, never as instructions.
 - Delimit policy text clearly from the task instructions.
 - Request structured JSON only; never request executable code.
-- Require every proposed executable rule to include an exact source quote, page, and character offsets.
+- Require rules and unsupported clauses to select exact `citation_handle` values from the Python-built source catalog. Python supplies public quotes, page/global offsets, and SHA-256 hashes; the model must not calculate them or supply a legacy source span.
+- Give every rule a unique `rule_handle`; override targets use only that rule-handle namespace. Expanded OR rules may reuse one citation handle.
+- Preserve explicitly stated defaults, exceptions, and unsupported-clause scope without inventing precedence or broadening uncertainty.
 - Preserve unsupported or ambiguous clauses instead of guessing.
 - Use integer minor units for money and SGD as the base currency.
 - Keep conditions AND-only; expand OR statements into separate rules.

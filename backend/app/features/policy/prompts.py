@@ -6,6 +6,7 @@ import json
 from dataclasses import dataclass
 
 from app.domain.models import PolicyDocument, PolicyIR
+from app.features.policy.citations import build_citation_catalog
 from app.features.policy.model_io import ModelPolicyExtraction
 
 _SYSTEM_INSTRUCTIONS = """You are the PolicyFuzz policy extraction agent.
@@ -16,15 +17,24 @@ Return structured JSON matching the supplied response schema. Propose at most
 12 executable travel-and-expense rules using only schema-supported predicate
 fields, operators, effects, enum values, integer SGD minor units, and explicit
 typed exceptions. Conditions are AND-only; expand OR language into separate
-rules. Every executable rule must include its exact source quote, one-based
-page number, document-global character offsets, and quote hash. Preserve vague,
-ambiguous, unsupported, or out-of-vocabulary language as an unsupported clause
-with an exact source citation instead of guessing.
+rules. Select each rule's `citation_handle` from the supplied citation_catalog.
+Each catalog entry contains an exact source quote with one-based page and
+document-global offsets. Python owns those offsets and hashes. Copy handles
+verbatim; do not compute hashes, offsets, or invent citations. Multiple rules
+expanded from the same source may reuse its citation_handle. A catalog entry
+may contain several clauses: interpret only explicit source language, retaining
+its conditions and exceptions. Preserve vague, ambiguous, unsupported, or
+out-of-vocabulary language as an unsupported clause with its citation_handle
+instead of guessing. Retain its explicitly stated scope in affected_dimensions
+and when_hint using supported predicates; do not broaden a scoped uncertainty.
 
 Assign every rule a unique `rule_handle` such as `rule_1`. Override
 `target_rule_id` values must use the referenced rule's local `rule_handle`, not
 a guessed final rule ID. Local handles are internal references only; Python
 assigns and rewrites final rule IDs after validating the complete rule graph.
+Represent an explicit default and its stated exception with local override
+references only where the source establishes that relationship. Do not infer
+precedence merely because two rules overlap or appear in a particular order.
 
 Do not provide executable code. Do not assign authoritative verdicts, severity,
 metrics, confirmation status, policy approval, or legal conclusions. Descriptions
@@ -54,6 +64,7 @@ def build_policy_extraction_prompt(
 ) -> PolicyExtractionPrompt:
     """Build a deterministic prompt from Person 1's public contracts."""
 
+    catalog = build_citation_catalog(document)
     payload = {
         "document_id": document.document_id,
         "document_sha256": document.document_sha256,
@@ -64,9 +75,18 @@ def build_policy_extraction_prompt(
                 "page": page.page,
                 "start": page.start,
                 "end": page.end,
-                "text": page.text,
             }
             for page in document.pages
+        ],
+        "citation_catalog": [
+            {
+                "citation_handle": entry.citation_handle,
+                "page": entry.span.page,
+                "start": entry.span.start,
+                "end": entry.span.end,
+                "quote": entry.span.quote,
+            }
+            for entry in catalog.entries
         ],
     }
     return PolicyExtractionPrompt(
