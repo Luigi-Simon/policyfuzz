@@ -1,138 +1,46 @@
-import { act, render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { RunRecord } from '../api/types';
-
-vi.mock('../api/config', () => ({
-  isHttpMode: true,
-  apiUrl: (path: string) => path,
-}));
-
-const engineMocks = vi.hoisted(() => ({
-  createRun: vi.fn(),
-  reviseRun: vi.fn(),
-  rehearseRun: vi.fn(),
-}));
-
-vi.mock('../api/engineClient', async (importOriginal) => {
-  const original = await importOriginal<typeof import('../api/engineClient')>();
-  return { ...original, ...engineMocks };
-});
-
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import App from '../App';
+import { HttpTransport } from '../api/httpTransport';
+import { makeAwaitingContractView, makeRunView } from './runViewFactory';
 
-const baselineRun: RunRecord = {
-  run_id: 'run_baseline',
-  status: 'completed',
-  message: 'complete',
-  ir: {
-    policy_id: 'pol_1',
-    title: 'Baseline policy',
-    revision: 1,
-    source: { document_id: 'doc_1', filename: 'policy.txt' },
-    rules: [{ id: 'R1', title: 'Baseline rule', statement: 'Keep the baseline rule.' }],
-    open_questions: [],
-    conflicts: [],
-  },
-  suite: {
-    suite_id: 'suite_baseline',
-    policy_id: 'pol_1',
-    policy_revision: 1,
-    scenarios: [
-      {
-        scenario_id: 'scn_baseline',
-        kind: 'normal',
-        title: 'Baseline scenario',
-        narrative: 'Baseline scenario facts remain visible.',
-        expected_outcome: 'compliant',
-      },
-    ],
-  },
-  evaluation: {
-    report_id: 'eval_1',
-    policy_id: 'pol_1',
-    policy_revision: 1,
-    suite_id: 'suite_baseline',
-    findings: [
-      {
-        finding_id: 'fnd_1',
-        scenario_id: 'scn_baseline',
-        verdict: 'pass',
-        summary: 'Baseline passed.',
-      },
-    ],
-  },
-  effectiveness: {
-    report_id: 'eff_1',
-    policy_id: 'pol_1',
-    policy_revision: 1,
-    score: 72,
-    justification: 'Baseline fuzz result.',
-    recommended_actions: [],
-    swarm_used: false,
-  },
-};
+const reply = (body:unknown,status=200) => new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json'}});
+afterEach(()=>{vi.unstubAllGlobals();vi.restoreAllMocks();});
 
-describe('HTTP adapter interface', () => {
-  beforeEach(() => {
-    engineMocks.createRun.mockReset();
-    engineMocks.reviseRun.mockReset();
-    engineMocks.rehearseRun.mockReset();
-  });
-
-  it('clears only the browser view and ignores a late create response', async () => {
-    let finish!: (value: unknown) => void;
-    engineMocks.createRun.mockReturnValue(new Promise((resolve) => { finish = resolve; }));
-    const user = userEvent.setup();
-    render(<App />);
-
-    await user.click(screen.getByRole('button', { name: 'Use sample policy' }));
-    expect(engineMocks.createRun).toHaveBeenCalledOnce();
-    expect(engineMocks.createRun.mock.calls[0][1]).toBeInstanceOf(AbortSignal);
-
-    await user.click(screen.getByRole('button', { name: 'Clear view' }));
-    expect(screen.getByRole('alert')).toHaveTextContent('Server run data will remain in the engine store');
-    await user.click(screen.getByRole('button', { name: 'Confirm clear' }));
-    expect(engineMocks.createRun.mock.calls[0][1].aborted).toBe(true);
-
-    await act(async () => {
-      finish({
-        run_id: 'late_run',
-        status: 'completed',
-        ir: null,
-        suite: null,
-        evaluation: null,
-        effectiveness: null,
-      });
-    });
-
-    expect(await screen.findByLabelText('Policy text')).toHaveValue('');
-    expect(screen.queryByText(/late_run/)).not.toBeInTheDocument();
-  });
-
-  it('preserves the baseline when optional rehearsal returns a failed record', async () => {
-    engineMocks.createRun.mockResolvedValue(baselineRun);
-    engineMocks.rehearseRun.mockResolvedValue({
-      run_id: 'run_baseline',
-      status: 'failed',
-      message: 'Pipeline failed',
-      error: 'Traceback: private provider detail',
-      ir: null,
-      suite: null,
-      evaluation: null,
-      effectiveness: null,
-    });
-    const user = userEvent.setup();
-    render(<App />);
-
-    await user.click(screen.getByRole('checkbox', { name: /Explore interactions/ }));
-    await user.click(screen.getByRole('button', { name: 'Use sample policy' }));
-    await user.click(await screen.findByRole('checkbox', { name: /I confirm the extracted rules/ }));
-    await user.click(screen.getByRole('button', { name: /Confirm contract & review results/ }));
-
-    expect(await screen.findByText('Swarm rehearsal failed — using prior fuzz evaluation results')).toBeVisible();
-    expect(screen.getByText('Baseline scenario facts remain visible.')).toBeVisible();
-    expect(screen.getByText('72')).toBeVisible();
-    expect(screen.queryByText(/private provider detail/)).not.toBeInTheDocument();
-  });
+describe('public HTTP application',()=>{
+ it('creates with public JSON, resynchronizes a rejected action, and deletes with validated 200 JSON',async()=>{
+  const user=userEvent.setup();const contract={...makeAwaitingContractView(),run_id:'public-run',mode:'live' as const};
+  const rejected={...makeRunView('contract_rejected'),run_id:'public-run',mode:'live' as const};
+  const fetch=vi.fn().mockResolvedValueOnce(reply({schema_version:'1.0',run_id:'public-run'},202)).mockResolvedValueOnce(reply(contract))
+   .mockResolvedValueOnce(reply({error:{schema_version:'1.0',code:'INVALID_STATE',message:'This contract review has already ended.',retryable:false,error_id:'public-review-409'}},409))
+   .mockResolvedValueOnce(reply(rejected)).mockResolvedValueOnce(reply({schema_version:'1.0',run_id:'public-run',deleted:true}));
+  vi.stubGlobal('fetch',fetch);render(<App transport={new HttpTransport()} />);
+  expect(screen.getByText('Public API · no run loaded')).toBeVisible();
+  await user.type(screen.getByLabelText('Policy title'),'Synthetic HTTP policy');
+  await user.click(screen.getByLabelText('Bundled sample'));
+  expect(screen.getByRole('combobox',{name:'Bundled policy sample'})).toHaveDisplayValue('Development reimbursement policy');
+  await user.click(screen.getByLabelText(/I confirm this policy is non-confidential/));
+  await user.click(screen.getByRole('button',{name:'Analyze policy'}));
+  expect(await screen.findByText('Live run')).toBeVisible();
+  expect(screen.queryByText(/authored display data/)).not.toBeInTheDocument();
+  await user.click(screen.getByRole('button',{name:'Reject policy contract'}));
+  expect(await screen.findByText('Contract rejected — run ended')).toBeVisible();
+  expect(screen.getByRole('alert')).toHaveTextContent('This contract review has already ended.');
+  expect(screen.getByRole('alert')).toHaveTextContent('public-review-409');
+  await user.click(screen.getByRole('button',{name:'Delete run'}));
+  await user.click(screen.getByRole('button',{name:'Confirm delete'}));
+  await waitFor(()=>expect(screen.queryByText('Live run')).not.toBeInTheDocument());
+  expect(fetch).toHaveBeenCalledTimes(5);
+  expect(JSON.parse(fetch.mock.calls[0][1].body)).toMatchObject({source_type:'bundled_sample',sample_id:'development-policy',text:null,title:'Synthetic HTTP policy',non_confidential_confirmed:true});
+  expect(JSON.parse(fetch.mock.calls[2][1].body)).toEqual({schema_version:'1.0',decision:'reject',baseline_policy_id:null,baseline_policy_sha256:null,invariants:[],required_dimensions:[]});
+  expect(fetch.mock.calls.map(call=>[call[0],call[1].method])).toEqual([
+   ['/api/v1/runs','POST'],['/api/v1/runs/public-run','GET'],['/api/v1/runs/public-run/confirm-contract','POST'],['/api/v1/runs/public-run','GET'],['/api/v1/runs/public-run','DELETE'],
+  ]);
+ });
+ it('shows a safe error and keeps the input after an unstructured HTTP failure',async()=>{
+  const user=userEvent.setup();vi.stubGlobal('fetch',vi.fn().mockResolvedValue(new Response('private stack trace and provider details',{status:500})));
+  render(<App transport={new HttpTransport()} />);await user.type(screen.getByLabelText('Policy title'),'Synthetic failure');await user.type(screen.getByLabelText('Policy text'),'Non-confidential test');await user.click(screen.getByLabelText(/I confirm this policy is non-confidential/));await user.click(screen.getByRole('button',{name:'Analyze policy'}));
+  expect(await screen.findByRole('alert')).not.toHaveTextContent(/private|stack trace|provider details/);expect(screen.getByLabelText('Policy text')).toHaveValue('Non-confidential test');
+ });
 });

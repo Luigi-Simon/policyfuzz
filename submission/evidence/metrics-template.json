@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "status": "draft",
+  "scoring_eligible": false,
+  "scoring_eligibility_reason": "Required demo-core-v1, Gate B, benchmark, manual-review, and independent human-review evidence is not yet available. The public v2 benchmark metadata says human review is pending and headline gold scoring is ineligible.",
+  "frozen_commit": null,
+  "suite_hash": null,
+  "engine_version": null,
+  "provenance": {
+    "data_type": "synthetic",
+    "run_mode": "pending",
+    "verification_status": "unverified",
+    "blind_eligibility": "ineligible"
+  },
+  "claim_sources": [
+    {
+      "path": "submission/video/script.md",
+      "provenance": {
+        "data_type": "synthetic",
+        "run_mode": "pending",
+        "verification_status": "unverified",
+        "blind_eligibility": "ineligible"
+      }
+    }
+  ],
+  "source_artifacts": {},
+  "required_metrics": [
+    "manual_review_1_minutes",
+    "manual_review_2_minutes",
+    "time_to_first_correct_finding_seconds",
+    "total_run_time_seconds",
+    "scenario_count",
+    "confirmation_count",
+    "model_call_count",
+    "provider_cost_usd",
+    "development_seeded_defect_recall",
+    "development_regression_pass_rate",
+    "control_regression_pass_rate",
+    "blind_seeded_defect_recall"
+  ],
+  "metrics": {
+    "manual_review_1_minutes": {"status": "pending"},
+    "manual_review_2_minutes": {"status": "pending"},
+    "time_to_first_correct_finding_seconds": {"status": "pending"},
+    "total_run_time_seconds": {"status": "pending"},
+    "scenario_count": {"status": "pending"},
+    "confirmation_count": {"status": "pending"},
+    "model_call_count": {"status": "pending"},
+    "provider_cost_usd": {"status": "pending"},
+    "development_seeded_defect_recall": {"status": "pending"},
+    "development_regression_pass_rate": {"status": "pending"},
+    "control_regression_pass_rate": {"status": "pending"},
+    "blind_seeded_defect_recall": {"status": "pending"}
+  },
+  "field_contract": {
+    "finalization": "Copy this file to verified-metrics.json only after every required metric is supported by frozen source artifacts. Set status to final and scoring_eligible to true only when all gold-scoring prerequisites are satisfied.",
+    "source_artifacts": "Map a stable artifact ID to a repository-relative path and the SHA-256 of the actual file. Paths must remain inside package_root and may not use symlinks to escape it.",
+    "required_metrics": "The verifier owns the exact twelve Task 24 keys listed here. Final evidence may not omit, duplicate, rename, or add metric keys to weaken the contract.",
+    "metric": "Each verified metric requires status, display_value, numerator, denominator, basis_points, source_artifact, frozen_commit, suite_hash, engine_version, and provenance. Metric provenance must exactly match the submission provenance.",
+    "arithmetic": "All numeric fields are non-negative integers no larger than 1000000000000000. Rates use a positive denominator, numerator no larger than denominator, and nearest integer basis points computed with integer arithmetic. Counts use a numeric numerator with denominator and basis_points set to not_applicable. Unavailable values use not_applicable for all three fields.",
+    "display_value": "The verifier derives display_value from arithmetic: compact percent text for rates, an integer for counts, dollar-and-cent text from integer USD cents for numeric provider cost, or N/A when all arithmetic fields are not_applicable.",
+    "frozen_metadata": "Every verified metric repeats exactly the top-level demo-core-v1 commit, frozen-suite hash, and deterministic engine version.",
+    "claim_reference": "The canonical final token is [[metric:key|display_value|data_type|run_mode|verification_status|blind-eligibility]], for example [[metric:scenario_count|15|synthetic|live|verified|blind-eligible]]. The value and four provenance labels are checked against that exact metric and source. A line containing a canonical token may not contain another numeric value outside the token after timecode and slide/page-heading normalization; put unrelated structural numbers on a separate line. {{metric:key}} is an unresolved authoring token and intentionally fails verification.",
+    "provenance": "Final submission, metric, claim-source, and canonical-claim provenance must agree exactly. data_type is synthetic; run_mode is live or cached according to actual footage; verification_status is verified; blind_eligibility is eligible only after independent review. Boilerplate label lists do not satisfy claim-level checks.",
+    "claim_sources": "The final script at submission/video/script.md is mandatory and audited even when the CLI omits --source. Every additional --source path must have a matching structured claim_sources entry. Extracted deck text must be non-empty.",
+    "candidate_selection": "--package-root/--candidate-root selects the complete directory measured for Task 25 alignment. scripts.verify_submission.enumerate_candidate_files(candidate_root) is the reusable source of the deterministic root-relative member list; Task 25 must package that exact returned list. The fixed exclusions are .git, .superpowers, .env files, dependency/virtual-environment directories, cache/coverage/build/dist output, bytecode, purpose-specific raw-video/backup-video directories, and raw/backup video files. Generic directories named raw, backup, or backups are not excluded. The verifier rejects symlinks and private paths, computes size and final-deliverable basename uniqueness from the returned member list, and permits repeated ordinary source basenames such as AGENTS.md or __init__.py. Final packaging acceptance remains pending until Task 25 records a manifest proving the archive uses the same list.",
+    "manual_reviews": "Store the two independent ten-minute review observations separately. These are a small internal benchmark, not user research.",
+    "provider_cost": "Use N/A unless a checked-in price source and the run's provider-usage evidence support a reproducible calculation."
+  }
+}

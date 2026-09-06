@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import { dataMode, apiBase } from './api/config';
+import { HttpTransport } from './api/httpTransport';
+import { MockTransport } from './api/mockTransport';
 import './styles.css';
-import './behavior.css';
-ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);
+
+const transport = dataMode === 'mock' ? new MockTransport() : new HttpTransport(apiBase);
+ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App transport={transport}/></React.StrictMode>);

@@ -1,10 +1,10 @@
 export type DataMode = 'mock' | 'http';
 
 function readMode(raw: string | undefined): DataMode {
-  return raw === 'http' ? 'http' : 'mock';
+  return raw === 'mock' ? 'mock' : 'http';
 }
 
-/** Default empty base uses the Vite proxy to the engine. */
+/** Default empty base uses the Vite proxy to the public FastAPI service. */
 export const apiBase = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? '';
 
 export const dataMode: DataMode = readMode(import.meta.env.VITE_DATA_MODE as string | undefined);

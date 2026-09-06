@@ -1,51 +1,48 @@
-# Frontend integration boundary
+# Public workflow integration
 
-## Current behavior
+## Shared surface
 
-Mock mode is the default and is the mode used by the component tests. It renders the complete four-screen interaction with illustrative local data and does not send policy text to a server.
+The frontend consumes the public `RunView` through generated TypeScript aliases. Ajv validates snapshots against `contracts/jsonschema/RunView.schema.json`; request/response names are generated from `contracts/openapi.json`. The exported models are available now; the final version 1.0 freeze follows Person 1's Task 4.
 
-Setting `VITE_DATA_MODE=http` opts into a temporary, direct adapter to the checked-in engine sidecar. This path consumes the engine's `RunRecord` shape from `engine/app/contracts/` and calls `/v1` directly. It does not represent a frozen PolicyFuzz public contract.
+| Action | Declared wire contract |
+| --- | --- |
+| Create | `POST /api/v1/runs` → `202 CreateRunResponse`, then GET |
+| Load / poll | `GET /api/v1/runs/{run_id}` → `200 RunView` |
+| Confirm or reject contract | `POST .../confirm-contract` → `200 RunView`, then GET |
+| Submit finding decisions | `POST .../select-findings` → `200 RunView`, then GET |
+| Confirm or reject revision | `POST .../confirm-revision` → `200 RunView`, then GET |
+| Delete | `DELETE /api/v1/runs/{run_id}` → `200 DeleteRunResponse` |
 
-| UI action | Current HTTP behavior |
-|---|---|
-| Analyze policy / use sample | `POST /v1/runs` as multipart form data |
-| Confirm contract | Uses the synchronous create result; optionally calls `POST /v1/runs/{id}/rehearse?swarm=true` |
-| Finding accept/reject/clarify | Browser state only; no server decision is recorded |
-| Confirm revision | Sends accepted finding summaries and intent text as the `instruction` to `POST /v1/runs/{id}/revise` |
-| Clear view | Cancels the active browser request and resets local state; server data remains |
+The bundled sample control submits `sample_id: "development-policy"`, matching the approved sample filename stem. Task 20 must register that ID.
 
-Engine create, rehearse, and revise are synchronous endpoints. The frontend therefore waits for one bounded request and does not poll. Each request has a two-minute timeout, accepts a caller `AbortSignal`, and ignores a completion after reset or a newer request.
+Errors use `{error: PublicError}`. A 409 response is followed by a fresh GET because the current error schema does not carry stage/actions. Unknown or malformed responses become concise public errors. A run ID is checked against the requested run before applying a response.
 
-Successful responses receive handwritten runtime validation before mapping. The validator checks the allowed engine run statuses and validates every nested field consumed by `mapRunToView`, including policy rules/citations/conditions/obligations, scenario kinds and facts, finding verdicts and traces, recommendation actions, booleans, arrays, objects, and finite integer scores/revisions. Invalid JSON or an incompatible response is shown as a concise public error; raw backend bodies remain available only on the internal error object.
+## Lifecycle and evidence
 
-## UI data boundary
+Server stage and allowed actions control progression. Active stages poll after the previous GET settles; review and terminal stages stop polling. In-flight work is aborted on unmount or replacement, and stale completions cannot overwrite a newer run. Earlier public snapshots may be retained within the current browser session for back-navigation. Missing historical details on a directly loaded later run remain unavailable.
 
-- `src/api/types.ts` describes only the subset of the engine `RunRecord` used by this temporary adapter.
-- `src/api/engineClient.ts` owns `/v1` requests, cancellation, timeout, validation, and concise error translation.
-- `src/api/mapRun.ts` projects a validated engine record into frontend display shapes.
-- `src/preview.ts` and static content in `src/behavior.tsx` are illustrative mock data, not backend models or benchmark evidence.
-- HTTP finding decisions are labelled local. The engine has no finding-decision endpoint.
-- HTTP clear is labelled **Clear view**. The engine has no run deletion endpoint.
+Mock provenance is explicit: the canonical completed fixture is authored synthetic display data and demonstrates a rejected patch. It is not the later recorded cached-run deliverable. HTTP responses display their actual `live` or `cached` mode. A transport label is separate from run provenance.
 
-The UI does not claim that its display `RunView` is the planned public `RunView`. No backend module is imported by the frontend.
+Finding decisions use stable IDs and the reviewable IDs supplied by the server. Structured revision operations and the server's acceptance flags determine the result; drafted wording remains labelled unverified. The frontend does not create findings, scores, oracle answers, or pass/fail verdicts.
 
-## Pending integration dependencies
+## Public projection gaps for Person 1
 
-Person 1 still needs to provide and freeze:
+These are pending upstream fields, not permission to read backend internals or synthesize evidence.
 
-1. The public `/api/v1` orchestration surface and its public error rules.
-2. A versioned public `RunView` schema with stage, confirmation, terminal, and partial-result semantics.
-3. Generated TypeScript types/client configuration and a canonical completed fixture.
-4. Commands and concurrency rules for interpretation confirmation, finding decisions, revision confirmation, and deletion or retention.
-5. If orchestration is asynchronous, snapshot/polling semantics: allowed active states, interval, overall deadline, retry/backoff rules, cancellation, stale-write protection, and terminal errors.
-6. Stable identifiers and provenance linking policies, rules, scenarios, actions, evaluations, findings, revisions, and comparisons.
-7. Immutable comparison inputs and backend acceptance results for fixed-action and behavioral comparison views.
-8. Public redaction rules for uploaded policy content, source quotations, provider errors, prompts, and stored artifacts.
+| Planned detail | Current public data | Follow-up |
+| --- | --- | --- |
+| Scenario facts and individual assertion results | Visible trace IDs, predicates, resolved effects, compliance, citations and hashes | Decide which visible-only fields Task 20 should expose; preserve holdout redaction. |
+| Measured adaptation lift | Current covered/total counters | Add measured initial/final coverage or an explicit lift projection if required. |
+| Fixed / remaining / regressed item IDs | Aggregate assertion transitions and acceptance counts | Add visible-only ID collections if required. |
+| Engine version | Full engine SHA-256 in comparison inputs | Expose the version string separately; the UI labels the current value as a hash. |
+| Completed-run rule and proposal history | Pending-confirmation data only | Add a safe historical projection if direct reload must retain those details. |
 
-Until those dependencies exist, keep the direct engine adapter explicit and opt-in. Do not invent `/api/v1` endpoints, treat the handwritten types as generated public types, persist local finding choices by implication, or add artificial polling to the synchronous engine.
+## Remaining acceptance gates
 
-## Fixture needs for the future public contract
+1. Person 1 Task 4: freeze the public contract and regenerate/check client types if it changes.
+2. Person 1 Tasks 19–20: provide the coordinator and exact public HTTP routes/status codes/error wrapper. Follow the generated `200` deletion contract rather than the older plan's `204` example.
+3. Complete a real bundled workflow against that API, including decisions, rejection, deletion, and frozen-suite comparison.
+4. Verify keyboard navigation and the 375 px / 1440 px layouts in a browser that can reach the development server. The current controlled browser rejected localhost with `ERR_BLOCKED_BY_CLIENT`; no visual acceptance is claimed from that attempt.
+5. Freeze the verified executable and actual evidence before final deck screenshots or video capture.
 
-The frozen contract should include examples for a normal completed run, a stage in progress, a public error, an unsupported interpretation, no reviewable findings, clarification pending, revision rejected, failed safeguards, changed comparison inputs, an additional-scenario cohort, cancellation, expiration, and deletion/retention behavior.
-
-One complete fixture should link policy → confirmed intent → scenario → evaluated action → finding → revision → fixed-action comparison using stable public IDs and source-bearing evidence.
+The private benchmark lineage is selected by `submission/evidence/active-benchmark.json`. It is schema-validated, agent-authored and late-sealed, with human review pending and headline gold scoring disabled. No private benchmark content is a frontend fixture.

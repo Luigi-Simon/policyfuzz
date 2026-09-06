@@ -1,51 +1,47 @@
 # PolicyFuzz interface
 
-React/Vite implementation of the supplied four-screen workflow. The default mode is a local mock preview with explicitly illustrative policy, findings, scores, and comparison states.
+React/Vite implements the four public workflow views: input and contract, run evidence, findings and revision, and comparison. All server fields come from generated OpenAPI types and successful responses are validated against the public JSON schemas.
 
-## Run the mock preview
+## Run the available mock workflow
 
 From this directory:
 
 ```bash
 npm ci
+```
+
+Create `.env.local` containing:
+
+```dotenv
+VITE_DATA_MODE=mock
+```
+
+Then run:
+
+```bash
 npm run dev
 ```
 
-Choose **Use sample policy**, review and confirm the interpretation, inspect scenarios, decide each finding, prepare a revision, and open the comparison. Arbitrary pasted policy text is not analyzed in mock mode.
+Choose the bundled sample, acknowledge the displayed rules and intent invariants, then confirm the contract. For the included revision example, reject the approval-gap finding and accept the cap-assertion finding; then confirm or reject the structured revision. Other finding selections end without a supported authored revision. The completed example demonstrates a revision that fails its safeguards. The mock uses authored synthetic display fixtures; it does not analyze pasted text or provide measured model/engine results.
 
-## Temporary engine HTTP adapter
+## Public HTTP integration
 
-HTTP mode is an explicit development option for the engine sidecar in `../engine`; it is not the planned public PolicyFuzz API.
+HTTP is the default. Remove the mock setting or use `VITE_DATA_MODE=http`. The development proxy sends `/api` to `http://127.0.0.1:8000`; `VITE_API_BASE_URL` can select another public API origin. Never put a provider key in a frontend environment variable.
 
-1. Start the engine from `engine/` on port 8000.
-2. Copy `.env.example` to `.env` and set `VITE_DATA_MODE=http`.
-3. Leave `VITE_API_BASE_URL` empty to use the Vite proxy, or set an engine base URL.
-4. Run `npm run dev`.
+The client implements the declared `/api/v1` routes, with generated requests, runtime response validation, a 15-second request timeout, cancellation, and non-overlapping 1,500 ms polling during active stages. Confirmation and terminal stages pause polling. A successful action is followed by a fresh GET. Deletion uses the server's validated response before clearing the run.
 
-The adapter currently calls these engine endpoints:
-
-- `POST /v1/runs` to synchronously ingest, extract, generate scenarios, evaluate, and score.
-- `POST /v1/runs/{run_id}/rehearse?swarm=true` when optional simulation is enabled.
-- `POST /v1/runs/{run_id}/revise` to synchronously revise and rerun the engine pipeline.
-
-Requests have a fixed two-minute client timeout and are cancelled when the browser view is reset or superseded. Responses are checked at runtime against the engine `RunRecord` fields consumed by the UI, including nested rules, scenarios, findings, traces, status values, and numeric values.
-
-The engine has no delete endpoint. **Clear view** resets browser state and leaves server run data in the engine store. Finding accept/reject/clarification choices remain local; accepted items are sent only as prose in a later `/revise` instruction.
+**Live acceptance is pending Person 1's Task 20 API and coordinator.** A running legacy engine does not satisfy this public API dependency. The interface can be tested now using mock mode and fake HTTP tests.
 
 ## Checks
 
 ```bash
+npm run generate:types
+npm run check:generated
 npm run typecheck
 npm run test:run
 npm run build
 ```
 
-Tests use local fixtures and mocked HTTP only. They never call a provider or a live engine.
+`generate:types` reads `../contracts/openapi.json`; shared schemas and the canonical fixture remain owned by Person 1. Commit the generated client after a reviewed contract change. `check:generated` detects drift. Tests use local fixtures and fake HTTP and never call a model provider.
 
-## Integration status
-
-This checkout has no frozen public `RunView`, public `/api/v1` orchestration API, generated API client, canonical completed fixture, or agreed decision/delete commands. `src/api/engineClient.ts` and `src/api/types.ts` are handwritten temporary engine adapters. `src/preview.ts` and the mock behavioral content remain UI-only illustrative data.
-
-Do not add polling around the current engine create/revise calls: those endpoints return synchronously. Polling belongs with a future public asynchronous orchestration contract once its stages, snapshot schema, terminal states, timing limits, and error semantics are frozen.
-
-See [INTEGRATION.md](INTEGRATION.md) for the remaining dependencies and exact boundary.
+See [INTEGRATION.md](INTEGRATION.md) for exact endpoints, public-data limits, and the remaining acceptance gates.
