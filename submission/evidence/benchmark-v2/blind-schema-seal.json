@@ -1,0 +1,20 @@
+{
+  "archive_sha256": "652aa10da6058d482b0e46d4366388e7318793329131885da8b9195049a1305f",
+  "artifact_hashes": {
+    "canonical-policy-ir.json": "e2baab5d451d16e440bc3ba917b908a3cc3e8e8a497a2c5a662636f3a8c79c7f",
+    "confirmed-contract.json": "ca6ba8121f8d3616e2376cd206e71d102bb653b55ec153d469a671ed5b7f4e89",
+    "corrected-semantics.json": "1cc02a7c7050bffb1ea8cc2cce22fc65bc511d61cdc9f3e11b3af8e2ba3fe2d8",
+    "defect-manifest.json": "9bb001a70c5ce368cb97a452a91d415ce2554cf9a76aa70b05ec7b36d9fda485",
+    "expected-effects.json": "3410a6353ed351d8f82f930712c93ffc34cb43475222b961ee050fc4d9b8f7a6",
+    "frozen-suite.json": "1856d5500bf62649262c5e07759183aa5afd19fe3e62c562d0e9e23f6ac7b043",
+    "source-labels.json": "9d4dc38521cb0140d8effce013c384f00c4240dd27b1566c8d88480446be1887"
+  },
+  "created_at": "2026-09-06T07:22:50Z",
+  "custodian_role": "Person 5 — Product and demo lead",
+  "defect_count": 3,
+  "defect_ids_sha256": "eca91b2eac8a67c10288b1fb7bd49170989619215d181dfdc4b3bb9c71414e60",
+  "rule_count": 9,
+  "scenario_count": 15,
+  "schema_version": "1.0",
+  "source_policy_sha256": "115ce2feefd120c84107af1a086de61358935bd743bbabf589b6e16a599bc23e"
+}

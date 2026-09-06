@@ -1,0 +1,16 @@
+{
+  "candidate_version": 2,
+  "defect_ids_sha256": "eca91b2eac8a67c10288b1fb7bd49170989619215d181dfdc4b3bb9c71414e60",
+  "headline_gold_scoring_eligible": false,
+  "human_review": "pending",
+  "previous_candidate_disposition": "submission/evidence/blind-a2-compatibility.md",
+  "provenance": "submission/evidence/benchmark-v2/provenance.json",
+  "purpose": "Technical custody checkpoint for continued integration; not approval of semantic labels or performance evidence.",
+  "reviewed_at": "2026-09-06T07:32:19.869057+00:00",
+  "schema_archive_sha256": "652aa10da6058d482b0e46d4366388e7318793329131885da8b9195049a1305f",
+  "schema_seal": "submission/evidence/benchmark-v2/blind-schema-seal.json",
+  "schema_version": "1.0",
+  "source_policy_sha256": "115ce2feefd120c84107af1a086de61358935bd743bbabf589b6e16a599bc23e",
+  "source_seal": "submission/evidence/benchmark-v2/blind-seal.json",
+  "status": "schema_validated_candidate"
+}

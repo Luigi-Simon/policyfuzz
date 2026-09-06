@@ -1,0 +1,43 @@
+{
+  "activation": "pending Person 1 review; no active-candidate pointer changed",
+  "authorship": "authored by delegated agent",
+  "candidate_version": 2,
+  "counts": {
+    "defects": 3,
+    "protected_normal_cases": 3,
+    "rules": 9,
+    "scenarios": 15,
+    "schema_shapes": 7
+  },
+  "created_at": "2026-09-06T07:25:20.031868+00:00",
+  "defect_ids_sha256": "eca91b2eac8a67c10288b1fb7bd49170989619215d181dfdc4b3bb9c71414e60",
+  "engine_execution": false,
+  "feature_code_prompts_or_development_samples_inspected": false,
+  "headline_gold_scoring_eligible": false,
+  "independent_human_review": "pending",
+  "lineage": "new candidate; previous lineage preserved",
+  "previous_private_material_inspected": false,
+  "private_bundle": {
+    "filename": "policyfuzz-benchmark-v2-private-custody.zip",
+    "library_file_id": "libfile_b2aebb75625c8191aa34b9d8676f85b1",
+    "saved": true,
+    "sha256": "fabc1ca1d88050061331eb2d25a6001fb397beaa66680f6440a6d7633971f04e"
+  },
+  "provider_calls": false,
+  "replacement_reason": "Previous candidate did not conform to the frozen supported public vocabulary. This is a newly authored candidate, not a reseal or repair of that candidate.",
+  "schema_archive_sha256": "652aa10da6058d482b0e46d4366388e7318793329131885da8b9195049a1305f",
+  "schema_flags_disclaimer": "gold/session_confirmed flags, labels, severities and expected fingerprint identities are agent-authored schema representations; they are not evidence of human validation or evaluator execution.",
+  "schema_sealed_at": "2026-09-06T07:22:50Z",
+  "seal_timing": "sealed after development",
+  "source_archive_sha256": "6470cb7edeb566ee54470fd8e3801e6c7069df04c28d4e268b64e59de98e5c94",
+  "source_policy_sha256": "115ce2feefd120c84107af1a086de61358935bd743bbabf589b6e16a599bc23e",
+  "source_sealed_at": "2026-09-06T07:22:37Z",
+  "validation": {
+    "archive_reproduction": "passed byte-identical independent rebuild",
+    "gate_a1": "passed existing seal_blind_benchmark.py",
+    "gate_a2": "passed existing validate_and_seal_blind_contracts.py",
+    "source_and_ids_unchanged": "passed",
+    "validators_or_contracts_modified": false
+  },
+  "validation_scope": "schema validation only, not semantic/oracle verification"
+}
