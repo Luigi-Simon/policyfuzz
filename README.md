@@ -58,6 +58,8 @@ backend\.venv\Scripts\python.exe scripts/check_setup.py --mode cached
 
 Use `--mode live` after setting the backend environment, or `--mode mock` for frontend-only rehearsal. On macOS/Linux use `backend/.venv/bin/python`. This checks local configuration, not API authentication, account quota, model compatibility or browser acceptance.
 
+Cached mode also validates the recorded run and its evidence links. Live mode constructs and closes the OpenAI client with a dummy key to catch local transport/dependency failures; it sends no API request. These checks leave the files and process environment unchanged.
+
 ## Live hosted-model setup
 
 Set `APP_MODE=live`, `LLM_PROVIDER=openai`, `LLM_MODEL` to a model available to your project, and `OPENAI_API_KEY` in the backend process environment, then restart it. Keep the browser in HTTP mode. Pasted text is sent to the configured provider after the required acknowledgement. Never commit a key or a real policy. No credentials are needed for tests, replay or CI.

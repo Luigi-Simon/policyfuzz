@@ -38,7 +38,7 @@ backend\.venv\Scripts\python.exe scripts/check_setup.py --mode cached
 
 If you already have a clone, use that folder and update your clean checkout with `git pull --ff-only`; do not clone into the existing folder. If Git reports local changes or divergence, preserve them and resolve the update before recording.
 
-The checker does not contact OpenAI, start servers or change files. It checks local prerequisites and configuration only. A passing check does not verify a key, account credits, model access, ports or browser behaviour. The backend does not automatically load `.env`.
+The checker does not contact OpenAI, start servers or change files. It checks local prerequisites and configuration, validates the cached run's evidence links in cached mode, and constructs/closes the SDK with a dummy key in live mode. A passing check does not verify a key, account credits, model access, ports or browser behaviour. The backend does not automatically load `.env`.
 
 ### Start the recorded API demo
 
@@ -90,6 +90,8 @@ backend\.venv\Scripts\python.exe scripts/check_setup.py --mode live
 Use an authorized project with access to the chosen model. `gpt-4.1-mini` is the documented setup example, not a claim that this project's live run has passed. The current adapter uses Chat Completions, JSON-schema output and sampling parameters; another model must support that request format. A model name from ChatGPT is not automatically a compatible API model ID.
 
 Resolve any failed local checks, then start the backend with the same Uvicorn command above. Restart Terminal 2's Vite process with `VITE_DATA_MODE=http`, then reload the browser and start a new run. Review each actual contract, finding and revision rather than applying the mock script mechanically. Live analysis can return different results.
+
+If the client cannot initialize, check the backend installation and configured proxy. A SOCKS proxy also needs `socksio` in that environment: `backend\.venv\Scripts\python.exe -m pip install socksio`. This dependency is only needed when using SOCKS; keep any required network proxy configured. If cached evidence validation fails, restore `samples/cached-demo` from the same repository version and run `backend\.venv\Scripts\python.exe scripts/replay_check.py` before rehearsing.
 
 The secret exists in that terminal's environment until removed or the terminal closes. It is not written to a file by these commands. Re-enter it when opening a new backend terminal. Do not put it in any `VITE_*` variable or `.env.example`. Share only redacted errors and run results.
 
