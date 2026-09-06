@@ -35,9 +35,9 @@ examples in the older plan differ.
 
 ## Verified application checks
 
-- Backend: **1,470 tests passed**; Ruff check/format passed for 164 backend Python files.
+- Backend: **1,476 tests passed** after the merged startup-check follow-up; the merge CI passed.
 - Frontend: **108 tests passed**; generated-type drift, type checking and production build passed.
-- Setup checker: ten tests passed; its Ruff check/format and local mock/cached checks passed.
+- Setup checker: sixteen tests passed; its Ruff check/format and offline cached/live probes passed.
   Earlier shared-script and caption-generator checks remain in the historical verification record.
 - Contracts: all **111 schemas**, OpenAPI and the canonical view fixture match generated output.
 - Actual TCP API create/read/completed replay/delete checks passed within the backend suite.
@@ -94,7 +94,11 @@ an independently verified reconciliation procedure is supplied.
 5. Produce the final nine-page PDF, video and captions; verify and package them
    at the final tag, then publish the release. Drafts do not satisfy these gates.
 
-Live-provider acceptance is also pending because this workspace has no configured model/key.
+Live-provider authentication succeeded during the synthetic rehearsal on 2026-09-06.
+The full run stopped at extraction after the first output and its allowed repair
+failed validation. A separate diagnostic reproduced invalid citation hashes and
+offsets. Person 2's citation metadata fix is required before live acceptance can
+continue. See the [reproduction and handoff](../team/person-1-integration/live-extraction-handoff.md).
 
 The application can be developed and rehearsed now. Pending evidence has not been
 replaced with invented approvals, a final release tag, or simulated footage.

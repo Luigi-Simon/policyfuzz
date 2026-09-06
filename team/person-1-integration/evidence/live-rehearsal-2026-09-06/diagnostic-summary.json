@@ -1,0 +1,27 @@
+{
+  "kind": "single_call_extraction_diagnostic",
+  "original_run_id": "bfd7018f-233a-4b4b-a9be-23ac5e5224b1",
+  "source_commit": "931e67b0b8f57bbb0180c42213c416d6c6f5a031",
+  "actual_provider_attempts": 1,
+  "usage": {
+    "schema_version": "1.0",
+    "input_tokens": 1846,
+    "output_tokens": 1708,
+    "repair_calls": 0,
+    "transport_retries": 0
+  },
+  "response_sha256": "4b99b594c2b1756b82962303e81a7f70a8e7e79f5f9488d40d50152f5c7e7e55",
+  "schema_valid": false,
+  "error_code": "SCHEMA_VALIDATION_FAILED",
+  "issues": [
+    [
+      "$",
+      "string_pattern_mismatch"
+    ],
+    [
+      "unsupported_clauses.0.span.quote_sha256",
+      "string_pattern_mismatch"
+    ]
+  ],
+  "duration_seconds": 26.374
+}

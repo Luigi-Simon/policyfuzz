@@ -45,6 +45,12 @@ verification below remains dated evidence, not the current complete-suite test c
 
 ## Isolated startup diagnostics — 2026-09-06
 
+Update: PR #1 is merged at `931e67b0b8f57bbb0180c42213c416d6c6f5a031` and
+merge CI passed. A subsequent live attempt confirmed provider access but stopped
+at invalid extraction output. The [Person 2 reproduction packet](live-extraction-handoff.md)
+preserves the failed attempt and exact diagnostic without changing feature code.
+Full live, browser, benchmark and final release acceptance remain pending.
+
 Branch `p1/fix-offline-startup-checks` adds only Person 1 setup diagnostics, tests,
 CI and documentation. It is a separate reviewable change from `main`; no teammate
 branch, feature implementation, frontend, dependency or frozen contract is edited.

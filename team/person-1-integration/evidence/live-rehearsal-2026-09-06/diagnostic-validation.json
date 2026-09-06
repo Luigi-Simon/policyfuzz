@@ -1,0 +1,94 @@
+{
+  "schema_issues": [
+    {
+      "path": "rules.0.provenance.text_citation.span.quote_sha256",
+      "code": "string_pattern_mismatch"
+    },
+    {
+      "path": "rules.7.provenance.text_citation.span.quote_sha256",
+      "code": "string_pattern_mismatch"
+    },
+    {
+      "path": "rules.8.provenance.text_citation.span.quote_sha256",
+      "code": "string_pattern_mismatch"
+    },
+    {
+      "path": "rules.9.provenance.text_citation.span.quote_sha256",
+      "code": "string_pattern_mismatch"
+    },
+    {
+      "path": "unsupported_clauses.0.span.quote_sha256",
+      "code": "string_pattern_mismatch"
+    }
+  ],
+  "citation_checks": [
+    {
+      "citation_index": 0,
+      "hash_matches_quote": false,
+      "offsets_match_quote": false,
+      "quote_occurrences_in_page": 1
+    },
+    {
+      "citation_index": 1,
+      "hash_matches_quote": false,
+      "offsets_match_quote": false,
+      "quote_occurrences_in_page": 1
+    },
+    {
+      "citation_index": 2,
+      "hash_matches_quote": false,
+      "offsets_match_quote": false,
+      "quote_occurrences_in_page": 1
+    },
+    {
+      "citation_index": 3,
+      "hash_matches_quote": false,
+      "offsets_match_quote": false,
+      "quote_occurrences_in_page": 1
+    },
+    {
+      "citation_index": 4,
+      "hash_matches_quote": false,
+      "offsets_match_quote": false,
+      "quote_occurrences_in_page": 1
+    },
+    {
+      "citation_index": 5,
+      "hash_matches_quote": false,
+      "offsets_match_quote": false,
+      "quote_occurrences_in_page": 1
+    },
+    {
+      "citation_index": 6,
+      "hash_matches_quote": false,
+      "offsets_match_quote": false,
+      "quote_occurrences_in_page": 1
+    },
+    {
+      "citation_index": 7,
+      "hash_matches_quote": false,
+      "offsets_match_quote": false,
+      "quote_occurrences_in_page": 1
+    },
+    {
+      "citation_index": 8,
+      "hash_matches_quote": false,
+      "offsets_match_quote": false,
+      "quote_occurrences_in_page": 1
+    },
+    {
+      "citation_index": 9,
+      "hash_matches_quote": false,
+      "offsets_match_quote": false,
+      "quote_occurrences_in_page": 1
+    },
+    {
+      "citation_index": 10,
+      "hash_matches_quote": false,
+      "offsets_match_quote": false,
+      "quote_occurrences_in_page": 1
+    }
+  ],
+  "rule_count": 10,
+  "unsupported_clause_count": 1
+}

@@ -1,0 +1,17 @@
+{
+  "kind": "synthetic_live_rehearsal_evidence",
+  "files": {
+    "summary.json": "3b22b8d2e152076524fbe5a7714148c06d13398a167c61c7f4ebe021626b025d",
+    "run-record.json": "e051bebb5af3b226508706c273eedfb8c46b5b98fec65e16df484d66ace7534e",
+    "diagnostic-response.json": "c76a831b470a89b3e0bdb6190d52bd026270b88c983070ccf4ea5a6c85716cd3",
+    "diagnostic-summary.json": "b6e768c4f3b9d3788cd443ac22c05a375fd300f37b988cdeeb37d33031e4b5c1",
+    "diagnostic-validation.json": "9925dd258d9902ca596838af1be8e4f5670301b28fbdcc6e822f4a721db0896e"
+  },
+  "actual_provider_attempts": 3,
+  "successful_provider_responses": 3,
+  "full_rehearsal_complete": false,
+  "total_reported_input_tokens": 5603,
+  "total_reported_output_tokens": 6025,
+  "no_billing_cost_inferred": true,
+  "diagnostic_is_separate_attempt": true
+}
