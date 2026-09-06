@@ -20,6 +20,9 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - run: python -m pip install -e './backend[dev]'
       - run: npm --prefix frontend ci
+      - run: python scripts/check_setup.py --mode cached
+      - run: python -m ruff check scripts/check_setup.py
+      - run: python -m ruff format --check scripts/check_setup.py
       - run: python -m ruff check backend/app backend/tests
       - run: python -m ruff format --check backend/app backend/tests
       - run: python -m pytest backend/tests -q
@@ -31,6 +34,23 @@ jobs:
       - run: npm --prefix frontend run typecheck
       - run: npm --prefix frontend run test:run
       - run: npm --prefix frontend run build
+  windows-setup:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: python -m pip install -e './backend[dev]'
+      - run: npm --prefix frontend ci
+      - run: python -m pytest backend/tests/integration/test_check_setup.py -q
+      - run: python scripts/check_setup.py --mode mock
+      - run: python scripts/check_setup.py --mode cached
   submission:
     if: startsWith(github.ref, 'refs/tags/demo-v')
     needs: core

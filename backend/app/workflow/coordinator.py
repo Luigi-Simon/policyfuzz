@@ -1,7 +1,7 @@
 """Bounded, injected orchestration; no specialist internals or provider calls."""
 
 import asyncio
-from collections.abc import Callable
+from collections.abc import Awaitable, Callable
 from datetime import timedelta
 from uuid import uuid4
 
@@ -87,6 +87,8 @@ from app.workflow.validation import (
     validate_suite,
 )
 from app.workflow.views import to_run_view
+
+ContinuationScheduler = Callable[[Callable[[], Awaitable[RunView]]], object]
 
 
 def digest(payload):
@@ -350,7 +352,11 @@ class RunCoordinator:
                 self._tasks.pop(run_id, None)
 
     async def confirm_contract(
-        self, run_id: str, command: ConfirmContractRequest
+        self,
+        run_id: str,
+        command: ConfirmContractRequest,
+        *,
+        schedule: ContinuationScheduler | None = None,
     ) -> RunView:
         command = self._command(ConfirmContractRequest, command)
         record = await self._at(run_id, "awaiting_contract")
@@ -363,7 +369,7 @@ class RunCoordinator:
             or command.baseline_policy_sha256 != pending.baseline_policy_sha256
         ):
             raise StaleArtifactError()
-        return await self._baseline(record, command)
+        return await self._baseline(record, command, schedule=schedule)
 
     async def get_run(self, run_id: str) -> RunView:
         return to_run_view(await self.store.get(run_id))
@@ -449,7 +455,7 @@ class RunCoordinator:
         # out of visible evidence and retains their aggregate rejection count.
         return suite
 
-    async def _baseline(self, record, command):
+    async def _baseline(self, record, command, *, schedule=None):
         policy = self._payload(record, "policy_ir")
         policy = PolicyIR.model_validate(
             policy.model_copy(
@@ -493,6 +499,13 @@ class RunCoordinator:
             artifacts=(("policy_ir", policy), ("policy_contract", contract)),
             pending_confirmation=None,
         )
+        if schedule is not None:
+            # No suspension between accepting the decision and owning its work.
+            schedule(lambda: self._continue_baseline(record, policy, contract))
+            return to_run_view(record)
+        return await self._continue_baseline(record, policy, contract)
+
+    async def _continue_baseline(self, record, policy, contract):
         task = asyncio.current_task()
         self._tasks.setdefault(record.run_id, set()).add(task)
         try:
@@ -599,7 +612,11 @@ class RunCoordinator:
         return await self.get_run(record.run_id)
 
     async def select_findings(
-        self, run_id: str, command: SelectFindingsRequest
+        self,
+        run_id: str,
+        command: SelectFindingsRequest,
+        *,
+        schedule: ContinuationScheduler | None = None,
     ) -> RunView:
         command = self._command(SelectFindingsRequest, command)
         record = await self._at(run_id, "awaiting_finding_review")
@@ -662,6 +679,21 @@ class RunCoordinator:
         )
         if not accepted:
             return await self.get_run(run_id)
+        if schedule is not None:
+            schedule(
+                lambda: self._continue_revision(
+                    record, policy, contract, suite, reviewed, accepted, command
+                )
+            )
+            return to_run_view(record)
+        return await self._continue_revision(
+            record, policy, contract, suite, reviewed, accepted, command
+        )
+
+    async def _continue_revision(
+        self, record, policy, contract, suite, reviewed, accepted, command
+    ):
+        run_id = record.run_id
         task = asyncio.current_task()
         self._tasks.setdefault(run_id, set()).add(task)
         try:

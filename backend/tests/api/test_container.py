@@ -157,7 +157,11 @@ async def test_missing_and_corrupt_recorded_cache_are_safe(tmp_path):
         assert "SECRET" not in response.text
 
 
-async def test_http_create_runs_concrete_policy_compiler_with_scripted_transport():
+async def test_http_create_runs_concrete_policy_compiler_with_scripted_transport(
+    monkeypatch,
+):
+    import asyncio
+
     from app.container import build_container
     from app.domain.models import (
         CompilePolicyRequest,
@@ -208,15 +212,41 @@ async def test_http_create_runs_concrete_policy_compiler_with_scripted_transport
         ]
         from tests.workflow.coordinator_fixtures import confirm
 
+        entered, release = asyncio.Event(), asyncio.Event()
+        original_complete = llm.complete_json
+
+        async def blocked_scenarios(command):
+            if command.operation == "scenario_generation":
+                entered.set()
+                await release.wait()
+            return await original_complete(command)
+
+        monkeypatch.setattr(llm, "complete_json", blocked_scenarios)
         llm.queue(LLMResponse(output={"scenarios": []}))
         llm.queue(LLMResponse(output={"scenarios": []}))
+        scoped_planner = container.scenario_scope._instances[run_id]
         command = confirm(await container.coordinator.get_run(run_id))
-        response = await client.post(
-            "/api/v1/runs/" + run_id + "/confirm-contract",
-            json=command.model_dump(mode="json"),
+        response = await asyncio.wait_for(
+            client.post(
+                "/api/v1/runs/" + run_id + "/confirm-contract",
+                json=command.model_dump(mode="json"),
+            ),
+            1,
         )
         assert response.status_code == 200
-        assert response.json()["stage"] == "completed_no_findings"
+        assert response.json()["stage"] == "generating_initial_tests"
+        await asyncio.wait_for(entered.wait(), 1)
+        assert (await client.get("/api/v1/runs/" + run_id)).json()[
+            "stage"
+        ] == "generating_initial_tests"
+        release.set()
+        await container.task_runner.drain(run_id)
+        assert (await client.get("/api/v1/runs/" + run_id)).json()[
+            "stage"
+        ] == "completed_no_findings"
+        assert container.scenario_scope._instances[run_id] is scoped_planner
+        assert (await client.delete("/api/v1/runs/" + run_id)).status_code == 200
+        assert run_id not in container.scenario_scope._instances
 
 
 def test_manifest_uses_the_exact_exploratory_schema_and_prompt_commitment():

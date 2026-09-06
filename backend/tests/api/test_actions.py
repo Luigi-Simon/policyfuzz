@@ -32,7 +32,11 @@ async def test_contract_confirmation_returns_frozen_run_view():
             "/api/v1/runs/run/confirm-contract", json=command.model_dump(mode="json")
         )
         assert response.status_code == 200
-        assert response.json()["stage"] == "completed_no_findings"
+        assert response.json()["stage"] == "generating_initial_tests"
+        await runner.drain("run")
+        assert (await client.get("/api/v1/runs/run")).json()[
+            "stage"
+        ] == "completed_no_findings"
 
 
 async def test_complete_revision_through_all_http_actions():
@@ -64,12 +68,20 @@ async def test_complete_revision_through_all_http_actions():
             "/api/v1/runs/run/confirm-contract", json=command.model_dump(mode="json")
         )
         assert response.status_code == 200
-        assert response.json()["stage"] == "awaiting_finding_review"
+        assert response.json()["stage"] == "generating_initial_tests"
+        await runner.drain("run")
+        assert (await client.get("/api/v1/runs/run")).json()[
+            "stage"
+        ] == "awaiting_finding_review"
         response = await client.post(
             "/api/v1/runs/run/select-findings", json=selection().model_dump(mode="json")
         )
         assert response.status_code == 200
-        assert response.json()["stage"] == "awaiting_revision_confirmation"
+        assert response.json()["stage"] == "drafting_revision"
+        await runner.drain("run")
+        assert (await client.get("/api/v1/runs/run")).json()[
+            "stage"
+        ] == "awaiting_revision_confirmation"
         response = await client.post(
             "/api/v1/runs/run/confirm-revision",
             json={"decision": "confirm", "proposal_id": "proposal"},

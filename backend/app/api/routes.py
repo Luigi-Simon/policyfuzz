@@ -84,11 +84,8 @@ async def confirm_contract(
     command: Annotated[ConfirmContractRequest, json_command(ConfirmContractRequest)],
     container: Container,
 ):
-    return await container.task_runner.run(
-        run_id,
-        lambda: container.execute(
-            run_id, lambda: container.coordinator.confirm_contract(run_id, command)
-        ),
+    return await container.coordinator.confirm_contract(
+        run_id, command, schedule=lambda work: container.submit(run_id, work)
     )
 
 
@@ -103,11 +100,8 @@ async def select_findings(
     command: Annotated[SelectFindingsRequest, json_command(SelectFindingsRequest)],
     container: Container,
 ):
-    return await container.task_runner.run(
-        run_id,
-        lambda: container.execute(
-            run_id, lambda: container.coordinator.select_findings(run_id, command)
-        ),
+    return await container.coordinator.select_findings(
+        run_id, command, schedule=lambda work: container.submit(run_id, work)
     )
 
 

@@ -6,6 +6,8 @@ Use synthetic or explicitly non-confidential policy text only. This is a hackath
 
 ## Quickstart: recorded demonstration
 
+Preparing for a first demo? The [rehearsal guide](docs/demo-day-guide.md) includes Windows setup, safe key entry, a walkthrough, judging questions and a labelled fallback.
+
 Requirements: Python 3.12+, Node 20+ and Git. Use two terminals from a clone of this repository. The default backend mode is `cached`; it requires no provider key. The frontend talks to the real local API and displays the cached label.
 
 Terminal 1, macOS/Linux:
@@ -48,9 +50,19 @@ npm run dev
 
 To use the authored interface fixtures instead, set `VITE_DATA_MODE=mock` before starting Vite. Mock screen fixtures are separate from the recorded API cache.
 
+After installing dependencies, open a new terminal at the repository root (the folder containing `backend` and `frontend`) and check local setup without making provider calls:
+
+```powershell
+backend\.venv\Scripts\python.exe scripts/check_setup.py --mode cached
+```
+
+Use `--mode live` after setting the backend environment, or `--mode mock` for frontend-only rehearsal. On macOS/Linux use `backend/.venv/bin/python`. This checks local configuration, not API authentication, account quota, model compatibility or browser acceptance.
+
 ## Live hosted-model setup
 
 Set `APP_MODE=live`, `LLM_PROVIDER=openai`, `LLM_MODEL` to a model available to your project, and `OPENAI_API_KEY` in the backend process environment, then restart it. Keep the browser in HTTP mode. Pasted text is sent to the configured provider after the required acknowledgement. Never commit a key or a real policy. No credentials are needed for tests, replay or CI.
+
+The backend does **not** automatically read `.env` files. Set variables in the terminal that starts Uvicorn; the [Windows guide](docs/demo-day-guide.md#enable-live-ai-when-the-backend-operator-is-ready) provides a hidden key prompt. A live badge or `provider_configured=true` is a configuration signal, not a successful provider request.
 
 | Variable | Purpose |
 | --- | --- |
@@ -109,6 +121,8 @@ curl -X DELETE http://127.0.0.1:8000/api/v1/runs/RUN_ID
 ```
 
 Use the returned run ID. Confirmation actions are `confirm-contract`, `select-findings` and `confirm-revision`; submit the matching pending-confirmation data and frozen request body shown by OpenAPI. Re-fetch after a conflict. Do not manufacture confirmation anchors or infer success from a stage-entry event.
+
+Accepted contract and finding decisions return the active `RunView` promptly while owned background jobs perform model work. Continue polling `GET /api/v1/runs/{run_id}` for the next confirmation or terminal result. A successful confirmation response records acceptance of the command; it does not mean the model stage has finished.
 
 ## Verification and benchmarks
 

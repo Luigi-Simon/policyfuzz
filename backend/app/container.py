@@ -101,6 +101,10 @@ class AppContainer:
         record = await self.coordinator.store.get(run_id)
         return await self.scenario_scope.execute(record.manifest, work)
 
+    def submit(self, run_id: str, work: Callable[[], Awaitable[T]]) -> None:
+        """Own a continuation and bind its specialist scope when it starts."""
+        self.task_runner.submit(run_id, lambda: self.execute(run_id, work))
+
     async def aclose(self) -> None:
         try:
             await self.coordinator.store.aclose()

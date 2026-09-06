@@ -41,7 +41,7 @@ async def test_lifecycle_cancels_and_drains_blocked_stage(reason):
             await parts.store.get("run")
 
 
-async def test_expiry_drains_foreground_decision_job_and_returns_404():
+async def test_expiry_drains_accepted_decision_job_and_polling_returns_404():
     from app.workflow.fake_stages import FakeScenarioPlanner
     from tests.workflow.coordinator_fixtures import confirm
 
@@ -68,10 +68,12 @@ async def test_expiry_drains_foreground_decision_job_and_returns_404():
             client.post("/api/v1/runs/run/confirm-contract", json=command)
         )
         await asyncio.wait_for(entered.wait(), 1)
+        response = await asyncio.wait_for(call, 1)
+        assert response.status_code == 200
+        assert response.json()["stage"] == "generating_initial_tests"
         parts.clock.tick = 3601
         await runner.sweep()
-        response = await asyncio.wait_for(call, 1)
-        assert response.status_code == 404
+        assert (await client.get("/api/v1/runs/run")).status_code == 404
         assert cleaned.is_set()
 
 
