@@ -12,12 +12,14 @@ from app.domain.models import (
     AddOverrideOperation,
     AddRuleOperation,
     Finding,
+    LLMRequest,
     ProposeRevisionRequest,
     ReplaceRuleOperation,
     RevisionOperation,
     RevisionProposal,
 )
-from app.features.policy.model_output import parse_typed_output
+from app.domain.protocols import LLMClient, RevisionPlanner
+from app.features.policy.model_output import complete_typed, parse_typed_output
 
 
 class RevisionValidationError(ValueError):
@@ -216,7 +218,18 @@ def build_revision_prompt(request: ProposeRevisionRequest) -> RevisionPrompt:
         "accepted_findings": tuple(
             eligible[key].model_dump(mode="json") for key in sorted(eligible)
         ),
-        "visible_scenarios": tuple(item.model_dump(mode="json") for item in scenarios),
+        "visible_scenarios": tuple(
+            {
+                "scenario_id": item.scenario_id,
+                "category": item.category,
+                "facts": item.facts.model_dump(mode="json"),
+                "target_rule_ids": item.target_rule_ids,
+                "target_invariant_ids": item.target_invariant_ids,
+                "protected": item.protected,
+                "partition": item.partition,
+            }
+            for item in scenarios
+        ),
         "anchors": {
             "document_sha256": request.document_sha256,
             "rule_set_sha256": request.rule_set_sha256,
@@ -239,3 +252,27 @@ was applied, tested, scored, accepted, published, or legally approved.
             separators=(",", ":"),
         ),
     )
+
+
+@dataclass(frozen=True, slots=True)
+class LLMRevisionPlanner(RevisionPlanner):
+    """Provider-neutral proposal stage with deterministic trust validation."""
+
+    llm: LLMClient
+
+    async def propose(self, request: ProposeRevisionRequest) -> RevisionProposal:
+        prompt = build_revision_prompt(request)
+        llm_request = LLMRequest(
+            operation="revision_proposal",
+            system_instructions=prompt.system_instructions,
+            untrusted_payload_json=prompt.payload_json,
+            response_schema=RevisionProposal.model_json_schema(),
+            response_schema_name="RevisionProposal",
+        )
+        proposal = await complete_typed(
+            self.llm,
+            request=llm_request,
+            response_model=RevisionProposal,
+            repair_operation="revision_proposal",
+        )
+        return validate_revision_proposal(request, proposal).proposal

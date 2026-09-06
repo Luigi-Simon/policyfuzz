@@ -6,7 +6,7 @@ from tests.workflow.coordinator_fixtures import cached_record, harness
 
 
 @pytest.mark.asyncio
-async def test_cached_replay_keeps_identity_and_never_calls_stages():
+async def test_cached_replay_creates_fresh_session_and_never_calls_stages():
     record = cached_record()
     coordinator, fakes = harness(mode="cached", cached_loader=lambda _: record)
     created = await coordinator.create_run(
@@ -14,7 +14,8 @@ async def test_cached_replay_keeps_identity_and_never_calls_stages():
             source_type="bundled_sample", title="Synthetic", sample_id="synthetic"
         )
     )
-    assert created.run_id == "recorded"
+    assert created.run_id == "run"
+    assert created.run_id != record.run_id
     view = await coordinator.get_run(created.run_id)
     assert view.stage == "completed_no_findings" and view.mode == "cached"
     assert fakes.policy_compiler.calls == fakes.evaluation_engine.calls == 0

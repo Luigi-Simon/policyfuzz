@@ -1,0 +1,223 @@
+{
+  "document": {
+    "document_id": "document-1b5a96f1b897fe1f78f46a6e8d956f4470b8f2c321021e8dc96d5ad3b7ef566c",
+    "document_sha256": "1b5a96f1b897fe1f78f46a6e8d956f4470b8f2c321021e8dc96d5ad3b7ef566c",
+    "pages": [
+      {
+        "end": 987,
+        "page": 1,
+        "schema_version": "1.0",
+        "start": 0,
+        "text": "SYNTHETIC HACKATHON SAMPLE — NOT COMPANY POLICY\nSynthetic Travel and Expense Policy — Corrected Control\n\nEligible categories\nMeal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.\n\nCategory caps\nMeal claims have a per-claim cap of SGD 100.\nMeal claims have a daily category cap of SGD 100.\nHotel claims have a per-claim cap of SGD 250.\nTransport claims have a per-claim cap of SGD 200.\n\nReceipts\nReceipts are not required for claims below SGD 50.\nReceipts are required for claims at or above SGD 50.\n\nApprovals\nApproval is normally not required for a claim.\nHotel claims below SGD 250 require no approval, regardless of destination.\nInternational hotel claims require manager approval and override both the normal no-approval rule and the hotel-specific no-approval rule.\nAirfare booked fewer than 14 days before travel requires manager approval.\n\nUnsupported language\nReasonable incidental expenses may be reimbursed.\n"
+      }
+    ],
+    "schema_version": "1.0",
+    "source_type": "bundled_sample",
+    "title": "development-corrected"
+  },
+  "labels": [
+    {
+      "label_id": "label-eligible-categories",
+      "rule_ids": [
+        "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+      ],
+      "schema_version": "1.0",
+      "source_span": {
+        "end": 247,
+        "page": 1,
+        "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+        "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 125
+      },
+      "unsupported_clause_id": null
+    },
+    {
+      "label_id": "label-meal-claim-cap",
+      "rule_ids": [
+        "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19"
+      ],
+      "schema_version": "1.0",
+      "source_span": {
+        "end": 307,
+        "page": 1,
+        "quote": "Meal claims have a per-claim cap of SGD 100.",
+        "quote_sha256": "6be28fb33e2dbb55da3b93195f9d877fe0c4ce6d002c05a68f0c138cda7ebb04",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 263
+      },
+      "unsupported_clause_id": null
+    },
+    {
+      "label_id": "label-meal-daily-cap",
+      "rule_ids": [
+        "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300"
+      ],
+      "schema_version": "1.0",
+      "source_span": {
+        "end": 357,
+        "page": 1,
+        "quote": "Meal claims have a daily category cap of SGD 100.",
+        "quote_sha256": "e5507b63711a0b9d0e31306851bf1606839d0bf65d22975d04a1f9edf2520b66",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 308
+      },
+      "unsupported_clause_id": null
+    },
+    {
+      "label_id": "label-hotel-claim-cap",
+      "rule_ids": [
+        "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb"
+      ],
+      "schema_version": "1.0",
+      "source_span": {
+        "end": 403,
+        "page": 1,
+        "quote": "Hotel claims have a per-claim cap of SGD 250.",
+        "quote_sha256": "b0dc146bd671169b5b56a66703ea1023533817a75b745a3787a86394ccde4ac2",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 358
+      },
+      "unsupported_clause_id": null
+    },
+    {
+      "label_id": "label-transport-claim-cap",
+      "rule_ids": [
+        "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2"
+      ],
+      "schema_version": "1.0",
+      "source_span": {
+        "end": 453,
+        "page": 1,
+        "quote": "Transport claims have a per-claim cap of SGD 200.",
+        "quote_sha256": "06a6c2867710eaac615d068d654e15251609922b094f89e4707902fe61804623",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 404
+      },
+      "unsupported_clause_id": null
+    },
+    {
+      "label_id": "label-receipt-below-50",
+      "rule_ids": [
+        "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae"
+      ],
+      "schema_version": "1.0",
+      "source_span": {
+        "end": 514,
+        "page": 1,
+        "quote": "Receipts are not required for claims below SGD 50.",
+        "quote_sha256": "881e4b4c701a197a86eacc3c3687c477889c523c77887f7725b33aab2e4552af",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 464
+      },
+      "unsupported_clause_id": null
+    },
+    {
+      "label_id": "label-receipt-threshold",
+      "rule_ids": [
+        "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+      ],
+      "schema_version": "1.0",
+      "source_span": {
+        "end": 567,
+        "page": 1,
+        "quote": "Receipts are required for claims at or above SGD 50.",
+        "quote_sha256": "74ad77111b3a9006d184610962fd4e3e34592985be988a58d597ada440e9cd45",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 515
+      },
+      "unsupported_clause_id": null
+    },
+    {
+      "label_id": "label-approval-normal",
+      "rule_ids": [
+        "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+      ],
+      "schema_version": "1.0",
+      "source_span": {
+        "end": 625,
+        "page": 1,
+        "quote": "Approval is normally not required for a claim.",
+        "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 579
+      },
+      "unsupported_clause_id": null
+    },
+    {
+      "label_id": "label-hotel-below-250-no-approval",
+      "rule_ids": [
+        "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf"
+      ],
+      "schema_version": "1.0",
+      "source_span": {
+        "end": 700,
+        "page": 1,
+        "quote": "Hotel claims below SGD 250 require no approval, regardless of destination.",
+        "quote_sha256": "f9c18c5f04f1d6883ddc9e4fff7bace998426bb0d87c6811dc07310c58274d4b",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 626
+      },
+      "unsupported_clause_id": null
+    },
+    {
+      "label_id": "label-international-hotel-approval",
+      "rule_ids": [
+        "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440"
+      ],
+      "schema_version": "1.0",
+      "source_span": {
+        "end": 839,
+        "page": 1,
+        "quote": "International hotel claims require manager approval and override both the normal no-approval rule and the hotel-specific no-approval rule.",
+        "quote_sha256": "6d19b983b3054ad7f8396be96fe06b40dee004418efbc271219263e4507248b9",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 701
+      },
+      "unsupported_clause_id": null
+    },
+    {
+      "label_id": "label-airfare-short-notice",
+      "rule_ids": [
+        "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36"
+      ],
+      "schema_version": "1.0",
+      "source_span": {
+        "end": 914,
+        "page": 1,
+        "quote": "Airfare booked fewer than 14 days before travel requires manager approval.",
+        "quote_sha256": "f4e9c7a9c0d6a1dfc2022cd40e8b3e524bbd6cc562962ba0d13af5d154f0a3fb",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 840
+      },
+      "unsupported_clause_id": null
+    },
+    {
+      "label_id": "label-unsupported-reasonable-incidental",
+      "rule_ids": [],
+      "schema_version": "1.0",
+      "source_span": {
+        "end": 986,
+        "page": 1,
+        "quote": "Reasonable incidental expenses may be reimbursed.",
+        "quote_sha256": "136526213606e56fa63342c1a468d6c9c3659ba560040a8662f465739dd0bb3c",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 937
+      },
+      "unsupported_clause_id": "unsupported-reasonable-incidental"
+    }
+  ],
+  "schema_version": "1.0"
+}

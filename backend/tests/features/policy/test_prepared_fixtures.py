@@ -1,7 +1,6 @@
 import json
 from pathlib import Path
 
-
 TEAM_DIR = Path(__file__).parents[4] / "team/person-2-policy"
 
 
@@ -15,8 +14,9 @@ def test_invariant_fixtures_cover_bounds_duplicates_and_confirmation_attack() ->
     assert len(fixtures["valid_three"]) == 3
     assert len(fixtures["too_few"]) < 3
     assert len(fixtures["too_many"]) > 5
-    assert fixtures["duplicate_semantics"][0]["value"] == (
-        fixtures["duplicate_semantics"][1]["value"]
+    assert (
+        fixtures["duplicate_semantics"][0]["value"]
+        == (fixtures["duplicate_semantics"][1]["value"])
     )
     assert fixtures["model_assigned_confirmation"][0]["review_status"] == (
         "session_confirmed"

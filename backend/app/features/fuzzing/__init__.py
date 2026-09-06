@@ -9,6 +9,18 @@ from app.features.fuzzing.engine_client import (
     HttpPolicyEngineClient,
     PolicyEngineClient,
 )
+from app.features.fuzzing.exploratory import (
+    ExploratoryBatchPayload,
+    ExploratoryScenarioPayload,
+    ModelOutputValidationError,
+    PromptCommitmentError,
+    exploratory_response_example,
+)
+from app.features.fuzzing.planner import (
+    CoverageLimitExceededError,
+    DefaultScenarioPlanner,
+)
+from app.features.fuzzing.prompts import exploratory_prompt_commitment
 from app.features.fuzzing.types import (
     AudienceSegmentInput,
     EffectivenessView,
@@ -19,11 +31,19 @@ from app.features.fuzzing.types import (
 
 __all__ = [
     "AudienceSegmentInput",
+    "CoverageLimitExceededError",
+    "DefaultScenarioPlanner",
     "EffectivenessView",
     "EngineClientError",
+    "ExploratoryBatchPayload",
+    "ExploratoryScenarioPayload",
     "HttpPolicyEngineClient",
+    "ModelOutputValidationError",
     "PolicyEngineClient",
+    "PromptCommitmentError",
     "RehearsalRequest",
     "RehearsalResult",
     "RevisionHintView",
+    "exploratory_prompt_commitment",
+    "exploratory_response_example",
 ]

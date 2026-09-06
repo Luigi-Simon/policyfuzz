@@ -190,14 +190,14 @@ function slideArrow(slide, x, y, w) {
 // 4 — bounded agent loop
 {
   const s = deck.slides.add();
-  base(s, 4, "Bounded agent loop");
-  title(s, "One targeted cycle closes coverage — or stops");
+  base(s, 4, "Bounded agent loop · cached rehearsal");
+  title(s, "Coverage satisfied on the first bounded pass");
   line(s, 110, 320, 1000, 0, C.line, 4);
   const stages = [
     ["PLAN", "Required targets"],
     ["ACT", "Candidate scenarios"],
     ["OBSERVE", "Coverage gaps"],
-    ["ADAPT", "One targeted batch"],
+    ["FREEZE", "No adaptive call needed"],
     ["RETEST", "Freeze + execute"],
   ];
   stages.forEach((st, i) => {
@@ -207,18 +207,18 @@ function slideArrow(slide, x, y, w) {
     txt(s, st[1], x - 58, 428, 180, 58, { size: 16, color: C.grey, align: "center" });
   });
   box(s, 748, 526, 414, 78, C.amberPale, "none", 12);
-  txt(s, "Bound", 772, 545, 74, 24, { size: 15, bold: true, color: C.amber });
-  txt(s, "At most one targeted generation cycle before suite freeze.", 852, 538, 284, 44, { size: 17, bold: true, color: C.navy2 });
+  txt(s, "Observed", 772, 545, 100, 24, { size: 15, bold: true, color: C.amber });
+  txt(s, "0 targeted cycles · minimum coverage already satisfied.", 884, 538, 252, 44, { size: 17, bold: true, color: C.navy2 });
   notes(s,
-    ["Explain that the agentic behavior is bounded by a single targeted cycle.", "If coverage remains insufficient, the workflow stops rather than expanding without limit."],
-    ["docs/superpowers/plans/2026-09-04-policyfuzz-implementation.md — Tasks 9 and 24", "docs/superpowers/specs/2026-09-04-policyfuzz-design.md — §12.2 frozen-suite procedure"]
+    ["The current cached rehearsal satisfies minimum coverage in the initial provisional suite, so it freezes without adaptation.", "One targeted cycle remains the upper bound when coverage is missing; it is not a mandatory step."],
+    ["samples/cached-demo/run-record.json — scenario suite statistics and coverage", "docs/superpowers/specs/2026-09-04-policyfuzz-design.md — §12.2 frozen-suite procedure"]
   );
 }
 
 // 5 — architecture diagram
 {
   const s = deck.slides.add();
-  base(s, 5, "Target architecture · integration pending");
+  base(s, 5, "Current architecture · cached rehearsal");
   title(s, "Models propose; deterministic Python decides");
   // Connectors first so they remain behind nodes.
   slideArrow(s, 420, 312, 90);
@@ -242,15 +242,15 @@ function slideArrow(slide, x, y, w) {
   );
 }
 
-// 6 — planned cases
+// 6 — current cached findings
 {
   const s = deck.slides.add();
-  base(s, 6, "Planned development cases · synthetic");
-  title(s, "Three planned cases make ambiguity executable");
+  base(s, 6, "Current cached findings · synthetic rehearsal");
+  title(s, "Three deterministic findings make ambiguity executable");
   const rows = [
-    ["01", "THRESHOLD GAP", "SGD 50.00 receipt claim", "below 50 ≠ above 50", "Equality has no matching rule"],
-    ["02", "HOTEL CONFLICT", "International hotel · SGD 249.00", "no approval ↔ manager approval", "No override resolves the clash"],
-    ["03", "DAILY CAP BREACH", "Meal SGD 60 + prior SGD 50", "eligible per claim → daily total 110", "Confirmed daily intent is breached"],
+    ["01", "RECEIPT REQUIREMENT", "Deterministic baseline finding", "Visible witness + cited rules", "Accepted by authored demo decision"],
+    ["02", "APPROVAL REQUIREMENT", "Deterministic baseline finding", "Visible witness + cited rules", "Accepted by authored demo decision"],
+    ["03", "DAILY CATEGORY CAP", "Deterministic baseline finding", "Visible witness + cited intent", "Accepted by authored demo decision"],
   ];
   rows.forEach((r, i) => {
     const y = 180 + i * 132;
@@ -260,26 +260,26 @@ function slideArrow(slide, x, y, w) {
     txt(s, r[2], 138, y + 48, 300, 34, { size: 17, color: C.grey });
     txt(s, r[3], 486, y + 6, 302, 42, { size: 20, bold: true, color: i === 0 ? C.red : C.tealDark });
     txt(s, r[4], 486, y + 54, 304, 38, { size: 16, color: C.grey });
-    label(s, "Trace + citation pending", 858, y + 28, 262, C.amber, C.amberPale);
+    label(s, "Frozen capture pending", 858, y + 28, 262, C.amber, C.amberPale);
   });
-  txt(s, "PLANNED", 70, 594, 106, 24, { size: 14, bold: true, color: C.amber });
-  txt(s, "Final witnesses, authoritative traces, and exact policy citations will be captured only from the verified build.", 180, 586, 900, 46, { size: 17, color: C.navy2 });
+  txt(s, "CACHED", 70, 594, 106, 24, { size: 14, bold: true, color: C.amber });
+  txt(s, "Current record: 3 baseline findings. Final witnesses, traces, and citations still require the frozen browser capture.", 180, 586, 900, 46, { size: 17, color: C.navy2 });
   notes(s,
-    ["Describe these as synthetic planned development cases, not observed findings.", "The amount facts instantiate the approved defect definitions; final witnesses, traces, and policy-span citations remain capture dependencies."],
-    ["docs/superpowers/specs/2026-09-04-policyfuzz-design.md — §12.1 development demonstration cases", "docs/superpowers/plans/2026-09-04-policyfuzz-implementation.md — Task 21 fixture contract and Task 24, slide 6"]
+    ["Describe these as findings in the current public cached rehearsal, not frozen benchmark claims.", "Exact browser witnesses, traces, and policy-span citations remain capture dependencies."],
+    ["samples/cached-demo/run-record.json — baseline finding report and authored decisions", "samples/cached-demo/summary.json — baseline finding count and cached provenance"]
   );
 }
 
-// 7 — pending evidence
+// 7 — current cached rehearsal evidence
 {
   const s = deck.slides.add();
-  base(s, 7, "Evidence plan");
-  title(s, "Measured results wait for a frozen evidence chain");
-  label(s, "Measured results: pending", 70, 158, 254, C.amber, C.amberPale);
+  base(s, 7, "Measured cached rehearsal · synthetic");
+  title(s, "3 findings become 0; all seven gates pass");
+  label(s, "Not frozen · not blind-eligible", 70, 158, 318, C.amber, C.amberPale);
   const columns = [
-    ["DEVELOPMENT", "Known synthetic defects", "Exact finding match\nCitation integrity\nCoverage + replay\nSame-suite patch gates"],
-    ["CORRECTED CONTROL", "Regression challenge", "No confirmed target defect\nProtected assertions\nNo new gaps or conflicts\nSame engine + suite"],
-    ["BLIND", "Late-sealed candidate", "Human review pending\nScoring-ineligible\nFirst-run custody required\nNo headline claim"],
+    ["BEFORE", "3 findings", "10 scenarios\n12 inconclusive assertions\n11 gaps · 1 conflict\nMinimum coverage satisfied"],
+    ["AFTER", "0 findings", "Same frozen suite\n12 passing assertions\n0 gaps · 0 conflicts\n7 / 7 gates true"],
+    ["PROVENANCE", "Cached rehearsal", "4 scripted model responses\n0 actual provider calls\nSynthetic data\nBlind-scoring-ineligible"],
   ];
   columns.forEach((c, i) => {
     const x = 70 + i * 372;
@@ -288,12 +288,12 @@ function slideArrow(slide, x, y, w) {
     txt(s, c[1], x + 22, 292, 294, 58, { size: 24, bold: true });
     txt(s, c[2], x + 22, 374, 292, 124, { size: 17, color: C.grey });
   });
-  txt(s, "Release chain", 70, 566, 120, 26, { size: 15, bold: true, color: C.grey });
-  txt(s, "Gate B report  →  demo-core-v1  →  6-hour freeze  →  evidence capture  →  reviewer checks", 194, 560, 946, 34, { size: 18, bold: true, color: C.navy2 });
-  txt(s, "Results will be reported with their frozen suite, engine, and source evidence.", 194, 606, 938, 34, { size: 16, color: C.tealDark });
+  txt(s, "Final chain", 70, 566, 120, 26, { size: 15, bold: true, color: C.grey });
+  txt(s, "Gate B  →  demo-core-v1  →  6-hour freeze  →  browser capture  →  two human reviews", 194, 560, 946, 34, { size: 18, bold: true, color: C.navy2 });
+  txt(s, "Until that chain completes, these numbers remain rehearsal evidence — not headline blind results.", 194, 606, 938, 34, { size: 16, color: C.tealDark });
   notes(s,
-    ["Do not present placeholder values as measurements.", "Explain the evidence chain and disclose the blind candidate's late seal, delegated-agent authorship, pending human review, and scoring ineligibility."],
-    ["docs/superpowers/plans/2026-09-04-policyfuzz-implementation.md — Gate B and Task 24, steps 1–2", "docs/superpowers/specs/2026-09-04-policyfuzz-design.md — §§12.2–12.4 and 18", "submission/evidence/benchmark-v2/README.md", "submission/evidence/benchmark-v2/provenance.json"]
+    ["These are measured values from the current public cached rehearsal record, not final verified metrics.", "Keep synthetic, cached, scripted, and blind-ineligible labels visible; final claims still require Gate B, freeze, capture, and human review."],
+    ["samples/cached-demo/summary.json", "samples/cached-demo/run-record.json", "submission/evidence/benchmark-v2/provenance.json"]
   );
 }
 
@@ -334,7 +334,7 @@ function slideArrow(slide, x, y, w) {
   txt(s, "P1 integration · P2 policy · P3 fuzzing\nP4 evaluation · P5 product", 858, 402, 332, 70, { size: 17, color: "#D9E7EE" });
   txt(s, "github.com/Luigi-Simon/policyfuzz", 858, 526, 330, 34, { size: 17, bold: true, color: "#7DE2D7" });
   label(s, "Validation pending", 70, 558, 196, "#D7F7F2", "#174A55");
-  txt(s, "Next: capture verified results and footage after Gate B.", 286, 558, 486, 36, { size: 17, color: C.paper, valign: "middle" });
+  txt(s, "Next: Gate B, 6-hour freeze, browser capture, two human reviews.", 286, 558, 600, 36, { size: 17, color: C.paper, valign: "middle" });
   notes(s,
     ["Close on the narrow intended proof, then state the present limitations plainly.", "Team roles are ownership areas only; no individual names are invented."],
     ["docs/superpowers/specs/2026-09-04-policyfuzz-design.md — §§11, 18 and 19", "docs/superpowers/plans/2026-09-04-policyfuzz-implementation.md — Task 24, slide 9", "AGENTS.md and team/person-5-product/AGENTS.md", "git remote origin — https://github.com/Luigi-Simon/policyfuzz"]

@@ -5,11 +5,10 @@ from __future__ import annotations
 import hashlib
 import hmac
 import re
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Sequence
 
 from app.domain.models import PolicyDocument, SourceSpan
-
 
 _SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 
@@ -125,4 +124,21 @@ def validate_source_span(
         end_offset=page.start + validated.end_offset,
         quote=validated.quote,
         quote_sha256=validated.quote_sha256,
+    )
+
+
+def canonical_source_span(
+    document: PolicyDocument,
+    span: SourceSpan,
+) -> SourceSpan:
+    """Return only citation fields verified against source-controlled text."""
+
+    validated = validate_source_span(document, span)
+    return SourceSpan(
+        page=validated.page_number,
+        start=validated.start_offset,
+        end=validated.end_offset,
+        quote=validated.quote,
+        quote_sha256=validated.quote_sha256,
+        section=None,
     )

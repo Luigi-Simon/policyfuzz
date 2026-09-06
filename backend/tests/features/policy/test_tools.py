@@ -78,7 +78,10 @@ def test_find_section_returns_heading_and_body_until_next_section() -> None:
 
 @pytest.mark.parametrize(
     ("heading", "section_name"),
-    [("2.1 Receipt rules\nKeep receipts.", "2.1"), ("4(b) Appeals\nAn appeal is allowed.", "4(b)")],
+    [
+        ("2.1 Receipt rules\nKeep receipts.", "2.1"),
+        ("4(b) Appeals\nAn appeal is allowed.", "4(b)"),
+    ],
 )
 def test_find_section_supports_nested_and_lettered_headings(
     heading: str,

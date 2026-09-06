@@ -1,22 +1,23 @@
 # Person 2 — Policy Intelligence handoff
 
-Status: Approximately 70% complete; all work independent of Task 4 is implemented
+Status: Complete for Tasks 12–15 and Person 2's Task 21 ownership
 
 Current branch: `p2/feat-deterministic-policy-pipeline`
 
 ## Executive summary
 
-Person 2 now provides safe text and page ingestion, immutable `PolicyDocument`
-construction, exact citation validation, strict extraction parsing, deterministic
-rule and policy identities, provisional baseline compilation, bounded prompt
-preparation, accepted-visible-only revision inputs, and deterministic revision
-proposal validation. All model-shaped inputs remain untrusted; all consequential
-hashing, limits, provenance checks, and evidence filtering are deterministic.
+Person 2 provides safe text ingestion, exact citation validation, typed extraction,
+deterministic rule and policy identities, provisional invariant suggestions, and
+minimal revision proposals through the frozen provider-neutral protocols. Schema
+validation permits one sanitized repair request. Python recomputes semantic IDs,
+forces model-authored unsupported clauses to provisional status, and restricts
+revision prompts to accepted visible evidence without scenario assertions or
+holdout cases. Person 4 continues to own revision application and evaluation.
 
-The only unfinished Person 2 runtime work is the actual provider-neutral model
-call and one-repair orchestration for extraction, invariant suggestions, and
-revision proposals. Those require Person 1's Task 4 shared protocols. Person 4
-continues to own revision application and evaluation.
+The development and corrected-control policy artifacts now implement the Task 21
+synthetic benchmark contract. Reproducible extraction, invariant-suggestion, and
+three-operation revision-proposal responses are stored under
+`team/person-2-policy/fixtures/` for offline replay.
 
 ## Public inputs and outputs
 
@@ -182,3 +183,37 @@ provider adapters, dependency changes, or workflow contracts. Once frozen,
 Person 2 can connect the completed deterministic ingestion, citation checks,
 prompt builder, and rule-ID assignment to the one-repair extraction workflow;
 Person 3 can then consume the validated extraction output.
+
+## Final Task 4 and Task 21 completion update
+
+This section supersedes the historical integration limitations and request above.
+The frozen Task 4 interfaces are now integrated:
+
+- `complete_typed(...)` validates either object or text output, performs at most
+  one repair, sends only bounded schema paths/codes, and raises a terminal safe
+  error with `repair_attempted=True`.
+- `extract_policy(...)` builds a separated-trust `LLMRequest`, validates exact
+  citations, and returns the bounded typed extraction.
+- `LLMPolicyCompiler(llm).compile(...)` implements `PolicyCompiler`, performs
+  extraction when needed, validates three to five suggestions, and replaces
+  model-supplied suggestion and assertion IDs with canonical semantic IDs.
+- `LLMRevisionPlanner(llm).propose(...)` implements `RevisionPlanner`, accepts the
+  canonical full request, sends the model only accepted visible findings and
+  visible scenario facts, and returns a deterministically validated proposal.
+
+Final synthetic artifact anchors:
+
+- Development document SHA-256:
+  `4c194c07ac6de7044f0548771ea257cccd1e8d4d0a5b4d1a602e428ee3a66734`
+- Development complete policy SHA-256:
+  `0dce41090a250a7e82f93a292d3aaf84093d0a6adc42f20a3c582ed0ebbfa7c8`
+- Corrected-control document SHA-256:
+  `1b5a96f1b897fe1f78f46a6e8d956f4470b8f2c321021e8dc96d5ad3b7ef566c`
+- Corrected-control complete policy SHA-256:
+  `81e870cc9734a2e2acb875dc7808ed4e9ca69ca77c2e32930c9444aa2c19b728`
+- Confirmed contract complete SHA-256:
+  `d182dc79ab8133b25876e7adc0047f590b72d2642e6f46ac46987972df00ce3a`
+
+No live provider was called. Revision application, deterministic evaluation,
+workflow/API wiring, recorded cached-run assembly, and benchmark execution labels
+remain with their assigned owners.

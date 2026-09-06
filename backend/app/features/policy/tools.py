@@ -2,11 +2,10 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import re
+from dataclasses import dataclass
 
 from app.features.policy.ingest import PreparedPolicyPage, PreparedPolicyText
-
 
 MAX_PAGE_READ_CHARS = 5_000
 MAX_SEARCH_QUERY_CHARS = 200

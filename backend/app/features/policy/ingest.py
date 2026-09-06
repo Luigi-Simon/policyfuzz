@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import hashlib
 import unicodedata
+from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, Literal
+from typing import Literal
 
 from app.domain.models import PolicyDocument, PolicyPage
-
 
 MAX_POLICY_CHARS = 50_000
 MAX_PDF_PAGES = 20

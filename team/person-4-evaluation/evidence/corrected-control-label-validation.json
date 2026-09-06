@@ -1,0 +1,11 @@
+{
+  "label_source": "Independently authored DEVELOPMENT_DEFECT_LABELS and canonical source/confirmed intent IDs; generated before evaluation.",
+  "authored_definition_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "manifest_sha256": "1308aa5920311bb18b4f606632981728eb5e1967c59b7def944395a25251dc75",
+  "score": {
+    "true_positives": 0,
+    "false_positives": 0,
+    "false_negatives": 0
+  },
+  "development_analyzer_fingerprint_witness_target_perturbation_tests_passed": true
+}

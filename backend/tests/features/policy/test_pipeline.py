@@ -16,7 +16,6 @@ from app.domain.models import (
 from app.features.policy.compiler import compile_baseline_policy
 from app.features.policy.ingest import ingest_policy_text
 
-
 TEXT = "Meals require receipts."
 
 
@@ -37,9 +36,7 @@ def _request() -> CompilePolicyRequest:
             RuleDraft(
                 description="Meal receipt rule",
                 when=(),
-                effects=(
-                    Effect(dimension="receipt_requirement", value="required"),
-                ),
+                effects=(Effect(dimension="receipt_requirement", value="required"),),
                 provenance=TextRuleProvenance(citation_id="c1", span=span),
             ),
         ),

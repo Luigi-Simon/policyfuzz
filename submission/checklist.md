@@ -27,7 +27,19 @@ Use only `PASS` when the cited public artifact or direct final observation prove
 | PENDING | `verified-metrics.json` contains all required metrics with consistent arithmetic and actual source hashes | Final evidence manifest plus verifier output |
 | PENDING | Every displayed measured value uses the canonical `[[metric:key|display|data|mode|verification|blind-eligibility]]` token; no `{{metric:*}}` remains | Extracted non-empty deck text, mandatory final script, and verifier output |
 | PENDING | Structured submission, metric, source, and per-claim provenance agree on synthetic data, actual live/cached mode, verified status, and eligible blind evidence | Final evidence manifest and verifier output; boilerplate labels are insufficient |
+| PENDING | Any reported first-run blind discovery recall is independently measured and reconciled | A post-run gold-assisted assessment must not be relabelled as first-run discovery recall; retain N/A/unmeasured until separate valid evidence exists |
 | PENDING | No legal-compliance, exhaustive-discovery, market-validation, invented-ROI, customer, or automatic-publication claim appears | Final two-person claim review |
+
+## Current rehearsal evidence — not final submission acceptance
+
+| Status | Observation | Evidence |
+| --- | --- | --- |
+| PASS | Public cached synthetic record currently contains 10 scenarios, 3 baseline findings, and 0 remaining findings | `samples/cached-demo/summary.json`; `submission/evidence/demo-run.json` |
+| PASS | Current cached comparison has all seven patch-acceptance gates true and 12 assertions move from inconclusive to passing | `samples/cached-demo/run-record.json`; `submission/evidence/demo-run.json` |
+| PASS | Current run uses four scripted model responses and zero actual provider calls | `samples/cached-demo/summary.json` |
+| PASS | Current minimum coverage is satisfied without a targeted cycle | `samples/cached-demo/run-record.json`: 10/10 rules, 3/3 invariants, 23/26 predicate branches, `targeted_cycles: 0` |
+| PASS | Draft caption timing can be regenerated from the timed narration | `node --test submission/video/build-captions.test.mjs`; `node submission/video/build-captions.mjs` |
+| PENDING | Automated browser rehearsal at 375 px and 1440 px, keyboard-only | `submission/evidence/browser-rehearsal.md` records the failed capability attempts; rerun in an environment with a local browser binary |
 
 ## Persons 1–4 handoff dependencies
 

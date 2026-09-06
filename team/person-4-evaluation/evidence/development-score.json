@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "benchmark_id": "SYNTHETIC HACKATHON SAMPLE — NOT COMPANY POLICY: development",
+  "inputs": {
+    "schema_version": "1.0",
+    "policy_sha256": "0dce41090a250a7e82f93a292d3aaf84093d0a6adc42f20a3c582ed0ebbfa7c8",
+    "contract_sha256": "d182dc79ab8133b25876e7adc0047f590b72d2642e6f46ac46987972df00ce3a",
+    "suite_sha256": "c988053930f1a6e6b12a3a059ad2c630576138482ce9757fddcbd7af7a480c94",
+    "engine_sha256": "618a10e80869b0d256939beaca940688b9c2a514670fc4d3d2dd09bee125efc5",
+    "run_manifest_sha256": "1016403b3369effa5c2ae02dba783f7c01cb772c751262a94c40b8911725a70f"
+  },
+  "true_positives": 3,
+  "false_positives": 0,
+  "false_negatives": 0,
+  "precision_percent": 100,
+  "recall_percent": 100,
+  "f1_percent": 100
+}

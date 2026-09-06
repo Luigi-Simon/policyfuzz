@@ -130,6 +130,7 @@ class RunCoordinator:
         mode: RunMode = "live",
         run_id_factory: Callable[[], str] | None = None,
         cached_loader: Callable[[CreateRunRequest], RunRecord] | None = None,
+        recording_demo: bool = False,
     ) -> None:
         self.store, self.clock = store, clock
         self.policy_compiler, self.scenario_planner = policy_compiler, scenario_planner
@@ -155,6 +156,11 @@ class RunCoordinator:
         self.draft_severity, self.mode = draft_severity, mode
         self.run_id_factory = run_id_factory or (lambda: str(uuid4()))
         self.cached_loader = cached_loader
+        if not isinstance(recording_demo, bool) or (
+            recording_demo and mode != "cached"
+        ):
+            raise InvalidRunCommandError()
+        self.recording_demo = recording_demo
         self._tasks: dict[str, set[asyncio.Task]] = {}
         self._used_ids: set[str] = set()
 
@@ -166,7 +172,12 @@ class RunCoordinator:
 
     async def create_run(self, command: CreateRunRequest) -> CreateRunResponse:
         command = self._command(CreateRunRequest, command)
-        if self.mode == "cached":
+        if self.recording_demo and (
+            command.source_type != "bundled_sample"
+            or command.sample_id != "development-policy"
+        ):
+            raise InvalidRunCommandError()
+        if self.mode == "cached" and not self.recording_demo:
             return await self._create_cached(command)
         run_id = self.run_id_factory()
         if run_id in self._used_ids:
@@ -419,13 +430,23 @@ class RunCoordinator:
                 <= {i for c in sources for i in c.target_invariant_ids}
             )
             require(scenario.protected == any(c.protected for c in sources))
-        require(suite.statistics.generated_count in (0, len(candidates)))
+        statistics = suite.statistics
+        require(statistics.rejected_count == len(statistics.rejections))
         require(
-            all(
-                r.candidate_id in {c.candidate_id for c in candidates}
-                for r in suite.statistics.rejections
-            )
+            statistics.duplicate_count
+            == sum(r.reason_code == "duplicate" for r in statistics.rejections)
         )
+        if statistics.generated_count:
+            require(
+                statistics.generated_count
+                == len(suite.scenarios) + statistics.rejected_count
+            )
+        else:
+            require(not statistics.rejections)
+        # ScenarioBatch contains accepted candidates only. Rejected generator
+        # IDs first arrive here in the frozen statistics; they are not required
+        # to masquerade as accepted inputs. Public projection keeps unknown IDs
+        # out of visible evidence and retains their aggregate rejection count.
         return suite
 
     async def _baseline(self, record, command):
@@ -797,8 +818,20 @@ class RunCoordinator:
                     message="Recorded demonstration could not be validated.",
                 )
             ) from None
-        if record.run_id in self._used_ids:
+        run_id = self.run_id_factory()
+        if run_id == record.run_id or run_id in self._used_ids:
             raise InvalidRunCommandError()
-        self._used_ids.add(record.run_id)
+        from app.workflow.cache_replay import rebase_cached_record
+
+        try:
+            record = rebase_cached_record(record, run_id)
+        except Exception:  # noqa: BLE001 - validate the complete replay graph before storage
+            raise WorkflowError(
+                PublicError(
+                    code="HASH_MISMATCH",
+                    message="Recorded demonstration could not be validated.",
+                )
+            ) from None
+        self._used_ids.add(run_id)
         await self.store.create(record)
-        return CreateRunResponse(run_id=record.run_id)
+        return CreateRunResponse(run_id=run_id)

@@ -8,7 +8,6 @@ from app.features.policy.extraction import parse_and_validate_policy_extraction
 from app.features.policy.model_output import ModelOutputValidationError
 from app.features.policy.prompts import build_policy_extraction_prompt
 
-
 FIXTURE_PATH = (
     Path(__file__).parents[4] / "team/person-2-policy/fake-llm-responses.json"
 )

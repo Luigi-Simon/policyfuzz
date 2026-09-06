@@ -1,0 +1,24 @@
+SYNTHETIC HACKATHON SAMPLE — NOT COMPANY POLICY
+Synthetic Travel and Expense Policy — Corrected Control
+
+Eligible categories
+Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.
+
+Category caps
+Meal claims have a per-claim cap of SGD 100.
+Meal claims have a daily category cap of SGD 100.
+Hotel claims have a per-claim cap of SGD 250.
+Transport claims have a per-claim cap of SGD 200.
+
+Receipts
+Receipts are not required for claims below SGD 50.
+Receipts are required for claims at or above SGD 50.
+
+Approvals
+Approval is normally not required for a claim.
+Hotel claims below SGD 250 require no approval, regardless of destination.
+International hotel claims require manager approval and override both the normal no-approval rule and the hotel-specific no-approval rule.
+Airfare booked fewer than 14 days before travel requires manager approval.
+
+Unsupported language
+Reasonable incidental expenses may be reimbursed.

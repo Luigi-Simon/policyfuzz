@@ -1,0 +1,4854 @@
+{
+  "schema_version": "1.0",
+  "report_id": "evaluation-9b82fcdfe60ab786cb17697a7ff4cb6895ff5203b99c4255558136223dc54761",
+  "inputs": {
+    "schema_version": "1.0",
+    "policy_sha256": "81e870cc9734a2e2acb875dc7808ed4e9ca69ca77c2e32930c9444aa2c19b728",
+    "contract_sha256": "d182dc79ab8133b25876e7adc0047f590b72d2642e6f46ac46987972df00ce3a",
+    "suite_sha256": "a8da764114e6407f3dfdf33337db78eff9b8281d14ac14e116f71652f281b9e2",
+    "engine_sha256": "618a10e80869b0d256939beaca940688b9c2a514670fc4d3d2dd09bee125efc5",
+    "run_manifest_sha256": "0501a8c5eb1d62e21132cd7cdda5e353e7f436eb71dfc2f2b1ec01fc0eac2f59"
+  },
+  "engine_version": "1.0.0",
+  "results": [
+    {
+      "schema_version": "1.0",
+      "scenario_id": "airfare-boundary",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "airfare-boundary",
+        "fired_rule_ids": [
+          "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+          "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+          "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "NOT_APPLICABLE"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-eligible-categories",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 125,
+              "end": 247,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-approval-normal",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 579,
+              "end": 625,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-receipt-threshold",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 515,
+              "end": 567,
+              "quote": "Receipts are required for claims at or above SGD 50.",
+              "quote_sha256": "74ad77111b3a9006d184610962fd4e3e34592985be988a58d597ada440e9cd45",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "8fc3cef5f4785a6cbd70f58227a59693731b457af02a03b0c0fe0068875cd6cd"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-airfare-boundary-approval_requirement",
+          "status": "PASS",
+          "actual_value": "none"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-airfare-boundary-eligibility",
+          "status": "PASS",
+          "actual_value": "allow"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-airfare-boundary-receipt_requirement",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "airfare-short",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "airfare-short",
+        "fired_rule_ids": [
+          "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+          "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+          "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+          "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 1,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "manager",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+              "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36"
+            ],
+            "overridden_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+            ],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "NOT_APPLICABLE"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-airfare-short-notice",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 840,
+              "end": 914,
+              "quote": "Airfare booked fewer than 14 days before travel requires manager approval.",
+              "quote_sha256": "f4e9c7a9c0d6a1dfc2022cd40e8b3e524bbd6cc562962ba0d13af5d154f0a3fb",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-eligible-categories",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 125,
+              "end": 247,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-approval-normal",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 579,
+              "end": 625,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-receipt-threshold",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 515,
+              "end": 567,
+              "quote": "Receipts are required for claims at or above SGD 50.",
+              "quote_sha256": "74ad77111b3a9006d184610962fd4e3e34592985be988a58d597ada440e9cd45",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "f3384d2c2face98c26bed1a5c27da0a06f72452ab94a21b04ba3f2fee8a7dcc9"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-airfare-short-approval_requirement",
+          "status": "PASS",
+          "actual_value": "manager"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-airfare-short-eligibility",
+          "status": "PASS",
+          "actual_value": "allow"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-airfare-short-receipt_requirement",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "hotel-domestic-below",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "hotel-domestic-below",
+        "fired_rule_ids": [
+          "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+          "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+          "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+          "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+          "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 1,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+              "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 25000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-hotel-below-250-no-approval",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 626,
+              "end": 700,
+              "quote": "Hotel claims below SGD 250 require no approval, regardless of destination.",
+              "quote_sha256": "f9c18c5f04f1d6883ddc9e4fff7bace998426bb0d87c6811dc07310c58274d4b",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-eligible-categories",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 125,
+              "end": 247,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-approval-normal",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 579,
+              "end": 625,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-receipt-threshold",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 515,
+              "end": 567,
+              "quote": "Receipts are required for claims at or above SGD 50.",
+              "quote_sha256": "74ad77111b3a9006d184610962fd4e3e34592985be988a58d597ada440e9cd45",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-hotel-claim-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 358,
+              "end": 403,
+              "quote": "Hotel claims have a per-claim cap of SGD 250.",
+              "quote_sha256": "b0dc146bd671169b5b56a66703ea1023533817a75b745a3787a86394ccde4ac2",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "3ffca2356a0a2d01d666fcb83cbd16b6811248f673a1eb0679d3d6515cccffb5"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-below-approval_requirement",
+          "status": "PASS",
+          "actual_value": "none"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-below-claim_cap_minor",
+          "status": "PASS",
+          "actual_value": 25000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-below-eligibility",
+          "status": "PASS",
+          "actual_value": "allow"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-below-receipt_requirement",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "hotel-domestic-over",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "hotel-domestic-over",
+        "fired_rule_ids": [
+          "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+          "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+          "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+          "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 1,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 25000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "NONCOMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-eligible-categories",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 125,
+              "end": 247,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-approval-normal",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 579,
+              "end": 625,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-receipt-threshold",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 515,
+              "end": 567,
+              "quote": "Receipts are required for claims at or above SGD 50.",
+              "quote_sha256": "74ad77111b3a9006d184610962fd4e3e34592985be988a58d597ada440e9cd45",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-hotel-claim-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 358,
+              "end": 403,
+              "quote": "Hotel claims have a per-claim cap of SGD 250.",
+              "quote_sha256": "b0dc146bd671169b5b56a66703ea1023533817a75b745a3787a86394ccde4ac2",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "1d688547f8c1d75f0c20f98d8dfa2944e0e09046f0c27c8cf8efe112a1a58fdc"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-over-approval_requirement",
+          "status": "PASS",
+          "actual_value": "none"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-over-claim_cap_minor",
+          "status": "PASS",
+          "actual_value": 25000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-over-eligibility",
+          "status": "PASS",
+          "actual_value": "allow"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-over-receipt_requirement",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "hotel-international-at",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "hotel-international-at",
+        "fired_rule_ids": [
+          "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+          "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+          "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+          "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+          "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 1,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 1,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "manager",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+              "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440"
+            ],
+            "overridden_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+            ],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 25000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-international-hotel-approval",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 701,
+              "end": 839,
+              "quote": "International hotel claims require manager approval and override both the normal no-approval rule and the hotel-specific no-approval rule.",
+              "quote_sha256": "6d19b983b3054ad7f8396be96fe06b40dee004418efbc271219263e4507248b9",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-eligible-categories",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 125,
+              "end": 247,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-approval-normal",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 579,
+              "end": 625,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-receipt-threshold",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 515,
+              "end": 567,
+              "quote": "Receipts are required for claims at or above SGD 50.",
+              "quote_sha256": "74ad77111b3a9006d184610962fd4e3e34592985be988a58d597ada440e9cd45",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-hotel-claim-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 358,
+              "end": 403,
+              "quote": "Hotel claims have a per-claim cap of SGD 250.",
+              "quote_sha256": "b0dc146bd671169b5b56a66703ea1023533817a75b745a3787a86394ccde4ac2",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "f6cef206350ffd9ba33e1911b7f84901669074d38146ad5cc5ce08c23b0c00e0"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-9064ea7cd3d412361f35d9cdfde7d93180f1eb106607527132234a16d7ddc1c8",
+          "status": "PASS",
+          "actual_value": "manager"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-at-approval_requirement",
+          "status": "PASS",
+          "actual_value": "manager"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-at-claim_cap_minor",
+          "status": "PASS",
+          "actual_value": 25000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-at-eligibility",
+          "status": "PASS",
+          "actual_value": "allow"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-at-receipt_requirement",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "hotel-international-below",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "hotel-international-below",
+        "fired_rule_ids": [
+          "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+          "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+          "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+          "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+          "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+          "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 1,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 1,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "manager",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+              "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+              "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440"
+            ],
+            "overridden_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+              "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf"
+            ],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 25000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-hotel-below-250-no-approval",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 626,
+              "end": 700,
+              "quote": "Hotel claims below SGD 250 require no approval, regardless of destination.",
+              "quote_sha256": "f9c18c5f04f1d6883ddc9e4fff7bace998426bb0d87c6811dc07310c58274d4b",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-international-hotel-approval",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 701,
+              "end": 839,
+              "quote": "International hotel claims require manager approval and override both the normal no-approval rule and the hotel-specific no-approval rule.",
+              "quote_sha256": "6d19b983b3054ad7f8396be96fe06b40dee004418efbc271219263e4507248b9",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-eligible-categories",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 125,
+              "end": 247,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-approval-normal",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 579,
+              "end": 625,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-receipt-threshold",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 515,
+              "end": 567,
+              "quote": "Receipts are required for claims at or above SGD 50.",
+              "quote_sha256": "74ad77111b3a9006d184610962fd4e3e34592985be988a58d597ada440e9cd45",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-hotel-claim-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 358,
+              "end": 403,
+              "quote": "Hotel claims have a per-claim cap of SGD 250.",
+              "quote_sha256": "b0dc146bd671169b5b56a66703ea1023533817a75b745a3787a86394ccde4ac2",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "a81a1867ae4463dda8ab127d2f0a26b606cb1d58ed94316c693699dedd992e32"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-9064ea7cd3d412361f35d9cdfde7d93180f1eb106607527132234a16d7ddc1c8",
+          "status": "PASS",
+          "actual_value": "manager"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-below-approval_requirement",
+          "status": "PASS",
+          "actual_value": "manager"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-below-claim_cap_minor",
+          "status": "PASS",
+          "actual_value": 25000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-below-eligibility",
+          "status": "PASS",
+          "actual_value": "allow"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-below-receipt_requirement",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "incidental-unsupported",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "incidental-unsupported",
+        "fired_rule_ids": [
+          "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+          "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+          "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+            "predicate_index": 0,
+            "matched": false
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "INCONCLUSIVE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": [
+              "unsupported-reasonable-incidental"
+            ]
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "not_required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "NOT_APPLICABLE"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-eligible-categories",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 125,
+              "end": 247,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-approval-normal",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 579,
+              "end": 625,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-receipt-below-50",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 464,
+              "end": 514,
+              "quote": "Receipts are not required for claims below SGD 50.",
+              "quote_sha256": "881e4b4c701a197a86eacc3c3687c477889c523c77887f7725b33aab2e4552af",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "793d4c938bec4bb509418e736a23ec2cfc2c052861d74724579b6478515d570a"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-incidental-unsupported-approval_requirement",
+          "status": "PASS",
+          "actual_value": "none"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-incidental-unsupported-receipt_requirement",
+          "status": "PASS",
+          "actual_value": "not_required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "meal-at-cap",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "meal-at-cap",
+        "fired_rule_ids": [
+          "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+          "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+          "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+          "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+          "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "COMPLIANT"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-meal-daily-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 308,
+              "end": 357,
+              "quote": "Meal claims have a daily category cap of SGD 100.",
+              "quote_sha256": "e5507b63711a0b9d0e31306851bf1606839d0bf65d22975d04a1f9edf2520b66",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-eligible-categories",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 125,
+              "end": 247,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-approval-normal",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 579,
+              "end": 625,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-meal-claim-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 263,
+              "end": 307,
+              "quote": "Meal claims have a per-claim cap of SGD 100.",
+              "quote_sha256": "6be28fb33e2dbb55da3b93195f9d877fe0c4ce6d002c05a68f0c138cda7ebb04",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-receipt-threshold",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 515,
+              "end": 567,
+              "quote": "Receipts are required for claims at or above SGD 50.",
+              "quote_sha256": "74ad77111b3a9006d184610962fd4e3e34592985be988a58d597ada440e9cd45",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "3724c3ac97e49685bba37323ae9f67094dba31a9cf0f33def71c31eba26365fb"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+          "status": "PASS",
+          "actual_value": 10000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-at-cap-approval_requirement",
+          "status": "PASS",
+          "actual_value": "none"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-at-cap-claim_cap_minor",
+          "status": "PASS",
+          "actual_value": 10000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-at-cap-daily_category_cap_minor",
+          "status": "PASS",
+          "actual_value": 10000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-at-cap-eligibility",
+          "status": "PASS",
+          "actual_value": "allow"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-at-cap-receipt_requirement",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "meal-over-cap",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "meal-over-cap",
+        "fired_rule_ids": [
+          "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+          "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+          "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+          "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+          "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "NONCOMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NONCOMPLIANT"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-meal-daily-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 308,
+              "end": 357,
+              "quote": "Meal claims have a daily category cap of SGD 100.",
+              "quote_sha256": "e5507b63711a0b9d0e31306851bf1606839d0bf65d22975d04a1f9edf2520b66",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-eligible-categories",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 125,
+              "end": 247,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-approval-normal",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 579,
+              "end": 625,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-meal-claim-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 263,
+              "end": 307,
+              "quote": "Meal claims have a per-claim cap of SGD 100.",
+              "quote_sha256": "6be28fb33e2dbb55da3b93195f9d877fe0c4ce6d002c05a68f0c138cda7ebb04",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-receipt-threshold",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 515,
+              "end": 567,
+              "quote": "Receipts are required for claims at or above SGD 50.",
+              "quote_sha256": "74ad77111b3a9006d184610962fd4e3e34592985be988a58d597ada440e9cd45",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "0ba99233b4693d0684be4e9750eb022cd9a907bb5733c60e4f0165117031738d"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+          "status": "PASS",
+          "actual_value": 10000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-over-cap-approval_requirement",
+          "status": "PASS",
+          "actual_value": "none"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-over-cap-claim_cap_minor",
+          "status": "PASS",
+          "actual_value": 10000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-over-cap-daily_category_cap_minor",
+          "status": "PASS",
+          "actual_value": 10000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-over-cap-eligibility",
+          "status": "PASS",
+          "actual_value": "allow"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-over-cap-receipt_requirement",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "receipt-above",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "receipt-above",
+        "fired_rule_ids": [
+          "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+          "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+          "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+          "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 20000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-transport-claim-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 404,
+              "end": 453,
+              "quote": "Transport claims have a per-claim cap of SGD 200.",
+              "quote_sha256": "06a6c2867710eaac615d068d654e15251609922b094f89e4707902fe61804623",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-eligible-categories",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 125,
+              "end": 247,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-approval-normal",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 579,
+              "end": 625,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-receipt-threshold",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 515,
+              "end": 567,
+              "quote": "Receipts are required for claims at or above SGD 50.",
+              "quote_sha256": "74ad77111b3a9006d184610962fd4e3e34592985be988a58d597ada440e9cd45",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "958c396f66cb8b92ff755ad389416bf40345125f869799e4bde818d288bff1be"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-above-approval_requirement",
+          "status": "PASS",
+          "actual_value": "none"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-above-claim_cap_minor",
+          "status": "PASS",
+          "actual_value": 20000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-above-eligibility",
+          "status": "PASS",
+          "actual_value": "allow"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-above-receipt_requirement",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "receipt-below",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "receipt-below",
+        "fired_rule_ids": [
+          "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+          "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+          "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+          "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+          "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+            "predicate_index": 0,
+            "matched": false
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "not_required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "COMPLIANT"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-meal-daily-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 308,
+              "end": 357,
+              "quote": "Meal claims have a daily category cap of SGD 100.",
+              "quote_sha256": "e5507b63711a0b9d0e31306851bf1606839d0bf65d22975d04a1f9edf2520b66",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-eligible-categories",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 125,
+              "end": 247,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-approval-normal",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 579,
+              "end": 625,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-meal-claim-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 263,
+              "end": 307,
+              "quote": "Meal claims have a per-claim cap of SGD 100.",
+              "quote_sha256": "6be28fb33e2dbb55da3b93195f9d877fe0c4ce6d002c05a68f0c138cda7ebb04",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-receipt-below-50",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 464,
+              "end": 514,
+              "quote": "Receipts are not required for claims below SGD 50.",
+              "quote_sha256": "881e4b4c701a197a86eacc3c3687c477889c523c77887f7725b33aab2e4552af",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "8567730d8ae07129a3dba6731bbb1e69b62241de8c528765db0e2c07a0e44d9f"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+          "status": "PASS",
+          "actual_value": 10000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-below-approval_requirement",
+          "status": "PASS",
+          "actual_value": "none"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-below-claim_cap_minor",
+          "status": "PASS",
+          "actual_value": 10000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-below-daily_category_cap_minor",
+          "status": "PASS",
+          "actual_value": 10000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-below-eligibility",
+          "status": "PASS",
+          "actual_value": "allow"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-below-receipt_requirement",
+          "status": "PASS",
+          "actual_value": "not_required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "receipt-exact",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "receipt-exact",
+        "fired_rule_ids": [
+          "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+          "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+          "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+          "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 20000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-transport-claim-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 404,
+              "end": 453,
+              "quote": "Transport claims have a per-claim cap of SGD 200.",
+              "quote_sha256": "06a6c2867710eaac615d068d654e15251609922b094f89e4707902fe61804623",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-eligible-categories",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 125,
+              "end": 247,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-approval-normal",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 579,
+              "end": 625,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-receipt-threshold",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 515,
+              "end": 567,
+              "quote": "Receipts are required for claims at or above SGD 50.",
+              "quote_sha256": "74ad77111b3a9006d184610962fd4e3e34592985be988a58d597ada440e9cd45",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "b1a1cfccc8f67619273dad07373013e90f459a15d24e1932a73caa60b91d081e"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+          "status": "PASS",
+          "actual_value": "required"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-exact-approval_requirement",
+          "status": "PASS",
+          "actual_value": "none"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-exact-claim_cap_minor",
+          "status": "PASS",
+          "actual_value": 20000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-exact-eligibility",
+          "status": "PASS",
+          "actual_value": "allow"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-exact-receipt_requirement",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "split-meal",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "split-meal",
+        "fired_rule_ids": [
+          "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+          "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+          "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+          "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+          "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "VALUE",
+            "value": 10000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NONCOMPLIANT"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-meal-daily-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 308,
+              "end": 357,
+              "quote": "Meal claims have a daily category cap of SGD 100.",
+              "quote_sha256": "e5507b63711a0b9d0e31306851bf1606839d0bf65d22975d04a1f9edf2520b66",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-eligible-categories",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 125,
+              "end": 247,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-approval-normal",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 579,
+              "end": 625,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-meal-claim-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 263,
+              "end": 307,
+              "quote": "Meal claims have a per-claim cap of SGD 100.",
+              "quote_sha256": "6be28fb33e2dbb55da3b93195f9d877fe0c4ce6d002c05a68f0c138cda7ebb04",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-receipt-threshold",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 515,
+              "end": 567,
+              "quote": "Receipts are required for claims at or above SGD 50.",
+              "quote_sha256": "74ad77111b3a9006d184610962fd4e3e34592985be988a58d597ada440e9cd45",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "94af92d0b2597901f8a7903e18b534f8fb2d6d293896bcd4417a24147a4c5b20"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+          "status": "PASS",
+          "actual_value": 10000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-split-meal-approval_requirement",
+          "status": "PASS",
+          "actual_value": "none"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-split-meal-claim_cap_minor",
+          "status": "PASS",
+          "actual_value": 10000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-split-meal-daily_category_cap_minor",
+          "status": "PASS",
+          "actual_value": 10000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-split-meal-eligibility",
+          "status": "PASS",
+          "actual_value": "allow"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-split-meal-receipt_requirement",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "transport-at-cap",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "transport-at-cap",
+        "fired_rule_ids": [
+          "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+          "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+          "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+          "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 20000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-transport-claim-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 404,
+              "end": 453,
+              "quote": "Transport claims have a per-claim cap of SGD 200.",
+              "quote_sha256": "06a6c2867710eaac615d068d654e15251609922b094f89e4707902fe61804623",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-eligible-categories",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 125,
+              "end": 247,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-approval-normal",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 579,
+              "end": 625,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-receipt-threshold",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 515,
+              "end": 567,
+              "quote": "Receipts are required for claims at or above SGD 50.",
+              "quote_sha256": "74ad77111b3a9006d184610962fd4e3e34592985be988a58d597ada440e9cd45",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "1a4936ff697378328bef082a2f87679328f9fdf2819fa1c51efdad14fd1ca053"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-at-cap-approval_requirement",
+          "status": "PASS",
+          "actual_value": "none"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-at-cap-claim_cap_minor",
+          "status": "PASS",
+          "actual_value": 20000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-at-cap-eligibility",
+          "status": "PASS",
+          "actual_value": "allow"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-at-cap-receipt_requirement",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "transport-over-cap",
+      "trace": {
+        "schema_version": "1.0",
+        "scenario_id": "transport-over-cap",
+        "fired_rule_ids": [
+          "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+          "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+          "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+          "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+        ],
+        "predicate_results": [
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 0,
+            "matched": true
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 0,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+            "predicate_index": 1,
+            "matched": false
+          },
+          {
+            "schema_version": "1.0",
+            "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+            "predicate_index": 0,
+            "matched": true
+          }
+        ],
+        "resolved_effects": [
+          {
+            "schema_version": "1.0",
+            "dimension": "eligibility",
+            "status": "VALUE",
+            "value": "allow",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "VALUE",
+            "value": "required",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "VALUE",
+            "value": "none",
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "VALUE",
+            "value": 20000,
+            "conflicting_values": [],
+            "applicable_rule_ids": [
+              "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2"
+            ],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE",
+            "value": null,
+            "conflicting_values": [],
+            "applicable_rule_ids": [],
+            "overridden_rule_ids": [],
+            "unsupported_clause_ids": []
+          }
+        ],
+        "compliance_values": [
+          {
+            "schema_version": "1.0",
+            "dimension": "receipt_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "approval_requirement",
+            "status": "COMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "claim_cap_minor",
+            "status": "NONCOMPLIANT"
+          },
+          {
+            "schema_version": "1.0",
+            "dimension": "daily_category_cap_minor",
+            "status": "NOT_APPLICABLE"
+          }
+        ],
+        "source_citations": [
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-transport-claim-cap",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 404,
+              "end": 453,
+              "quote": "Transport claims have a per-claim cap of SGD 200.",
+              "quote_sha256": "06a6c2867710eaac615d068d654e15251609922b094f89e4707902fe61804623",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-eligible-categories",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 125,
+              "end": 247,
+              "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+              "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-approval-normal",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 579,
+              "end": 625,
+              "quote": "Approval is normally not required for a claim.",
+              "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+              "section": null
+            }
+          },
+          {
+            "schema_version": "1.0",
+            "kind": "text_citation",
+            "citation_id": "citation-receipt-threshold",
+            "span": {
+              "schema_version": "1.0",
+              "page": 1,
+              "start": 515,
+              "end": 567,
+              "quote": "Receipts are required for claims at or above SGD 50.",
+              "quote_sha256": "74ad77111b3a9006d184610962fd4e3e34592985be988a58d597ada440e9cd45",
+              "section": null
+            }
+          }
+        ],
+        "trace_sha256": "6e49c9efb3d29e6b0482a01d805094fdd358cda3e8f5426224051b40625a3581"
+      },
+      "assertion_results": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-over-cap-approval_requirement",
+          "status": "PASS",
+          "actual_value": "none"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-over-cap-claim_cap_minor",
+          "status": "PASS",
+          "actual_value": 20000
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-over-cap-eligibility",
+          "status": "PASS",
+          "actual_value": "allow"
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-over-cap-receipt_requirement",
+          "status": "PASS",
+          "actual_value": "required"
+        }
+      ],
+      "verdict": "PASS",
+      "error": null
+    }
+  ],
+  "coverage": {
+    "schema_version": "1.0",
+    "total_rules": 11,
+    "covered_rules": 11,
+    "total_invariants": 3,
+    "covered_invariants": 3,
+    "total_predicate_branches": 28,
+    "covered_predicate_branches": 26,
+    "evidence": [
+      {
+        "schema_version": "1.0",
+        "target_kind": "invariant",
+        "target_id": "invariant-c59c930b5dc65af6216031b7dd91f54d03dc6fda5986833053a6583757deca7b",
+        "scenario_ids": [
+          "hotel-international-at",
+          "hotel-international-below"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "invariant",
+        "target_id": "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+        "scenario_ids": [
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-below",
+          "split-meal"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "invariant",
+        "target_id": "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a",
+        "scenario_ids": [
+          "receipt-exact"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short",
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below",
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-above",
+          "receipt-exact",
+          "split-meal",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+        "scenario_ids": [
+          "incidental-unsupported",
+          "receipt-below"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short",
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below",
+          "incidental-unsupported",
+          "receipt-above",
+          "receipt-exact",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+        "scenario_ids": [
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-below",
+          "split-meal"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short",
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below",
+          "incidental-unsupported",
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-below",
+          "split-meal"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+        "scenario_ids": [
+          "receipt-above",
+          "receipt-exact",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short",
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below",
+          "incidental-unsupported",
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-above",
+          "receipt-below",
+          "receipt-exact",
+          "split-meal",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short",
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below",
+          "incidental-unsupported",
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-above",
+          "receipt-below",
+          "receipt-exact",
+          "split-meal",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short",
+          "hotel-domestic-over",
+          "hotel-international-at"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+        "scenario_ids": [
+          "hotel-domestic-below",
+          "hotel-international-below",
+          "incidental-unsupported",
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-above",
+          "receipt-below",
+          "receipt-exact",
+          "split-meal",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short",
+          "incidental-unsupported",
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-above",
+          "receipt-below",
+          "receipt-exact",
+          "split-meal",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": 1,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+        "scenario_ids": [
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below"
+        ],
+        "predicate_index": 1,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short",
+          "incidental-unsupported",
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-above",
+          "receipt-below",
+          "receipt-exact",
+          "split-meal",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+        "scenario_ids": [
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short",
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "incidental-unsupported",
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-above",
+          "receipt-below",
+          "receipt-exact",
+          "split-meal",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": 1,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+        "scenario_ids": [
+          "hotel-international-at",
+          "hotel-international-below"
+        ],
+        "predicate_index": 1,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short",
+          "incidental-unsupported",
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-above",
+          "receipt-below",
+          "receipt-exact",
+          "split-meal",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+        "scenario_ids": [
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short",
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below",
+          "incidental-unsupported",
+          "receipt-above",
+          "receipt-exact",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+        "scenario_ids": [
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-below",
+          "split-meal"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+        "scenario_ids": [
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below",
+          "incidental-unsupported",
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-above",
+          "receipt-below",
+          "receipt-exact",
+          "split-meal",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+        "scenario_ids": [
+          "airfare-boundary",
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below",
+          "incidental-unsupported",
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-above",
+          "receipt-below",
+          "receipt-exact",
+          "split-meal",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": 1,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+        "scenario_ids": [
+          "airfare-short"
+        ],
+        "predicate_index": 1,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+        "scenario_ids": [
+          "incidental-unsupported",
+          "receipt-below"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": false
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "predicate_branch",
+        "target_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short",
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below",
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-above",
+          "receipt-exact",
+          "split-meal",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": 0,
+        "predicate_outcome": true
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+        "scenario_ids": [
+          "incidental-unsupported",
+          "receipt-below"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+        "scenario_ids": [
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-below",
+          "split-meal"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+        "scenario_ids": [
+          "receipt-above",
+          "receipt-exact",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short",
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below",
+          "incidental-unsupported",
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-above",
+          "receipt-below",
+          "receipt-exact",
+          "split-meal",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short",
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below",
+          "incidental-unsupported",
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-above",
+          "receipt-below",
+          "receipt-exact",
+          "split-meal",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+        "scenario_ids": [
+          "hotel-domestic-below",
+          "hotel-international-below"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+        "scenario_ids": [
+          "hotel-international-at",
+          "hotel-international-below"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+        "scenario_ids": [
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+        "scenario_ids": [
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-below",
+          "split-meal"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+        "scenario_ids": [
+          "airfare-short"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      },
+      {
+        "schema_version": "1.0",
+        "target_kind": "rule",
+        "target_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+        "scenario_ids": [
+          "airfare-boundary",
+          "airfare-short",
+          "hotel-domestic-below",
+          "hotel-domestic-over",
+          "hotel-international-at",
+          "hotel-international-below",
+          "meal-at-cap",
+          "meal-over-cap",
+          "receipt-above",
+          "receipt-exact",
+          "split-meal",
+          "transport-at-cap",
+          "transport-over-cap"
+        ],
+        "predicate_index": null,
+        "predicate_outcome": null
+      }
+    ],
+    "missing_rule_ids": [],
+    "missing_invariant_ids": [],
+    "targeted_cycles": 0,
+    "status": "satisfied"
+  }
+}

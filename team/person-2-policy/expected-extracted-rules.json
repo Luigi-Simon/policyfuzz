@@ -1,57 +1,143 @@
 {
-  "source_file": "samples/policies/development-policy.txt",
-  "source_sha256": "3f89eab4b69fbe5a189c6cdbf9503ca5d1114fbb1447159259593842e3b9bf17",
   "review_status": "provisional_unverified_development_fixture",
   "rules": [
     {
-      "temporary_id": "meal-daily-cap",
-      "when": [
-        {"field": "expense_category", "operator": "eq", "value": "meal"},
-        {"field": "employee_role", "operator": "in", "value": ["employee", "manager", "director", "executive"]}
-      ],
-      "effects": [{"dimension": "daily_category_cap_minor", "value": 8000}],
-      "citation": {"section": "1", "page": 1, "start": 45, "end": 131, "quote": "Employees may claim meals up to SGD 80 per day while travelling for approved business.", "quote_sha256": "d0d00319b40c3bb39dbc81b3b01c3b80b4ad6ccf246707ffa246424e8cc22ae4"}
+      "citation": {
+        "end": 241,
+        "page": 1,
+        "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+        "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 119
+      },
+      "temporary_id": "citation-eligible-categories"
     },
     {
-      "temporary_id": "meal-receipt",
-      "when": [{"field": "expense_category", "operator": "eq", "value": "meal"}],
-      "effects": [{"dimension": "receipt_requirement", "value": "required"}],
-      "citation": {"section": "1", "page": 1, "start": 132, "end": 175, "quote": "A receipt is required for every meal claim.", "quote_sha256": "955d04c967832363ba42fb302b65a09e2a022290c84a40b5f26e4afef24277f0"}
+      "citation": {
+        "end": 301,
+        "page": 1,
+        "quote": "Meal claims have a per-claim cap of SGD 100.",
+        "quote_sha256": "6be28fb33e2dbb55da3b93195f9d877fe0c4ce6d002c05a68f0c138cda7ebb04",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 257
+      },
+      "temporary_id": "citation-meal-claim-cap"
     },
     {
-      "temporary_id": "manager-approval-over-50",
-      "when": [{"field": "amount_minor", "operator": "gt", "value": 5000}],
-      "effects": [{"dimension": "approval_requirement", "value": "manager"}],
-      "citation": {"section": "2", "page": 1, "start": 189, "end": 255, "quote": "Claims above SGD 50 require manager approval before reimbursement.", "quote_sha256": "ca80c5634f210446202e6c480b0b8fdce04795cb18456bdd604aec46158542bc"}
+      "citation": {
+        "end": 347,
+        "page": 1,
+        "quote": "Hotel claims have a per-claim cap of SGD 250.",
+        "quote_sha256": "b0dc146bd671169b5b56a66703ea1023533817a75b745a3787a86394ccde4ac2",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 302
+      },
+      "temporary_id": "citation-hotel-claim-cap"
     },
     {
-      "temporary_id": "finance-approval-over-200",
-      "when": [{"field": "amount_minor", "operator": "gt", "value": 20000}],
-      "effects": [{"dimension": "approval_requirement", "value": "finance"}],
-      "overrides": ["manager-approval-over-50"],
-      "citation": {"section": "2", "page": 1, "start": 256, "end": 302, "quote": "Claims above SGD 200 require finance approval.", "quote_sha256": "a7358a065000ed604dd96bd2c4885bab6e2a44a8c0591d4ee06a2d8482adbce8"}
+      "citation": {
+        "end": 397,
+        "page": 1,
+        "quote": "Transport claims have a per-claim cap of SGD 200.",
+        "quote_sha256": "06a6c2867710eaac615d068d654e15251609922b094f89e4707902fe61804623",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 348
+      },
+      "temporary_id": "citation-transport-claim-cap"
     },
     {
-      "temporary_id": "domestic-hotel-cap",
-      "when": [
-        {"field": "expense_category", "operator": "eq", "value": "hotel"},
-        {"field": "destination_type", "operator": "eq", "value": "domestic"}
-      ],
-      "effects": [{"dimension": "claim_cap_minor", "value": 22000}],
-      "citation": {"section": "3", "page": 1, "start": 382, "end": 450, "quote": "Hotel claims are allowed up to SGD 220 per night for domestic travel", "quote_sha256": "306e11a74fabc0e8f517f283aeb64b671f96dcf734813a4b3493ebc46537a573"}
+      "citation": {
+        "end": 458,
+        "page": 1,
+        "quote": "Receipts are not required for claims below SGD 50.",
+        "quote_sha256": "881e4b4c701a197a86eacc3c3687c477889c523c77887f7725b33aab2e4552af",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 408
+      },
+      "temporary_id": "citation-receipt-below-50"
     },
     {
-      "temporary_id": "international-hotel-cap",
-      "when": [
-        {"field": "expense_category", "operator": "eq", "value": "hotel"},
-        {"field": "destination_type", "operator": "eq", "value": "international"}
-      ],
-      "effects": [{"dimension": "claim_cap_minor", "value": 30000}],
-      "citation": {"section": "3", "page": 1, "start": 455, "end": 498, "quote": "SGD 300 per night for international travel.", "quote_sha256": "ef0a6e4ce440611918da732587dd80a36f5d943b4320fa4eb02af65171b79177"}
+      "citation": {
+        "end": 505,
+        "page": 1,
+        "quote": "Receipts are required for claims above SGD 50.",
+        "quote_sha256": "5e3bce25baf9b207405c128376a8cdea3f7370df89911446c5be4dc980331d70",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 459
+      },
+      "temporary_id": "citation-receipt-threshold"
+    },
+    {
+      "citation": {
+        "end": 563,
+        "page": 1,
+        "quote": "Approval is normally not required for a claim.",
+        "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 517
+      },
+      "temporary_id": "citation-approval-normal"
+    },
+    {
+      "citation": {
+        "end": 638,
+        "page": 1,
+        "quote": "Hotel claims below SGD 250 require no approval, regardless of destination.",
+        "quote_sha256": "f9c18c5f04f1d6883ddc9e4fff7bace998426bb0d87c6811dc07310c58274d4b",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 564
+      },
+      "temporary_id": "citation-hotel-below-250-no-approval"
+    },
+    {
+      "citation": {
+        "end": 691,
+        "page": 1,
+        "quote": "International hotel claims require manager approval.",
+        "quote_sha256": "547747bdbeeafa8ed3a320309706fdcb344121fc4d7eaa4f080e0b511207c0a9",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 639
+      },
+      "temporary_id": "citation-international-hotel-approval"
+    },
+    {
+      "citation": {
+        "end": 766,
+        "page": 1,
+        "quote": "Airfare booked fewer than 14 days before travel requires manager approval.",
+        "quote_sha256": "f4e9c7a9c0d6a1dfc2022cd40e8b3e524bbd6cc562962ba0d13af5d154f0a3fb",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 692
+      },
+      "temporary_id": "citation-airfare-short-notice"
     }
   ],
+  "source_file": "samples/policies/development-policy.txt",
+  "source_sha256": "4c194c07ac6de7044f0548771ea257cccd1e8d4d0a5b4d1a602e428ee3a66734",
   "unsupported_clauses": [
-    {"section": "4", "text": "The company may make reasonable exceptions in urgent circumstances.", "reason": "ambiguous_exception", "citation": {"page": 1, "start": 539, "end": 606, "quote_sha256": "cc4d0696162d247c1ae226fed3c6937363b452c8738e19e16fd14736a97b865b"}},
-    {"section": "4", "text": "Claims that do not follow this policy may be reviewed under applicable law.", "reason": "unsupported_legal_reference", "citation": {"page": 1, "start": 649, "end": 724, "quote_sha256": "0bcb98c334e4373f5af3793dc76837e57e4afa3114c1fe0b0bfbd6c84f8b7f73"}}
+    {
+      "citation": {
+        "end": 838,
+        "page": 1,
+        "quote": "Reasonable incidental expenses may be reimbursed.",
+        "quote_sha256": "136526213606e56fa63342c1a468d6c9c3659ba560040a8662f465739dd0bb3c",
+        "schema_version": "1.0",
+        "section": null,
+        "start": 789
+      },
+      "reason": "ambiguous_language",
+      "section": null,
+      "text": "Reasonable incidental expenses may be reimbursed."
+    }
   ]
 }

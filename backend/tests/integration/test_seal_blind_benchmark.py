@@ -9,7 +9,6 @@ from pathlib import Path
 from zipfile import ZIP_DEFLATED, ZipFile
 
 import pytest
-
 from scripts.seal_blind_benchmark import CUSTODIAN_ROLE, create_seal_ledger
 
 POLICY_SHA256 = "1" * 64

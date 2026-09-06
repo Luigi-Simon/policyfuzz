@@ -1,0 +1,119 @@
+{
+  "accepted_finding_ids": [
+    "finding-395e1dd4d17223c58a023ca7f7b279f9f8093ece0cb7b2281c255c1585d30841",
+    "finding-957d31840a01d295c43e9263bb20cef9e9599a36d9904c5e07f3af2ead0a8f20",
+    "finding-bb045ddfae7a2c575858637394f4b296bdf57f430dbf768c12e182eec941d34e"
+  ],
+  "document_sha256": "4c194c07ac6de7044f0548771ea257cccd1e8d4d0a5b4d1a602e428ee3a66734",
+  "draft_policy_wording": "Receipts are required at or above SGD 50; international hotel approval takes precedence; meal claims have a SGD 100 daily cap.",
+  "operations": [
+    {
+      "expected_revision": 0,
+      "finding_ids": [
+        "finding-bb045ddfae7a2c575858637394f4b296bdf57f430dbf768c12e182eec941d34e"
+      ],
+      "kind": "replace_rule",
+      "rule": {
+        "description": "Receipt threshold",
+        "effects": [
+          {
+            "dimension": "receipt_requirement",
+            "schema_version": "1.0",
+            "value": "required"
+          }
+        ],
+        "overrides": [],
+        "schema_version": "1.0",
+        "when": [
+          {
+            "field": "amount_minor",
+            "operator": "gte",
+            "schema_version": "1.0",
+            "value": 5000
+          }
+        ]
+      },
+      "rule_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+      "schema_version": "1.0"
+    },
+    {
+      "expected_revision": 0,
+      "finding_ids": [
+        "finding-957d31840a01d295c43e9263bb20cef9e9599a36d9904c5e07f3af2ead0a8f20"
+      ],
+      "kind": "replace_rule",
+      "rule": {
+        "description": "International hotel approval",
+        "effects": [
+          {
+            "dimension": "approval_requirement",
+            "schema_version": "1.0",
+            "value": "manager"
+          }
+        ],
+        "overrides": [
+          {
+            "dimension": "approval_requirement",
+            "schema_version": "1.0",
+            "target_rule_id": "rule-7b5d464b2dba249e2355cfa90864ef491c3f46204624f72528abd226dac71f73"
+          },
+          {
+            "dimension": "approval_requirement",
+            "schema_version": "1.0",
+            "target_rule_id": "rule-79328c80dfd0e6c06362c6dea194f3bec1637250fb262378919079da484783fc"
+          }
+        ],
+        "schema_version": "1.0",
+        "when": [
+          {
+            "field": "expense_category",
+            "operator": "eq",
+            "schema_version": "1.0",
+            "value": "hotel"
+          },
+          {
+            "field": "destination_type",
+            "operator": "eq",
+            "schema_version": "1.0",
+            "value": "international"
+          }
+        ]
+      },
+      "rule_id": "rule-27abdc28985983a6cc91c1c9b39d1cb5c8ea26cba15ccf7133201c19f4a78a0a",
+      "schema_version": "1.0"
+    },
+    {
+      "finding_ids": [
+        "finding-395e1dd4d17223c58a023ca7f7b279f9f8093ece0cb7b2281c255c1585d30841"
+      ],
+      "kind": "add_rule",
+      "rule": {
+        "description": "Meal daily cap",
+        "effects": [
+          {
+            "dimension": "daily_category_cap_minor",
+            "schema_version": "1.0",
+            "value": 10000
+          }
+        ],
+        "overrides": [],
+        "schema_version": "1.0",
+        "when": [
+          {
+            "field": "expense_category",
+            "operator": "eq",
+            "schema_version": "1.0",
+            "value": "meal"
+          }
+        ]
+      },
+      "rule_id": "rule-e7dbd89eebf5fc2b9539a217debf038be7aa26c3bb02f9bb4993931b6185109b",
+      "schema_version": "1.0"
+    }
+  ],
+  "policy_contract_sha256": "d182dc79ab8133b25876e7adc0047f590b72d2642e6f46ac46987972df00ce3a",
+  "proposal_id": "model-development-revision",
+  "rule_set_sha256": "059990dd890678148456964d4d2ce54473c6d3503670b4b996bfd3f315ec17af",
+  "schema_version": "1.0",
+  "suite_sha256": "c988053930f1a6e6b12a3a059ad2c630576138482ce9757fddcbd7af7a480c94"
+}

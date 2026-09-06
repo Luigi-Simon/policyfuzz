@@ -1,5 +1,50 @@
 # Person 1 integration handoff
 
+Status: Application implementation and offline verification complete; final benchmark/media release gates pending.
+
+## Current application handoff
+
+Person 1 now wires the real policy compiler, per-run scenario planner, deterministic evaluator,
+finding analyzer, structured revision applier and regression analyzer through FastAPI.
+The published version `1.0` domain models, protocol signatures and HTTP contracts remain the
+shared interface. Read the root README for the cached demonstration and live-server setup.
+
+- `app.container.build_container` owns configuration, provider lifecycle, specialist injection,
+  per-run planner scope and background jobs. Use `await container.execute(run_id, work)` for
+  direct coordinator stage calls so planner state stays scoped to the run.
+- `app.api` implements create/read, contract confirmation, finding review, revision confirmation,
+  deletion and health. Stale actions fail without mutating a run; deletion, expiry and shutdown
+  cancel owned jobs and discard in-memory state.
+- `scripts/offline_smoke.py` runs actual stages with explicit scripted model responses and
+  authored demo confirmations. `--record` writes the labelled development cache. The production
+  cached API replays validated evidence; it never calls a provider.
+- `scripts/replay_check.py` reruns baseline and revision three times and verifies current engine
+  source commitments. `scripts/validate_contracts.py` checks all 111 schemas, OpenAPI and fixture
+  bytes without replacing the canonical files. `scripts/verify_benchmarks.py` independently
+  checks public synthetic development/control labels.
+- `scripts/record_blind_run.py` requires a clean annotated tag and hash-bound human approval,
+  reserves a single attempt before provider calls, pauses for explicit human commands and
+  preserves the raw run plus provenance. It cannot approve labels or conceal a failed attempt.
+- `scripts/run_gate_b.py` verifies a clean commit, human evidence and fixed verification commands.
+  `scripts/package_submission.py` checks final media, tags, secret exclusions and archive integrity.
+  CI runs the application checks on ordinary pushes and final submission checks on demo tags.
+
+The current demonstration is synthetic and scripted. It is not a live-provider quality result.
+Independent human benchmark approval, the sealed blind attempt and manual reviews, browser
+acceptance, the six-hour release freeze and final reviewed media remain separate gates.
+Strict gold-suite execution scoring does not establish first-run discovery recall when the normal
+workflow generated different scenarios; a post-run gold-assisted assessment must stay labelled
+and cannot satisfy that headline gate. The old plan's direct blind-scoring command therefore does
+not by itself finish benchmark acceptance.
+
+The task-by-task release status is recorded in `docs/implementation-status.md`.
+Current checks: 1,438 backend tests, 108 frontend tests, production build, 111-schema drift,
+three-run replay and independent public benchmark verification all pass. See the explicitly
+non-Gate-B `team/person-1-integration/evidence/implementation-verification.json`. Historical
+verification below remains dated evidence, not the current complete-suite test count.
+
+## Historical Task 19 handoff
+
 Status: Task 19 workflow implementation and offline verification are complete.
 Task 4 remains frozen as version `1.0` and published at `323f06a`.
 

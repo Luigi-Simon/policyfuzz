@@ -1,0 +1,80 @@
+{
+  "invariant_drafts": [
+    {
+      "assertion": {
+        "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+        "dimension": "receipt_requirement",
+        "expected_value": "required",
+        "operator": "eq",
+        "schema_version": "1.0",
+        "target_kind": "effect_value"
+      },
+      "description": "Claims at SGD 50 require a receipt.",
+      "invariant_id": "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a",
+      "origin": "model_suggestion",
+      "rationale": "Suggested for explicit reviewer confirmation from the synthetic policy intent.",
+      "schema_version": "1.0",
+      "when": [
+        {
+          "field": "amount_minor",
+          "operator": "eq",
+          "schema_version": "1.0",
+          "value": 5000
+        }
+      ]
+    },
+    {
+      "assertion": {
+        "assertion_id": "assertion-9064ea7cd3d412361f35d9cdfde7d93180f1eb106607527132234a16d7ddc1c8",
+        "dimension": "approval_requirement",
+        "expected_value": "manager",
+        "operator": "eq",
+        "schema_version": "1.0",
+        "target_kind": "effect_value"
+      },
+      "description": "International hotel claims require manager approval.",
+      "invariant_id": "invariant-c59c930b5dc65af6216031b7dd91f54d03dc6fda5986833053a6583757deca7b",
+      "origin": "model_suggestion",
+      "rationale": "Suggested for explicit reviewer confirmation from the synthetic policy intent.",
+      "schema_version": "1.0",
+      "when": [
+        {
+          "field": "expense_category",
+          "operator": "eq",
+          "schema_version": "1.0",
+          "value": "hotel"
+        },
+        {
+          "field": "destination_type",
+          "operator": "eq",
+          "schema_version": "1.0",
+          "value": "international"
+        }
+      ]
+    },
+    {
+      "assertion": {
+        "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+        "dimension": "daily_category_cap_minor",
+        "expected_value": 10000,
+        "operator": "lte",
+        "schema_version": "1.0",
+        "target_kind": "effect_value"
+      },
+      "description": "Meal spending is capped at SGD 100 per day.",
+      "invariant_id": "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+      "origin": "model_suggestion",
+      "rationale": "Suggested for explicit reviewer confirmation from the synthetic policy intent.",
+      "schema_version": "1.0",
+      "when": [
+        {
+          "field": "expense_category",
+          "operator": "eq",
+          "schema_version": "1.0",
+          "value": "meal"
+        }
+      ]
+    }
+  ],
+  "schema_version": "1.0"
+}

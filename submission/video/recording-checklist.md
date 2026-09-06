@@ -28,6 +28,7 @@
 - [ ] Describe model outputs as proposals and deterministic results as verdicts only where the captured evidence supports that distinction.
 - [ ] Record clear narration without clipped starts, long silence, or claims that outrun the displayed evidence.
 - [ ] Create captions from the final audio, proofread technical terms and numbers against the evidence manifest, and check timing through the full video.
+- [x] Generate a draft timing rehearsal from the current narration with `node submission/video/build-captions.mjs`; this does not satisfy final caption or audio review.
 
 ## Export and mechanical validation
 

@@ -1,8 +1,8 @@
 # PolicyFuzz pitch deck — draft outline
 
-Status: **reviewable prototype draft; validation evidence pending**
+Status: **reviewable prototype draft; current cached rehearsal measured; frozen submission evidence pending**
 
-This nine-slide draft follows the approved Task 24 narrative while the final backend, `demo-core-v1`, Gate B report, scored development/control/blind artifacts, reviewer checks, and capture footage remain unavailable. It contains no measured-result claims and no final-build screenshots.
+This nine-slide draft follows the approved Task 24 narrative and now reports the current public cached rehearsal record. That record is synthetic, uses four scripted model responses and zero actual provider calls, and is not blind-scoring-eligible. `demo-core-v1`, the Gate B report, six-hour freeze, final browser capture, final metrics manifest, and two human reviews remain unavailable. No final-build screenshot or headline blind score is claimed.
 
 1. **Policies have prose reviews, but no unit tests**
 
@@ -16,21 +16,21 @@ This nine-slide draft follows the approved Task 24 narrative while the final bac
 
    Upload or paste synthetic/non-confidential text; confirm cited rules and intent; fuzz boundaries and combinations; review a structured revision; retest the identical frozen suite. Live/cached mode labels remain visible.
 
-4. **One bounded cycle targets missing coverage**
+4. **Coverage can freeze without an adaptive call**
 
-   `plan -> act -> observe -> adapt -> retest`, with at most one targeted generation cycle before the suite is frozen.
+   `plan -> act -> observe -> freeze -> retest`. The current cached rehearsal met the configured minimum coverage in its initial provisional suite, so `targeted_cycles` is zero. One targeted cycle remains a bound, not a step every run must use.
 
 5. **Models propose; deterministic Python decides**
 
    Target modular-monolith architecture and explicit trust boundary. LLM-backed stages interpret or propose; Python validates citations and schemas, resolves effects, freezes/hashes suites, evaluates traces, computes metrics, and gates patch acceptance.
 
-6. **Three planned cases make ambiguity executable**
+6. **Three cached findings make ambiguity executable**
 
-   Synthetic development cases: the exact-SGD-50 receipt threshold gap, the international-hotel approval conflict, and the split-meal daily-cap breach. Exact trace and citation capture remain pending the verified build.
+   The current cached synthetic record contains three deterministic baseline findings: receipt requirement, approval requirement, and daily category cap. The authored demonstration decisions accept all three. Exact browser witness, trace, and citation capture remains pending the frozen build.
 
-7. **Measured results wait for a frozen evidence chain**
+7. **The cached rehearsal closes all three findings**
 
-   Pending evidence plan for development, corrected control, and blind runs; Gate B verification precedes the `demo-core-v1` tag and six-hour freeze, followed by evidence capture and review checks. The late-sealed blind candidate is human-review-pending and scoring-ineligible.
+   Current public cached rehearsal: 10 scenarios, 3 baseline findings to 0 remaining, 12 inconclusive assertions to 12 passing assertions, and all seven patch-acceptance gates true. Minimum coverage was already satisfied, so no targeted generation call occurred. These are rehearsal measurements, not frozen headline benchmark results. Gate B verification still precedes the `demo-core-v1` tag and six-hour freeze; the late-sealed blind candidate remains human-review-pending and scoring-ineligible.
 
 8. **The impact hypothesis is better review evidence**
 
@@ -45,4 +45,5 @@ This nine-slide draft follows the approved Task 24 narrative while the final bac
 - `docs/superpowers/plans/2026-09-04-policyfuzz-implementation.md`, Task 24 and the Gate B freeze procedure.
 - `docs/superpowers/specs/2026-09-04-policyfuzz-design.md`, §§11–19, especially the evaluation, demonstration, acceptance, and positioning sections.
 - `submission/evidence/benchmark-v2/README.md` and `provenance.json`, public candidate limitations only.
+- `samples/cached-demo/summary.json` and `run-record.json`, current public synthetic cached rehearsal measurements.
 - `team/person-1-integration/HANDOFF.md` and `team/person-5-product/HANDOFF.md`, current implementation status and limitations.

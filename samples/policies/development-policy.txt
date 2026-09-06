@@ -1,16 +1,23 @@
-Employee Travel and Expense Policy
+SYNTHETIC HACKATHON SAMPLE — NOT COMPANY POLICY
+Synthetic Travel and Expense Policy — Development
 
-1. Meals
-Employees may claim meals up to SGD 80 per day while travelling for approved business.
-A receipt is required for every meal claim.
+Eligible categories
+Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.
 
-2. Approval
-Claims above SGD 50 require manager approval before reimbursement.
-Claims above SGD 200 require finance approval. Finance approval satisfies the manager approval requirement.
+Category caps
+Meal claims have a per-claim cap of SGD 100.
+Hotel claims have a per-claim cap of SGD 250.
+Transport claims have a per-claim cap of SGD 200.
 
-3. Accommodation
-Hotel claims are allowed up to SGD 220 per night for domestic travel and SGD 300 per night for international travel.
+Receipts
+Receipts are not required for claims below SGD 50.
+Receipts are required for claims above SGD 50.
 
-4. Exceptions and unsupported language
-The company may make reasonable exceptions in urgent circumstances.
-Exceptions must be documented by Finance. Claims that do not follow this policy may be reviewed under applicable law.
+Approvals
+Approval is normally not required for a claim.
+Hotel claims below SGD 250 require no approval, regardless of destination.
+International hotel claims require manager approval.
+Airfare booked fewer than 14 days before travel requires manager approval.
+
+Unsupported language
+Reasonable incidental expenses may be reimbursed.

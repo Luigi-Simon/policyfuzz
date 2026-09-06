@@ -3,30 +3,35 @@ import json
 import pytest
 
 from app.core.artifacts import complete_payload_projection, semantic_payload_projection
+from app.core.fakes import ScriptedLLMClient
 from app.core.hashing import canonical_sha256
 from app.domain.models import (
     AddRuleOperation,
+    Assertion,
     Finding,
     FindingDecision,
     FindingReport,
+    LLMResponse,
     ProposeRevisionRequest,
     ReplaceRuleOperation,
     RevisionProposal,
     RevisionRuleDraft,
     TraceRef,
 )
+from app.features.policy.model_output import ModelOutputValidationError
 from app.features.policy.revision import (
+    LLMRevisionPlanner,
     RevisionValidationError,
     build_revision_prompt,
     parse_and_validate_revision_proposal,
     validate_revision_proposal,
 )
-from app.features.policy.model_output import ModelOutputValidationError
 from tests.domain.factories import (
     HASH,
     make_inputs,
     make_policy,
     make_policy_contract,
+    make_scenario,
     make_scenario_suite,
 )
 
@@ -108,9 +113,7 @@ def test_revision_validation_recomputes_id_and_marks_wording_unverified() -> Non
     assert result.proposal.proposal_id != "model-supplied-id"
     assert result.proposal.proposal_id.startswith("proposal-")
     assert result.draft_wording_status == "unverified"
-    assert result.proposal.draft_policy_wording.startswith(
-        "[AI-GENERATED, UNVERIFIED]"
-    )
+    assert result.proposal.draft_policy_wording.startswith("[AI-GENERATED, UNVERIFIED]")
 
 
 def test_revision_rejects_stale_anchor() -> None:
@@ -123,8 +126,8 @@ def test_revision_rejects_stale_anchor() -> None:
 
 def test_revision_rejects_unknown_or_stale_rule() -> None:
     request = _request()
-    operation = _proposal(request).operations[0].model_copy(
-        update={"rule_id": "missing-rule"}
+    operation = (
+        _proposal(request).operations[0].model_copy(update={"rule_id": "missing-rule"})
     )
     proposal = _proposal(request).model_copy(update={"operations": (operation,)})
 
@@ -166,6 +169,53 @@ def test_revision_prompt_contains_only_visible_eligible_evidence() -> None:
 
     assert "finding-1" in prompt.payload_json
     assert "unverified" in prompt.system_instructions.lower()
+    payload = json.loads(prompt.payload_json)
+    assert "assertions" not in payload["visible_scenarios"][0]
+
+
+def test_revision_prompt_excludes_real_holdout_facts_and_gold_answers() -> None:
+    request = _request()
+    gold_token = "gold-label-private-token"
+    holdout = make_scenario(
+        index=1,
+        origins=frozenset({"gold"}),
+        facts=request.suite.scenarios[0].facts.model_copy(
+            update={"amount_minor": 987654}
+        ),
+        assertions=(
+            Assertion(
+                assertion_id="gold-private-assertion",
+                target_kind="effect_value",
+                dimension="claim_cap_minor",
+                operator="lte",
+                expected_value=1234,
+                origin="gold",
+                gold_label_id=gold_token,
+            ),
+        ),
+        partition="holdout",
+    )
+    suite = make_scenario_suite(
+        scenarios=(request.suite.scenarios[0], holdout),
+        document_sha256=request.document_sha256,
+        policy_contract_sha256=request.policy_contract_sha256,
+        rule_set_sha256=request.rule_set_sha256,
+    )
+    mixed = request.model_copy(
+        update={
+            "suite": suite,
+            "suite_sha256": canonical_sha256(complete_payload_projection(suite)),
+        }
+    )
+
+    prompt = build_revision_prompt(mixed)
+
+    assert gold_token not in prompt.payload_json
+    assert "987654" not in prompt.payload_json
+    assert {
+        item["scenario_id"]
+        for item in json.loads(prompt.payload_json)["visible_scenarios"]
+    } == {"scenario-0"}
 
 
 @pytest.mark.parametrize(
@@ -196,11 +246,49 @@ def test_raw_revision_rejects_more_than_three_operations() -> None:
 def test_rejected_findings_are_not_revision_inputs() -> None:
     request = _request().model_copy(
         update={
-            "decisions": (
-                FindingDecision(finding_id="finding-1", decision="reject"),
-            )
+            "decisions": (FindingDecision(finding_id="finding-1", decision="reject"),)
         }
     )
 
     with pytest.raises(RevisionValidationError, match="NO_ACCEPTED_FINDINGS"):
         build_revision_prompt(request)
+
+
+@pytest.mark.asyncio
+async def test_llm_revision_planner_uses_restricted_payload_and_returns_proposal() -> (
+    None
+):
+    request = _request()
+    llm = ScriptedLLMClient(
+        (LLMResponse(output=_proposal(request).model_dump(mode="json")),)
+    )
+
+    result = await LLMRevisionPlanner(llm).propose(request)
+
+    assert result.proposal_id.startswith("proposal-")
+    assert result.draft_policy_wording.startswith("[AI-GENERATED, UNVERIFIED]")
+    assert llm.requests[0].operation == "revision_proposal"
+    sent = json.loads(llm.requests[0].untrusted_payload_json)
+    assert "assertions" not in sent["visible_scenarios"][0]
+    assert "holdout" not in llm.requests[0].untrusted_payload_json
+
+
+@pytest.mark.asyncio
+async def test_llm_revision_planner_repairs_schema_once_without_sending_output() -> (
+    None
+):
+    request = _request()
+    secret = "GOLD-ANSWER-secret"
+    llm = ScriptedLLMClient(
+        (
+            LLMResponse(output={"invalid": secret}),
+            LLMResponse(output=_proposal(request).model_dump(mode="json")),
+        )
+    )
+
+    result = await LLMRevisionPlanner(llm).propose(request)
+
+    assert result.proposal_id.startswith("proposal-")
+    assert len(llm.requests) == 2
+    assert secret not in llm.requests[1].system_instructions
+    assert secret not in llm.requests[1].untrusted_payload_json

@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "status": "rehearsal",
+  "scoring_eligible": false,
+  "scoring_eligibility_reason": "Current public cached synthetic demonstration evidence is not the Gate B frozen submission run and the active blind candidate still requires independent human review.",
+  "source_artifacts": {
+    "summary": {
+      "path": "samples/cached-demo/summary.json",
+      "byte_sha256": "296d8d6bea00daf02dd45a5c684dc4fb3e5cc4bf9ad4c7adf81df2dd3d7c8f8e"
+    },
+    "run_record": {
+      "path": "samples/cached-demo/run-record.json",
+      "byte_sha256": "8e913cce8febd51dc4fdbb26272b77d48f48db08747d58a18ca07244a3edbf28"
+    }
+  },
+  "rehearsal_anchors": {
+    "suite_sha256": "da14acf2f24997f73cca5c4f786e150ba3f02eadd46ef6a6cf19aa576b49af8c",
+    "engine_version": "1.0.0",
+    "engine_sha256": "a8f373b2922f6c5d7f29a6064bde8f0379d727cb4bfea320c9fbb45f748afe42",
+    "run_manifest_sha256": "c9e12997100bb91f5d568630db8bc4d328fef1c134c1fc6a3c4c95d7dee94b8a",
+    "replay": {
+      "count": 3,
+      "status": "passed",
+      "execution_sha256": "bab4805986a8d06b3bf80e923018d6f23091885880a21a8b255258189fb2310a",
+      "final_source_artifact": null,
+      "limitation": "Integration-owner rehearsal observation; bind to the checked-in Gate B report before using it as a final submission claim."
+    }
+  },
+  "provenance": {
+    "data_type": "synthetic",
+    "run_mode": "cached",
+    "provider_mode": "scripted",
+    "actual_provider_calls": 0,
+    "blind_eligibility": "ineligible"
+  },
+  "observations": {
+    "scenario_count": 10,
+    "baseline_finding_count": 3,
+    "remaining_finding_count": 0,
+    "accepted_finding_decision_count": 3,
+    "revision_operation_count": 3,
+    "scripted_model_call_count": 4,
+    "targeted_cycle_count": 0,
+    "patch_acceptance_gates_true": 7,
+    "patch_acceptance_gates_total": 7,
+    "baseline_assertions": {
+      "passed": 0,
+      "failed": 0,
+      "inconclusive": 12,
+      "error": 0
+    },
+    "revised_assertions": {
+      "passed": 12,
+      "failed": 0,
+      "inconclusive": 0,
+      "error": 0
+    },
+    "baseline_coverage": {
+      "rules": "10/10",
+      "invariants": "3/3",
+      "predicate_branches": "23/26",
+      "status": "satisfied"
+    },
+    "revised_coverage": {
+      "rules": "11/11",
+      "invariants": "3/3",
+      "predicate_branches": "25/28",
+      "status": "satisfied"
+    }
+  },
+  "not_established": [
+    "demo-core-v1 commit or tag",
+    "Gate B verification",
+    "six-hour freeze",
+    "375 px and 1440 px browser acceptance",
+    "manual-review timing",
+    "total run time",
+    "provider cost",
+    "blind benchmark recall",
+    "first-run blind discovery recall distinct from post-run gold-assisted assessment",
+    "independent human claim review",
+    "clean-checkout caption and audio review"
+  ],
+  "finalization": "These are stable rehearsal anchors, not demo-core-v1 evidence. Recompute them after any application-affecting change; bind final claims to the checked-in Gate B report and keep scoring_eligible false unless the independent-review and custody prerequisites are actually satisfied."
+}

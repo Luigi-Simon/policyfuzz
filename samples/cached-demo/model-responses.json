@@ -1,0 +1,697 @@
+{
+  "actual_provider_calls": 0,
+  "label": "SYNTHETIC SCRIPTED PROVIDER OUTPUTS \u2014 NOT LIVE MODEL QUALITY EVIDENCE",
+  "responses": [
+    {
+      "operation": "policy_extraction",
+      "response": {
+        "output": {
+          "document_sha256": "4c194c07ac6de7044f0548771ea257cccd1e8d4d0a5b4d1a602e428ee3a66734",
+          "rules": [
+            {
+              "confidence_percent": 100,
+              "description": "Eligible categories",
+              "effects": [
+                {
+                  "dimension": "eligibility",
+                  "schema_version": "1.0",
+                  "value": "allow"
+                }
+              ],
+              "overrides": [],
+              "provenance": {
+                "citation_id": "citation-eligible-categories",
+                "kind": "text_citation",
+                "schema_version": "1.0",
+                "span": {
+                  "end": 241,
+                  "page": 1,
+                  "quote": "Meal, hotel, transport, airfare, and incidental expenses are eligible for reimbursement when incurred for business travel.",
+                  "quote_sha256": "841fce3f974226befd96191c90d21fe29d4efd4f4c3448934a09f7280d64b2c0",
+                  "schema_version": "1.0",
+                  "section": null,
+                  "start": 119
+                }
+              },
+              "rule_handle": "citation-eligible-categories",
+              "schema_version": "1.0",
+              "when": [
+                {
+                  "field": "expense_category",
+                  "operator": "in",
+                  "schema_version": "1.0",
+                  "value": [
+                    "airfare",
+                    "hotel",
+                    "incidental",
+                    "meal",
+                    "transport"
+                  ]
+                }
+              ]
+            },
+            {
+              "confidence_percent": 100,
+              "description": "Meal claim cap",
+              "effects": [
+                {
+                  "dimension": "claim_cap_minor",
+                  "schema_version": "1.0",
+                  "value": 10000
+                }
+              ],
+              "overrides": [],
+              "provenance": {
+                "citation_id": "citation-meal-claim-cap",
+                "kind": "text_citation",
+                "schema_version": "1.0",
+                "span": {
+                  "end": 301,
+                  "page": 1,
+                  "quote": "Meal claims have a per-claim cap of SGD 100.",
+                  "quote_sha256": "6be28fb33e2dbb55da3b93195f9d877fe0c4ce6d002c05a68f0c138cda7ebb04",
+                  "schema_version": "1.0",
+                  "section": null,
+                  "start": 257
+                }
+              },
+              "rule_handle": "citation-meal-claim-cap",
+              "schema_version": "1.0",
+              "when": [
+                {
+                  "field": "expense_category",
+                  "operator": "eq",
+                  "schema_version": "1.0",
+                  "value": "meal"
+                }
+              ]
+            },
+            {
+              "confidence_percent": 100,
+              "description": "Hotel claim cap",
+              "effects": [
+                {
+                  "dimension": "claim_cap_minor",
+                  "schema_version": "1.0",
+                  "value": 25000
+                }
+              ],
+              "overrides": [],
+              "provenance": {
+                "citation_id": "citation-hotel-claim-cap",
+                "kind": "text_citation",
+                "schema_version": "1.0",
+                "span": {
+                  "end": 347,
+                  "page": 1,
+                  "quote": "Hotel claims have a per-claim cap of SGD 250.",
+                  "quote_sha256": "b0dc146bd671169b5b56a66703ea1023533817a75b745a3787a86394ccde4ac2",
+                  "schema_version": "1.0",
+                  "section": null,
+                  "start": 302
+                }
+              },
+              "rule_handle": "citation-hotel-claim-cap",
+              "schema_version": "1.0",
+              "when": [
+                {
+                  "field": "expense_category",
+                  "operator": "eq",
+                  "schema_version": "1.0",
+                  "value": "hotel"
+                }
+              ]
+            },
+            {
+              "confidence_percent": 100,
+              "description": "Transport claim cap",
+              "effects": [
+                {
+                  "dimension": "claim_cap_minor",
+                  "schema_version": "1.0",
+                  "value": 20000
+                }
+              ],
+              "overrides": [],
+              "provenance": {
+                "citation_id": "citation-transport-claim-cap",
+                "kind": "text_citation",
+                "schema_version": "1.0",
+                "span": {
+                  "end": 397,
+                  "page": 1,
+                  "quote": "Transport claims have a per-claim cap of SGD 200.",
+                  "quote_sha256": "06a6c2867710eaac615d068d654e15251609922b094f89e4707902fe61804623",
+                  "schema_version": "1.0",
+                  "section": null,
+                  "start": 348
+                }
+              },
+              "rule_handle": "citation-transport-claim-cap",
+              "schema_version": "1.0",
+              "when": [
+                {
+                  "field": "expense_category",
+                  "operator": "eq",
+                  "schema_version": "1.0",
+                  "value": "transport"
+                }
+              ]
+            },
+            {
+              "confidence_percent": 100,
+              "description": "Receipt below 50",
+              "effects": [
+                {
+                  "dimension": "receipt_requirement",
+                  "schema_version": "1.0",
+                  "value": "not_required"
+                }
+              ],
+              "overrides": [],
+              "provenance": {
+                "citation_id": "citation-receipt-below-50",
+                "kind": "text_citation",
+                "schema_version": "1.0",
+                "span": {
+                  "end": 458,
+                  "page": 1,
+                  "quote": "Receipts are not required for claims below SGD 50.",
+                  "quote_sha256": "881e4b4c701a197a86eacc3c3687c477889c523c77887f7725b33aab2e4552af",
+                  "schema_version": "1.0",
+                  "section": null,
+                  "start": 408
+                }
+              },
+              "rule_handle": "citation-receipt-below-50",
+              "schema_version": "1.0",
+              "when": [
+                {
+                  "field": "amount_minor",
+                  "operator": "lt",
+                  "schema_version": "1.0",
+                  "value": 5000
+                }
+              ]
+            },
+            {
+              "confidence_percent": 100,
+              "description": "Receipt threshold",
+              "effects": [
+                {
+                  "dimension": "receipt_requirement",
+                  "schema_version": "1.0",
+                  "value": "required"
+                }
+              ],
+              "overrides": [],
+              "provenance": {
+                "citation_id": "citation-receipt-threshold",
+                "kind": "text_citation",
+                "schema_version": "1.0",
+                "span": {
+                  "end": 505,
+                  "page": 1,
+                  "quote": "Receipts are required for claims above SGD 50.",
+                  "quote_sha256": "5e3bce25baf9b207405c128376a8cdea3f7370df89911446c5be4dc980331d70",
+                  "schema_version": "1.0",
+                  "section": null,
+                  "start": 459
+                }
+              },
+              "rule_handle": "citation-receipt-threshold",
+              "schema_version": "1.0",
+              "when": [
+                {
+                  "field": "amount_minor",
+                  "operator": "gt",
+                  "schema_version": "1.0",
+                  "value": 5000
+                }
+              ]
+            },
+            {
+              "confidence_percent": 100,
+              "description": "Approval normal",
+              "effects": [
+                {
+                  "dimension": "approval_requirement",
+                  "schema_version": "1.0",
+                  "value": "none"
+                }
+              ],
+              "overrides": [],
+              "provenance": {
+                "citation_id": "citation-approval-normal",
+                "kind": "text_citation",
+                "schema_version": "1.0",
+                "span": {
+                  "end": 563,
+                  "page": 1,
+                  "quote": "Approval is normally not required for a claim.",
+                  "quote_sha256": "0534fe1f41ef88270d13d9e617e51022b33432d1852ac2fc859a4516fe9d4b07",
+                  "schema_version": "1.0",
+                  "section": null,
+                  "start": 517
+                }
+              },
+              "rule_handle": "citation-approval-normal",
+              "schema_version": "1.0",
+              "when": [
+                {
+                  "field": "expense_category",
+                  "operator": "in",
+                  "schema_version": "1.0",
+                  "value": [
+                    "airfare",
+                    "hotel",
+                    "incidental",
+                    "meal",
+                    "transport"
+                  ]
+                }
+              ]
+            },
+            {
+              "confidence_percent": 100,
+              "description": "Hotel below 250 no approval",
+              "effects": [
+                {
+                  "dimension": "approval_requirement",
+                  "schema_version": "1.0",
+                  "value": "none"
+                }
+              ],
+              "overrides": [],
+              "provenance": {
+                "citation_id": "citation-hotel-below-250-no-approval",
+                "kind": "text_citation",
+                "schema_version": "1.0",
+                "span": {
+                  "end": 638,
+                  "page": 1,
+                  "quote": "Hotel claims below SGD 250 require no approval, regardless of destination.",
+                  "quote_sha256": "f9c18c5f04f1d6883ddc9e4fff7bace998426bb0d87c6811dc07310c58274d4b",
+                  "schema_version": "1.0",
+                  "section": null,
+                  "start": 564
+                }
+              },
+              "rule_handle": "citation-hotel-below-250-no-approval",
+              "schema_version": "1.0",
+              "when": [
+                {
+                  "field": "amount_minor",
+                  "operator": "lt",
+                  "schema_version": "1.0",
+                  "value": 25000
+                },
+                {
+                  "field": "expense_category",
+                  "operator": "eq",
+                  "schema_version": "1.0",
+                  "value": "hotel"
+                }
+              ]
+            },
+            {
+              "confidence_percent": 100,
+              "description": "International hotel approval",
+              "effects": [
+                {
+                  "dimension": "approval_requirement",
+                  "schema_version": "1.0",
+                  "value": "manager"
+                }
+              ],
+              "overrides": [
+                {
+                  "dimension": "approval_requirement",
+                  "schema_version": "1.0",
+                  "target_rule_id": "citation-approval-normal"
+                }
+              ],
+              "provenance": {
+                "citation_id": "citation-international-hotel-approval",
+                "kind": "text_citation",
+                "schema_version": "1.0",
+                "span": {
+                  "end": 691,
+                  "page": 1,
+                  "quote": "International hotel claims require manager approval.",
+                  "quote_sha256": "547747bdbeeafa8ed3a320309706fdcb344121fc4d7eaa4f080e0b511207c0a9",
+                  "schema_version": "1.0",
+                  "section": null,
+                  "start": 639
+                }
+              },
+              "rule_handle": "citation-international-hotel-approval",
+              "schema_version": "1.0",
+              "when": [
+                {
+                  "field": "expense_category",
+                  "operator": "eq",
+                  "schema_version": "1.0",
+                  "value": "hotel"
+                },
+                {
+                  "field": "destination_type",
+                  "operator": "eq",
+                  "schema_version": "1.0",
+                  "value": "international"
+                }
+              ]
+            },
+            {
+              "confidence_percent": 100,
+              "description": "Airfare short notice",
+              "effects": [
+                {
+                  "dimension": "approval_requirement",
+                  "schema_version": "1.0",
+                  "value": "manager"
+                }
+              ],
+              "overrides": [
+                {
+                  "dimension": "approval_requirement",
+                  "schema_version": "1.0",
+                  "target_rule_id": "citation-approval-normal"
+                }
+              ],
+              "provenance": {
+                "citation_id": "citation-airfare-short-notice",
+                "kind": "text_citation",
+                "schema_version": "1.0",
+                "span": {
+                  "end": 766,
+                  "page": 1,
+                  "quote": "Airfare booked fewer than 14 days before travel requires manager approval.",
+                  "quote_sha256": "f4e9c7a9c0d6a1dfc2022cd40e8b3e524bbd6cc562962ba0d13af5d154f0a3fb",
+                  "schema_version": "1.0",
+                  "section": null,
+                  "start": 692
+                }
+              },
+              "rule_handle": "citation-airfare-short-notice",
+              "schema_version": "1.0",
+              "when": [
+                {
+                  "field": "expense_category",
+                  "operator": "eq",
+                  "schema_version": "1.0",
+                  "value": "airfare"
+                },
+                {
+                  "field": "booking_days_before",
+                  "operator": "lt",
+                  "schema_version": "1.0",
+                  "value": 14
+                }
+              ]
+            }
+          ],
+          "schema_version": "1.0",
+          "unsupported_clauses": [
+            {
+              "affected_dimensions": [
+                "eligibility"
+              ],
+              "clause_id": "unsupported-reasonable-incidental",
+              "reason_code": "ambiguous_language",
+              "review_status": "provisional",
+              "schema_version": "1.0",
+              "span": {
+                "end": 838,
+                "page": 1,
+                "quote": "Reasonable incidental expenses may be reimbursed.",
+                "quote_sha256": "136526213606e56fa63342c1a468d6c9c3659ba560040a8662f465739dd0bb3c",
+                "schema_version": "1.0",
+                "section": null,
+                "start": 789
+              },
+              "when_hint": [
+                {
+                  "field": "expense_category",
+                  "operator": "eq",
+                  "schema_version": "1.0",
+                  "value": "incidental"
+                }
+              ]
+            }
+          ]
+        },
+        "schema_version": "1.0",
+        "usage": {
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "repair_calls": 0,
+          "schema_version": "1.0",
+          "transport_retries": 0
+        }
+      }
+    },
+    {
+      "operation": "invariant_suggestion",
+      "response": {
+        "output": {
+          "invariant_drafts": [
+            {
+              "assertion": {
+                "assertion_id": "assertion-d66cf92b80aa52bb1cd37017bb0469ffce1fb044d1166cbf512ed0f286e5742f",
+                "dimension": "receipt_requirement",
+                "expected_value": "required",
+                "operator": "eq",
+                "schema_version": "1.0",
+                "target_kind": "effect_value"
+              },
+              "description": "Claims at SGD 50 require a receipt.",
+              "invariant_id": "invariant-ebaeb0aafc48534b27ce355eb2b4a595044098ab0787c10e2b027de3fd783c9a",
+              "origin": "model_suggestion",
+              "rationale": "Suggested for explicit reviewer confirmation from the synthetic policy intent.",
+              "schema_version": "1.0",
+              "when": [
+                {
+                  "field": "amount_minor",
+                  "operator": "eq",
+                  "schema_version": "1.0",
+                  "value": 5000
+                }
+              ]
+            },
+            {
+              "assertion": {
+                "assertion_id": "assertion-9064ea7cd3d412361f35d9cdfde7d93180f1eb106607527132234a16d7ddc1c8",
+                "dimension": "approval_requirement",
+                "expected_value": "manager",
+                "operator": "eq",
+                "schema_version": "1.0",
+                "target_kind": "effect_value"
+              },
+              "description": "International hotel claims require manager approval.",
+              "invariant_id": "invariant-c59c930b5dc65af6216031b7dd91f54d03dc6fda5986833053a6583757deca7b",
+              "origin": "model_suggestion",
+              "rationale": "Suggested for explicit reviewer confirmation from the synthetic policy intent.",
+              "schema_version": "1.0",
+              "when": [
+                {
+                  "field": "expense_category",
+                  "operator": "eq",
+                  "schema_version": "1.0",
+                  "value": "hotel"
+                },
+                {
+                  "field": "destination_type",
+                  "operator": "eq",
+                  "schema_version": "1.0",
+                  "value": "international"
+                }
+              ]
+            },
+            {
+              "assertion": {
+                "assertion_id": "assertion-49c6f93cfceac6044577e44a747843935cfb5513f7021147cc3400ebc326039b",
+                "dimension": "daily_category_cap_minor",
+                "expected_value": 10000,
+                "operator": "lte",
+                "schema_version": "1.0",
+                "target_kind": "effect_value"
+              },
+              "description": "Meal spending is capped at SGD 100 per day.",
+              "invariant_id": "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e",
+              "origin": "model_suggestion",
+              "rationale": "Suggested for explicit reviewer confirmation from the synthetic policy intent.",
+              "schema_version": "1.0",
+              "when": [
+                {
+                  "field": "expense_category",
+                  "operator": "eq",
+                  "schema_version": "1.0",
+                  "value": "meal"
+                }
+              ]
+            }
+          ],
+          "schema_version": "1.0"
+        },
+        "schema_version": "1.0",
+        "usage": {
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "repair_calls": 0,
+          "schema_version": "1.0",
+          "transport_retries": 0
+        }
+      }
+    },
+    {
+      "operation": "scenario_generation",
+      "response": {
+        "output": {
+          "scenarios": []
+        },
+        "schema_version": "1.0",
+        "usage": {
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "repair_calls": 0,
+          "schema_version": "1.0",
+          "transport_retries": 0
+        }
+      }
+    },
+    {
+      "operation": "revision_proposal",
+      "response": {
+        "output": {
+          "accepted_finding_ids": [
+            "finding-395e1dd4d17223c58a023ca7f7b279f9f8093ece0cb7b2281c255c1585d30841",
+            "finding-957d31840a01d295c43e9263bb20cef9e9599a36d9904c5e07f3af2ead0a8f20",
+            "finding-bb045ddfae7a2c575858637394f4b296bdf57f430dbf768c12e182eec941d34e"
+          ],
+          "document_sha256": "4c194c07ac6de7044f0548771ea257cccd1e8d4d0a5b4d1a602e428ee3a66734",
+          "draft_policy_wording": "SYNTHETIC HACKATHON SAMPLE \u2014 UNVERIFIED WORDING. Receipts are required at or above SGD 50. International hotel manager approval overrides the hotel exception. Meals have a daily SGD 100 cap.",
+          "operations": [
+            {
+              "expected_revision": 0,
+              "finding_ids": [
+                "finding-bb045ddfae7a2c575858637394f4b296bdf57f430dbf768c12e182eec941d34e"
+              ],
+              "kind": "replace_rule",
+              "rule": {
+                "description": "Receipt threshold",
+                "effects": [
+                  {
+                    "dimension": "receipt_requirement",
+                    "schema_version": "1.0",
+                    "value": "required"
+                  }
+                ],
+                "overrides": [],
+                "schema_version": "1.0",
+                "when": [
+                  {
+                    "field": "amount_minor",
+                    "operator": "gte",
+                    "schema_version": "1.0",
+                    "value": 5000
+                  }
+                ]
+              },
+              "rule_id": "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec",
+              "schema_version": "1.0"
+            },
+            {
+              "expected_revision": 0,
+              "finding_ids": [
+                "finding-957d31840a01d295c43e9263bb20cef9e9599a36d9904c5e07f3af2ead0a8f20"
+              ],
+              "kind": "replace_rule",
+              "rule": {
+                "description": "International hotel approval",
+                "effects": [
+                  {
+                    "dimension": "approval_requirement",
+                    "schema_version": "1.0",
+                    "value": "manager"
+                  }
+                ],
+                "overrides": [
+                  {
+                    "dimension": "approval_requirement",
+                    "schema_version": "1.0",
+                    "target_rule_id": "rule-7b5d464b2dba249e2355cfa90864ef491c3f46204624f72528abd226dac71f73"
+                  },
+                  {
+                    "dimension": "approval_requirement",
+                    "schema_version": "1.0",
+                    "target_rule_id": "rule-79328c80dfd0e6c06362c6dea194f3bec1637250fb262378919079da484783fc"
+                  }
+                ],
+                "schema_version": "1.0",
+                "when": [
+                  {
+                    "field": "expense_category",
+                    "operator": "eq",
+                    "schema_version": "1.0",
+                    "value": "hotel"
+                  },
+                  {
+                    "field": "destination_type",
+                    "operator": "eq",
+                    "schema_version": "1.0",
+                    "value": "international"
+                  }
+                ]
+              },
+              "rule_id": "rule-27abdc28985983a6cc91c1c9b39d1cb5c8ea26cba15ccf7133201c19f4a78a0a",
+              "schema_version": "1.0"
+            },
+            {
+              "finding_ids": [
+                "finding-395e1dd4d17223c58a023ca7f7b279f9f8093ece0cb7b2281c255c1585d30841"
+              ],
+              "kind": "add_rule",
+              "rule": {
+                "description": "Daily meal cap",
+                "effects": [
+                  {
+                    "dimension": "daily_category_cap_minor",
+                    "schema_version": "1.0",
+                    "value": 10000
+                  }
+                ],
+                "overrides": [],
+                "schema_version": "1.0",
+                "when": [
+                  {
+                    "field": "expense_category",
+                    "operator": "eq",
+                    "schema_version": "1.0",
+                    "value": "meal"
+                  }
+                ]
+              },
+              "rule_id": "scripted-daily-meal-cap",
+              "schema_version": "1.0"
+            }
+          ],
+          "policy_contract_sha256": "6a6f394b31579ecda93ce243a3ec30f60b7f0c04ea361d27386d537101acbc16",
+          "proposal_id": "scripted-development-revision",
+          "rule_set_sha256": "059990dd890678148456964d4d2ce54473c6d3503670b4b996bfd3f315ec17af",
+          "schema_version": "1.0",
+          "suite_sha256": "da14acf2f24997f73cca5c4f786e150ba3f02eadd46ef6a6cf19aa576b49af8c"
+        },
+        "schema_version": "1.0",
+        "usage": {
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "repair_calls": 0,
+          "schema_version": "1.0",
+          "transport_retries": 0
+        }
+      }
+    }
+  ],
+  "schema_version": "1.0"
+}

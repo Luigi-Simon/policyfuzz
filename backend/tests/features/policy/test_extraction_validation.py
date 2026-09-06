@@ -3,8 +3,12 @@ import json
 
 import pytest
 
+from app.core.fakes import ScriptedLLMClient
 from app.domain.models import (
+    CompilePolicyRequest,
     Effect,
+    LLMResponse,
+    OverrideRef,
     PolicyDocument,
     PolicyExtraction,
     PolicyPage,
@@ -13,13 +17,14 @@ from app.domain.models import (
     TextRuleProvenance,
     UnsupportedClause,
 )
+from app.features.policy.compiler import compile_baseline_policy
 from app.features.policy.extraction import (
     ExtractionValidationError,
+    extract_policy,
     parse_and_validate_policy_extraction,
     validate_policy_extraction,
 )
 from app.features.policy.model_output import ModelOutputValidationError
-
 
 TEXT = "Meals require receipts.\nClaims above SGD 50 require manager approval."
 HASH = "a" * 64
@@ -136,9 +141,7 @@ def test_invalid_existing_unsupported_clause_citation_is_rejected() -> None:
         unsupported_clauses=(unsupported,),
     )
 
-    with pytest.raises(
-        ExtractionValidationError, match="INVALID_UNSUPPORTED_CITATION"
-    ):
+    with pytest.raises(ExtractionValidationError, match="INVALID_UNSUPPORTED_CITATION"):
         validate_policy_extraction(_document(), extraction)
 
 
@@ -183,3 +186,78 @@ def test_raw_proposals_reject_unsupported_predicate_fields() -> None:
             _document(),
             json.dumps(payload),
         )
+
+
+def test_validated_spans_discard_untrusted_section_metadata() -> None:
+    hostile = "PRIVATE_MODEL_SECTION"
+    span = _span("Meals require receipts.").model_copy(update={"section": hostile})
+    unsupported = UnsupportedClause(
+        clause_id="clause-1",
+        span=_span("Claims above SGD 50").model_copy(update={"section": hostile}),
+        reason_code="ambiguous_language",
+        affected_dimensions=frozenset({"approval_requirement"}),
+    )
+    extraction = PolicyExtraction(
+        document_sha256=HASH,
+        rules=(_draft(span=span),),
+        unsupported_clauses=(unsupported,),
+    )
+
+    result = validate_policy_extraction(_document(), extraction)
+
+    assert result.extraction.rules[0].provenance.span.section is None
+    assert result.extraction.unsupported_clauses[0].span.section is None
+
+
+def test_invalid_citation_replacement_discards_untrusted_section_metadata() -> None:
+    hostile = "PRIVATE_MODEL_SECTION"
+    bad = _span("Meals require receipts.").model_copy(
+        update={"quote_sha256": "0" * 64, "section": hostile}
+    )
+
+    result = validate_policy_extraction(
+        _document(), PolicyExtraction(document_sha256=HASH, rules=(_draft(span=bad),))
+    )
+
+    assert result.extraction.unsupported_clauses[0].span.section is None
+
+
+@pytest.mark.asyncio
+async def test_provider_local_rule_handles_compile_to_final_override_ids() -> None:
+    document = _document()
+    normal = _draft(index=1, span=_span("Meals require receipts.")).model_copy(
+        update={
+            "description": "Approval normally not required",
+            "effects": (Effect(dimension="approval_requirement", value="none"),),
+        }
+    )
+    exception = _draft(index=2, span=_span("Claims above SGD 50")).model_copy(
+        update={
+            "description": "Manager approval exception",
+            "effects": (Effect(dimension="approval_requirement", value="manager"),),
+            "overrides": (
+                OverrideRef(
+                    dimension="approval_requirement",
+                    target_rule_id="normal-approval",
+                ),
+            ),
+        }
+    )
+    payload = PolicyExtraction(
+        document_sha256=HASH,
+        rules=(normal, exception),
+    ).model_dump(mode="json")
+    payload["rules"][0]["rule_handle"] = "normal-approval"
+    payload["rules"][1]["rule_handle"] = "manager-exception"
+    llm = ScriptedLLMClient((LLMResponse(output=payload), LLMResponse(output=payload)))
+
+    extracted = await extract_policy(llm, CompilePolicyRequest(document=document))
+    compiled = compile_baseline_policy(
+        CompilePolicyRequest(document=document, extraction=extracted)
+    )
+    rules = {rule.description: rule for rule in compiled.policy.rules}
+
+    assert rules["Manager approval exception"].overrides[0].target_rule_id == (
+        rules["Approval normally not required"].rule_id
+    )
+    assert len(llm.requests) == 1

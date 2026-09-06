@@ -9,7 +9,6 @@ from app.features.policy.citations import (
     validate_citation,
 )
 
-
 PAGES = (
     "Meals are capped at SGD 80 per day.\nReceipts are required.",
     "Claims above SGD 50 require manager approval.",
@@ -117,14 +116,14 @@ def test_development_fixture_citations_match_sample_policy() -> None:
     ).read_text(encoding="utf-8")
     expected = json.loads(
         (
-            repository_root
-            / "team/person-2-policy/expected-extracted-rules.json"
+            repository_root / "team/person-2-policy/expected-extracted-rules.json"
         ).read_text(encoding="utf-8")
     )
 
-    assert expected["source_sha256"] == hashlib.sha256(
-        policy_text.encode("utf-8")
-    ).hexdigest()
+    assert (
+        expected["source_sha256"]
+        == hashlib.sha256(policy_text.encode("utf-8")).hexdigest()
+    )
 
     for rule in expected["rules"]:
         citation = rule["citation"]

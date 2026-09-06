@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0",
+  "status": "passed",
+  "scope": "application verification; not Gate B or final submission acceptance",
+  "application_commit": "e4d0db816fb1367bf64b05d523e05edbaa11425b",
+  "recorded_at": "2026-09-06T11:18:49.512972+00:00",
+  "checks": [
+    {
+      "command": "backend/.venv/bin/python -m pytest backend/tests -q",
+      "exit_code": 0,
+      "passed": 1438,
+      "duration_seconds": "38.60"
+    },
+    {
+      "command": "backend/.venv/bin/ruff check backend/app backend/tests",
+      "exit_code": 0
+    },
+    {
+      "command": "backend/.venv/bin/ruff format --check backend/app backend/tests",
+      "exit_code": 0,
+      "files": 162
+    },
+    {
+      "command": "backend/.venv/bin/ruff check scripts",
+      "exit_code": 0
+    },
+    {
+      "command": "backend/.venv/bin/ruff format --check scripts",
+      "exit_code": 0,
+      "files": 13
+    },
+    {
+      "command": "npm --prefix frontend run check:generated",
+      "exit_code": 0
+    },
+    {
+      "command": "npm --prefix frontend run typecheck",
+      "exit_code": 0
+    },
+    {
+      "command": "npm --prefix frontend run test:run",
+      "exit_code": 0,
+      "passed": 108
+    },
+    {
+      "command": "npm --prefix frontend run build",
+      "exit_code": 0
+    },
+    {
+      "command": "node --test submission/video/build-captions.test.mjs",
+      "exit_code": 0,
+      "passed": 2
+    },
+    {
+      "command": "backend/.venv/bin/python scripts/validate_contracts.py",
+      "exit_code": 0,
+      "schemas": 111
+    },
+    {
+      "command": "backend/.venv/bin/python scripts/replay_check.py",
+      "exit_code": 0,
+      "replays": 3,
+      "semantic_execution_sha256": "bab4805986a8d06b3bf80e923018d6f23091885880a21a8b255258189fb2310a"
+    },
+    {
+      "command": "backend/.venv/bin/python scripts/verify_benchmarks.py",
+      "exit_code": 0,
+      "development": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "corrected_control": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  ],
+  "demonstration": {
+    "actual_provider_calls": 0,
+    "baseline_defects": 3,
+    "blind_scoring_eligible": false,
+    "confirmation_source": "authored demonstration decisions",
+    "data_type": "synthetic",
+    "engine_version": "1.0.0",
+    "patch_accepted": true,
+    "provider_mode": "scripted",
+    "remaining_defects": 0,
+    "run_mode": "cached",
+    "scenario_count": 10,
+    "scripted_model_calls": 4,
+    "status": "passed",
+    "suite_sha256": "da14acf2f24997f73cca5c4f786e150ba3f02eadd46ef6a6cf19aa576b49af8c"
+  },
+  "artifact_bytes_sha256": {
+    "samples/cached-demo/run-record.json": "8e913cce8febd51dc4fdbb26272b77d48f48db08747d58a18ca07244a3edbf28",
+    "samples/cached-demo/summary.json": "296d8d6bea00daf02dd45a5c684dc4fb3e5cc4bf9ad4c7adf81df2dd3d7c8f8e",
+    "samples/cached-demo/model-responses.json": "b6c3ddb3eec55bfb2e683b94608e07998e70955e0838f3ea0367879125e43a18",
+    "contracts/openapi.json": "023e905bf4656080c0eb5e237e45616947f37c54a670e75194641512fde93424"
+  },
+  "not_established": [
+    "live provider quality",
+    "browser acceptance",
+    "independent human benchmark approval",
+    "first-run blind discovery recall",
+    "manual review measurements",
+    "Gate B",
+    "six-hour application freeze",
+    "final video/media approval",
+    "final release package"
+  ],
+  "final_submission_checks": {
+    "status": "blocked as expected",
+    "missing_final_media_and_evidence": true,
+    "verifier_reported_failures": 26
+  },
+  "live_provider_configured": false,
+  "headline_benchmark_eligible": false
+}

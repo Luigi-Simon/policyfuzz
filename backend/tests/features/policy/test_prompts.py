@@ -1,6 +1,7 @@
 import json
 
-from app.domain.models import PolicyDocument, PolicyExtraction, PolicyIR, PolicyPage
+from app.domain.models import PolicyDocument, PolicyIR, PolicyPage
+from app.features.policy.model_io import ModelPolicyExtraction
 from app.features.policy.prompts import (
     build_invariant_suggestion_prompt,
     build_policy_extraction_prompt,
@@ -39,12 +40,15 @@ def test_prompt_requires_citations_unsupported_preservation_and_and_rules() -> N
     assert "authoritative" in instructions
 
 
-def test_prompt_schema_is_derived_from_person_1_contract() -> None:
+def test_prompt_schema_extends_frozen_rules_with_private_local_handles() -> None:
     prompt = build_policy_extraction_prompt(_document())
 
-    assert json.loads(
-        prompt.response_schema_json
-    ) == PolicyExtraction.model_json_schema()
+    assert (
+        json.loads(prompt.response_schema_json)
+        == ModelPolicyExtraction.model_json_schema()
+    )
+    assert "rule_handle" in prompt.response_schema_json
+    assert "target_rule_id" in prompt.system_instructions
 
 
 def test_invariant_prompt_is_unverified_and_bounded() -> None:

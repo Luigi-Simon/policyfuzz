@@ -54,12 +54,18 @@ def _handler(request: httpx.Request) -> httpx.Response:
             200,
             json=_sample_run_payload()["effectiveness"],
         )
-    if path.startswith("/v1/runs/") and path.endswith("/revise") and request.method == "POST":
+    if (
+        path.startswith("/v1/runs/")
+        and path.endswith("/revise")
+        and request.method == "POST"
+    ):
         payload = json.loads(request.content.decode())
         assert "instruction" in payload
         return httpx.Response(200, json=_sample_run_payload(run_id="run_rev", score=72))
     if path.startswith("/v1/runs/") and request.method == "GET":
-        return httpx.Response(200, json=_sample_run_payload(run_id=path.rsplit("/", 1)[-1]))
+        return httpx.Response(
+            200, json=_sample_run_payload(run_id=path.rsplit("/", 1)[-1])
+        )
     return httpx.Response(404, json={"detail": "not found"})
 
 
@@ -120,7 +126,9 @@ def test_http_error_maps_code() -> None:
     def boom(request: httpx.Request) -> httpx.Response:
         return httpx.Response(503, json={"detail": "down"})
 
-    http = httpx.Client(base_url="http://engine.test", transport=httpx.MockTransport(boom))
+    http = httpx.Client(
+        base_url="http://engine.test", transport=httpx.MockTransport(boom)
+    )
     client = HttpPolicyEngineClient(client=http)
     with pytest.raises(EngineClientError) as exc:
         client.health()

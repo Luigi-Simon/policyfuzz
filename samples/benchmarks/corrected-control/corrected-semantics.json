@@ -1,0 +1,329 @@
+{
+  "baseline_policy_sha256": "81e870cc9734a2e2acb875dc7808ed4e9ca69ca77c2e32930c9444aa2c19b728",
+  "document_sha256": "1b5a96f1b897fe1f78f46a6e8d956f4470b8f2c321021e8dc96d5ad3b7ef566c",
+  "rules": [
+    {
+      "revision": 0,
+      "rule": {
+        "description": "Eligible categories",
+        "effects": [
+          {
+            "dimension": "eligibility",
+            "schema_version": "1.0",
+            "value": "allow"
+          }
+        ],
+        "overrides": [],
+        "schema_version": "1.0",
+        "when": [
+          {
+            "field": "expense_category",
+            "operator": "in",
+            "schema_version": "1.0",
+            "value": [
+              "airfare",
+              "hotel",
+              "incidental",
+              "meal",
+              "transport"
+            ]
+          }
+        ]
+      },
+      "rule_id": "rule-589f3a074e022bdc42813faf73d7cf86a7426972fd1009b7648540ca117e3c02",
+      "schema_version": "1.0"
+    },
+    {
+      "revision": 0,
+      "rule": {
+        "description": "Meal claim cap",
+        "effects": [
+          {
+            "dimension": "claim_cap_minor",
+            "schema_version": "1.0",
+            "value": 10000
+          }
+        ],
+        "overrides": [],
+        "schema_version": "1.0",
+        "when": [
+          {
+            "field": "expense_category",
+            "operator": "eq",
+            "schema_version": "1.0",
+            "value": "meal"
+          }
+        ]
+      },
+      "rule_id": "rule-8efb62a2088811e165d54ba54635039cd68d881562b997a79399ece46f867b19",
+      "schema_version": "1.0"
+    },
+    {
+      "revision": 0,
+      "rule": {
+        "description": "Meal daily cap",
+        "effects": [
+          {
+            "dimension": "daily_category_cap_minor",
+            "schema_version": "1.0",
+            "value": 10000
+          }
+        ],
+        "overrides": [],
+        "schema_version": "1.0",
+        "when": [
+          {
+            "field": "expense_category",
+            "operator": "eq",
+            "schema_version": "1.0",
+            "value": "meal"
+          }
+        ]
+      },
+      "rule_id": "rule-1e270ddcf96000c8168f9f6d6bc74c67f139297b0aa8edeaa0ce9aa442b94300",
+      "schema_version": "1.0"
+    },
+    {
+      "revision": 0,
+      "rule": {
+        "description": "Hotel claim cap",
+        "effects": [
+          {
+            "dimension": "claim_cap_minor",
+            "schema_version": "1.0",
+            "value": 25000
+          }
+        ],
+        "overrides": [],
+        "schema_version": "1.0",
+        "when": [
+          {
+            "field": "expense_category",
+            "operator": "eq",
+            "schema_version": "1.0",
+            "value": "hotel"
+          }
+        ]
+      },
+      "rule_id": "rule-8eb8ab140fe4d6974af319e3d9411b442eb7d0e6c8f0755c5108e444940ca5cb",
+      "schema_version": "1.0"
+    },
+    {
+      "revision": 0,
+      "rule": {
+        "description": "Transport claim cap",
+        "effects": [
+          {
+            "dimension": "claim_cap_minor",
+            "schema_version": "1.0",
+            "value": 20000
+          }
+        ],
+        "overrides": [],
+        "schema_version": "1.0",
+        "when": [
+          {
+            "field": "expense_category",
+            "operator": "eq",
+            "schema_version": "1.0",
+            "value": "transport"
+          }
+        ]
+      },
+      "rule_id": "rule-41a9c7e16acc82e94445cf154e8bdf16b37c79b42b7f484c6f108a6a92c8d5c2",
+      "schema_version": "1.0"
+    },
+    {
+      "revision": 0,
+      "rule": {
+        "description": "Receipt below 50",
+        "effects": [
+          {
+            "dimension": "receipt_requirement",
+            "schema_version": "1.0",
+            "value": "not_required"
+          }
+        ],
+        "overrides": [],
+        "schema_version": "1.0",
+        "when": [
+          {
+            "field": "amount_minor",
+            "operator": "lt",
+            "schema_version": "1.0",
+            "value": 5000
+          }
+        ]
+      },
+      "rule_id": "rule-166db3a1a4208aaa550a2e41b023350406429e5cd1f5f495d0c99087ab6bdfae",
+      "schema_version": "1.0"
+    },
+    {
+      "revision": 0,
+      "rule": {
+        "description": "Receipt threshold",
+        "effects": [
+          {
+            "dimension": "receipt_requirement",
+            "schema_version": "1.0",
+            "value": "required"
+          }
+        ],
+        "overrides": [],
+        "schema_version": "1.0",
+        "when": [
+          {
+            "field": "amount_minor",
+            "operator": "gte",
+            "schema_version": "1.0",
+            "value": 5000
+          }
+        ]
+      },
+      "rule_id": "rule-b464a44f0d68d0c833e3cc5a6b3b73229acad36639432021cdb353367a05133c",
+      "schema_version": "1.0"
+    },
+    {
+      "revision": 0,
+      "rule": {
+        "description": "Approval normal",
+        "effects": [
+          {
+            "dimension": "approval_requirement",
+            "schema_version": "1.0",
+            "value": "none"
+          }
+        ],
+        "overrides": [],
+        "schema_version": "1.0",
+        "when": [
+          {
+            "field": "expense_category",
+            "operator": "in",
+            "schema_version": "1.0",
+            "value": [
+              "airfare",
+              "hotel",
+              "incidental",
+              "meal",
+              "transport"
+            ]
+          }
+        ]
+      },
+      "rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b",
+      "schema_version": "1.0"
+    },
+    {
+      "revision": 0,
+      "rule": {
+        "description": "Hotel below 250 no approval",
+        "effects": [
+          {
+            "dimension": "approval_requirement",
+            "schema_version": "1.0",
+            "value": "none"
+          }
+        ],
+        "overrides": [],
+        "schema_version": "1.0",
+        "when": [
+          {
+            "field": "amount_minor",
+            "operator": "lt",
+            "schema_version": "1.0",
+            "value": 25000
+          },
+          {
+            "field": "expense_category",
+            "operator": "eq",
+            "schema_version": "1.0",
+            "value": "hotel"
+          }
+        ]
+      },
+      "rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf",
+      "schema_version": "1.0"
+    },
+    {
+      "revision": 0,
+      "rule": {
+        "description": "International hotel approval",
+        "effects": [
+          {
+            "dimension": "approval_requirement",
+            "schema_version": "1.0",
+            "value": "manager"
+          }
+        ],
+        "overrides": [
+          {
+            "dimension": "approval_requirement",
+            "schema_version": "1.0",
+            "target_rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+          },
+          {
+            "dimension": "approval_requirement",
+            "schema_version": "1.0",
+            "target_rule_id": "rule-6e043988de07c24ece5330811ac7bb7b9fc10a0a17cb9b7034f83d4c1c211fcf"
+          }
+        ],
+        "schema_version": "1.0",
+        "when": [
+          {
+            "field": "expense_category",
+            "operator": "eq",
+            "schema_version": "1.0",
+            "value": "hotel"
+          },
+          {
+            "field": "destination_type",
+            "operator": "eq",
+            "schema_version": "1.0",
+            "value": "international"
+          }
+        ]
+      },
+      "rule_id": "rule-757985334f5af3f00bc4bb04b266b4742542b5f65bc5256d9f12657a3f328440",
+      "schema_version": "1.0"
+    },
+    {
+      "revision": 0,
+      "rule": {
+        "description": "Airfare short notice",
+        "effects": [
+          {
+            "dimension": "approval_requirement",
+            "schema_version": "1.0",
+            "value": "manager"
+          }
+        ],
+        "overrides": [
+          {
+            "dimension": "approval_requirement",
+            "schema_version": "1.0",
+            "target_rule_id": "rule-4d06ce7172040f8c1fd2d38875175855c42a5327ea7ce0a089474ad97e80bf1b"
+          }
+        ],
+        "schema_version": "1.0",
+        "when": [
+          {
+            "field": "expense_category",
+            "operator": "eq",
+            "schema_version": "1.0",
+            "value": "airfare"
+          },
+          {
+            "field": "booking_days_before",
+            "operator": "lt",
+            "schema_version": "1.0",
+            "value": 14
+          }
+        ]
+      },
+      "rule_id": "rule-90d563a964ad4580c08bd7e11d469e6e9438c5f7785284e7b62e240724f02c36",
+      "schema_version": "1.0"
+    }
+  ],
+  "schema_version": "1.0"
+}

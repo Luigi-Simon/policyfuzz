@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import json
 import os
-from typing import Any, Protocol
+from typing import Any, Protocol, Self
 
 import httpx
 
@@ -58,9 +58,11 @@ class HttpPolicyEngineClient:
         timeout: float = 120.0,
         client: httpx.Client | None = None,
     ) -> None:
-        resolved = (base_url or os.environ.get("POLICY_ENGINE_BASE_URL") or DEFAULT_ENGINE_BASE_URL).rstrip(
-            "/"
-        )
+        resolved = (
+            base_url
+            or os.environ.get("POLICY_ENGINE_BASE_URL")
+            or DEFAULT_ENGINE_BASE_URL
+        ).rstrip("/")
         self.base_url = resolved
         self._owns_client = client is None
         self._client = client or httpx.Client(base_url=resolved, timeout=timeout)
@@ -69,7 +71,7 @@ class HttpPolicyEngineClient:
         if self._owns_client:
             self._client.close()
 
-    def __enter__(self) -> HttpPolicyEngineClient:
+    def __enter__(self) -> Self:
         return self
 
     def __exit__(self, *exc: object) -> None:
@@ -92,7 +94,9 @@ class HttpPolicyEngineClient:
         if request.groups:
             data["groups"] = ",".join(request.groups)
         if request.segments:
-            data["audience_json"] = json.dumps([item.to_payload() for item in request.segments])
+            data["audience_json"] = json.dumps(
+                [item.to_payload() for item in request.segments]
+            )
         response = self._client.post("/v1/runs", data=data)
         payload = self._parse(response, "ENGINE_CREATE_FAILED")
         return _to_result(payload)
@@ -109,7 +113,9 @@ class HttpPolicyEngineClient:
 
     def revise(self, engine_run_id: str, instruction: str) -> RehearsalResult:
         if not instruction.strip():
-            raise EngineClientError("ENGINE_EMPTY_INSTRUCTION", "instruction is required")
+            raise EngineClientError(
+                "ENGINE_EMPTY_INSTRUCTION", "instruction is required"
+            )
         response = self._client.post(
             f"/v1/runs/{engine_run_id}/revise",
             json={"instruction": instruction.strip()},
@@ -121,7 +127,9 @@ class HttpPolicyEngineClient:
         try:
             payload = response.json() if response.content else {}
         except ValueError as error:
-            raise EngineClientError(code, f"non-JSON response HTTP {response.status_code}") from error
+            raise EngineClientError(
+                code, f"non-JSON response HTTP {response.status_code}"
+            ) from error
         if response.status_code >= 400:
             detail = payload.get("detail") if isinstance(payload, dict) else payload
             raise EngineClientError(code, f"HTTP {response.status_code}: {detail}")
@@ -135,7 +143,9 @@ def _to_result(payload: dict[str, Any]) -> RehearsalResult:
     suite = payload.get("suite") if isinstance(payload.get("suite"), dict) else {}
     effectiveness_raw = payload.get("effectiveness")
     effectiveness = (
-        _to_effectiveness(effectiveness_raw) if isinstance(effectiveness_raw, dict) else None
+        _to_effectiveness(effectiveness_raw)
+        if isinstance(effectiveness_raw, dict)
+        else None
     )
     scenarios = suite.get("scenarios") if isinstance(suite, dict) else None
     return RehearsalResult(

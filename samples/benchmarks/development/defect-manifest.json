@@ -1,0 +1,1248 @@
+{
+  "benchmark_id": "SYNTHETIC HACKATHON SAMPLE — NOT COMPANY POLICY: development",
+  "defects": [
+    {
+      "schema_version": "1.0",
+      "defect_id": "defect-intent_breach",
+      "finding_type": "intent_breach",
+      "dimension": "daily_category_cap_minor",
+      "target_ids": [
+        "invariant-d47ac0ef0ac686201a542afd4475e041e81d8aea991f1def48944a753ecdfa4e"
+      ],
+      "severity": "high",
+      "source_spans": [
+        {
+          "schema_version": "1.0",
+          "page": 1,
+          "start": 257,
+          "end": 301,
+          "quote": "Meal claims have a per-claim cap of SGD 100.",
+          "quote_sha256": "6be28fb33e2dbb55da3b93195f9d877fe0c4ce6d002c05a68f0c138cda7ebb04",
+          "section": null
+        }
+      ],
+      "semantic_signature_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "permitted_witness_ids": [
+        "meal-at-cap",
+        "meal-over-cap",
+        "receipt-below",
+        "split-meal"
+      ],
+      "expected_finding_fingerprint_sha256": "395e1dd4d17223c58a023ca7f7b279f9f8093ece0cb7b2281c255c1585d30841",
+      "partition": "visible",
+      "unsupported_clause": false
+    },
+    {
+      "schema_version": "1.0",
+      "defect_id": "defect-conflict",
+      "finding_type": "conflict",
+      "dimension": "approval_requirement",
+      "target_ids": [
+        "rule-27abdc28985983a6cc91c1c9b39d1cb5c8ea26cba15ccf7133201c19f4a78a0a",
+        "rule-79328c80dfd0e6c06362c6dea194f3bec1637250fb262378919079da484783fc"
+      ],
+      "severity": "medium",
+      "source_spans": [
+        {
+          "schema_version": "1.0",
+          "page": 1,
+          "start": 564,
+          "end": 638,
+          "quote": "Hotel claims below SGD 250 require no approval, regardless of destination.",
+          "quote_sha256": "f9c18c5f04f1d6883ddc9e4fff7bace998426bb0d87c6811dc07310c58274d4b",
+          "section": null
+        },
+        {
+          "schema_version": "1.0",
+          "page": 1,
+          "start": 639,
+          "end": 691,
+          "quote": "International hotel claims require manager approval.",
+          "quote_sha256": "547747bdbeeafa8ed3a320309706fdcb344121fc4d7eaa4f080e0b511207c0a9",
+          "section": null
+        }
+      ],
+      "semantic_signature_sha256": "1fa3e871b80766843f89c259235db842050166daaaac84c882f961e04fd5b24b",
+      "permitted_witness_ids": [
+        "hotel-international-below"
+      ],
+      "expected_finding_fingerprint_sha256": "957d31840a01d295c43e9263bb20cef9e9599a36d9904c5e07f3af2ead0a8f20",
+      "partition": "visible",
+      "unsupported_clause": false
+    },
+    {
+      "schema_version": "1.0",
+      "defect_id": "defect-structural_gap",
+      "finding_type": "structural_gap",
+      "dimension": "receipt_requirement",
+      "target_ids": [
+        "rule-8a974988c36cd93f93826cce223e2d91496c36fa0cf87f1e1bd212fb4195ee48",
+        "rule-977e7abcfe0af608a20e6f52e0b2537f8de2ec65f07fdebd11088282322bc3ec"
+      ],
+      "severity": "medium",
+      "source_spans": [
+        {
+          "schema_version": "1.0",
+          "page": 1,
+          "start": 459,
+          "end": 505,
+          "quote": "Receipts are required for claims above SGD 50.",
+          "quote_sha256": "5e3bce25baf9b207405c128376a8cdea3f7370df89911446c5be4dc980331d70",
+          "section": null
+        },
+        {
+          "schema_version": "1.0",
+          "page": 1,
+          "start": 408,
+          "end": 458,
+          "quote": "Receipts are not required for claims below SGD 50.",
+          "quote_sha256": "881e4b4c701a197a86eacc3c3687c477889c523c77887f7725b33aab2e4552af",
+          "section": null
+        }
+      ],
+      "semantic_signature_sha256": "76a6884a5aed259d004ee1ea759a2e4d92a20d258098692df6578de614cb36af",
+      "permitted_witness_ids": [
+        "receipt-exact"
+      ],
+      "expected_finding_fingerprint_sha256": "bb045ddfae7a2c575858637394f4b296bdf57f430dbf768c12e182eec941d34e",
+      "partition": "visible",
+      "unsupported_clause": false
+    }
+  ],
+  "document_sha256": "4c194c07ac6de7044f0548771ea257cccd1e8d4d0a5b4d1a602e428ee3a66734",
+  "engine_version": "1.0.0",
+  "gold_scenarios": [
+    {
+      "schema_version": "1.0",
+      "scenario_id": "receipt-below",
+      "category": "boundary",
+      "origins": [
+        "gold"
+      ],
+      "facts": {
+        "schema_version": "1.0",
+        "employee_role": "employee",
+        "expense_category": "meal",
+        "amount_minor": 4999,
+        "destination_type": "domestic",
+        "booking_days_before": 20,
+        "receipt_present": false,
+        "approval_roles_present": [
+          "manager"
+        ],
+        "prior_same_day_category_spend_minor": 0
+      },
+      "target_rule_ids": [],
+      "target_invariant_ids": [],
+      "assertions": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-below-approval_requirement",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "none",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-receipt-below-approval_requirement",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-below-claim_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "claim_cap_minor",
+          "operator": "eq",
+          "expected_value": 10000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-receipt-below-claim_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-below-daily_category_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "daily_category_cap_minor",
+          "operator": "eq",
+          "expected_value": 10000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-receipt-below-daily_category_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-below-eligibility",
+          "target_kind": "effect_value",
+          "dimension": "eligibility",
+          "operator": "eq",
+          "expected_value": "allow",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-receipt-below-eligibility",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-below-receipt_requirement",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "not_required",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-receipt-below-receipt_requirement",
+          "mechanical_relation_id": null
+        }
+      ],
+      "protected": false,
+      "partition": "visible"
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "receipt-exact",
+      "category": "boundary",
+      "origins": [
+        "gold"
+      ],
+      "facts": {
+        "schema_version": "1.0",
+        "employee_role": "employee",
+        "expense_category": "transport",
+        "amount_minor": 5000,
+        "destination_type": "domestic",
+        "booking_days_before": 20,
+        "receipt_present": true,
+        "approval_roles_present": [
+          "manager"
+        ],
+        "prior_same_day_category_spend_minor": 0
+      },
+      "target_rule_ids": [],
+      "target_invariant_ids": [],
+      "assertions": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-exact-approval_requirement",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "none",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-receipt-exact-approval_requirement",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-exact-claim_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "claim_cap_minor",
+          "operator": "eq",
+          "expected_value": 20000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-receipt-exact-claim_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-exact-eligibility",
+          "target_kind": "effect_value",
+          "dimension": "eligibility",
+          "operator": "eq",
+          "expected_value": "allow",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-receipt-exact-eligibility",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-exact-receipt_requirement",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "required",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-receipt-exact-receipt_requirement",
+          "mechanical_relation_id": null
+        }
+      ],
+      "protected": false,
+      "partition": "visible"
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "receipt-above",
+      "category": "boundary",
+      "origins": [
+        "gold"
+      ],
+      "facts": {
+        "schema_version": "1.0",
+        "employee_role": "employee",
+        "expense_category": "transport",
+        "amount_minor": 5001,
+        "destination_type": "domestic",
+        "booking_days_before": 20,
+        "receipt_present": true,
+        "approval_roles_present": [
+          "manager"
+        ],
+        "prior_same_day_category_spend_minor": 0
+      },
+      "target_rule_ids": [],
+      "target_invariant_ids": [],
+      "assertions": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-above-approval_requirement",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "none",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-receipt-above-approval_requirement",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-above-claim_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "claim_cap_minor",
+          "operator": "eq",
+          "expected_value": 20000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-receipt-above-claim_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-above-eligibility",
+          "target_kind": "effect_value",
+          "dimension": "eligibility",
+          "operator": "eq",
+          "expected_value": "allow",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-receipt-above-eligibility",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-receipt-above-receipt_requirement",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "required",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-receipt-above-receipt_requirement",
+          "mechanical_relation_id": null
+        }
+      ],
+      "protected": false,
+      "partition": "visible"
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "split-meal",
+      "category": "adversarial",
+      "origins": [
+        "gold"
+      ],
+      "facts": {
+        "schema_version": "1.0",
+        "employee_role": "employee",
+        "expense_category": "meal",
+        "amount_minor": 6000,
+        "destination_type": "domestic",
+        "booking_days_before": 20,
+        "receipt_present": true,
+        "approval_roles_present": [
+          "manager"
+        ],
+        "prior_same_day_category_spend_minor": 5000
+      },
+      "target_rule_ids": [],
+      "target_invariant_ids": [],
+      "assertions": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-split-meal-approval_requirement",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "none",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-split-meal-approval_requirement",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-split-meal-claim_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "claim_cap_minor",
+          "operator": "eq",
+          "expected_value": 10000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-split-meal-claim_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-split-meal-daily_category_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "daily_category_cap_minor",
+          "operator": "eq",
+          "expected_value": 10000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-split-meal-daily_category_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-split-meal-eligibility",
+          "target_kind": "effect_value",
+          "dimension": "eligibility",
+          "operator": "eq",
+          "expected_value": "allow",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-split-meal-eligibility",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-split-meal-receipt_requirement",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "required",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-split-meal-receipt_requirement",
+          "mechanical_relation_id": null
+        }
+      ],
+      "protected": false,
+      "partition": "visible"
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "meal-at-cap",
+      "category": "boundary",
+      "origins": [
+        "gold"
+      ],
+      "facts": {
+        "schema_version": "1.0",
+        "employee_role": "employee",
+        "expense_category": "meal",
+        "amount_minor": 10000,
+        "destination_type": "domestic",
+        "booking_days_before": 20,
+        "receipt_present": true,
+        "approval_roles_present": [
+          "manager"
+        ],
+        "prior_same_day_category_spend_minor": 0
+      },
+      "target_rule_ids": [],
+      "target_invariant_ids": [],
+      "assertions": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-at-cap-approval_requirement",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "none",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-meal-at-cap-approval_requirement",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-at-cap-claim_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "claim_cap_minor",
+          "operator": "eq",
+          "expected_value": 10000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-meal-at-cap-claim_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-at-cap-daily_category_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "daily_category_cap_minor",
+          "operator": "eq",
+          "expected_value": 10000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-meal-at-cap-daily_category_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-at-cap-eligibility",
+          "target_kind": "effect_value",
+          "dimension": "eligibility",
+          "operator": "eq",
+          "expected_value": "allow",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-meal-at-cap-eligibility",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-at-cap-receipt_requirement",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "required",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-meal-at-cap-receipt_requirement",
+          "mechanical_relation_id": null
+        }
+      ],
+      "protected": false,
+      "partition": "visible"
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "meal-over-cap",
+      "category": "boundary",
+      "origins": [
+        "gold"
+      ],
+      "facts": {
+        "schema_version": "1.0",
+        "employee_role": "employee",
+        "expense_category": "meal",
+        "amount_minor": 10001,
+        "destination_type": "domestic",
+        "booking_days_before": 20,
+        "receipt_present": true,
+        "approval_roles_present": [
+          "manager"
+        ],
+        "prior_same_day_category_spend_minor": 0
+      },
+      "target_rule_ids": [],
+      "target_invariant_ids": [],
+      "assertions": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-over-cap-approval_requirement",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "none",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-meal-over-cap-approval_requirement",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-over-cap-claim_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "claim_cap_minor",
+          "operator": "eq",
+          "expected_value": 10000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-meal-over-cap-claim_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-over-cap-daily_category_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "daily_category_cap_minor",
+          "operator": "eq",
+          "expected_value": 10000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-meal-over-cap-daily_category_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-over-cap-eligibility",
+          "target_kind": "effect_value",
+          "dimension": "eligibility",
+          "operator": "eq",
+          "expected_value": "allow",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-meal-over-cap-eligibility",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-meal-over-cap-receipt_requirement",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "required",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-meal-over-cap-receipt_requirement",
+          "mechanical_relation_id": null
+        }
+      ],
+      "protected": false,
+      "partition": "visible"
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "hotel-international-below",
+      "category": "boundary",
+      "origins": [
+        "gold"
+      ],
+      "facts": {
+        "schema_version": "1.0",
+        "employee_role": "employee",
+        "expense_category": "hotel",
+        "amount_minor": 24999,
+        "destination_type": "international",
+        "booking_days_before": 20,
+        "receipt_present": true,
+        "approval_roles_present": [
+          "manager"
+        ],
+        "prior_same_day_category_spend_minor": 0
+      },
+      "target_rule_ids": [],
+      "target_invariant_ids": [],
+      "assertions": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-below-approval_requirement",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "manager",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-international-below-approval_requirement",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-below-claim_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "claim_cap_minor",
+          "operator": "eq",
+          "expected_value": 25000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-international-below-claim_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-below-eligibility",
+          "target_kind": "effect_value",
+          "dimension": "eligibility",
+          "operator": "eq",
+          "expected_value": "allow",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-international-below-eligibility",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-below-receipt_requirement",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "required",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-international-below-receipt_requirement",
+          "mechanical_relation_id": null
+        }
+      ],
+      "protected": false,
+      "partition": "visible"
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "hotel-international-at",
+      "category": "boundary",
+      "origins": [
+        "gold"
+      ],
+      "facts": {
+        "schema_version": "1.0",
+        "employee_role": "employee",
+        "expense_category": "hotel",
+        "amount_minor": 25000,
+        "destination_type": "international",
+        "booking_days_before": 20,
+        "receipt_present": true,
+        "approval_roles_present": [
+          "manager"
+        ],
+        "prior_same_day_category_spend_minor": 0
+      },
+      "target_rule_ids": [],
+      "target_invariant_ids": [],
+      "assertions": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-at-approval_requirement",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "manager",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-international-at-approval_requirement",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-at-claim_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "claim_cap_minor",
+          "operator": "eq",
+          "expected_value": 25000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-international-at-claim_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-at-eligibility",
+          "target_kind": "effect_value",
+          "dimension": "eligibility",
+          "operator": "eq",
+          "expected_value": "allow",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-international-at-eligibility",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-international-at-receipt_requirement",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "required",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-international-at-receipt_requirement",
+          "mechanical_relation_id": null
+        }
+      ],
+      "protected": false,
+      "partition": "visible"
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "hotel-domestic-below",
+      "category": "boundary",
+      "origins": [
+        "gold"
+      ],
+      "facts": {
+        "schema_version": "1.0",
+        "employee_role": "employee",
+        "expense_category": "hotel",
+        "amount_minor": 24999,
+        "destination_type": "domestic",
+        "booking_days_before": 20,
+        "receipt_present": true,
+        "approval_roles_present": [
+          "manager"
+        ],
+        "prior_same_day_category_spend_minor": 0
+      },
+      "target_rule_ids": [],
+      "target_invariant_ids": [],
+      "assertions": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-below-approval_requirement",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "none",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-domestic-below-approval_requirement",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-below-claim_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "claim_cap_minor",
+          "operator": "eq",
+          "expected_value": 25000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-domestic-below-claim_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-below-eligibility",
+          "target_kind": "effect_value",
+          "dimension": "eligibility",
+          "operator": "eq",
+          "expected_value": "allow",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-domestic-below-eligibility",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-below-receipt_requirement",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "required",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-domestic-below-receipt_requirement",
+          "mechanical_relation_id": null
+        }
+      ],
+      "protected": true,
+      "partition": "holdout"
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "transport-at-cap",
+      "category": "boundary",
+      "origins": [
+        "gold"
+      ],
+      "facts": {
+        "schema_version": "1.0",
+        "employee_role": "employee",
+        "expense_category": "transport",
+        "amount_minor": 20000,
+        "destination_type": "domestic",
+        "booking_days_before": 20,
+        "receipt_present": true,
+        "approval_roles_present": [
+          "manager"
+        ],
+        "prior_same_day_category_spend_minor": 0
+      },
+      "target_rule_ids": [],
+      "target_invariant_ids": [],
+      "assertions": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-at-cap-approval_requirement",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "none",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-transport-at-cap-approval_requirement",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-at-cap-claim_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "claim_cap_minor",
+          "operator": "eq",
+          "expected_value": 20000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-transport-at-cap-claim_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-at-cap-eligibility",
+          "target_kind": "effect_value",
+          "dimension": "eligibility",
+          "operator": "eq",
+          "expected_value": "allow",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-transport-at-cap-eligibility",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-at-cap-receipt_requirement",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "required",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-transport-at-cap-receipt_requirement",
+          "mechanical_relation_id": null
+        }
+      ],
+      "protected": true,
+      "partition": "holdout"
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "transport-over-cap",
+      "category": "boundary",
+      "origins": [
+        "gold"
+      ],
+      "facts": {
+        "schema_version": "1.0",
+        "employee_role": "employee",
+        "expense_category": "transport",
+        "amount_minor": 20001,
+        "destination_type": "domestic",
+        "booking_days_before": 20,
+        "receipt_present": true,
+        "approval_roles_present": [
+          "manager"
+        ],
+        "prior_same_day_category_spend_minor": 0
+      },
+      "target_rule_ids": [],
+      "target_invariant_ids": [],
+      "assertions": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-over-cap-approval_requirement",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "none",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-transport-over-cap-approval_requirement",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-over-cap-claim_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "claim_cap_minor",
+          "operator": "eq",
+          "expected_value": 20000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-transport-over-cap-claim_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-over-cap-eligibility",
+          "target_kind": "effect_value",
+          "dimension": "eligibility",
+          "operator": "eq",
+          "expected_value": "allow",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-transport-over-cap-eligibility",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-transport-over-cap-receipt_requirement",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "required",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-transport-over-cap-receipt_requirement",
+          "mechanical_relation_id": null
+        }
+      ],
+      "protected": false,
+      "partition": "visible"
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "airfare-short",
+      "category": "boundary",
+      "origins": [
+        "gold"
+      ],
+      "facts": {
+        "schema_version": "1.0",
+        "employee_role": "employee",
+        "expense_category": "airfare",
+        "amount_minor": 30000,
+        "destination_type": "domestic",
+        "booking_days_before": 13,
+        "receipt_present": true,
+        "approval_roles_present": [
+          "manager"
+        ],
+        "prior_same_day_category_spend_minor": 0
+      },
+      "target_rule_ids": [],
+      "target_invariant_ids": [],
+      "assertions": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-airfare-short-approval_requirement",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "manager",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-airfare-short-approval_requirement",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-airfare-short-eligibility",
+          "target_kind": "effect_value",
+          "dimension": "eligibility",
+          "operator": "eq",
+          "expected_value": "allow",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-airfare-short-eligibility",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-airfare-short-receipt_requirement",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "required",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-airfare-short-receipt_requirement",
+          "mechanical_relation_id": null
+        }
+      ],
+      "protected": false,
+      "partition": "visible"
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "airfare-boundary",
+      "category": "boundary",
+      "origins": [
+        "gold"
+      ],
+      "facts": {
+        "schema_version": "1.0",
+        "employee_role": "employee",
+        "expense_category": "airfare",
+        "amount_minor": 30000,
+        "destination_type": "domestic",
+        "booking_days_before": 14,
+        "receipt_present": true,
+        "approval_roles_present": [
+          "manager"
+        ],
+        "prior_same_day_category_spend_minor": 0
+      },
+      "target_rule_ids": [],
+      "target_invariant_ids": [],
+      "assertions": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-airfare-boundary-approval_requirement",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "none",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-airfare-boundary-approval_requirement",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-airfare-boundary-eligibility",
+          "target_kind": "effect_value",
+          "dimension": "eligibility",
+          "operator": "eq",
+          "expected_value": "allow",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-airfare-boundary-eligibility",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-airfare-boundary-receipt_requirement",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "required",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-airfare-boundary-receipt_requirement",
+          "mechanical_relation_id": null
+        }
+      ],
+      "protected": true,
+      "partition": "holdout"
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "incidental-unsupported",
+      "category": "boundary",
+      "origins": [
+        "gold"
+      ],
+      "facts": {
+        "schema_version": "1.0",
+        "employee_role": "employee",
+        "expense_category": "incidental",
+        "amount_minor": 1000,
+        "destination_type": "domestic",
+        "booking_days_before": 20,
+        "receipt_present": false,
+        "approval_roles_present": [
+          "manager"
+        ],
+        "prior_same_day_category_spend_minor": 0
+      },
+      "target_rule_ids": [],
+      "target_invariant_ids": [],
+      "assertions": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-incidental-unsupported-approval_requirement",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "none",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-incidental-unsupported-approval_requirement",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-incidental-unsupported-receipt_requirement",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "not_required",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-incidental-unsupported-receipt_requirement",
+          "mechanical_relation_id": null
+        }
+      ],
+      "protected": false,
+      "partition": "visible"
+    },
+    {
+      "schema_version": "1.0",
+      "scenario_id": "hotel-domestic-over",
+      "category": "boundary",
+      "origins": [
+        "gold"
+      ],
+      "facts": {
+        "schema_version": "1.0",
+        "employee_role": "employee",
+        "expense_category": "hotel",
+        "amount_minor": 25001,
+        "destination_type": "domestic",
+        "booking_days_before": 20,
+        "receipt_present": true,
+        "approval_roles_present": [
+          "manager"
+        ],
+        "prior_same_day_category_spend_minor": 0
+      },
+      "target_rule_ids": [],
+      "target_invariant_ids": [],
+      "assertions": [
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-over-approval_requirement",
+          "target_kind": "effect_value",
+          "dimension": "approval_requirement",
+          "operator": "eq",
+          "expected_value": "none",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-domestic-over-approval_requirement",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-over-claim_cap_minor",
+          "target_kind": "effect_value",
+          "dimension": "claim_cap_minor",
+          "operator": "eq",
+          "expected_value": 25000,
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-domestic-over-claim_cap_minor",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-over-eligibility",
+          "target_kind": "effect_value",
+          "dimension": "eligibility",
+          "operator": "eq",
+          "expected_value": "allow",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-domestic-over-eligibility",
+          "mechanical_relation_id": null
+        },
+        {
+          "schema_version": "1.0",
+          "assertion_id": "gold-hotel-domestic-over-receipt_requirement",
+          "target_kind": "effect_value",
+          "dimension": "receipt_requirement",
+          "operator": "eq",
+          "expected_value": "required",
+          "origin": "gold",
+          "source_invariant_id": null,
+          "gold_label_id": "label-hotel-domestic-over-receipt_requirement",
+          "mechanical_relation_id": null
+        }
+      ],
+      "protected": false,
+      "partition": "visible"
+    }
+  ],
+  "policy_contract_sha256": "d182dc79ab8133b25876e7adc0047f590b72d2642e6f46ac46987972df00ce3a",
+  "required_dimensions": [
+    "eligibility"
+  ],
+  "schema_version": "1.0",
+  "seal_sha256": "47db66cab0a1caab0e2c1bcef800314718004b45afd50b280b80ee5f81f3f3d3",
+  "sealed_at": "2026-09-04T00:00:00Z"
+}

@@ -1,0 +1,167 @@
+1
+00:00:00,000 --> 00:00:10,000
+Policies get careful prose review, but they rarely get the equivalent of unit tests.
+
+2
+00:00:10,000 --> 00:00:20,000
+PolicyFuzz explores a narrow test-and-evaluation question: can a reviewer turn policy intent into cited, executable scenarios, expose a concrete gap or conflict, and retest a confirmed revision without handing judgment to a model?
+
+3
+00:00:20,000 --> 00:00:28,333
+Our working user is a Finance or People Ops reviewer.
+
+4
+00:00:28,333 --> 00:00:36,667
+The problem statement is still a hypothesis, not validated market research: edge cases span thresholds, exceptions, and interacting clauses, while a manual pass gives little reusable regression evidence.
+
+5
+00:00:36,667 --> 00:00:45,000
+The two bounded manual-review exercises are still pending, so this rehearsal makes no speed or customer claim.
+
+6
+00:00:45,000 --> 00:00:51,250
+In the final take, we will upload the synthetic policy on the frozen build.
+
+7
+00:00:51,250 --> 00:00:57,500
+Proposed rules retain source citations, and unsupported language stays visible instead of being silently normalized.
+
+8
+00:00:57,500 --> 00:01:03,750
+The reviewer checks the structured contract and explicitly confirms it before generation can continue.
+
+9
+00:01:03,750 --> 00:01:10,000
+This pause is the first trust boundary: interpretation is proposed by a model; authority stays with the reviewer and deterministic validators.
+
+10
+00:01:10,000 --> 00:01:17,500
+The current public cached rehearsal record has exactly three deterministic baseline findings.
+
+11
+00:01:17,500 --> 00:01:25,000
+First is a receipt-requirement finding.
+
+12
+00:01:25,000 --> 00:01:32,500
+In the final capture, we select its exact witness and open the cited rule, resolved values, and deterministic trace.
+
+13
+00:01:32,500 --> 00:01:40,000
+Second is an approval-requirement finding.
+
+14
+00:01:40,000 --> 00:01:47,500
+The final narration must follow the displayed witness and citations; it must not imply that the system resolved legal meaning.
+
+15
+00:01:47,500 --> 00:01:55,000
+Third is a daily-category-cap finding.
+
+16
+00:01:55,000 --> 00:02:02,500
+We will show the scenario inputs, the invariant witness, and the trace that connects the observed behavior to the reviewer-confirmed intent.
+
+17
+00:02:02,500 --> 00:02:10,000
+All three are accepted by authored demonstration decisions in the cached record.
+
+18
+00:02:10,000 --> 00:02:17,500
+That proves a reproducible rehearsal path, not independent human review or blind benchmark eligibility.
+
+19
+00:02:17,500 --> 00:02:25,000
+Final narration may call them frozen results only when the Gate B evidence and capture show the same witnesses, traces, citations, and one-to-one matches.
+
+20
+00:02:25,000 --> 00:02:29,167
+The current cached run accepted 10 scenarios.
+
+21
+00:02:29,167 --> 00:02:33,333
+Its initial provisional suite already satisfied the configured minimum: all 10 rules and all three invariants were covered, with 23 of 26 predicate branches covered.
+
+22
+00:02:33,333 --> 00:02:37,500
+The recorded targeted_cycles value is zero, so the workflow froze the suite without an adaptive model call.
+
+23
+00:02:37,500 --> 00:02:41,667
+One targeted cycle remains available only when minimum coverage is missing.
+
+24
+00:02:41,667 --> 00:02:45,833
+The rehearsal must not stage a fake adaptive cycle.
+
+25
+00:02:45,833 --> 00:02:50,000
+Final development recall remains unstated until frozen benchmark evidence exists.
+
+26
+00:02:50,000 --> 00:02:57,000
+PolicyFuzz pauses again.
+
+27
+00:02:57,000 --> 00:03:04,000
+Candidate findings cannot be accepted, and structural findings need reviewer severity.
+
+28
+00:03:04,000 --> 00:03:11,000
+In the current cached rehearsal, authored demonstration decisions accept the three supported findings and produce a three-operation revision proposal.
+
+29
+00:03:11,000 --> 00:03:18,000
+Nothing is published automatically.
+
+30
+00:03:18,000 --> 00:03:25,000
+The revision is applied only after session confirmation, and that confirmation event must be visible in the final capture.
+
+31
+00:03:25,000 --> 00:03:32,500
+After confirmation, deterministic Python reruns the identical frozen suite.
+
+32
+00:03:32,500 --> 00:03:40,000
+In the current cached rehearsal, findings move from three to zero, all 12 previously inconclusive assertions pass, and every patch-acceptance gate is true: suite identity, target fixes, failures outside targets, protected cases, newly bad states, unrelated-rule signatures, and holdout deterioration.
+
+33
+00:03:40,000 --> 00:03:47,500
+The final capture must still show the same suite hash before and after.
+
+34
+00:03:47,500 --> 00:03:55,000
+Frozen development regression remains unstated until final evidence exists.
+
+35
+00:03:55,000 --> 00:04:01,250
+Models interpret language, generate bounded tests, and draft a proposal.
+
+36
+00:04:01,250 --> 00:04:07,500
+They do not assign authoritative verdicts, severity, scored answers, hashes, or patch acceptance.
+
+37
+00:04:07,500 --> 00:04:13,750
+Deterministic code owns those decisions.
+
+38
+00:04:13,750 --> 00:04:20,000
+Human confirmation gates contract acceptance, finding decisions, and revision application; the public view excludes prompts, credentials, and full uploaded text.
+
+39
+00:04:20,000 --> 00:04:25,000
+The current public cached rehearsal contains 10 scenarios, three accepted finding decisions, four scripted model responses, and zero actual provider calls.
+
+40
+00:04:25,000 --> 00:04:30,000
+It is synthetic, cached, and blind-scoring-ineligible.
+
+41
+00:04:30,000 --> 00:04:35,000
+Confirmation count, elapsed run time, provider cost, manual-review comparisons, and the blind score remain unstated until their required frozen or human evidence exists.
+
+42
+00:04:35,000 --> 00:04:40,000
+PolicyFuzz offers review coverage and repeatable regression evidence; it does not prove compliance or exhaustive discovery.

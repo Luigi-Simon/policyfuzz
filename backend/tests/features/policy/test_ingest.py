@@ -8,8 +8,8 @@ from app.features.policy.ingest import (
     MAX_PDF_PAGES,
     MAX_POLICY_CHARS,
     PolicyIngestionError,
-    ingest_policy_text,
     ingest_policy_pages,
+    ingest_policy_text,
     load_bundled_policy,
     load_bundled_policy_text,
     prepare_policy_pages,
@@ -83,9 +83,10 @@ def test_ingest_policy_text_builds_deterministic_contract_document() -> None:
     assert document.pages == (
         PolicyPage(page=1, text=normalized, start=0, end=len(normalized)),
     )
-    assert document.document_sha256 == hashlib.sha256(
-        normalized.encode("utf-8")
-    ).hexdigest()
+    assert (
+        document.document_sha256
+        == hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+    )
     assert document.document_id == f"document-{document.document_sha256}"
 
 
@@ -133,9 +134,10 @@ def test_ingest_policy_pages_preserves_global_offsets_and_content_hash() -> None
     )
 
     assert [(page.start, page.end) for page in document.pages] == [(0, 10), (11, 22)]
-    assert document.document_sha256 == hashlib.sha256(
-        b"First page\nSecond page"
-    ).hexdigest()
+    assert (
+        document.document_sha256
+        == hashlib.sha256(b"First page\nSecond page").hexdigest()
+    )
 
 
 def test_prepare_policy_pages_rejects_too_many_pages() -> None:

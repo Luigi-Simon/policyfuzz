@@ -1,0 +1,10 @@
+{
+  "engine_version": "1.0.0",
+  "suite_sha256": "c988053930f1a6e6b12a3a059ad2c630576138482ce9757fddcbd7af7a480c94",
+  "semantic_execution_hashes": [
+    "b6f9faa63787ef0931b08fa7a9800ce66371f1eca8bd76a9209609d31f319111",
+    "b6f9faa63787ef0931b08fa7a9800ce66371f1eca8bd76a9209609d31f319111",
+    "b6f9faa63787ef0931b08fa7a9800ce66371f1eca8bd76a9209609d31f319111"
+  ],
+  "exactly_three_equal": true
+}
