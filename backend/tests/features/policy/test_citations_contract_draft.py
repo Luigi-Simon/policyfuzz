@@ -1,58 +1,109 @@
-"""Contract-first citation tests; enabled once Person 1 publishes SourceSpan models."""
-
 import hashlib
 
 import pytest
 
-
-citations = pytest.importorskip("app.features.policy.citations")
-if not hasattr(citations, "SourceSpan"):
-    pytest.skip(
-        "waiting for Person 1's shared SourceSpan contract and adapter",
-        allow_module_level=True,
-    )
-
-
-def _span(page: int, text: str, start: int, end: int):
-    return citations.SourceSpan(
-        page=page,
-        start=start,
-        end=end,
-        quote=text[start:end],
-        quote_sha256=hashlib.sha256(text[start:end].encode("utf-8")).hexdigest(),
-    )
-
-
-def test_exact_quote_and_offsets_are_accepted(policy_document):
-    page = policy_document.pages[0].text
-    citations.validate_source_span(policy_document, _span(1, page, 0, 12))
-
-
-@pytest.mark.parametrize(
-    "page,start,end,quote",
-    [(2, 0, 4, "Meal"), (1, -1, 4, "Meal"), (1, 0, 999, "Meal"), (1, 0, 4, "WRONG")],
+from app.domain.models import PolicyDocument, PolicyPage, SourceSpan
+from app.features.policy.citations import (
+    CitationValidationError,
+    validate_source_span,
 )
-def test_invalid_page_or_offsets_are_rejected(policy_document, page, start, end, quote):
-    bad = citations.SourceSpan(
-        page=page,
+
+
+def _hash(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+@pytest.fixture
+def policy_document() -> PolicyDocument:
+    first = "Meals require receipts."
+    second = "Claims above SGD 50 require manager approval."
+    return PolicyDocument(
+        document_id="document-1",
+        title="Development policy",
+        source_type="pasted_text",
+        pages=(
+            PolicyPage(page=1, text=first, start=0, end=len(first)),
+            PolicyPage(
+                page=2,
+                text=second,
+                start=len(first) + 1,
+                end=len(first) + 1 + len(second),
+            ),
+        ),
+        document_sha256="a" * 64,
+    )
+
+
+def test_exact_quote_and_global_offsets_are_accepted(
+    policy_document: PolicyDocument,
+) -> None:
+    page = policy_document.pages[1]
+    quote = "SGD 50"
+    start = page.start + page.text.index(quote)
+    span = SourceSpan(
+        page=page.page,
         start=start,
-        end=end,
+        end=start + len(quote),
         quote=quote,
+        quote_sha256=_hash(quote),
+    )
+
+    validated = validate_source_span(policy_document, span)
+
+    assert validated.start_offset == span.start
+    assert validated.end_offset == span.end
+
+
+def test_span_cannot_cross_a_page_boundary(policy_document: PolicyDocument) -> None:
+    first = policy_document.pages[0]
+    span = SourceSpan(
+        page=1,
+        start=first.end - 2,
+        end=first.end + 2,
+        quote="ts.X",
+        quote_sha256=_hash("ts.X"),
+    )
+
+    with pytest.raises(CitationValidationError, match="OFFSETS_OUT_OF_RANGE"):
+        validate_source_span(policy_document, span)
+
+
+def test_wrong_page_is_rejected_even_when_offsets_exist(
+    policy_document: PolicyDocument,
+) -> None:
+    span = SourceSpan(
+        page=1,
+        start=policy_document.pages[1].start,
+        end=policy_document.pages[1].start + 6,
+        quote="Claims",
+        quote_sha256=_hash("Claims"),
+    )
+
+    with pytest.raises(CitationValidationError, match="OFFSETS_OUT_OF_RANGE"):
+        validate_source_span(policy_document, span)
+
+
+def test_invalid_quote_hash_is_rejected(policy_document: PolicyDocument) -> None:
+    span = SourceSpan(
+        page=1,
+        start=0,
+        end=5,
+        quote="Meals",
         quote_sha256="0" * 64,
     )
-    with pytest.raises(citations.CitationValidationError):
-        citations.validate_source_span(policy_document, bad)
+
+    with pytest.raises(CitationValidationError, match="QUOTE_HASH_MISMATCH"):
+        validate_source_span(policy_document, span)
 
 
-def test_invalid_quote_hash_is_rejected(policy_document):
-    page = policy_document.pages[0].text
-    bad = _span(1, page, 0, 12).model_copy(update={"quote_sha256": "0" * 64})
-    with pytest.raises(citations.CitationValidationError, match="QUOTE_HASH_MISMATCH"):
-        citations.validate_source_span(policy_document, bad)
+def test_quote_is_recomputed_from_offsets(policy_document: PolicyDocument) -> None:
+    span = SourceSpan(
+        page=1,
+        start=0,
+        end=5,
+        quote="Hotel",
+        quote_sha256=_hash("Hotel"),
+    )
 
-
-def test_quote_is_recomputed_from_offsets_not_trusted_from_model(policy_document):
-    page = policy_document.pages[0].text
-    bad = _span(1, page, 0, 12).model_copy(update={"quote": "model supplied text"})
-    with pytest.raises(citations.CitationValidationError, match="QUOTE_MISMATCH"):
-        citations.validate_source_span(policy_document, bad)
+    with pytest.raises(CitationValidationError, match="QUOTE_MISMATCH"):
+        validate_source_span(policy_document, span)

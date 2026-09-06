@@ -1,12 +1,14 @@
-"""Primitive citation validation independent of shared domain contracts."""
+"""Exact citation validation for primitives and public policy contracts."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import hashlib
 import hmac
 import re
+from dataclasses import dataclass
 from typing import Sequence
+
+from app.domain.models import PolicyDocument, SourceSpan
 
 
 _SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
@@ -85,4 +87,42 @@ def validate_citation(
         end_offset=end_offset,
         quote=quote,
         quote_sha256=expected_hash,
+    )
+
+
+def validate_source_span(
+    document: PolicyDocument,
+    span: SourceSpan,
+) -> ValidatedCitation:
+    """Verify a public source span against its declared document page.
+
+    ``SourceSpan`` offsets are document-global while ``validate_citation`` uses
+    page-local offsets.  This adapter performs that conversion and returns the
+    verified values in document-global coordinates.
+    """
+
+    page = next((item for item in document.pages if item.page == span.page), None)
+    if page is None:
+        raise CitationValidationError("PAGE_OUT_OF_RANGE")
+    if page.end - page.start != len(page.text):
+        raise CitationValidationError("INVALID_PAGE_RANGE")
+    if span.start < page.start or span.end > page.end:
+        raise CitationValidationError("OFFSETS_OUT_OF_RANGE")
+
+    local_start = span.start - page.start
+    local_end = span.end - page.start
+    validated = validate_citation(
+        pages=(page.text,),
+        page_number=1,
+        start_offset=local_start,
+        end_offset=local_end,
+        quote=span.quote,
+        quote_sha256=span.quote_sha256,
+    )
+    return ValidatedCitation(
+        page_number=page.page,
+        start_offset=page.start + validated.start_offset,
+        end_offset=page.start + validated.end_offset,
+        quote=validated.quote,
+        quote_sha256=validated.quote_sha256,
     )

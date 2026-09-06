@@ -1,109 +1,78 @@
-Status: Ready for review — contract-independent Policy Intelligence foundation complete
+# Person 2 — Policy Intelligence handoff
 
-Branch: `p2/feat-policy-ingestion`
+Status: Deterministic Stage 1–2 foundation integrated with Person 1's Task 2 contracts
 
-Commits after the ingestion commit already on `main`:
+Branch: `p2/feat-policy-stages-1-2`
 
-- `7b1bf3a` — compiler fixtures, vocabulary, sample policy, and prompt requirements
-- `21c9ee1` — primitive exact-citation validation
-- `d7e3580` — strict typed model-output validation
-- `6cfaa8b` — bounded compiler retrieval tools
+## Public inputs and outputs
 
-## Interfaces
+- Consumes `PolicyDocument`, `SourceSpan`, `PolicyExtraction`, `RuleDraft`,
+  `TextRuleProvenance`, and `UnsupportedClause` from `app.domain.models`.
+- `validate_source_span(document, span) -> ValidatedCitation` checks an exact
+  contract citation using document-global offsets and its declared page.
+- `validate_policy_extraction(document, extraction, *, max_rules=12) ->
+  ValidatedPolicyExtraction` preserves valid rules and unsupported clauses,
+  excludes invalidly cited rules, and reports the deterministic exclusion count.
+- `parse_and_validate_policy_extraction(document, raw_output)` strictly validates
+  raw JSON against Person 1's predicate/effect contracts before provenance checks.
+- `build_policy_extraction_prompt(document) -> PolicyExtractionPrompt` returns
+  separated system instructions, untrusted policy JSON, and a JSON schema
+  generated directly from Person 1's `PolicyExtraction` contract.
 
-- `prepare_policy_text(text, *, max_characters=50_000) -> PreparedPolicyText`
-- `prepare_policy_pages(pages, *, max_characters=50_000, max_pages=20) -> PreparedPolicyText`
-- `load_bundled_policy_text(path) -> PreparedPolicyText`
-- `validate_citation(*, pages, page_number, start_offset, end_offset, quote, quote_sha256) -> ValidatedCitation`
-- `parse_typed_output(raw_output, *, response_model, max_characters=100_000) -> BaseModel`
-- `read_page(policy, *, page_number, max_characters=5_000) -> PageExcerpt`
-- `search_policy(policy, query, *, max_results=5, context_characters=120) -> tuple[SearchHit, ...]`
-- `find_section(policy, section_name, *, max_characters=3_000) -> SectionExcerpt`
-- `get_clause_context(policy, *, page_number, start_offset, end_offset, context_characters=120) -> PageExcerpt`
-- `PreparedPolicyText` and `PreparedPolicyPage` are feature-local preparation
-  types, not replacements for Person 1's shared `PolicyDocument` contract.
+Existing foundation remains available for normalized bounded ingestion, strict
+typed JSON parsing, primitive citation validation, and bounded policy retrieval.
 
-## Files
+## Changed files
 
-- `backend/app/features/policy/ingest.py`
-- `backend/tests/features/policy/__init__.py`
-- `backend/tests/features/policy/test_ingest.py`
-- `team/person-2-policy/HANDOFF.md`
-- `backend/tests/features/policy/test_citations_contract_draft.py`
 - `backend/app/features/policy/citations.py`
-- `backend/tests/features/policy/test_citations.py`
-- `backend/app/features/policy/model_output.py`
-- `backend/tests/features/policy/test_model_output.py`
-- `backend/app/features/policy/tools.py`
-- `backend/tests/features/policy/test_tools.py`
-- `samples/policies/development-policy.txt`
-- `team/person-2-policy/expected-extracted-rules.json`
-- `team/person-2-policy/supported-vocabulary.md`
-- `team/person-2-policy/fake-llm-responses.json`
-- `team/person-2-policy/prompt-requirements.md`
+- `backend/app/features/policy/extraction.py`
+- `backend/app/features/policy/prompts.py`
+- `backend/tests/features/policy/test_citations_contract_draft.py`
+- `backend/tests/features/policy/test_extraction_validation.py`
+- `backend/tests/features/policy/test_prompts.py`
+- `team/person-2-policy/HANDOFF.md`
 
-## Commands
+## Deterministic behavior and trust boundaries
 
-- RED: `python -m pytest tests/features/policy/test_ingest.py -q`
-  - Expected result: collection failed because `app.features.policy.ingest`
-    did not exist.
-- GREEN: `PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider tests/features/policy/test_ingest.py -q`
-  - Result: 12 passed.
-- FULL: `PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider -q`
-  - Result after compiler retrieval tools: 69 passed, 1 skipped
-    (only the future shared-contract adapter tests remain skipped).
-- JSON validation: `python -m json.tool team/person-2-policy/expected-extracted-rules.json` and `python -m json.tool team/person-2-policy/fake-llm-responses.json`
-  - Result: both valid.
-- LINT: `python -m ruff check app/features/policy/ingest.py tests/features/policy/test_ingest.py`
-  - Not run: `ruff` is declared as a development dependency but is not
-    installed in the current environment.
+- Source-span validation converts global offsets to page-local offsets only
+  after confirming that the span lies wholly inside its declared page.
+- Exact quote equality and SHA-256 are recomputed from source policy text.
+- A bad executable-rule citation excludes only that rule. Python derives a
+  verified line-level source span and preserves the candidate as an
+  `invalid_citation` unsupported clause.
+- Existing unsupported clauses are retained only when their citations validate.
+- At most 12 valid rules pass this boundary; overflow is counted as excluded.
+- Prompt instructions and policy content remain separate. Policy text is
+  explicitly untrusted, JSON-only output is required, OR clauses must become
+  separate AND-only rules, and unsupported language must not be guessed.
+- The prompt cannot assign authoritative verdicts, severity, metrics,
+  confirmation, approval, or legal conclusions.
 
-## Submission evidence
+## Commands and results
 
-- Unicode is normalized to NFC and CRLF/CR line endings become LF.
-- Empty policies, blank extracted pages, more than 20 pages, invalid UTF-8,
-  missing files, and policies over 50,000 normalized characters are rejected
-  with sanitized stable error codes.
-- Prepared pages retain deterministic one-based page numbers and global
-  character offsets into the combined normalized text.
-- Primitive citation validation rejects invalid pages, offsets, quote text, and
-  SHA-256 values using sanitized error codes.
-- Typed model-output parsing strictly validates JSON against a caller-supplied
-  Pydantic model and exposes only deterministic field paths and error codes.
-- Malformed, empty, oversized, schema-invalid, and coercion-dependent model
-  output is rejected without echoing raw output or private values.
-- Every rule and unsupported clause in the development fixture now has an exact
-  source offset and independently verified quote hash.
-- Prompt requirements record the broader large-population stakeholder audience
-  while preserving the repository's current T&E MVP scope.
-- Compiler retrieval tools provide bounded page reads, literal case-insensitive
-  search, numbered-section lookup, and clause context with stable offsets.
-- Retrieval failures use sanitized error codes and do not include policy text.
+- RED: focused test collection failed for missing `validate_source_span`,
+  `app.features.policy.extraction`, and `app.features.policy.prompts`.
+- GREEN: `PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider
+  tests/features/policy/test_citations.py
+  tests/features/policy/test_citations_contract_draft.py
+  tests/features/policy/test_extraction_validation.py
+  tests/features/policy/test_prompts.py -q` — **27 passed**.
+- Person 2 suite after rebasing onto Person 1's Task 3 commit:
+  `PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider
+  tests/features/policy -q` — **70 passed**.
+- Full backend after that rebase: **382 passed, 3 failed**. The failures are in
+  Person 1-owned Task 2/3 checks: enum construction, committed schema drift,
+  and warning-free blind-validation stderr. The active environment emits a
+  Pydantic protected-namespace warning and does not match Person 1's schema
+  generation environment; Person 2 did not change shared models or schemas.
+- Ruff could not run because the active Python environment has no `ruff` module.
 
-## Limitations
+## Remaining integration limitations
 
-- Person 1's shared domain contracts, canonical hashing helper, and public
-  protocols are not yet present on `main`. This foundation intentionally does
-  not create competing contracts or compute the final document hash.
-- `prepare_policy_pages` accepts page text already extracted by a PDF parser.
-  Selecting and adding a PDF dependency belongs to the shared dependency owner.
-- The public `ingest_policy_text(...) -> PolicyDocument` adapter from Task 12
-  remains pending until the frozen shared contracts are available.
-- Contract-adapter citation tests remain skipped until Person 1's `SourceSpan`
-  model exists. Primitive citation tests are active and passing.
-
-## Integration handoff
-
-Person 1 needs to publish the documented shared `PolicyDocument`, `PolicyPage`,
-`SourceSpan`, `RuleDraft`, `PolicyExtraction`, request/response models,
-`canonical_sha256`, and public LLM protocol. Person 2 should then:
-
-1. Adapt `PreparedPolicyText` to the official `PolicyDocument` and compute its
-   canonical document hash.
-2. Add `validate_source_span(document, span)` as a thin adapter over the tested
-   primitive citation validator and enable the skipped tests.
-3. Wrap `parse_typed_output` in the one-repair LLM workflow.
-4. Use the bounded retrieval tools in the Policy Compiler Agent.
-
-No file outside Person 2's owned paths is changed by this branch. The local
-`person-2-policy-flow.svg` diagram is untracked and is not part of this handoff.
+- Contract-backed `PolicyDocument` creation and stable rule IDs still require
+  Person 1's `app.core.hashing.canonical_sha256` from Task 3.
+- The one-repair model workflow and end-to-end `extract_policy(...)` still
+  require Person 1's public LLM request/response/operation types and
+  `app.domain.protocols.LLMClient` from Task 4.
+- No live model was called. No shared contracts, dependencies, API, workflow,
+  fuzzing, evaluation, frontend, blind data, or submission files were changed.
