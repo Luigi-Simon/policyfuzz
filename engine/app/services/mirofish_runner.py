@@ -206,12 +206,33 @@ def _capture(http: httpx.Client, base_url: str, simulation_id: str) -> dict[str,
     comments = _get(http, base_url, f"/api/simulation/{simulation_id}/comments", params={"limit": 80})
     actions = _get(http, base_url, f"/api/simulation/{simulation_id}/actions", params={"limit": 120})
     stats = _get(http, base_url, f"/api/simulation/{simulation_id}/agent-stats")
+    post_rows, post_duplicates = _deduplicate_messages(_list_payload(posts))
+    comment_rows, comment_duplicates = _deduplicate_messages(_list_payload(comments))
     return {
-        "posts": _list_payload(posts),
-        "comments": _list_payload(comments),
+        "posts": post_rows,
+        "comments": comment_rows,
         "actions": _list_payload(actions),
+        "duplicate_messages_rejected": post_duplicates + comment_duplicates,
         "agent_stats": (stats.get("data") or stats),
     }
+
+
+def _deduplicate_messages(rows: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]:
+    """Keep the first copy of each non-empty message before exposing it publicly."""
+    kept: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    rejected = 0
+    for row in rows:
+        text = str(row.get("content") or row.get("text") or "").strip()
+        if not text:
+            kept.append(row)
+            continue
+        if text in seen:
+            rejected += 1
+            continue
+        seen.add(text)
+        kept.append(row)
+    return kept, rejected
 
 
 def _poll_task(

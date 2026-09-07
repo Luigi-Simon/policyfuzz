@@ -51,6 +51,42 @@ def test_create_run_and_fetch_ir(tmp_settings):
     assert any(item["run_id"] == run_id for item in listed.json())
 
 
+def test_policyfuzz_linked_run_retains_confirmed_step_one_provenance(tmp_settings):
+    client = TestClient(create_app())
+    files = {"file": ("sample_policy.txt", SAMPLE_POLICY.read_bytes(), "text/plain")}
+    response = client.post(
+        "/v1/runs",
+        files=files,
+        data={
+            "policyfuzz_run_id": "public-run-123",
+            "policy_ir_sha256": "a" * 64,
+            "policy_contract_sha256": "b" * 64,
+            "scenario_suite_sha256": "c" * 64,
+            "policyfuzz_confirmation": "confirmed",
+        },
+    )
+    assert response.status_code == 200, response.text
+    assert response.json()["extra"]["policyfuzz_confirmation"] == {
+        "run_id": "public-run-123",
+        "policy_ir_sha256": "a" * 64,
+        "policy_contract_sha256": "b" * 64,
+        "scenario_suite_sha256": "c" * 64,
+        "confirmation": "confirmed",
+    }
+
+
+def test_policyfuzz_linked_run_rejects_partial_provenance(tmp_settings):
+    client = TestClient(create_app())
+    files = {"file": ("sample_policy.txt", SAMPLE_POLICY.read_bytes(), "text/plain")}
+    response = client.post(
+        "/v1/runs",
+        files=files,
+        data={"policyfuzz_run_id": "public-run-123", "policyfuzz_confirmation": "confirmed"},
+    )
+    assert response.status_code == 400
+    assert "all three artifact hashes" in response.text
+
+
 def test_post_scenarios(tmp_settings):
     client = TestClient(create_app())
     files = {"file": ("sample_policy.txt", SAMPLE_POLICY.read_bytes(), "text/plain")}

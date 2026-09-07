@@ -17,6 +17,8 @@ def test_pack_from_ir_without_suite():
     assert pack.agent_count == 0
     assert "Resident 001" in pack.seed_markdown
     assert "social media" in pack.simulation_requirement.lower() or "talk" in pack.simulation_requirement.lower()
+    assert "do not invent eligibility categories" in pack.simulation_requirement.lower()
+    assert "ineligible groups were paid" not in pack.simulation_requirement.lower()
     assert ir.rules[0].statement[:40] in pack.seed_markdown
 
 

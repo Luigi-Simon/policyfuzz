@@ -23,7 +23,7 @@ from app.features.fuzzing.types import (
     RevisionHintView,
 )
 
-DEFAULT_ENGINE_BASE_URL = "http://127.0.0.1:8000"
+DEFAULT_ENGINE_BASE_URL = "http://127.0.0.1:8001"
 
 
 class EngineClientError(RuntimeError):
@@ -44,6 +44,8 @@ class PolicyEngineClient(Protocol):
     def get_rehearsal(self, engine_run_id: str) -> RehearsalResult: ...
 
     def get_effectiveness(self, engine_run_id: str) -> EffectivenessView: ...
+
+    def rehearse(self, engine_run_id: str, *, swarm: bool = True) -> RehearsalResult: ...
 
     def revise(self, engine_run_id: str, instruction: str) -> RehearsalResult: ...
 
@@ -110,6 +112,13 @@ class HttpPolicyEngineClient:
         response = self._client.get(f"/v1/runs/{engine_run_id}/effectiveness")
         payload = self._parse(response, "ENGINE_EFFECTIVENESS_FAILED")
         return _to_effectiveness(payload)
+
+    def rehearse(self, engine_run_id: str, *, swarm: bool = True) -> RehearsalResult:
+        response = self._client.post(
+            f"/v1/runs/{engine_run_id}/rehearse",
+            params={"swarm": str(swarm).lower()},
+        )
+        return _to_result(self._parse(response, "ENGINE_REHEARSE_FAILED"))
 
     def revise(self, engine_run_id: str, instruction: str) -> RehearsalResult:
         if not instruction.strip():

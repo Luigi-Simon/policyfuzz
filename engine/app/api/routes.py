@@ -81,6 +81,11 @@ async def create_run(
         description='Structured audience segments JSON: [{"id","label","weight","attributes"}] or {segments:[...]}',
     ),
     locale: str = Form(default="", description="Optional locale / jurisdiction label for the audience"),
+    policyfuzz_run_id: str = Form(default="", description="Confirmed public PolicyFuzz run identifier"),
+    policy_ir_sha256: str = Form(default="", description="Confirmed PolicyIR artifact hash"),
+    policy_contract_sha256: str = Form(default="", description="Confirmed policy contract artifact hash"),
+    scenario_suite_sha256: str = Form(default="", description="Frozen scenario suite artifact hash"),
+    policyfuzz_confirmation: str = Form(default="", description="Must be confirmed for a PolicyFuzz-linked run"),
     seed_file: UploadFile | None = File(
         default=None,
         description="Optional audience seed PDF/TXT/MD. Text is merged into seed_text.",
@@ -114,10 +119,22 @@ async def create_run(
         locale=locale.strip(),
     )
     try:
+        provenance = {
+            "run_id": policyfuzz_run_id.strip(),
+            "policy_ir_sha256": policy_ir_sha256.strip(),
+            "policy_contract_sha256": policy_contract_sha256.strip(),
+            "scenario_suite_sha256": scenario_suite_sha256.strip(),
+            "confirmation": policyfuzz_confirmation.strip(),
+        }
+        if any(provenance.values()) and not all(provenance.values()):
+            raise HTTPException(400, "PolicyFuzz provenance must include the confirmed run and all three artifact hashes")
+        if provenance and any(provenance.values()) and provenance["confirmation"] != "confirmed":
+            raise HTTPException(400, "PolicyFuzz provenance is not confirmed")
         return _coordinator().create_run(
             filename=filename,
             payload=payload,
             seed=seed,
+            provenance=provenance if provenance and any(provenance.values()) else None,
         )
     except Exception as error:
         raise HTTPException(400, str(error)) from error

@@ -1,5 +1,5 @@
 import { apiBase } from './config';
-import { PublicTransportError, safePublicError, type PolicyFuzzTransport } from './transport';
+import { PublicTransportError, safePublicError, type AgentSimulationRequest, AgentSimulationResult, type PolicyFuzzTransport } from './transport';
 import type {
   ConfirmContractRequest,
   ConfirmRevisionRequest,
@@ -83,6 +83,82 @@ export class HttpTransport implements PolicyFuzzTransport {
     if (!result.deleted || result.run_id !== runId) throw invalidResponse();
   }
 
+  async startAgentSimulation(request: AgentSimulationRequest, signal?: AbortSignal): Promise<AgentSimulationResult> {
+    if (!request.confirmedRunId) {
+      throw safePublicError('INVALID_STATE', 'Confirm the Step 1 policy contract before starting MiroFish.');
+    }
+    const sourceRun = await this.getRun(request.confirmedRunId, signal);
+    const readyStages = new Set(['awaiting_finding_review', 'completed_no_findings', 'completed_no_revision', 'complete']);
+    if (!readyStages.has(sourceRun.stage)) {
+      throw safePublicError('INVALID_STATE', 'MiroFish is waiting for the confirmed contract and frozen scenario suite.');
+    }
+    const artifacts = new Map(sourceRun.artifacts.map((item) => [item.artifact.artifact_type, item.artifact.artifact_sha256]));
+    const confirmedArtifacts = {
+      policyIrSha256: artifacts.get('policy_ir'),
+      contractSha256: artifacts.get('policy_contract'),
+      suiteSha256: artifacts.get('scenario_suite'),
+    };
+    if (!confirmedArtifacts.policyIrSha256 || !confirmedArtifacts.contractSha256 || !confirmedArtifacts.suiteSha256) {
+      throw safePublicError('INVALID_STATE', 'MiroFish is waiting for the confirmed PolicyIR, contract, and frozen scenario suite.');
+    }
+    const result = await this.request(
+      `/api/v1/runs/${encodeURIComponent(request.confirmedRunId)}/agent-simulation`,
+      'POST',
+      200,
+      {
+        seed_text: request.seedText,
+        population_size: request.populationSize,
+        groups: request.groups.split(',').map((group) => group.trim()).filter(Boolean),
+        policy_ir_sha256: confirmedArtifacts.policyIrSha256,
+        policy_contract_sha256: confirmedArtifacts.contractSha256,
+        scenario_suite_sha256: confirmedArtifacts.suiteSha256,
+        confirmation: 'confirmed',
+      },
+      signal,
+    );
+    if (typeof result !== 'object' || result === null || Array.isArray(result) || typeof (result as { run_id?: unknown }).run_id !== 'string') {
+      throw safePublicError('INTERNAL_ERROR', 'The agent engine returned no run identifier.');
+    }
+    return result as AgentSimulationResult;
+  }
+
+  async startCustomAgentSimulation(request: AgentSimulationRequest, signal?: AbortSignal): Promise<AgentSimulationResult> {
+    const result = await this.request(
+      '/api/v1/custom-agent-simulation',
+      'POST',
+      200,
+      {
+        title: request.title,
+        policy_text: request.text,
+        seed_text: request.seedText,
+        population_size: request.populationSize,
+        groups: request.groups.split(',').map((group) => group.trim()).filter(Boolean),
+        non_confidential_confirmed: true,
+      },
+      signal,
+      360_000,
+    );
+    if (typeof result !== 'object' || result === null || Array.isArray(result) || typeof (result as { run_id?: unknown }).run_id !== 'string') {
+      throw safePublicError('INTERNAL_ERROR', 'The generic MiroFish engine returned no run identifier.');
+    }
+    return result as AgentSimulationResult;
+  }
+
+  async loadAgentSimulation(engineRunId: string, signal?: AbortSignal): Promise<AgentSimulationResult> {
+    assertRunId(engineRunId);
+    const result = await this.request(
+      `/api/v1/agent-simulation/${encodeURIComponent(engineRunId)}`,
+      'GET',
+      200,
+      undefined,
+      signal,
+    );
+    if (typeof result !== 'object' || result === null || Array.isArray(result) || typeof (result as { run_id?: unknown }).run_id !== 'string') {
+      throw safePublicError('INTERNAL_ERROR', 'The stored agent result returned no run identifier.');
+    }
+    return result as AgentSimulationResult;
+  }
+
   private async runRequest(
     runId: string,
     suffix: string,
@@ -118,6 +194,7 @@ export class HttpTransport implements PolicyFuzzTransport {
     expectedStatus: number,
     body: object | undefined,
     callerSignal?: AbortSignal,
+    timeoutMs = this.timeoutMs,
   ): Promise<unknown> {
     callerSignal?.throwIfAborted();
     const controller = new AbortController();
@@ -127,7 +204,7 @@ export class HttpTransport implements PolicyFuzzTransport {
     const timer = setTimeout(() => {
       timedOut = true;
       controller.abort();
-    }, this.timeoutMs);
+    }, timeoutMs);
     try {
       const init: RequestInit = { method, signal: controller.signal };
       if (body !== undefined) {

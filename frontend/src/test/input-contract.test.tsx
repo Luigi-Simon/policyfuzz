@@ -26,6 +26,29 @@ describe('InputContractView', () => {
     });
   });
 
+  it('queues agent configuration but still creates the normal Step 1 run', async () => {
+    const user = userEvent.setup();
+    const onCreate = vi.fn();
+    const onAgentSimulation = vi.fn();
+
+    render(<InputContractView busy={false} onCreate={onCreate} onConfirm={vi.fn()} onAgentSimulation={onAgentSimulation} />);
+    await user.type(screen.getByLabelText('Policy title'), 'Forest policy');
+    await user.type(screen.getByLabelText('Policy text'), 'The policy protects the forest and defines review safeguards.');
+    await user.click(screen.getByLabelText(/non-confidential/i));
+    await user.click(screen.getByLabelText(/Enable AI agents/i));
+    await user.click(screen.getByRole('button', { name: 'Analyze policy' }));
+
+    expect(onAgentSimulation).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Forest policy',
+      text: 'The policy protects the forest and defines review safeguards.',
+    }));
+    expect(onCreate).toHaveBeenCalledWith(expect.objectContaining({
+      source_type: 'pasted_text',
+      title: 'Forest policy',
+      text: 'The policy protects the forest and defines review safeguards.',
+    }));
+  });
+
   it('rejects pasted text beyond the public 50,000-character limit', async () => {
     const user = userEvent.setup();
     const onCreate = vi.fn();

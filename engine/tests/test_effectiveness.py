@@ -17,6 +17,7 @@ def test_effectiveness_score_is_0_to_100_with_repair_hints():
     assert report.justification
     assert report.recommended_actions
     assert report.swarm_used is False
+    assert report.interaction_verified is False
     assert "Fuzz suite" in report.justification
 
 
@@ -45,6 +46,7 @@ def test_swarm_highlights_feed_justification():
     }
     report = synthesize_effectiveness(ir, evaluation, swarm=swarm)
     assert report.swarm_used is True
+    assert report.interaction_verified is True
     assert any("Priya Nair" in item.agent for item in report.highlights)
     assert "Priya Nair" in report.justification
     assert "Hafiz Abdullah" in report.justification

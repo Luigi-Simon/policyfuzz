@@ -25,8 +25,8 @@ class Settings(BaseSettings):
     evaluator: str = ""
 
     max_swarm_agents: int = 50
-    mirofish_live_agents: int = 12
-    mirofish_use_llm_profiles: bool = False
+    mirofish_live_agents: int = 5
+    mirofish_use_llm_profiles: bool = True
 
     mirofish_base_url: str = ""
     mirofish_auto_launch: bool = False
@@ -34,7 +34,7 @@ class Settings(BaseSettings):
     mirofish_timeout_seconds: float = 120.0
     mirofish_swarm_timeout_seconds: float = 900.0
     mirofish_poll_seconds: float = 5.0
-    mirofish_max_rounds: int = 2
+    mirofish_max_rounds: int = 3
     mirofish_platform: str = "twitter"
 
     @property

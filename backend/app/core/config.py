@@ -30,6 +30,7 @@ class Settings(BaseSettings):
         default="openai", validation_alias="LLM_PROVIDER"
     )
     llm_model: str | None = Field(default=None, validation_alias="LLM_MODEL")
+    llm_base_url: str | None = Field(default=None, validation_alias="LLM_BASE_URL")
     openai_api_key: SecretStr | None = Field(
         default=None, validation_alias="OPENAI_API_KEY", repr=False
     )

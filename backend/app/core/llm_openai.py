@@ -44,6 +44,7 @@ class OpenAILLMClient:
         timeout_seconds: float,
         sdk_client: object,
     ) -> None:
+        self._is_openai_default_endpoint = True
         self._configure(
             model=model,
             timeout_seconds=timeout_seconds,
@@ -89,11 +90,14 @@ class OpenAILLMClient:
         if not secret.strip():
             raise LLMConfigurationError() from None
         try:
-            sdk_client = openai.AsyncOpenAI(
-                api_key=secret,
-                max_retries=0,
-                timeout=settings.llm_timeout_seconds,
-            )
+            sdk_options: dict[str, object] = {
+                "api_key": secret,
+                "max_retries": 0,
+                "timeout": settings.llm_timeout_seconds,
+            }
+            if settings.llm_base_url:
+                sdk_options["base_url"] = settings.llm_base_url
+            sdk_client = openai.AsyncOpenAI(**sdk_options)
         except Exception:  # noqa: BLE001 - sanitize SDK construction failures
             raise LLMConfigurationError() from None
         instance = cls.__new__(cls)
@@ -103,6 +107,7 @@ class OpenAILLMClient:
             sdk_client=sdk_client,
             owned_client=cast(_AsyncSDK, sdk_client),
         )
+        instance._is_openai_default_endpoint = not settings.llm_base_url
         return instance
 
     async def complete_json(self, request: LLMRequest) -> LLMResponse:
@@ -116,14 +121,22 @@ class OpenAILLMClient:
                     "content": _UNTRUSTED_INPUT_LABEL + request.untrusted_payload_json,
                 },
             ],
-            "response_format": {
-                "type": "json_schema",
-                "json_schema": {
-                    "name": request.response_schema_name,
-                    "schema": schema,
-                    "strict": False,
-                },
-            },
+            # OpenAI supports structured json_schema responses. Several
+            # OpenAI-compatible providers used by MiroFish only support the
+            # older json_object form; the response is still validated against
+            # the contract by the workflow after transport.
+            "response_format": (
+                {
+                    "type": "json_schema",
+                    "json_schema": {
+                        "name": request.response_schema_name,
+                        "schema": schema,
+                        "strict": False,
+                    },
+                }
+                if self._is_openai_default_endpoint
+                else {"type": "json_object"}
+            ),
             "max_completion_tokens": request.generation_config.max_output_tokens,
             "temperature": request.generation_config.temperature_milli / 1000,
             "top_p": request.generation_config.top_p_percent / 100,

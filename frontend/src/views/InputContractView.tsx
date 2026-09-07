@@ -12,6 +12,7 @@ export interface InputContractViewProps {
   busy: boolean;
   onCreate: (request: CreateRunRequest) => void;
   onConfirm: (request: ConfirmContractRequest) => void;
+  onAgentSimulation?: (request: { title: string; text: string; seedText: string; populationSize: number; groups: string }) => void;
 }
 
 function valueText(value: unknown) {
@@ -26,13 +27,16 @@ function codePointLength(value: string) {
   return Array.from(value).length;
 }
 
-export function InputContractView({ run, busy, onCreate, onConfirm }: InputContractViewProps) {
+export function InputContractView({ run, busy, onCreate, onConfirm, onAgentSimulation }: InputContractViewProps) {
   const [sourceType, setSourceType] = useState<CreateRunRequest['source_type']>('pasted_text');
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [sampleId, setSampleId] = useState<string>(bundledSamples[0].id);
   const [nonConfidential, setNonConfidential] = useState(false);
   const [message, setMessage] = useState('');
+  const [agentEnabled, setAgentEnabled] = useState(false);
+  const [seedText, setSeedText] = useState('Residents with different perspectives discuss the policy and its consequences.');
+  const [populationSize, setPopulationSize] = useState(12);
   const pending = run?.pending_confirmation?.kind === 'contract' ? run.pending_confirmation : null;
   const [ruleAcknowledgements, setRuleAcknowledgements] = useState<Record<string, boolean>>({});
   const [dimensionAcknowledgements, setDimensionAcknowledgements] = useState<Record<string, boolean>>({});
@@ -52,6 +56,10 @@ export function InputContractView({ run, busy, onCreate, onConfirm }: InputContr
     if (sourceType === 'bundled_sample' && (codePointLength(normalizedSampleId) < 1 || codePointLength(normalizedSampleId) > 200)) {
       return setMessage('Bundled sample ID must contain between 1 and 200 characters.');
     }
+    const agentRequest = agentEnabled && sourceType === 'pasted_text'
+      ? { title: title.trim(), text, seedText, populationSize, groups: 'residents,students,workers,seniors' }
+      : null;
+    if (agentRequest) onAgentSimulation?.(agentRequest);
     onCreate({
       schema_version: '1.0',
       source_type: sourceType,
@@ -118,6 +126,8 @@ export function InputContractView({ run, busy, onCreate, onConfirm }: InputContr
                 <h3>Private by design</h3>
                 <div className="disclosure"><p>The source stays in memory for up to 60 minutes. Delete the run sooner from the header. Provider processing is disclosed by the configured service.</p></div>
                 <label className="checkbox"><input type="checkbox" checked={nonConfidential} disabled={busy} onChange={(event) => setNonConfidential(event.target.checked)} /> I confirm this policy is non-confidential and may be processed by the configured provider.</label>
+                <label className="checkbox"><input type="checkbox" checked={agentEnabled} disabled={busy} onChange={(event) => setAgentEnabled(event.target.checked)} /> Enable AI agents to talk to each other through MiroFish</label>
+                {agentEnabled ? <div className="inset"><p className="small">PolicyFuzz will first create and show the Step 1 contract. After you confirm it and the scenario suite is frozen, the same run will launch MiroFish with this seed.</p><label className="field">Agent seed<textarea rows={3} value={seedText} disabled={busy} onChange={(event) => setSeedText(event.target.value)} /></label><label className="field">Agent count<input type="number" min={1} max={50} value={populationSize} disabled={busy} onChange={(event) => setPopulationSize(Number(event.target.value))} /></label></div> : null}
                 {message ? <p role="alert" className="form-error">{message}</p> : null}
                 <button className="wide" disabled={busy} type="submit">{busy ? 'Starting…' : 'Analyze policy'}</button>
               </section>

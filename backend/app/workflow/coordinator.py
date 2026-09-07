@@ -833,7 +833,17 @@ class RunCoordinator:
         from app.workflow.validation import validate_cached_record
 
         if command.source_type != "bundled_sample":
-            raise InvalidRunCommandError()
+            raise WorkflowError(
+                PublicError(
+                    code="INVALID_INPUT",
+                    message=(
+                        "Custom pasted policies require APP_MODE=live with a "
+                        "configured model provider. Cached mode only runs the "
+                        "bundled development-policy sample."
+                    ),
+                    retryable=False,
+                )
+            )
         if self.cached_loader is None:
             raise WorkflowError(
                 PublicError(

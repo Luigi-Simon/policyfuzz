@@ -55,6 +55,7 @@ def synthesize_effectiveness(
         swarm_used=bool(
             swarm and (swarm.get("actions") or swarm.get("posts") or swarm.get("comments"))
         ),
+        interaction_verified=bool(swarm and (swarm.get("comments") or [])),
         metrics=metrics,
     )
 

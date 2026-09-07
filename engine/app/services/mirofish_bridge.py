@@ -207,15 +207,20 @@ def _simulation_requirement(
     agent_count: int,
 ) -> str:
     rule_lines = "\n".join(f"- {rule.statement}" for rule in ir.rules[:12])
+    question_lines = "\n".join(f"- {question}" for question in ir.open_questions[:12])
     n = min(agent_count or population or 50, 50)
     return (
         f"A government just announced this policy: {ir.title}.\n\n"
         f"Key rules the public has heard:\n{rule_lines}\n\n"
+        f"Open questions from the source:\n{question_lines or '- None recorded.'}\n\n"
         f"Simulate social-media reaction among {n} residents described in the seed "
-        f"for about 24 hours (keep the run short). Agents must talk to each other "
-        f"(posts, comments, quote-tweets, rumours).\n\n"
-        "Track sentiment: support, opposition, perceived fairness, confusion about eligibility, "
-        "and whether rumours (for example that ineligible groups were paid) take off.\n\n"
-        "Do not only restate the rules. Show how different groups react to one another.\n\n"
+        "for about 24 hours (keep the run short). Agents must talk to each other "
+        "through posts, comments, and quote-tweets.\n\n"
+        "Track support, opposition, perceived fairness, implementation concerns, "
+        "and uncertainty about any open questions actually present in the source.\n\n"
+        "Do not only restate the rules. Show how different groups react to one another. "
+        "Do not invent eligibility categories, compensation programs, benefits, penalties, "
+        "rumours, or other provisions that the policy does not state. If a participant "
+        "raises an unsupported claim, label it as uncertainty or a question rather than fact.\n\n"
         f"Population notes: {seed.text.strip() or 'see seed document.'}"
     )

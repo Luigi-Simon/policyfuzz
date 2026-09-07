@@ -61,8 +61,11 @@ class Coordinator:
         filename: str,
         payload: bytes,
         seed: SeedSpec | None = None,
+        provenance: dict[str, str] | None = None,
     ) -> RunRecord:
         record = RunRecord(seed=self._cap_seed(seed or SeedSpec()))
+        if provenance is not None:
+            record.extra["policyfuzz_confirmation"] = dict(provenance)
         self.store.save(record)
         self.store.save_source_bytes(record.run_id, filename, payload)
         try:
@@ -294,12 +297,19 @@ class Coordinator:
 
 
 def _trim_swarm(capture: dict[str, Any]) -> dict[str, Any]:
+    posts = (capture.get("posts") or [])[:80]
+    comments = (capture.get("comments") or [])[:80]
+    actions = (capture.get("actions") or [])[:120]
+    interaction_verified = bool(comments)
     return {
         "project_id": capture.get("project_id"),
         "graph_id": capture.get("graph_id"),
         "simulation_id": capture.get("simulation_id"),
-        "posts": (capture.get("posts") or [])[:80],
-        "comments": (capture.get("comments") or [])[:80],
-        "actions": (capture.get("actions") or [])[:120],
+        "posts": posts,
+        "comments": comments,
+        "actions": actions,
+        "duplicate_messages_rejected": int(capture.get("duplicate_messages_rejected") or 0),
+        "interaction_verified": interaction_verified,
+        "interaction_status": "verified" if interaction_verified else "posts_only",
         "agent_stats": capture.get("agent_stats"),
     }

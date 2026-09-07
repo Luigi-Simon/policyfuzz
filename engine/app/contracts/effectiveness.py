@@ -39,5 +39,6 @@ class PolicyEffectivenessReport(BaseModel):
     highlights: list[AgentInteraction] = Field(default_factory=list)
     recommended_actions: list[RevisionHint] = Field(default_factory=list)
     swarm_used: bool = False
+    interaction_verified: bool = False
     metrics: JsonDict = Field(default_factory=dict)
     created_at: str = Field(default_factory=now_iso)

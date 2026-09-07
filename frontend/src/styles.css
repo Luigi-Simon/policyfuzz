@@ -9,4 +9,7 @@
 .eyebrow,.badge,th,.citation figcaption,.event-list time{font-size:11px}
 .brand .badge,.session small,.engine,.pipeline small,.gates .row code,.table-scroll:after{font-size:11px}
 .coverage-unavailable{grid-column:1/-1;margin:0}
+html,body,#root{min-height:100%;overflow-y:auto}.app-shell{min-height:100vh}
+.agent-conversation{max-height:60vh;overflow-y:auto;padding-right:8px}
+.agent-highlights{display:grid;gap:10px;margin-top:12px}.agent-highlights .inset{margin-top:0}.agent-outcome{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.75;max-height:none}.agent-findings{display:grid;gap:10px}.agent-findings .inset{margin-top:0}
 @media(max-width:900px){.input-grid>aside{grid-row:auto}.finding-card p{display:block}}

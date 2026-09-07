@@ -1,7 +1,18 @@
 import httpx
 
 from app.contracts.mirofish import MiroFishPack
-from app.services.mirofish_runner import run_swarm
+from app.services.mirofish_runner import _deduplicate_messages, run_swarm
+
+
+def test_duplicate_messages_are_rejected_before_public_capture():
+    kept, rejected = _deduplicate_messages([
+        {"user_id": 1, "content": "same"},
+        {"user_id": 2, "content": "same"},
+        {"user_id": 3, "content": "different"},
+        {"user_id": 4, "content": ""},
+    ])
+    assert rejected == 1
+    assert [item["user_id"] for item in kept] == [1, 3, 4]
 
 
 def test_run_swarm_walks_ontology_build_prepare_start_capture():

@@ -1,4 +1,4 @@
-import { PublicTransportError, safePublicError, type PolicyFuzzTransport } from './transport';
+import { PublicTransportError, safePublicError, type AgentSimulationRequest, AgentSimulationResult, type PolicyFuzzTransport } from './transport';
 import type {
   ConfirmContractRequest,
   ConfirmRevisionRequest,
@@ -64,6 +64,12 @@ export class MockTransport implements PolicyFuzzTransport {
 
   constructor(options: MockTransportOptions = {}) {
     this.terminalStage = options.terminalStage;
+  }
+
+  async startAgentSimulation(request: AgentSimulationRequest, signal?: AbortSignal): Promise<AgentSimulationResult> {
+    abortIfNeeded(signal);
+    if (!request.confirmedRunId) throw safePublicError('INVALID_STATE', 'Confirm the Step 1 policy contract before starting MiroFish.');
+    return { run_id: 'mock-agent-run-1', status: 'completed', message: 'Mock agent simulation complete.', effectiveness: { score: 0, swarm_used: false } };
   }
 
   async createRun(request: CreateRunRequest, signal?: AbortSignal): Promise<CreateRunResponse> {
