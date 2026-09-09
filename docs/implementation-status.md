@@ -35,8 +35,9 @@ examples in the older plan differ.
 
 ## Verified application checks
 
-- Backend: **1,524 tests passed** after Person 2 citation, response-schema and rule-limit corrections, including **179 policy tests**.
-- Frontend: **108 tests passed**; generated-type drift, type checking and production build passed.
+- Backend: **1,534 tests passed** after the semifinal simulation API corrections. The earlier Person 2 citation, response-schema and rule-limit fixes remain included.
+- Frontend: **177 tests passed**; generated-type drift, type checking and production build passed.
+- Optional exploratory engine: **83 tests passed**, including exact extraction, reproducibility, evidence isolation and revision source guards.
 - Setup checker: sixteen tests passed; its Ruff check/format and offline cached/live probes passed.
   Earlier shared-script and caption-generator checks remain in the historical verification record.
 - Contracts: all **111 schemas**, OpenAPI and the canonical view fixture match generated output.
@@ -45,7 +46,8 @@ examples in the older plan differ.
 - Draft PDF: **nine pages**. Final submission checks intentionally reject absent final media and evidence.
 
 The latest machine-readable application verification record is
-[`p2-citation-verification.json`](../team/person-1-integration/evidence/p2-citation-verification.json).
+[`semifinal-verification-2026-09-09.json`](../team/person-1-integration/evidence/semifinal-verification-2026-09-09.json).
+The earlier [`p2-citation-verification.json`](../team/person-1-integration/evidence/p2-citation-verification.json) remains historical evidence.
 The earlier [`demo-readiness-verification.json`](../team/person-1-integration/evidence/demo-readiness-verification.json) remains historical evidence.
 The earlier [`implementation-verification.json`](../team/person-1-integration/evidence/implementation-verification.json)
 is retained as historical evidence.
@@ -55,6 +57,21 @@ The demo-readiness follow-up preserves Person 2's latest validation fixes and ma
 accepted contract/finding confirmations return active progress before model calls finish.
 Polling, schemas and direct offline coordinator behavior are preserved. See the
 [rehearsal guide](demo-day-guide.md) for setup and the live/cached/mock distinction.
+
+The [semifinal refinement](semifinal-refinement.md) hardens simulation launch,
+cancellation, refresh recovery, response validation and evidence presentation.
+Optional engine extraction now fails safely on invalid citations, exploratory
+cases cannot invent scored expectations, and structured revisions retain the same
+cases while preventing stale swarm evidence or stale prose from representing the
+revision. `npm run dev` starts the core API and frontend together after dependency
+installation; root CI also runs the optional engine tests.
+
+The combined launcher served both services successfully over HTTP. A supervised
+frontend preview started, but browser control stalled, so this pass records no
+browser acceptance or screenshot. All model responses in this pass were fake,
+scripted or cached, with zero real provider calls. A fresh live-provider and
+external MiroFish rehearsal remains unverified; historical live evidence below is
+preserved with its original scope.
 
 ## Evidence and limits
 

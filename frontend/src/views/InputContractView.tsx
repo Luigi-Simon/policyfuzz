@@ -35,7 +35,7 @@ export function InputContractView({ run, busy, onCreate, onConfirm, onAgentSimul
   const [nonConfidential, setNonConfidential] = useState(false);
   const [message, setMessage] = useState('');
   const [agentEnabled, setAgentEnabled] = useState(false);
-  const [seedText, setSeedText] = useState('Residents with different perspectives discuss the policy and its consequences.');
+  const [seedText, setSeedText] = useState('Employees, managers and finance reviewers discuss expense claims, unclear wording and exceptions.');
   const [populationSize, setPopulationSize] = useState(12);
   const pending = run?.pending_confirmation?.kind === 'contract' ? run.pending_confirmation : null;
   const [ruleAcknowledgements, setRuleAcknowledgements] = useState<Record<string, boolean>>({});
@@ -56,8 +56,12 @@ export function InputContractView({ run, busy, onCreate, onConfirm, onAgentSimul
     if (sourceType === 'bundled_sample' && (codePointLength(normalizedSampleId) < 1 || codePointLength(normalizedSampleId) > 200)) {
       return setMessage('Bundled sample ID must contain between 1 and 200 characters.');
     }
-    const agentRequest = agentEnabled && sourceType === 'pasted_text'
-      ? { title: title.trim(), text, seedText, populationSize, groups: 'residents,students,workers,seniors' }
+    if (agentEnabled && onAgentSimulation && sourceType === 'pasted_text') {
+      if (!seedText.trim()) return setMessage('Enter an agent seed before starting the simulation.');
+      if (!Number.isInteger(populationSize) || populationSize < 1 || populationSize > 50) return setMessage('Agent count must be a whole number between 1 and 50.');
+    }
+    const agentRequest = agentEnabled && onAgentSimulation && sourceType === 'pasted_text'
+      ? { title: title.trim(), text, seedText: seedText.trim(), populationSize, groups: 'employees,managers,finance reviewers' }
       : null;
     if (agentRequest) onAgentSimulation?.(agentRequest);
     onCreate({
@@ -110,8 +114,8 @@ export function InputContractView({ run, busy, onCreate, onConfirm, onAgentSimul
               <div className="section-heading"><span className="iconbox"><FileText aria-hidden="true" /></span><div><span className="eyebrow">Source</span><h3>Provide a policy</h3></div></div>
               <fieldset className="segmented">
                 <legend>Policy source</legend>
-                <label><input type="radio" name="source" checked={sourceType === 'pasted_text'} onChange={() => setSourceType('pasted_text')} /> Pasted text</label>
-                <label><input type="radio" name="source" checked={sourceType === 'bundled_sample'} onChange={() => setSourceType('bundled_sample')} /> Bundled sample</label>
+                <label><input type="radio" name="source" disabled={busy} checked={sourceType === 'pasted_text'} onChange={() => setSourceType('pasted_text')} /> Pasted text</label>
+                <label><input type="radio" name="source" disabled={busy} checked={sourceType === 'bundled_sample'} onChange={() => setSourceType('bundled_sample')} /> Bundled sample</label>
               </fieldset>
               <label className="field">Policy title<input value={title} disabled={busy} onChange={(event) => setTitle(event.target.value)} /></label>
               {sourceType === 'pasted_text' ? (
@@ -126,8 +130,8 @@ export function InputContractView({ run, busy, onCreate, onConfirm, onAgentSimul
                 <h3>Private by design</h3>
                 <div className="disclosure"><p>The source stays in memory for up to 60 minutes. Delete the run sooner from the header. Provider processing is disclosed by the configured service.</p></div>
                 <label className="checkbox"><input type="checkbox" checked={nonConfidential} disabled={busy} onChange={(event) => setNonConfidential(event.target.checked)} /> I confirm this policy is non-confidential and may be processed by the configured provider.</label>
-                <label className="checkbox"><input type="checkbox" checked={agentEnabled} disabled={busy} onChange={(event) => setAgentEnabled(event.target.checked)} /> Enable AI agents to talk to each other through MiroFish</label>
-                {agentEnabled ? <div className="inset"><p className="small">PolicyFuzz will first create and show the Step 1 contract. After you confirm it and the scenario suite is frozen, the same run will launch MiroFish with this seed.</p><label className="field">Agent seed<textarea rows={3} value={seedText} disabled={busy} onChange={(event) => setSeedText(event.target.value)} /></label><label className="field">Agent count<input type="number" min={1} max={50} value={populationSize} disabled={busy} onChange={(event) => setPopulationSize(Number(event.target.value))} /></label></div> : null}
+                {onAgentSimulation ? <><label className="checkbox"><input type="checkbox" checked={agentEnabled && sourceType === 'pasted_text'} disabled={busy || sourceType !== 'pasted_text'} onChange={(event) => setAgentEnabled(event.target.checked)} /> Enable AI agents for an independent MiroFish simulation</label>{sourceType !== 'pasted_text' ? <p className="small muted">Paste non-confidential policy text to enable independent agent simulation.</p> : null}</> : null}
+                {onAgentSimulation && agentEnabled && sourceType === 'pasted_text' ? <div className="inset"><p className="small">After the PolicyFuzz contract review and initial tests, MiroFish separately interprets the original text and generates its own scenarios. Its observations do not change the deterministic verdicts or frozen test suite. MiroFish processes and retains its own copy; deleting the PolicyFuzz run does not delete that separate simulation.</p><label className="field">Agent seed<textarea rows={3} value={seedText} disabled={busy} onChange={(event) => setSeedText(event.target.value)} /></label><label className="field">Agent count<input type="number" min={1} max={50} value={populationSize} disabled={busy} onChange={(event) => setPopulationSize(Number(event.target.value))} /></label></div> : null}
                 {message ? <p role="alert" className="form-error">{message}</p> : null}
                 <button className="wide" disabled={busy} type="submit">{busy ? 'Starting…' : 'Analyze policy'}</button>
               </section>

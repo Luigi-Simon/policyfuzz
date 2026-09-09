@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
+import hashlib
 import random
 import re
 from typing import Any
 
 from app.contracts.policy import ActorType, AttributeSchema, PolicyIR, Predicate, Rule
 from app.contracts.run import AudienceSegment, SeedSpec
-from app.contracts.scenario import ExpectedOutcome, Scenario, ScenarioKind, ScenarioSuite
+from app.contracts.scenario import Scenario, ScenarioKind, ScenarioSuite
 from app.plugins.scenario_designer import ScenarioDesigner
 
 DEFAULT_MAX_AGENTS = 50
@@ -51,7 +52,7 @@ class FuzzDesigner(ScenarioDesigner):
 
 
 def _seed_int(text: str) -> int:
-    return abs(hash(text)) % (2**32)
+    return int.from_bytes(hashlib.sha256(text.encode("utf-8")).digest(), "big")
 
 
 def _resolve_segments(seed: SeedSpec, ir: PolicyIR) -> list[AudienceSegment]:
@@ -91,18 +92,19 @@ def _coverage_plan(ir: PolicyIR, n: int) -> list[tuple[ScenarioKind, Rule]]:
         return [("normal", placeholder) for _ in range(n)]
     open_ids = set(ir.index.open_question_rule_ids)
     plan: list[tuple[ScenarioKind, Rule]] = []
-    for rule in rules:
-        plan.append(("normal", rule))
-        plan.append(("boundary", rule))
-        plan.append(("adversarial", rule))
-        if rule.ambiguity or rule.id in open_ids:
-            plan.append(("targeted", rule))
-    if len(plan) < n:
-        kinds: tuple[ScenarioKind, ...] = ("normal", "boundary", "adversarial", "targeted")
-        extra = n - len(plan)
-        for index in range(extra):
-            plan.append((kinds[index % 4], rules[index % len(rules)]))
-    return plan[:n]
+    # Cover distinct rules before assigning another probe to an earlier rule.
+    # Rotate kinds across both rules and rounds to retain diversity at small caps.
+    round_index = 0
+    while len(plan) < n:
+        for rule_index, rule in enumerate(rules):
+            kinds: tuple[ScenarioKind, ...] = ("normal", "boundary", "adversarial")
+            if rule.ambiguity or rule.id in open_ids:
+                kinds += ("targeted",)
+            plan.append((kinds[(rule_index + round_index) % len(kinds)], rule))
+            if len(plan) == n:
+                break
+        round_index += 1
+    return plan
 
 
 def _build_scenario(
@@ -130,15 +132,11 @@ def _build_scenario(
     _apply_predicates(facts, rule.when)
     if kind == "boundary":
         _nudge_boundary(facts, rule)
-        expected: ExpectedOutcome = "compliant"
     elif kind == "adversarial":
         _make_adversarial(facts, ir, rule)
-        expected = "violation"
     elif kind == "targeted":
         _make_targeted(facts, ir, rule)
-        expected = "ambiguous"
     else:
-        expected = "compliant" if _modality(rule) != "must_not" else "compliant"
         if _modality(rule) == "must_not":
             facts["action.name"] = _safe_action(ir, rule)
     targeted = [rule.id] if rule.id else []
@@ -150,7 +148,8 @@ def _build_scenario(
         narrative=_narrative(facts, kind, rule),
         facts=facts,
         targeted_rule_ids=targeted,
-        expected_outcome=expected,
+        # Probe kind describes how facts were generated, not a policy-owner oracle.
+        expected_outcome=None,
         notes=rule.ambiguity or "",
     )
 

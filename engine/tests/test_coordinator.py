@@ -4,6 +4,22 @@ from app.services.revise import revise_policy_ir
 from tests.conftest import SAMPLE_POLICY, make_pdf_bytes
 
 
+class ScriptedRevision:
+    enabled = True
+
+    def __init__(self, ir):
+        self.ir = ir
+
+    def complete_json(self, *, system, user):
+        if "Revision instruction:" not in user:
+            return {"recommended_actions": []}
+        raw = self.ir.model_dump(mode="json")
+        raw["rules"][0]["when"].append(
+            {"field": "context.days", "op": "gte", "value": 7}
+        )
+        return raw
+
+
 def test_pipeline_compiles_without_llm(tmp_settings):
     coordinator = Coordinator(settings=tmp_settings)
     payload = SAMPLE_POLICY.read_bytes()
@@ -31,7 +47,8 @@ def test_revise_bumps_revision(tmp_settings):
         filename="sample_policy.txt",
         payload=SAMPLE_POLICY.read_bytes(),
     )
-    revised = coordinator.revise(record.run_id, "Exempt grade 12 students from the phone ban.")
+    coordinator.llm = ScriptedRevision(record.ir)
+    revised = coordinator.revise(record.run_id, "Delay enforcement by one week.")
     assert revised.ir is not None
     assert revised.ir.revision == 2
     assert revised.ir.parent_revision == 1
@@ -43,7 +60,9 @@ def test_attach_suite(tmp_settings):
     coordinator = Coordinator(settings=tmp_settings)
     record = coordinator.create_run(
         filename="ban.pdf",
-        payload=make_pdf_bytes("Students must not use phones. Teachers shall confiscate after 2 warnings."),
+        payload=make_pdf_bytes(
+            "Students must not use phones. Teachers shall confiscate after 2 warnings."
+        ),
     )
     suite = ScenarioSuite(
         policy_id=record.ir.policy_id,
@@ -54,7 +73,11 @@ def test_attach_suite(tmp_settings):
             Scenario(
                 kind="boundary",
                 title="Exactly two warnings",
-                facts={"actor.role": "student", "action.name": "use_device", "context.warnings": 2},
+                facts={
+                    "actor.role": "student",
+                    "action.name": "use_device",
+                    "context.warnings": 2,
+                },
                 targeted_rule_ids=[record.ir.rules[0].id],
                 expected_outcome="violation",
             )
@@ -72,7 +95,9 @@ def test_designer_plugin_advances_status(tmp_settings):
     from examples.simple_designer import SimpleDesigner
 
     coordinator = Coordinator(settings=tmp_settings, designer=SimpleDesigner())
-    record = coordinator.create_run(filename="sample_policy.txt", payload=SAMPLE_POLICY.read_bytes())
+    record = coordinator.create_run(
+        filename="sample_policy.txt", payload=SAMPLE_POLICY.read_bytes()
+    )
     assert record.status == "completed"
     assert record.suite is not None
     assert {item.kind for item in record.suite.scenarios} == {
@@ -89,6 +114,8 @@ def test_revise_function_without_run():
 
     document = ingest_bytes("p.txt", SAMPLE_POLICY.read_bytes())
     ir = heuristic_extract(document)
-    revised = revise_policy_ir(ir, "Delay enforcement by one week.")
+    revised = revise_policy_ir(
+        ir, "Delay enforcement by one week.", llm=ScriptedRevision(ir)
+    )
     assert revised.revision == ir.revision + 1
     assert revised.policy_id == ir.policy_id

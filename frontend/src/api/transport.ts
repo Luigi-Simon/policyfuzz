@@ -32,8 +32,8 @@ export type AgentSimulationResult = {
   policy_source_text?: string;
   message?: string;
   error?: string | null;
-  document?: { filename?: string; text?: string };
-  ir?: { title?: string; source?: { text?: string }; rules?: Array<{ id?: string; statement?: string }> };
+  document?: { filename?: string; text?: string } | null;
+  ir?: { title?: string; source?: { text?: string }; rules?: Array<{ id?: string; statement?: string }> } | null;
   effectiveness?: {
     score?: number;
     swarm_used?: boolean;
@@ -41,13 +41,15 @@ export type AgentSimulationResult = {
     justification?: string;
     metrics?: Record<string, unknown>;
     highlights?: Array<{ agent?: string; platform?: string; kind?: string; text?: string; why_significant?: string }>;
-  };
-  evaluation?: { findings?: Array<{ scenario_id?: string; verdict?: string; summary?: string; rule_ids?: string[]; [key: string]: unknown }> };
+  } | null;
+  evaluation?: { findings?: Array<{ scenario_id?: string; verdict?: string; summary?: string; rule_ids?: string[]; [key: string]: unknown }> } | null;
   extra?: { swarm?: { interaction_verified?: boolean; duplicate_messages_rejected?: number; error?: string; posts?: Array<{ agent?: string; user_name?: string; text?: string; content?: string; [key: string]: unknown }>; comments?: Array<{ agent?: string; user_name?: string; text?: string; content?: string; [key: string]: unknown }>; actions?: Array<{ agent?: string; agent_name?: string; text?: string; content?: string; [key: string]: unknown }> } };
 };
 
 export interface PolicyFuzzTransport {
   readonly dataSourceLabel?: string;
+  /** Explicitly enabled only by a transport that can run independent simulations. */
+  readonly supportsAgentSimulation?: boolean;
   createRun(request: CreateRunRequest, signal?: AbortSignal): Promise<CreateRunResponse>;
   getRun(runId: string, signal?: AbortSignal): Promise<RunView>;
   confirmContract(runId: string, request: ConfirmContractRequest, signal?: AbortSignal): Promise<RunView>;

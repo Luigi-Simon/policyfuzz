@@ -1,13 +1,13 @@
 # Policy rehearsal engine
 
-FastAPI backend that turns a policy PDF into compiled **PolicyIR**, then Person 3 fuzzes it (max 50 agents), grades the suite, optionally runs the MiroFish swarm, and returns a 0–100 effectiveness score.
+Optional FastAPI engine that compiles policy PDF/text into a provisional **PolicyIR**, generates up to 50 exploratory scenarios, and can capture MiroFish conversations. Its evidence is independent of the core PolicyFuzz frozen suite. A heuristic score is available only when expected outcomes exist; ordinary generated cases are unasserted and must display **Not scored**.
 
 This is **not** the MiroFish UI. MiroFish stays next door as the optional swarm simulator.
 
 | Role | Owns | This repo |
 |------|------|-----------|
 | 1 Integration | contracts, routes, coordinator, run state, LLM adapter, CI | implemented |
-| 2 Policy intelligence | PDF ingest, cited rules, revise + recompile | implemented |
+| 2 Policy intelligence | PDF ingest, cited provisional rules, structured revisions | implemented |
 | 3 Fuzz + swarm + score | `PolicyIR → ≤50 agents → EvaluationReport + PolicyEffectivenessReport` | implemented |
 | 4 Custom grader | optional `EVALUATOR=` override | plugin slot |
 | 5 Product / demo | React | CORS + OpenAPI + `/v1/contracts` |
@@ -20,14 +20,16 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
 cp .env.example .env   # optional: add LLM_API_KEY for better extraction
-uvicorn app.main:app --reload --port 8000
+uvicorn app.main:app --reload --port 8001
 ```
 
-- API: http://localhost:8000/docs
-- Downloadable pack for the frontend: http://localhost:8000/download/api-docs.zip
+- API: http://localhost:8001/docs
+- Downloadable pack for the frontend: http://localhost:8001/download/api-docs.zip
 - Also in the repo: `docs/API.md`, `docs/openapi.json`, `docs/swagger.html`
 
-Without `LLM_API_KEY`, extraction uses a deterministic heuristic (must/shall/may/should sentences + citations). Good enough to unblock you and CI. With a key, the same OpenAI-compatible adapter MiroFish uses compiles a richer IR.
+Without `LLM_API_KEY`, or with `LLM_MOCK=true`, extraction uses an explicitly unverified demo heuristic. Live extraction validates complete source quotations and fails visibly on malformed or unsupported output; it does not silently substitute the demo interpretation. Source text beyond 24,000 characters is rejected rather than truncated.
+
+The engine reads `.env` from its working directory, unlike the core backend. Configure `LLM_API_KEY`, `LLM_MODEL_NAME` and optionally `LLM_BASE_URL` here. The core backend separately uses `OPENAI_API_KEY` and `LLM_MODEL`. Keep all credentials server-side and out of Git. From the repository root, `npm run dev -- --agents` starts the installed core, engine and frontend environments together. It does not start the separate MiroFish project.
 
 ## Pipeline
 
@@ -40,7 +42,7 @@ policy PDF/text + audience seed/segments + N
     → PolicyEffectivenessReport        (score 0–100, justification, next actions)
 ```
 
-`POST /v1/runs` is **synchronous**. It compiles IR, generates ≤50 fuzz agents, grades them, and writes a **preview score** from the fuzzer. It does **not** wait for a live swarm. Audience is injectable via `seed_text` / `seed_file` / `groups` / `audience_json` + optional `locale` — not hardcoded to any jurisdiction.
+`POST /v1/runs` is **synchronous**. It compiles IR, generates ≤50 exploratory cases, evaluates supplied assertions, and records whether a heuristic score is available. Model-generated scenarios do not supply their own expected answers. Creating a run does not wait for a live swarm by default. Audience is injectable via `seed_text` / `seed_file` / `groups` / `audience_json` + optional `locale`.
 
 ```
 GET  /v1/runs/{id}/effectiveness     # score + justification + recommended_actions
@@ -52,7 +54,9 @@ POST /v1/runs/{id}/revise            # iteration round from recommended_actions 
 GET  /v1/contracts                   # JSON Schema for TS types (includes AudienceSegment)
 ```
 
-Swarm scoring needs MiroFish at `http://localhost:5001` and `MIROFISH_BASE_URL=http://localhost:5001`. Without that, rehearse still returns a fuzz-only score. GST voucher is only a sample policy, not hardcoded logic.
+External conversations need MiroFish at `http://localhost:5001` and `MIROFISH_BASE_URL=http://localhost:5001`. Conversations are candidate observations; they cannot change deterministic verdicts or inflate the heuristic score. Without a capture, the result explicitly records that limitation. Consumers must check `metrics.score_available`; the numeric zero placeholder does not mean a measured score when that flag is false.
+
+Structured revisions preserve scenario facts, IDs and assertions for local comparison, and archive prior results. Revised prose remains unverified, so the engine prevents a new MiroFish launch from reusing unchanged original wording after a revision. A failed extraction, revision or swarm does not fabricate a successful replacement result.
 
 ## Person 3
 
@@ -67,7 +71,7 @@ Person 2 hands off a revised PolicyIR (`POST /v1/runs/{id}/revise`). Person 3 fu
 
 Results on `GET /v1/runs/{id}/effectiveness`:
 
-- `score` 0–100
+- `score` 0–100 only when `metrics.score_available` is true; otherwise display **Not scored**
 - `justification` — fuzz summary plus named swarm posts when the swarm ran
 - `highlights` — significant agent interactions
 - `recommended_actions` — smallest useful edits for Person 2's repair agent
@@ -96,8 +100,8 @@ Then:
 
 - `GET /v1/runs/{id}` — full run (document, IR, suite, score)
 - `GET /v1/runs/{id}/effectiveness` — 0–100 + justification
-- `POST /v1/runs/{id}/revise` `{"instruction": "Exempt grade 12"}` — recompile IR, regenerate agents
-- `POST /v1/runs/{id}/rehearse?swarm=true` — run MiroFish and rescore
+- `POST /v1/runs/{id}/revise` `{"instruction": "Clarify the receipt threshold"}` — validate a structured revision and rerun the same local scenarios
+- `POST /v1/runs/{id}/rehearse?swarm=true` — request MiroFish capture where source wording is still eligible
 - `GET /v1/contracts` — generate TypeScript types
 
 CORS defaults to `localhost:5173` and `localhost:3000`.
@@ -108,7 +112,7 @@ CORS defaults to `localhost:5173` and `localhost:3000`.
 LLM_MOCK=true pytest -q
 ```
 
-GitHub workflow: `.github/workflows/ci.yml`. Init git in `engine/` (or make `engine/` the repo root) so that workflow is picked up.
+The repository-root `.github/workflows/ci.yml` runs these tests in the `exploratory-engine` job. Keep the engine and core backend in separate virtual environments because both expose an `app` Python package.
 
 ## Layout
 

@@ -43,6 +43,34 @@ three-run replay and independent public benchmark verification all pass. See the
 non-Gate-B `team/person-1-integration/evidence/demo-readiness-verification.json`. Historical
 verification below remains dated evidence, not the current complete-suite test count.
 
+## Semifinal refinement — 2026-09-09
+
+The user authorized work across all five roles for this pass. Current verification
+is **1,534 backend tests**, **177 frontend tests**, **83 optional engine tests**,
+unchanged **111 public schemas**, Ruff/format, generated frontend types and the
+production build. The scripted workflow still removes three defects to zero on
+the same ten-case suite; three replay executions match. Shared domain models,
+protocols and public HTTP schemas remain unchanged.
+
+Simulation launches now use the actual document pages without blocking the API
+event loop. Safe sidecar errors, frontend cancellation, refresh recovery and
+runtime response validation protect the complete handoff. The optional engine
+requires exact citations, keeps unasserted cases unscored, preserves frozen cases
+through structured revision and isolates historical captures. Revised rules cannot
+launch an external swarm against unchanged original prose. Simulation observations
+are explicitly independent from the core deterministic evidence.
+
+`npm run dev` starts the installed core API and frontend together; `--agents` adds
+the optional local engine. Root CI now includes engine tests. The combined launcher
+passed a real HTTP startup/shutdown check. The frontend preview started, but browser
+control stalled; browser acceptance and a fresh live/MiroFish rehearsal remain
+unverified. This pass made zero real provider calls and does not complete the
+remaining human, blind, Gate B, freeze or media gates.
+
+See [refinement details](../../docs/semifinal-refinement.md) and
+[verification evidence](evidence/semifinal-verification-2026-09-09.json).
+Historical verification below retains its original date and scope.
+
 ## Person 2 live hardening — 2026-09-06
 
 Person 1 integrated the revised provider fixture with the actual workflow/API.

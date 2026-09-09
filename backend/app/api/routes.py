@@ -1,9 +1,12 @@
 """Frozen HTTP commands forwarded to the coordinator through owned jobs."""
 
+from contextlib import suppress
 from typing import Annotated
 
+import httpx
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel, Field
+from starlette.concurrency import run_in_threadpool
 
 from app.api.dependencies import get_container, json_command
 from app.container import AppContainer
@@ -15,11 +18,19 @@ from app.domain.models import (
     CreateRunResponse,
     DeleteRunResponse,
     HealthResponse,
+    PolicyDocument,
+    PublicError,
     RunView,
     SelectFindingsRequest,
 )
-from app.features.fuzzing import AudienceSegmentInput, HttpPolicyEngineClient, RehearsalRequest
-from app.workflow.errors import InvalidRunCommandError, InvalidRunStateError, StaleArtifactError
+from app.features.fuzzing import HttpPolicyEngineClient, RehearsalRequest
+from app.features.fuzzing.engine_client import EngineClientError
+from app.workflow.errors import (
+    InvalidRunCommandError,
+    InvalidRunStateError,
+    StaleArtifactError,
+    WorkflowError,
+)
 from app.workflow.state_machine import allowed_actions
 
 router = APIRouter(prefix="/api/v1")
@@ -131,54 +142,81 @@ async def start_agent_simulation(
     command: AgentSimulationCommand,
     container: Container,
 ):
-    """Launch MiroFish only from a confirmed PolicyFuzz run and frozen suite."""
+    """Authorize an independent exploratory simulation after core review."""
 
     record = await container.coordinator.store.get(run_id)
     if record is None:
         raise InvalidRunCommandError()
-    ready_stages = {"awaiting_finding_review", "completed_no_findings", "completed_no_revision", "complete"}
+    ready_stages = {
+        "awaiting_finding_review",
+        "completed_no_findings",
+        "completed_no_revision",
+        "complete",
+    }
     if record.stage not in ready_stages:
         raise InvalidRunStateError(
             current_stage=record.stage,
             allowed_actions=allowed_actions(record.stage),
         )
     if command.confirmation != "confirmed":
-        raise InvalidRunCommandError(current_stage=record.stage, allowed_actions=allowed_actions(record.stage))
+        raise InvalidRunCommandError(
+            current_stage=record.stage, allowed_actions=allowed_actions(record.stage)
+        )
     artifacts = {
         envelope.artifact_type: envelope.artifact_sha256
         for envelope in record.artifacts
     }
-    if not all(artifacts.get(kind) for kind in ("policy_ir", "policy_contract", "scenario_suite")):
-        raise InvalidRunCommandError(current_stage=record.stage, allowed_actions=allowed_actions(record.stage))
+    if not all(
+        artifacts.get(kind)
+        for kind in ("policy_ir", "policy_contract", "scenario_suite")
+    ):
+        raise InvalidRunCommandError(
+            current_stage=record.stage, allowed_actions=allowed_actions(record.stage)
+        )
     if (
         command.policy_ir_sha256 != artifacts["policy_ir"]
         or command.policy_contract_sha256 != artifacts["policy_contract"]
         or command.scenario_suite_sha256 != artifacts["scenario_suite"]
     ):
-        raise StaleArtifactError(current_stage=record.stage, allowed_actions=allowed_actions(record.stage))
+        raise StaleArtifactError(
+            current_stage=record.stage, allowed_actions=allowed_actions(record.stage)
+        )
     document = next(
-        (envelope.payload for envelope in record.artifacts if envelope.artifact_type == "policy_document"),
+        (
+            envelope.payload
+            for envelope in record.artifacts
+            if envelope.artifact_type == "policy_document"
+        ),
         None,
     )
-    policy_text = getattr(document, "text", "")
+    policy_text = (
+        "\n\n".join(page.text for page in document.pages)
+        if isinstance(document, PolicyDocument)
+        else ""
+    )
     if not policy_text.strip():
-        raise InvalidRunCommandError(current_stage=record.stage, allowed_actions=allowed_actions(record.stage))
-    client = HttpPolicyEngineClient()
-    try:
-        created = client.create_rehearsal(
-            RehearsalRequest(
-                policy_text=policy_text,
-                seed_text=command.seed_text,
-                population_size=command.population_size,
-                groups=tuple(command.groups),
-            )
+        raise InvalidRunCommandError(
+            current_stage=record.stage, allowed_actions=allowed_actions(record.stage)
         )
-        if not created.engine_run_id:
-            raise InvalidRunCommandError(current_stage=record.stage, allowed_actions=allowed_actions(record.stage))
-        result = client.rehearse(created.engine_run_id, swarm=True)
-        return result.raw
-    finally:
-        client.close()
+    payload = await run_in_threadpool(
+        _run_simulation,
+        RehearsalRequest(
+            policy_text=policy_text,
+            seed_text=command.seed_text,
+            population_size=command.population_size,
+            groups=tuple(command.groups),
+        ),
+    )
+    # These hashes anchor the launch decision only. The independent sidecar
+    # reinterprets the source and generates its own exploratory scenarios.
+    payload["source_policyfuzz_run_id"] = run_id
+    payload["policy_title"] = document.title
+    payload["source_artifact_hashes"] = {
+        "policy_ir": command.policy_ir_sha256,
+        "policy_contract": command.policy_contract_sha256,
+        "scenario_suite": command.scenario_suite_sha256,
+    }
+    return payload
 
 
 @router.get(
@@ -186,15 +224,20 @@ async def start_agent_simulation(
     operation_id="get_agent_simulation",
     include_in_schema=False,
 )
-async def get_agent_simulation(engine_run_id: str):
+def get_agent_simulation(engine_run_id: str):
     """Reopen a completed local MiroFish result for read-only evidence viewing."""
 
-    client = HttpPolicyEngineClient(timeout=30.0)
+    client = None
     try:
+        client = HttpPolicyEngineClient(timeout=30.0)
         result = client.get_rehearsal(engine_run_id)
-        return result.raw
+        return _exploratory_payload(result.raw)
+    except (EngineClientError, httpx.HTTPError, ValueError, TypeError):
+        raise _simulation_unavailable() from None
     finally:
-        client.close()
+        if client is not None:
+            with suppress(Exception):  # Cleanup must not mask the original result.
+                client.close()
 
 
 @router.post(
@@ -212,30 +255,64 @@ async def start_custom_agent_simulation(command: CustomAgentSimulationCommand):
 
     if not command.non_confidential_confirmed:
         raise InvalidRunCommandError()
-    # Generic MiroFish preparation can include graph construction and profile
-    # generation before the short swarm begins. Give this compatibility path
-    # enough time to return the completed structured result to the frontend.
-    client = HttpPolicyEngineClient(timeout=300.0)
-    try:
-        created = client.create_rehearsal(
-            RehearsalRequest(
-                policy_text=command.policy_text,
-                seed_text=command.seed_text,
-                population_size=command.population_size,
-                groups=command.groups,
-                policy_filename=command.title,
-            )
+    payload = await run_in_threadpool(
+        _run_simulation,
+        RehearsalRequest(
+            policy_text=command.policy_text,
+            seed_text=command.seed_text,
+            population_size=command.population_size,
+            groups=command.groups,
+            policy_filename=command.title,
+        ),
+    )
+    payload["compatibility_mode"] = "mirofish_generic_policy"
+    payload["policy_title"] = command.title
+    payload["policy_source_text"] = command.policy_text
+    return payload
+
+
+def _simulation_unavailable() -> WorkflowError:
+    return WorkflowError(
+        PublicError(
+            code="PROVIDER_UNAVAILABLE",
+            message="The simulation service could not complete this request. Check its status before starting another simulation.",
+            retryable=False,
         )
+    )
+
+
+def _exploratory_payload(raw: dict) -> dict:
+    payload = dict(raw)
+    if not isinstance(payload.get("run_id"), str) or not payload["run_id"]:
+        raise _simulation_unavailable()
+    payload["evidence_scope"] = "independent_exploratory_simulation"
+    payload["frozen_suite_reused"] = False
+    if payload.get("error"):
+        payload["error"] = (
+            "The exploratory simulation did not complete. Any retained observations are partial and unverified."
+        )
+    return payload
+
+
+def _run_simulation(request: RehearsalRequest) -> dict:
+    """Keep synchronous sidecar I/O off the core API event loop; always close it."""
+    client = None
+    try:
+        client = HttpPolicyEngineClient(timeout=300.0)
+        created = client.create_rehearsal(request)
         if not created.engine_run_id:
-            raise InvalidRunCommandError()
-        result = client.rehearse(created.engine_run_id, swarm=True)
-        payload = dict(result.raw)
-        payload["compatibility_mode"] = "mirofish_generic_policy"
-        payload["policy_title"] = command.title
-        payload["policy_source_text"] = command.policy_text
-        return payload
+            raise _simulation_unavailable()
+        if created.error:
+            return _exploratory_payload(created.raw)
+        return _exploratory_payload(
+            client.rehearse(created.engine_run_id, swarm=True).raw
+        )
+    except (EngineClientError, httpx.HTTPError, ValueError, TypeError):
+        raise _simulation_unavailable() from None
     finally:
-        client.close()
+        if client is not None:
+            with suppress(Exception):  # Cleanup must not mask the original result.
+                client.close()
 
 
 @router.post(
