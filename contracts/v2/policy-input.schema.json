@@ -1,0 +1,83 @@
+{
+  "$defs": {
+    "SupportingDocument": {
+      "additionalProperties": false,
+      "properties": {
+        "document_id": {
+          "minLength": 1,
+          "title": "Document Id",
+          "type": "string"
+        },
+        "source_uri": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Uri"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "document_id",
+        "title",
+        "text"
+      ],
+      "title": "SupportingDocument",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "agent_count": {
+      "maximum": 100,
+      "minimum": 1,
+      "title": "Agent Count",
+      "type": "integer"
+    },
+    "agent_seed": {
+      "minLength": 1,
+      "title": "Agent Seed",
+      "type": "string"
+    },
+    "description": {
+      "minLength": 1,
+      "title": "Description",
+      "type": "string"
+    },
+    "supporting_documents": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/SupportingDocument"
+      },
+      "title": "Supporting Documents",
+      "type": "array"
+    },
+    "title": {
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "description",
+    "agent_seed",
+    "agent_count"
+  ],
+  "title": "PolicyInput",
+  "type": "object"
+}

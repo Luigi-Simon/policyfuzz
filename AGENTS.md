@@ -1,5 +1,23 @@
 # PolicyFuzz repository rules
 
+## V2 collaboration scope — current branch
+
+The user-approved v2 work is split between Simon and the Sandbox contributor.
+Read docs/v2/README.md and the applicable team/v2-core or team/v2-sandbox handoff.
+
+- V2 has exactly four product agent roles: **Orchestrator Agent**, **Metric Agent**, **Sandbox Agent**, **Judge Agent**. The old Fuzz Agent role is named Metric Agent in v2. PolicyFuzz remains the project name.
+- Parsing, translation, deterministic execution and storage are tools, not extra agent roles. Stakeholders are participants inside the Sandbox Agent.
+- Simon owns shared schemas, configuration and integration, plus all v2 paths except the Sandbox contributor's paths.
+- The Sandbox contributor owns backend/app/v2/sandbox/** and backend/tests/v2/sandbox/**. Shared schema or dependency changes go through Simon.
+- Canonical v2 models come from app.v2.contracts; the Sandbox protocol comes from app.v2.protocols. This is an explicit versioned exception to the v1 import rule below.
+- V2 work uses synthetic or explicitly non-confidential policy text. The executable domain is limited to what the runner actually supports; no general-policy correctness claim.
+- Preserve v1 schemas, recorded artifacts and historical hashes. Legacy v1 modules retain their names until a separately tested migration is integrated.
+- Do not send expected verdicts or historical outcomes into stakeholder seed material.
+- Keep main unchanged during v2 foundation work. Core and Sandbox PRs target p1/feat-policyfuzz-v2.
+- Unit tests and fixtures must make no live provider calls. Fixture results must always identify themselves as fixture.
+- Public Sandbox output contains English display text; original records remain backend-only. Translation cannot assign policy verdicts or alter IDs, counts, amounts or source relationships.
+- This scope supersedes the older five-person ownership allocation only for the new v2 work. The v1 rules below continue to apply to the preserved v1 application.
+
 These rules apply to every path unless a more specific `AGENTS.md` narrows them.
 
 ## Engineering discipline

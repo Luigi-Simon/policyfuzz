@@ -1,0 +1,195 @@
+{
+  "$defs": {
+    "ContextSource": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "source_uri": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Uri"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "title",
+        "text"
+      ],
+      "title": "ContextSource",
+      "type": "object"
+    },
+    "ScenarioSetup": {
+      "additionalProperties": false,
+      "properties": {
+        "circumstances": {
+          "minLength": 1,
+          "title": "Circumstances",
+          "type": "string"
+        },
+        "scenario_id": {
+          "minLength": 1,
+          "title": "Scenario Id",
+          "type": "string"
+        },
+        "stakeholder_actions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Stakeholder Actions",
+          "type": "array"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scenario_id",
+        "title",
+        "circumstances"
+      ],
+      "title": "ScenarioSetup",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "context": {
+      "items": {
+        "$ref": "#/$defs/ContextSource"
+      },
+      "title": "Context",
+      "type": "array"
+    },
+    "max_rounds": {
+      "default": 4,
+      "maximum": 20,
+      "minimum": 1,
+      "title": "Max Rounds",
+      "type": "integer"
+    },
+    "personality_seed": {
+      "minLength": 1,
+      "title": "Personality Seed",
+      "type": "string"
+    },
+    "policy_text": {
+      "minLength": 1,
+      "title": "Policy Text",
+      "type": "string"
+    },
+    "policy_text_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Policy Text Sha256",
+      "type": "string"
+    },
+    "policy_title": {
+      "minLength": 1,
+      "title": "Policy Title",
+      "type": "string"
+    },
+    "policy_version": {
+      "minLength": 1,
+      "title": "Policy Version",
+      "type": "string"
+    },
+    "random_seed": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Random Seed"
+    },
+    "request_id": {
+      "minLength": 1,
+      "title": "Request Id",
+      "type": "string"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "scenario_setups": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ScenarioSetup"
+      },
+      "title": "Scenario Setups",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "2.0",
+      "default": "2.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "stakeholder_count": {
+      "maximum": 100,
+      "minimum": 1,
+      "title": "Stakeholder Count",
+      "type": "integer"
+    },
+    "target_language": {
+      "const": "English",
+      "default": "English",
+      "title": "Target Language",
+      "type": "string"
+    },
+    "test_budget": {
+      "maximum": 100,
+      "minimum": 1,
+      "title": "Test Budget",
+      "type": "integer"
+    },
+    "timeout_seconds": {
+      "default": 120,
+      "maximum": 600,
+      "minimum": 1,
+      "title": "Timeout Seconds",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "request_id",
+    "run_id",
+    "policy_version",
+    "policy_title",
+    "policy_text",
+    "policy_text_sha256",
+    "personality_seed",
+    "stakeholder_count",
+    "test_budget",
+    "context"
+  ],
+  "title": "SandboxRequest",
+  "type": "object"
+}

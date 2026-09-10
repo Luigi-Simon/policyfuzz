@@ -1,5 +1,12 @@
 # PolicyFuzz
 
+**Building v2?** Start with the [two-person development guide](docs/v2/README.md).
+The v2 foundation defines exactly four agents: Orchestrator Agent, Metric Agent,
+Sandbox Agent and Judge Agent. It includes a shared Sandbox contract and labelled
+offline fixtures. The live adapter and full v2 application are the next work packets.
+Use the v2 ownership guide for new work; the quickstart and five-person allocation
+below describe the existing v1 application.
+
 PolicyFuzz turns a supported subset of a travel-and-expense policy into cited executable rules, stress-tests them, and checks whether an approved structured revision fixes failures on the same frozen suite.
 
 Use synthetic or explicitly non-confidential policy text only. This is a hackathon prototype, not legal advice or a compliance certification. Suggested prose is unverified: the deterministic engine tests the structured revision.

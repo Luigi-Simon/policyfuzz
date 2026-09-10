@@ -1,0 +1,42 @@
+name: V2 foundation
+
+on:
+  push:
+    branches:
+      - p1/feat-policyfuzz-v2
+      - p1/feat-v2-core
+      - p3/feat-v2-sandbox
+    paths:
+      - backend/app/v2/**
+      - backend/tests/v2/**
+      - contracts/v2/**
+      - scripts/check_v2_foundation.py
+      - .github/workflows/v2-foundation.yml
+  pull_request:
+    paths:
+      - backend/app/v2/**
+      - backend/tests/v2/**
+      - contracts/v2/**
+      - scripts/check_v2_foundation.py
+      - .github/workflows/v2-foundation.yml
+
+permissions:
+  contents: read
+
+jobs:
+  offline-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install contract and lint dependencies
+        run: python -m pip install pydantic==2.13.5 ruff
+      - name: Validate synthetic fixtures and interface
+        run: python scripts/check_v2_foundation.py
+      - name: Check foundation formatting
+        run: python -m ruff format --check --diff backend/app/v2 backend/tests/v2 scripts/check_v2_foundation.py
+      - name: Lint foundation
+        run: python -m ruff check backend/app/v2 backend/tests/v2 scripts/check_v2_foundation.py

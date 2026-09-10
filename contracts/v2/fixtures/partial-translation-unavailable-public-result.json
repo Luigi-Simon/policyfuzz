@@ -1,0 +1,101 @@
+{
+  "configured_stakeholder_count": 3,
+  "errors": [],
+  "execution_mode": "fixture",
+  "limitations": [
+    "Authored synthetic fixture dialogue; it does not analyze the supplied policy or personality seed, and no live Sandbox was executed.",
+    "English translation unavailable for one preserved original record."
+  ],
+  "messages": [
+    {
+      "content": "The rider asks the city to retain late-night service.",
+      "message_id": "message-001",
+      "persona_id": "persona-001",
+      "recorded_at": null,
+      "reply_to_message_ids": [],
+      "round_number": 1,
+      "sequence": 1,
+      "source_refs": [
+        "source-001"
+      ],
+      "translation_status": "translated"
+    },
+    {
+      "content": "[English translation unavailable for this record.]",
+      "message_id": "message-002",
+      "persona_id": "persona-002",
+      "recorded_at": null,
+      "reply_to_message_ids": [
+        "message-001"
+      ],
+      "round_number": 1,
+      "sequence": 2,
+      "source_refs": [
+        "source-002"
+      ],
+      "translation_status": "unavailable"
+    },
+    {
+      "content": "Every pilot stop should preserve an accessible route.",
+      "message_id": "message-003",
+      "persona_id": "persona-003",
+      "recorded_at": null,
+      "reply_to_message_ids": [
+        "message-001"
+      ],
+      "round_number": 1,
+      "sequence": 3,
+      "source_refs": [
+        "source-003"
+      ],
+      "translation_status": "original_english"
+    }
+  ],
+  "observed_stakeholder_count": 3,
+  "personas": [
+    {
+      "description": "A hospital worker who depends on transit after midnight.",
+      "display_name": "Night-shift rider",
+      "persona_id": "persona-001"
+    },
+    {
+      "description": "A driver focused on safe schedules and reliable breaks.",
+      "display_name": "Transit operator",
+      "persona_id": "persona-002"
+    },
+    {
+      "description": "A rider who evaluates step-free late-night journeys.",
+      "display_name": "Accessibility advocate",
+      "persona_id": "persona-003"
+    }
+  ],
+  "policy_text_sha256": "3c80093d65b680c91284cdec986c943b0133952bc4f932e4547f59fdb3587b4a",
+  "policy_title": "Synthetic late-night transit pilot",
+  "policy_version": "2026-09-10",
+  "request_fingerprint": "1bd7b1d6f2958b9f85d14c656d786b90c7092f08c427eee2e5f4d48df1e0ad54",
+  "request_id": "request-example-001",
+  "requested_stakeholder_count": 3,
+  "run_id": "run-example-001",
+  "schema_version": "2.0",
+  "sources": [
+    {
+      "excerpt": "The rider requests continued late-night service.",
+      "record_id": "message-001",
+      "source_id": "source-001",
+      "title": "Rider response"
+    },
+    {
+      "excerpt": "[English translation unavailable for this record.]",
+      "record_id": "message-002",
+      "source_id": "source-002",
+      "title": "Operator response"
+    },
+    {
+      "excerpt": "The advocate requests an accessible route at every stop.",
+      "record_id": "message-003",
+      "source_id": "source-003",
+      "title": "Accessibility response"
+    }
+  ],
+  "status": "partial"
+}
