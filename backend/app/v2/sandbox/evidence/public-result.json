@@ -1,0 +1,224 @@
+{
+  "schema_version": "2.0",
+  "request_id": "sandbox-v2-live-20260910-03",
+  "run_id": "sandbox-v2-live-20260910-03",
+  "policy_version": "2026-09-10",
+  "policy_title": "Synthetic late-night transit pilot",
+  "policy_text_sha256": "3c80093d65b680c91284cdec986c943b0133952bc4f932e4547f59fdb3587b4a",
+  "request_fingerprint": "e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9",
+  "execution_mode": "live",
+  "status": "completed",
+  "requested_stakeholder_count": 3,
+  "configured_stakeholder_count": 3,
+  "observed_stakeholder_count": 3,
+  "personas": [
+    {
+      "persona_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:participant:0",
+      "display_name": "Anna Rodriguez",
+      "description": "A pragmatic night-shift nurse who values efficient transit that doesn't break the bank. Her cost-conscious mindset makes her question the sustainability of extended transit hours without financial clarity."
+    },
+    {
+      "persona_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:participant:1",
+      "display_name": "Marcus White",
+      "description": "A paramedic who is cautious about personal safety while working night shifts. He often feels vulnerable when commuting after hours and is particularly interested in how the pilot program will tackle safety concerns for riders."
+    },
+    {
+      "persona_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:participant:2",
+      "display_name": "Lila Thompson",
+      "description": "A wheelchair user who depends on accessible transport options. She is focused on ensuring that the extended service accommodates passengers with disabilities and how it will impact her ability to travel at night."
+    }
+  ],
+  "messages": [
+    {
+      "message_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:post:1",
+      "sequence": 1,
+      "persona_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:participant:0",
+      "content": "How can we ensure these late-night services remain affordable for riders like me?",
+      "translation_status": "original_english",
+      "source_refs": [
+        "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:post:1"
+      ],
+      "reply_to_message_ids": [],
+      "round_number": null,
+      "recorded_at": null
+    },
+    {
+      "message_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:post:2",
+      "sequence": 2,
+      "persona_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:participant:1",
+      "content": "What measures are being put in place to enhance safety during these late-night rides?",
+      "translation_status": "original_english",
+      "source_refs": [
+        "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:post:2"
+      ],
+      "reply_to_message_ids": [],
+      "round_number": null,
+      "recorded_at": null
+    },
+    {
+      "message_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:post:3",
+      "sequence": 3,
+      "persona_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:participant:2",
+      "content": "Will the late-night transit service truly be accessible for all riders, including those with mobility challenges?",
+      "translation_status": "original_english",
+      "source_refs": [
+        "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:post:3"
+      ],
+      "reply_to_message_ids": [],
+      "round_number": null,
+      "recorded_at": null
+    },
+    {
+      "message_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:comment:1",
+      "sequence": 4,
+      "persona_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:participant:0",
+      "content": "That's a significant concern. As a night-shift nurse, I believe accessibility for all riders is essential. What specific features are being considered to ensure the service meets their needs?",
+      "translation_status": "original_english",
+      "source_refs": [
+        "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:comment:1"
+      ],
+      "reply_to_message_ids": [
+        "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:post:3"
+      ],
+      "round_number": 1,
+      "recorded_at": null
+    },
+    {
+      "message_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:comment:2",
+      "sequence": 5,
+      "persona_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:participant:2",
+      "content": "Ensuring affordability for late-night services is critical, especially for those of us with disabilities who rely on accessible transport options. How will cost structures support this need? #AccessibleTransport",
+      "translation_status": "original_english",
+      "source_refs": [
+        "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:comment:2"
+      ],
+      "reply_to_message_ids": [
+        "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:post:1"
+      ],
+      "round_number": 1,
+      "recorded_at": null
+    },
+    {
+      "message_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:comment:3",
+      "sequence": 6,
+      "persona_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:participant:1",
+      "content": "This is a crucial concern. Ensuring accessibility for all riders, especially those with mobility challenges, will make the late-night transit service truly beneficial for everyone. I hope the pilot program addresses this effectively.",
+      "translation_status": "original_english",
+      "source_refs": [
+        "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:comment:3"
+      ],
+      "reply_to_message_ids": [
+        "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:post:3"
+      ],
+      "round_number": 1,
+      "recorded_at": null
+    },
+    {
+      "message_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:comment:4",
+      "sequence": 7,
+      "persona_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:participant:2",
+      "content": "Safety is a major concern for riders with disabilities during late-night services. What specific safety measures are being planned to accommodate passengers like us? #SafetyFirst",
+      "translation_status": "original_english",
+      "source_refs": [
+        "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:comment:4"
+      ],
+      "reply_to_message_ids": [
+        "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:post:2"
+      ],
+      "round_number": 2,
+      "recorded_at": null
+    },
+    {
+      "message_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:comment:5",
+      "sequence": 8,
+      "persona_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:participant:0",
+      "content": "Safety is paramount, especially during late-night rides. Are there specific measures or protocols being planned to ensure riders feel secure during their journey?",
+      "translation_status": "original_english",
+      "source_refs": [
+        "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:comment:5"
+      ],
+      "reply_to_message_ids": [
+        "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:post:2"
+      ],
+      "round_number": 2,
+      "recorded_at": null
+    },
+    {
+      "message_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:comment:6",
+      "sequence": 9,
+      "persona_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:participant:1",
+      "content": "I completely agree that affordability is crucial, especially for those of us who rely on late-night services after shifts. It's important that the cost structures are designed to support all riders, ensuring that we can access these essential services safely.",
+      "translation_status": "original_english",
+      "source_refs": [
+        "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:comment:6"
+      ],
+      "reply_to_message_ids": [
+        "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:post:1"
+      ],
+      "round_number": 2,
+      "recorded_at": null
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:post:1",
+      "record_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:post:1",
+      "title": "MiroFish post (may include a seeded opening)",
+      "excerpt": "How can we ensure these late-night services remain affordable for riders like me?"
+    },
+    {
+      "source_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:post:2",
+      "record_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:post:2",
+      "title": "MiroFish post (may include a seeded opening)",
+      "excerpt": "What measures are being put in place to enhance safety during these late-night rides?"
+    },
+    {
+      "source_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:post:3",
+      "record_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:post:3",
+      "title": "MiroFish post (may include a seeded opening)",
+      "excerpt": "Will the late-night transit service truly be accessible for all riders, including those with mobility challenges?"
+    },
+    {
+      "source_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:comment:1",
+      "record_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:comment:1",
+      "title": "MiroFish comment",
+      "excerpt": "That's a significant concern. As a night-shift nurse, I believe accessibility for all riders is essential. What specific features are being considered to ensure the service meets their needs?"
+    },
+    {
+      "source_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:comment:2",
+      "record_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:comment:2",
+      "title": "MiroFish comment",
+      "excerpt": "Ensuring affordability for late-night services is critical, especially for those of us with disabilities who rely on accessible transport options. How will cost structures support this need? #AccessibleTransport"
+    },
+    {
+      "source_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:comment:3",
+      "record_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:comment:3",
+      "title": "MiroFish comment",
+      "excerpt": "This is a crucial concern. Ensuring accessibility for all riders, especially those with mobility challenges, will make the late-night transit service truly beneficial for everyone. I hope the pilot program addresses this effectively."
+    },
+    {
+      "source_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:comment:4",
+      "record_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:comment:4",
+      "title": "MiroFish comment",
+      "excerpt": "Safety is a major concern for riders with disabilities during late-night services. What specific safety measures are being planned to accommodate passengers like us? #SafetyFirst"
+    },
+    {
+      "source_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:comment:5",
+      "record_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:comment:5",
+      "title": "MiroFish comment",
+      "excerpt": "Safety is paramount, especially during late-night rides. Are there specific measures or protocols being planned to ensure riders feel secure during their journey?"
+    },
+    {
+      "source_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:source:comment:6",
+      "record_id": "mirofish:sim_f8440f07b2a5:e0d498cd3b9694a6a89bd217b16c52a75bb0aa7cabb317ed6db14fd4c43581f9:comment:6",
+      "title": "MiroFish comment",
+      "excerpt": "I completely agree that affordability is crucial, especially for those of us who rely on late-night services after shifts. It's important that the cost structures are designed to support all riders, ensuring that we can access these essential services safely."
+    }
+  ],
+  "limitations": [
+    "Simulated stakeholder reactions are qualitative evidence, not a representative survey or authoritative policy verdict.",
+    "Opening posts are seeded; only validated replies demonstrate interaction. Sequence is presentation order; missing timing stays unknown.",
+    "Participants may speculate or invent provisions. Verify their statements against the exact policy before treating them as facts."
+  ],
+  "errors": []
+}
