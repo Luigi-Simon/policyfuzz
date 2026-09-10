@@ -154,15 +154,6 @@
       "title": "ClaimStatus",
       "type": "string"
     },
-    "ExecutionMode": {
-      "enum": [
-        "fixture",
-        "recorded",
-        "live"
-      ],
-      "title": "ExecutionMode",
-      "type": "string"
-    },
     "MetricCaseResult": {
       "additionalProperties": false,
       "properties": {
@@ -411,116 +402,6 @@
       "title": "MetricRules",
       "type": "object"
     },
-    "MetricRunResult": {
-      "additionalProperties": false,
-      "properties": {
-        "cases": {
-          "default": [],
-          "items": {
-            "$ref": "#/$defs/MetricCaseResult"
-          },
-          "maxItems": 32,
-          "title": "Cases",
-          "type": "array"
-        },
-        "failed": {
-          "minimum": 0,
-          "title": "Failed",
-          "type": "integer"
-        },
-        "generation_method": {
-          "default": "rule_templates",
-          "enum": [
-            "rule_templates",
-            "authored_fixture"
-          ],
-          "title": "Generation Method",
-          "type": "string"
-        },
-        "limitations": {
-          "default": [],
-          "items": {
-            "type": "string"
-          },
-          "maxItems": 16,
-          "title": "Limitations",
-          "type": "array"
-        },
-        "pass_rate": {
-          "anyOf": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Pass Rate"
-        },
-        "passed": {
-          "minimum": 0,
-          "title": "Passed",
-          "type": "integer"
-        },
-        "policy_text_sha256": {
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Policy Text Sha256",
-          "type": "string"
-        },
-        "policy_version": {
-          "const": "1",
-          "default": "1",
-          "title": "Policy Version",
-          "type": "string"
-        },
-        "review": {
-          "$ref": "#/$defs/MetricReview"
-        },
-        "review_fingerprint": {
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Review Fingerprint",
-          "type": "string"
-        },
-        "run_id": {
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
-          "title": "Run Id",
-          "type": "string"
-        },
-        "schema_version": {
-          "const": "2.0",
-          "default": "2.0",
-          "title": "Schema Version",
-          "type": "string"
-        },
-        "status": {
-          "$ref": "#/$defs/MetricRunStatus"
-        },
-        "suite_sha256": {
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Suite Sha256",
-          "type": "string"
-        },
-        "unscored": {
-          "minimum": 0,
-          "title": "Unscored",
-          "type": "integer"
-        }
-      },
-      "required": [
-        "run_id",
-        "policy_text_sha256",
-        "review_fingerprint",
-        "status",
-        "review",
-        "suite_sha256",
-        "passed",
-        "failed",
-        "unscored",
-        "pass_rate"
-      ],
-      "title": "MetricRunResult",
-      "type": "object"
-    },
     "MetricRunStatus": {
       "enum": [
         "completed",
@@ -604,33 +485,6 @@
       "title": "PayAction",
       "type": "object"
     },
-    "Persona": {
-      "additionalProperties": false,
-      "properties": {
-        "description": {
-          "minLength": 1,
-          "title": "Description",
-          "type": "string"
-        },
-        "display_name": {
-          "minLength": 1,
-          "title": "Display Name",
-          "type": "string"
-        },
-        "persona_id": {
-          "minLength": 1,
-          "title": "Persona Id",
-          "type": "string"
-        }
-      },
-      "required": [
-        "persona_id",
-        "display_name",
-        "description"
-      ],
-      "title": "Persona",
-      "type": "object"
-    },
     "PolicyClause": {
       "additionalProperties": false,
       "properties": {
@@ -685,124 +539,6 @@
       "title": "PolicyGoal",
       "type": "object"
     },
-    "PublicSandboxResult": {
-      "additionalProperties": false,
-      "description": "Explicit public allowlist for Sandbox evidence.",
-      "properties": {
-        "configured_stakeholder_count": {
-          "minimum": 0,
-          "title": "Configured Stakeholder Count",
-          "type": "integer"
-        },
-        "errors": {
-          "default": [],
-          "items": {
-            "type": "string"
-          },
-          "title": "Errors",
-          "type": "array"
-        },
-        "execution_mode": {
-          "$ref": "#/$defs/ExecutionMode"
-        },
-        "limitations": {
-          "default": [],
-          "items": {
-            "type": "string"
-          },
-          "title": "Limitations",
-          "type": "array"
-        },
-        "messages": {
-          "default": [],
-          "items": {
-            "$ref": "#/$defs/SandboxMessage"
-          },
-          "title": "Messages",
-          "type": "array"
-        },
-        "observed_stakeholder_count": {
-          "minimum": 0,
-          "title": "Observed Stakeholder Count",
-          "type": "integer"
-        },
-        "personas": {
-          "default": [],
-          "items": {
-            "$ref": "#/$defs/Persona"
-          },
-          "title": "Personas",
-          "type": "array"
-        },
-        "policy_text_sha256": {
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Policy Text Sha256",
-          "type": "string"
-        },
-        "policy_title": {
-          "minLength": 1,
-          "title": "Policy Title",
-          "type": "string"
-        },
-        "policy_version": {
-          "minLength": 1,
-          "title": "Policy Version",
-          "type": "string"
-        },
-        "request_fingerprint": {
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Request Fingerprint",
-          "type": "string"
-        },
-        "request_id": {
-          "minLength": 1,
-          "title": "Request Id",
-          "type": "string"
-        },
-        "requested_stakeholder_count": {
-          "minimum": 1,
-          "title": "Requested Stakeholder Count",
-          "type": "integer"
-        },
-        "run_id": {
-          "minLength": 1,
-          "title": "Run Id",
-          "type": "string"
-        },
-        "schema_version": {
-          "const": "2.0",
-          "default": "2.0",
-          "title": "Schema Version",
-          "type": "string"
-        },
-        "sources": {
-          "default": [],
-          "items": {
-            "$ref": "#/$defs/SourceEvidence"
-          },
-          "title": "Sources",
-          "type": "array"
-        },
-        "status": {
-          "$ref": "#/$defs/SandboxStatus"
-        }
-      },
-      "required": [
-        "request_id",
-        "run_id",
-        "policy_version",
-        "policy_title",
-        "policy_text_sha256",
-        "request_fingerprint",
-        "execution_mode",
-        "status",
-        "requested_stakeholder_count",
-        "configured_stakeholder_count",
-        "observed_stakeholder_count"
-      ],
-      "title": "PublicSandboxResult",
-      "type": "object"
-    },
     "ReviewStatus": {
       "enum": [
         "ready",
@@ -810,128 +546,6 @@
       ],
       "title": "ReviewStatus",
       "type": "string"
-    },
-    "SandboxMessage": {
-      "additionalProperties": false,
-      "properties": {
-        "content": {
-          "minLength": 1,
-          "title": "Content",
-          "type": "string"
-        },
-        "message_id": {
-          "minLength": 1,
-          "title": "Message Id",
-          "type": "string"
-        },
-        "persona_id": {
-          "minLength": 1,
-          "title": "Persona Id",
-          "type": "string"
-        },
-        "recorded_at": {
-          "anyOf": [
-            {
-              "format": "date-time",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Recorded At"
-        },
-        "reply_to_message_ids": {
-          "default": [],
-          "items": {
-            "type": "string"
-          },
-          "title": "Reply To Message Ids",
-          "type": "array"
-        },
-        "round_number": {
-          "anyOf": [
-            {
-              "minimum": 1,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Round Number"
-        },
-        "sequence": {
-          "minimum": 1,
-          "title": "Sequence",
-          "type": "integer"
-        },
-        "source_refs": {
-          "default": [],
-          "items": {
-            "type": "string"
-          },
-          "title": "Source Refs",
-          "type": "array"
-        },
-        "translation_status": {
-          "$ref": "#/$defs/TranslationStatus"
-        }
-      },
-      "required": [
-        "message_id",
-        "sequence",
-        "persona_id",
-        "content",
-        "translation_status"
-      ],
-      "title": "SandboxMessage",
-      "type": "object"
-    },
-    "SandboxStatus": {
-      "enum": [
-        "completed",
-        "partial",
-        "failed",
-        "cancelled"
-      ],
-      "title": "SandboxStatus",
-      "type": "string"
-    },
-    "SourceEvidence": {
-      "additionalProperties": false,
-      "properties": {
-        "excerpt": {
-          "minLength": 1,
-          "title": "Excerpt",
-          "type": "string"
-        },
-        "record_id": {
-          "minLength": 1,
-          "title": "Record Id",
-          "type": "string"
-        },
-        "source_id": {
-          "minLength": 1,
-          "title": "Source Id",
-          "type": "string"
-        },
-        "title": {
-          "minLength": 1,
-          "title": "Title",
-          "type": "string"
-        }
-      },
-      "required": [
-        "source_id",
-        "record_id",
-        "title",
-        "excerpt"
-      ],
-      "title": "SourceEvidence",
-      "type": "object"
     },
     "SubmitAction": {
       "additionalProperties": false,
@@ -1064,15 +678,6 @@
       "title": "TraceStep",
       "type": "object"
     },
-    "TranslationStatus": {
-      "enum": [
-        "original_english",
-        "translated",
-        "unavailable"
-      ],
-      "title": "TranslationStatus",
-      "type": "string"
-    },
     "UnsupportedAction": {
       "additionalProperties": false,
       "properties": {
@@ -1099,80 +704,111 @@
     }
   },
   "additionalProperties": false,
-  "description": "Only core-validated public evidence; never raw source records or prompts.",
   "properties": {
+    "cases": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/MetricCaseResult"
+      },
+      "maxItems": 32,
+      "title": "Cases",
+      "type": "array"
+    },
+    "failed": {
+      "minimum": 0,
+      "title": "Failed",
+      "type": "integer"
+    },
+    "generation_method": {
+      "default": "rule_templates",
+      "enum": [
+        "rule_templates",
+        "authored_fixture"
+      ],
+      "title": "Generation Method",
+      "type": "string"
+    },
     "limitations": {
       "default": [],
       "items": {
-        "maxLength": 8000,
-        "minLength": 1,
         "type": "string"
       },
+      "maxItems": 16,
       "title": "Limitations",
       "type": "array"
     },
-    "metric": {
+    "pass_rate": {
       "anyOf": [
         {
-          "$ref": "#/$defs/MetricRunResult"
+          "type": "number"
         },
         {
           "type": "null"
         }
       ],
-      "default": null
+      "title": "Pass Rate"
+    },
+    "passed": {
+      "minimum": 0,
+      "title": "Passed",
+      "type": "integer"
     },
     "policy_text_sha256": {
       "pattern": "^[0-9a-f]{64}$",
       "title": "Policy Text Sha256",
       "type": "string"
     },
-    "policy_title": {
-      "maxLength": 8000,
-      "minLength": 1,
-      "title": "Policy Title",
-      "type": "string"
-    },
     "policy_version": {
-      "minLength": 1,
+      "const": "1",
+      "default": "1",
       "title": "Policy Version",
       "type": "string"
     },
-    "request_id": {
-      "minLength": 1,
-      "title": "Request Id",
+    "review": {
+      "$ref": "#/$defs/MetricReview"
+    },
+    "review_fingerprint": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Review Fingerprint",
       "type": "string"
     },
     "run_id": {
-      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
       "title": "Run Id",
       "type": "string"
-    },
-    "sandbox": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/PublicSandboxResult"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null
     },
     "schema_version": {
       "const": "2.0",
       "default": "2.0",
       "title": "Schema Version",
       "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/MetricRunStatus"
+    },
+    "suite_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Suite Sha256",
+      "type": "string"
+    },
+    "unscored": {
+      "minimum": 0,
+      "title": "Unscored",
+      "type": "integer"
     }
   },
   "required": [
-    "request_id",
     "run_id",
-    "policy_version",
-    "policy_title",
-    "policy_text_sha256"
+    "policy_text_sha256",
+    "review_fingerprint",
+    "status",
+    "review",
+    "suite_sha256",
+    "passed",
+    "failed",
+    "unscored",
+    "pass_rate"
   ],
-  "title": "JudgeRequest",
+  "title": "MetricRunResult",
   "type": "object"
 }

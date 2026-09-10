@@ -1,4 +1,4 @@
-"""Generate or check deterministic public contracts for the v2 fixture API."""
+"""Generate or check deterministic public contracts for the v2 API."""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from .main import app
+from .metric_contracts import MetricReview, MetricRunResult
 from .run_models import PublicSandboxResult
 
 DEFAULT_OUTPUT = Path(__file__).resolve().parents[3] / "contracts" / "v2-app"
@@ -25,6 +26,10 @@ def _rendered_contracts() -> dict[str, bytes]:
         "openapi.json": _json_bytes(app.openapi()),
         "public-sandbox-result.schema.json": _json_bytes(
             PublicSandboxResult.model_json_schema()
+        ),
+        "metric-review.schema.json": _json_bytes(MetricReview.model_json_schema()),
+        "metric-run-result.schema.json": _json_bytes(
+            MetricRunResult.model_json_schema()
         ),
     }
 

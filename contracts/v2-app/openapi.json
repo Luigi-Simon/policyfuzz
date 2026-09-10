@@ -1,6 +1,160 @@
 {
   "components": {
     "schemas": {
+      "ApproveAction": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "const": "approve",
+            "default": "approve",
+            "title": "Action",
+            "type": "string"
+          },
+          "claim_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Claim Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "claim_id"
+        ],
+        "title": "ApproveAction",
+        "type": "object"
+      },
+      "AssertionResult": {
+        "additionalProperties": false,
+        "properties": {
+          "actual": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Actual",
+            "type": "string"
+          },
+          "expected": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Expected",
+            "type": "string"
+          },
+          "passed": {
+            "title": "Passed",
+            "type": "boolean"
+          },
+          "requirement_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Requirement Id",
+            "type": "string"
+          },
+          "step_refs": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 32,
+            "minItems": 1,
+            "title": "Step Refs",
+            "type": "array"
+          }
+        },
+        "required": [
+          "requirement_id",
+          "passed",
+          "expected",
+          "actual",
+          "step_refs"
+        ],
+        "title": "AssertionResult",
+        "type": "object"
+      },
+      "CancelAction": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "const": "cancel",
+            "default": "cancel",
+            "title": "Action",
+            "type": "string"
+          },
+          "claim_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Claim Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "claim_id"
+        ],
+        "title": "CancelAction",
+        "type": "object"
+      },
+      "CaseCategory": {
+        "enum": [
+          "normal",
+          "boundary",
+          "compound",
+          "cascading",
+          "adversarial"
+        ],
+        "title": "CaseCategory",
+        "type": "string"
+      },
+      "CaseVerdict": {
+        "enum": [
+          "pass",
+          "fail",
+          "unscored"
+        ],
+        "title": "CaseVerdict",
+        "type": "string"
+      },
+      "ClaimRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "amount_cents": {
+            "maximum": 100000000.0,
+            "minimum": 0.0,
+            "title": "Amount Cents",
+            "type": "integer"
+          },
+          "claim_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Claim Id",
+            "type": "string"
+          },
+          "journey_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Journey Id",
+            "type": "string"
+          },
+          "participant_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Participant Id",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ClaimStatus"
+          }
+        },
+        "required": [
+          "claim_id",
+          "participant_id",
+          "journey_id",
+          "amount_cents",
+          "status"
+        ],
+        "title": "ClaimRecord",
+        "type": "object"
+      },
+      "ClaimStatus": {
+        "enum": [
+          "submitted",
+          "approved",
+          "paid",
+          "cancelled"
+        ],
+        "title": "ClaimStatus",
+        "type": "string"
+      },
       "CreateRunRequest": {
         "additionalProperties": false,
         "properties": {
@@ -51,6 +205,445 @@
         "title": "HealthResponse",
         "type": "object"
       },
+      "MetricCaseResult": {
+        "additionalProperties": false,
+        "properties": {
+          "actions": {
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/SubmitAction"
+                },
+                {
+                  "$ref": "#/components/schemas/ApproveAction"
+                },
+                {
+                  "$ref": "#/components/schemas/PayAction"
+                },
+                {
+                  "$ref": "#/components/schemas/CancelAction"
+                },
+                {
+                  "$ref": "#/components/schemas/UnsupportedAction"
+                }
+              ]
+            },
+            "maxItems": 32,
+            "minItems": 1,
+            "title": "Actions",
+            "type": "array"
+          },
+          "assertions": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/AssertionResult"
+            },
+            "maxItems": 16,
+            "title": "Assertions",
+            "type": "array"
+          },
+          "case_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Case Id",
+            "type": "string"
+          },
+          "category": {
+            "$ref": "#/components/schemas/CaseCategory"
+          },
+          "initial_state": {
+            "$ref": "#/components/schemas/MetricState"
+          },
+          "minimal_actions": {
+            "anyOf": [
+              {
+                "items": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/SubmitAction"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ApproveAction"
+                    },
+                    {
+                      "$ref": "#/components/schemas/PayAction"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CancelAction"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnsupportedAction"
+                    }
+                  ]
+                },
+                "maxItems": 32,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minimal Actions"
+          },
+          "plausibility": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Plausibility",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "trace": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/TraceStep"
+            },
+            "maxItems": 32,
+            "title": "Trace",
+            "type": "array"
+          },
+          "unscored_reason": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unscored Reason"
+          },
+          "verdict": {
+            "$ref": "#/components/schemas/CaseVerdict"
+          }
+        },
+        "required": [
+          "case_id",
+          "title",
+          "category",
+          "plausibility",
+          "initial_state",
+          "actions",
+          "verdict"
+        ],
+        "title": "MetricCaseResult",
+        "type": "object"
+      },
+      "MetricReview": {
+        "additionalProperties": false,
+        "properties": {
+          "assumptions": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 16,
+            "title": "Assumptions",
+            "type": "array"
+          },
+          "clauses": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/PolicyClause"
+            },
+            "maxItems": 16,
+            "title": "Clauses",
+            "type": "array"
+          },
+          "goals": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/PolicyGoal"
+            },
+            "maxItems": 16,
+            "title": "Goals",
+            "type": "array"
+          },
+          "limitations": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 16,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "policy_text_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Policy Text Sha256",
+            "type": "string"
+          },
+          "review_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Review Fingerprint",
+            "type": "string"
+          },
+          "rules": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MetricRules"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "$ref": "#/components/schemas/ReviewStatus"
+          }
+        },
+        "required": [
+          "policy_text_sha256",
+          "review_fingerprint",
+          "status",
+          "rules"
+        ],
+        "title": "MetricReview",
+        "type": "object"
+      },
+      "MetricRules": {
+        "additionalProperties": false,
+        "properties": {
+          "approval_budget_accounting": {
+            "enum": [
+              "paid_only",
+              "paid_and_approved"
+            ],
+            "title": "Approval Budget Accounting",
+            "type": "string"
+          },
+          "duplicate_scope": {
+            "enum": [
+              "claim_id",
+              "journey"
+            ],
+            "title": "Duplicate Scope",
+            "type": "string"
+          },
+          "participant_allowance_cents": {
+            "maximum": 100000000.0,
+            "minimum": 1.0,
+            "title": "Participant Allowance Cents",
+            "type": "integer"
+          },
+          "payment_budget_recheck": {
+            "title": "Payment Budget Recheck",
+            "type": "boolean"
+          },
+          "per_claim_limit_cents": {
+            "maximum": 10000000.0,
+            "minimum": 1.0,
+            "title": "Per Claim Limit Cents",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "per_claim_limit_cents",
+          "participant_allowance_cents",
+          "approval_budget_accounting",
+          "payment_budget_recheck",
+          "duplicate_scope"
+        ],
+        "title": "MetricRules",
+        "type": "object"
+      },
+      "MetricRunResult": {
+        "additionalProperties": false,
+        "properties": {
+          "cases": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/MetricCaseResult"
+            },
+            "maxItems": 32,
+            "title": "Cases",
+            "type": "array"
+          },
+          "failed": {
+            "minimum": 0.0,
+            "title": "Failed",
+            "type": "integer"
+          },
+          "generation_method": {
+            "default": "rule_templates",
+            "enum": [
+              "rule_templates",
+              "authored_fixture"
+            ],
+            "title": "Generation Method",
+            "type": "string"
+          },
+          "limitations": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 16,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "pass_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pass Rate"
+          },
+          "passed": {
+            "minimum": 0.0,
+            "title": "Passed",
+            "type": "integer"
+          },
+          "policy_text_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Policy Text Sha256",
+            "type": "string"
+          },
+          "policy_version": {
+            "const": "1",
+            "default": "1",
+            "title": "Policy Version",
+            "type": "string"
+          },
+          "review": {
+            "$ref": "#/components/schemas/MetricReview"
+          },
+          "review_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Review Fingerprint",
+            "type": "string"
+          },
+          "run_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Run Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "2.0",
+            "default": "2.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/MetricRunStatus"
+          },
+          "suite_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Suite Sha256",
+            "type": "string"
+          },
+          "unscored": {
+            "minimum": 0.0,
+            "title": "Unscored",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "run_id",
+          "policy_text_sha256",
+          "review_fingerprint",
+          "status",
+          "review",
+          "suite_sha256",
+          "passed",
+          "failed",
+          "unscored",
+          "pass_rate"
+        ],
+        "title": "MetricRunResult",
+        "type": "object"
+      },
+      "MetricRunStatus": {
+        "enum": [
+          "completed",
+          "needs_clarification"
+        ],
+        "title": "MetricRunStatus",
+        "type": "string"
+      },
+      "MetricState": {
+        "additionalProperties": false,
+        "properties": {
+          "claims": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ClaimRecord"
+            },
+            "maxItems": 64,
+            "title": "Claims",
+            "type": "array"
+          },
+          "participants": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ParticipantTotals"
+            },
+            "maxItems": 32,
+            "title": "Participants",
+            "type": "array"
+          }
+        },
+        "title": "MetricState",
+        "type": "object"
+      },
+      "ParticipantTotals": {
+        "additionalProperties": false,
+        "properties": {
+          "paid_cents": {
+            "maximum": 6400000000.0,
+            "minimum": 0.0,
+            "title": "Paid Cents",
+            "type": "integer"
+          },
+          "participant_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Participant Id",
+            "type": "string"
+          },
+          "reserved_cents": {
+            "maximum": 6400000000.0,
+            "minimum": 0.0,
+            "title": "Reserved Cents",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "participant_id",
+          "paid_cents",
+          "reserved_cents"
+        ],
+        "title": "ParticipantTotals",
+        "type": "object"
+      },
+      "PayAction": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "const": "pay",
+            "default": "pay",
+            "title": "Action",
+            "type": "string"
+          },
+          "claim_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Claim Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "claim_id"
+        ],
+        "title": "PayAction",
+        "type": "object"
+      },
       "Persona": {
         "additionalProperties": false,
         "properties": {
@@ -76,6 +669,73 @@
           "description"
         ],
         "title": "Persona",
+        "type": "object"
+      },
+      "PolicyClause": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "text"
+        ],
+        "title": "PolicyClause",
+        "type": "object"
+      },
+      "PolicyGoal": {
+        "additionalProperties": false,
+        "properties": {
+          "clause_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 8,
+            "minItems": 1,
+            "title": "Clause Ids",
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "text",
+          "clause_ids"
+        ],
+        "title": "PolicyGoal",
+        "type": "object"
+      },
+      "PrepareMetricRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "policy": {
+            "$ref": "#/components/schemas/RunPolicyInput"
+          }
+        },
+        "required": [
+          "policy"
+        ],
+        "title": "PrepareMetricRequest",
         "type": "object"
       },
       "PublicError": {
@@ -209,6 +869,33 @@
           "observed_stakeholder_count"
         ],
         "title": "PublicSandboxResult",
+        "type": "object"
+      },
+      "ReviewStatus": {
+        "enum": [
+          "ready",
+          "needs_clarification"
+        ],
+        "title": "ReviewStatus",
+        "type": "string"
+      },
+      "RunMetricRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "policy": {
+            "$ref": "#/components/schemas/RunPolicyInput"
+          },
+          "review_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Review Fingerprint",
+            "type": "string"
+          }
+        },
+        "required": [
+          "policy",
+          "review_fingerprint"
+        ],
+        "title": "RunMetricRequest",
         "type": "object"
       },
       "RunPolicyInput": {
@@ -369,6 +1056,137 @@
         "title": "SourceEvidence",
         "type": "object"
       },
+      "SubmitAction": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "const": "submit",
+            "default": "submit",
+            "title": "Action",
+            "type": "string"
+          },
+          "amount_cents": {
+            "maximum": 100000000.0,
+            "minimum": -100000000.0,
+            "title": "Amount Cents",
+            "type": "integer"
+          },
+          "claim_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Claim Id",
+            "type": "string"
+          },
+          "journey_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Journey Id",
+            "type": "string"
+          },
+          "participant_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Participant Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "claim_id",
+          "participant_id",
+          "journey_id",
+          "amount_cents"
+        ],
+        "title": "SubmitAction",
+        "type": "object"
+      },
+      "TraceStep": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted": {
+            "title": "Accepted",
+            "type": "boolean"
+          },
+          "action": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SubmitAction"
+              },
+              {
+                "$ref": "#/components/schemas/ApproveAction"
+              },
+              {
+                "$ref": "#/components/schemas/PayAction"
+              },
+              {
+                "$ref": "#/components/schemas/CancelAction"
+              },
+              {
+                "$ref": "#/components/schemas/UnsupportedAction"
+              }
+            ],
+            "title": "Action"
+          },
+          "action_index": {
+            "maximum": 63.0,
+            "minimum": 0.0,
+            "title": "Action Index",
+            "type": "integer"
+          },
+          "after_state_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "After State Sha256",
+            "type": "string"
+          },
+          "before_state_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Before State Sha256",
+            "type": "string"
+          },
+          "detail": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Detail",
+            "type": "string"
+          },
+          "participant_paid_cents_after": {
+            "minimum": 0.0,
+            "title": "Participant Paid Cents After",
+            "type": "integer"
+          },
+          "participant_paid_cents_before": {
+            "minimum": 0.0,
+            "title": "Participant Paid Cents Before",
+            "type": "integer"
+          },
+          "participant_reserved_cents_after": {
+            "minimum": 0.0,
+            "title": "Participant Reserved Cents After",
+            "type": "integer"
+          },
+          "participant_reserved_cents_before": {
+            "minimum": 0.0,
+            "title": "Participant Reserved Cents Before",
+            "type": "integer"
+          },
+          "step_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Step Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "step_id",
+          "action_index",
+          "action",
+          "accepted",
+          "detail",
+          "before_state_sha256",
+          "after_state_sha256",
+          "participant_paid_cents_before",
+          "participant_paid_cents_after",
+          "participant_reserved_cents_before",
+          "participant_reserved_cents_after"
+        ],
+        "title": "TraceStep",
+        "type": "object"
+      },
       "TranslationStatus": {
         "enum": [
           "original_english",
@@ -377,11 +1195,35 @@
         ],
         "title": "TranslationStatus",
         "type": "string"
+      },
+      "UnsupportedAction": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "pattern": "^[a-z][a-z0-9_]{0,31}$",
+            "title": "Action",
+            "type": "string"
+          },
+          "parameters": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 16,
+            "title": "Parameters",
+            "type": "array"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "title": "UnsupportedAction",
+        "type": "object"
       }
     }
   },
   "info": {
-    "title": "PolicyFuzz v2 Fixture API",
+    "title": "PolicyFuzz v2 API",
     "version": "2.0.0"
   },
   "openapi": "3.1.0",
@@ -402,6 +1244,110 @@
           }
         },
         "summary": "Health"
+      }
+    },
+    "/api/v2/metric/prepare": {
+      "post": {
+        "operationId": "prepare_metric_api_v2_metric_prepare_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrepareMetricRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricReview"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          }
+        },
+        "summary": "Prepare Metric"
+      }
+    },
+    "/api/v2/metric/runs": {
+      "post": {
+        "operationId": "metric_run_api_v2_metric_runs_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunMetricRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricRunResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          }
+        },
+        "summary": "Metric Run"
+      }
+    },
+    "/api/v2/metric/sample": {
+      "get": {
+        "operationId": "metric_sample_api_v2_metric_sample_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunPolicyInput"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Metric Sample"
       }
     },
     "/api/v2/runs": {

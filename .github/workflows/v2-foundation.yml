@@ -44,9 +44,9 @@ jobs:
         run: python scripts/check_v2_foundation.py
       - name: Check v2 API schemas
         run: PYTHONPATH=backend python -m app.v2.export_api --check
-      - name: Check Judge handoff contracts
+      - name: Check Judge handoff schemas and fixtures
         run: PYTHONPATH=backend python -m app.v2.export_judge --check
-      - name: Test v2 fixture API and Judge boundary
+      - name: Test v2 contracts and services
         run: python -m pytest backend/tests/v2 -q
       - name: Check foundation formatting
         run: python -m ruff format --check --diff backend/app/v2 backend/tests/v2 scripts/check_v2_foundation.py
