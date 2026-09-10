@@ -57,3 +57,20 @@
   .v2-message { padding: 14px; }
 }
 @media (max-width: 380px) { .v2-roles ol { grid-template-columns: 1fr; } }
+.v2-input-actions > div, .badge-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.v2-metric-review, .v2-metric-results, .v2-case-list { display: grid; gap: 20px; }
+.v2-review-grid, .v2-notes-grid, .v2-state-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.v2-clause-list, .v2-goal-list, .v2-action-list, .v2-trace-list, .v2-assertion-list { display: grid; gap: 10px; padding-left: 22px; }
+.v2-clause-list li, .v2-goal-list li, .v2-action-list li, .v2-trace-list li, .v2-assertion-list li { overflow-wrap: anywhere; }
+.v2-clause-list code, .v2-goal-list code, .v2-action-list code { margin-right: 8px; }
+.v2-rule-grid, .v2-metric-counts { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 12px; margin: 20px 0; }
+.v2-rule-grid > div, .v2-metric-counts > div { border: 1px solid var(--border); border-radius: 6px; padding: 12px; }
+.v2-rule-grid dt, .v2-metric-counts dt, .v2-provenance dt, .v2-trace-list dt { color: var(--muted); font-size: 12px; }
+.v2-rule-grid dd, .v2-provenance dd, .v2-trace-list dd { margin: 4px 0 0; overflow-wrap: anywhere; }
+.v2-metric-counts dd { margin: 6px 0 0; font-size: 28px; font-weight: 600; }
+.v2-case details + details, .v2-case details + .v2-case details { margin-top: 12px; }
+.v2-case summary, .v2-provenance summary { cursor: pointer; font-weight: 600; }
+.v2-trace-list dl, .v2-provenance dl { display: grid; gap: 10px; }
+.v2-trace-list code, .v2-provenance code { overflow-wrap: anywhere; white-space: normal; }
+.v2-confirm { align-items: center; }
+@media (max-width: 600px) { .v2-review-grid, .v2-notes-grid, .v2-state-grid { grid-template-columns: 1fr; } .v2-input-actions { align-items: flex-start; } }

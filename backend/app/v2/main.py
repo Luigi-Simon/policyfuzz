@@ -1,4 +1,4 @@
-"""Standalone FastAPI application for the v2 fixture milestone."""
+"""Standalone v2 API for reviewed Metric runs and Sandbox fixture previews."""
 
 from __future__ import annotations
 
@@ -6,18 +6,27 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
-from .orchestrator import AdapterExecutionError, AdapterTimeoutError, Orchestrator
+from .metric_contracts import MetricReview, MetricRunResult
+from .orchestrator import (
+    AdapterExecutionError,
+    AdapterTimeoutError,
+    Orchestrator,
+    StaleMetricReviewError,
+)
 from .run_models import (
     CreateRunRequest,
     HealthResponse,
+    PrepareMetricRequest,
     PublicError,
     PublicSandboxResult,
+    RunMetricRequest,
+    RunPolicyInput,
 )
 
 
 def create_app(orchestrator: Orchestrator | None = None) -> FastAPI:
     runner = orchestrator or Orchestrator()
-    application = FastAPI(title="PolicyFuzz v2 Fixture API", version="2.0.0")
+    application = FastAPI(title="PolicyFuzz v2 API", version="2.0.0")
 
     @application.exception_handler(RequestValidationError)
     async def invalid_request(
@@ -29,6 +38,36 @@ def create_app(orchestrator: Orchestrator | None = None) -> FastAPI:
     @application.get("/api/v2/health", response_model=HealthResponse)
     async def health() -> HealthResponse:
         return HealthResponse()
+
+    @application.get("/api/v2/metric/sample", response_model=RunPolicyInput)
+    def metric_sample() -> RunPolicyInput:
+        from .metric.sample import SAMPLE_POLICY
+
+        return SAMPLE_POLICY
+
+    @application.post(
+        "/api/v2/metric/prepare",
+        response_model=MetricReview,
+        responses={422: {"model": PublicError}},
+    )
+    def prepare_metric(body: PrepareMetricRequest) -> MetricReview:
+        return runner.prepare_metric(body.policy)
+
+    @application.post(
+        "/api/v2/metric/runs",
+        response_model=MetricRunResult,
+        responses={409: {"model": PublicError}, 422: {"model": PublicError}},
+    )
+    def metric_run(body: RunMetricRequest) -> MetricRunResult | JSONResponse:
+        try:
+            return runner.run_metric(body)
+        except StaleMetricReviewError:
+            return JSONResponse(
+                status_code=409,
+                content={
+                    "detail": "Policy inputs changed. Review the policy again.",
+                },
+            )
 
     @application.post(
         "/api/v2/runs",

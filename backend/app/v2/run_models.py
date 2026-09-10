@@ -1,4 +1,4 @@
-"""Public request and response models for the standalone v2 fixture API."""
+"""Public transport models for the standalone v2 API."""
 
 from __future__ import annotations
 
@@ -50,6 +50,14 @@ class RunPolicyInput(PolicyInput):
 class CreateRunRequest(ContractModel):
     policy: RunPolicyInput
     fixture_name: FixtureName = "completed"
+
+
+class PrepareMetricRequest(ContractModel):
+    policy: RunPolicyInput
+
+
+class RunMetricRequest(PrepareMetricRequest):
+    review_fingerprint: str = Field(pattern=r"^[0-9a-f]{64}$")
 
 
 class PublicSandboxResult(ContractModel):

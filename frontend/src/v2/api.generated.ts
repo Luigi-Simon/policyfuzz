@@ -21,6 +21,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v2/metric/prepare": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Prepare Metric */
+        post: operations["prepare_metric_api_v2_metric_prepare_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/metric/runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Metric Run */
+        post: operations["metric_run_api_v2_metric_runs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/metric/sample": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Metric Sample */
+        get: operations["metric_sample_api_v2_metric_sample_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v2/runs": {
         parameters: {
             query?: never;
@@ -42,6 +93,68 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** ApproveAction */
+        ApproveAction: {
+            /**
+             * Action
+             * @default approve
+             * @constant
+             */
+            action: "approve";
+            /** Claim Id */
+            claim_id: string;
+        };
+        /** AssertionResult */
+        AssertionResult: {
+            /** Actual */
+            actual: string;
+            /** Expected */
+            expected: string;
+            /** Passed */
+            passed: boolean;
+            /** Requirement Id */
+            requirement_id: string;
+            /** Step Refs */
+            step_refs: string[];
+        };
+        /** CancelAction */
+        CancelAction: {
+            /**
+             * Action
+             * @default cancel
+             * @constant
+             */
+            action: "cancel";
+            /** Claim Id */
+            claim_id: string;
+        };
+        /**
+         * CaseCategory
+         * @enum {string}
+         */
+        CaseCategory: "normal" | "boundary" | "compound" | "cascading" | "adversarial";
+        /**
+         * CaseVerdict
+         * @enum {string}
+         */
+        CaseVerdict: "pass" | "fail" | "unscored";
+        /** ClaimRecord */
+        ClaimRecord: {
+            /** Amount Cents */
+            amount_cents: number;
+            /** Claim Id */
+            claim_id: string;
+            /** Journey Id */
+            journey_id: string;
+            /** Participant Id */
+            participant_id: string;
+            status: components["schemas"]["ClaimStatus"];
+        };
+        /**
+         * ClaimStatus
+         * @enum {string}
+         */
+        ClaimStatus: "submitted" | "approved" | "paid" | "cancelled";
         /** CreateRunRequest */
         CreateRunRequest: {
             /**
@@ -72,6 +185,169 @@ export interface components {
              */
             status: "ok";
         };
+        /** MetricCaseResult */
+        MetricCaseResult: {
+            /** Actions */
+            actions: (components["schemas"]["SubmitAction"] | components["schemas"]["ApproveAction"] | components["schemas"]["PayAction"] | components["schemas"]["CancelAction"] | components["schemas"]["UnsupportedAction"])[];
+            /**
+             * Assertions
+             * @default []
+             */
+            assertions: components["schemas"]["AssertionResult"][];
+            /** Case Id */
+            case_id: string;
+            category: components["schemas"]["CaseCategory"];
+            initial_state: components["schemas"]["MetricState"];
+            /** Minimal Actions */
+            minimal_actions?: (components["schemas"]["SubmitAction"] | components["schemas"]["ApproveAction"] | components["schemas"]["PayAction"] | components["schemas"]["CancelAction"] | components["schemas"]["UnsupportedAction"])[] | null;
+            /** Plausibility */
+            plausibility: string;
+            /** Title */
+            title: string;
+            /**
+             * Trace
+             * @default []
+             */
+            trace: components["schemas"]["TraceStep"][];
+            /** Unscored Reason */
+            unscored_reason?: string | null;
+            verdict: components["schemas"]["CaseVerdict"];
+        };
+        /** MetricReview */
+        MetricReview: {
+            /**
+             * Assumptions
+             * @default []
+             */
+            assumptions: string[];
+            /**
+             * Clauses
+             * @default []
+             */
+            clauses: components["schemas"]["PolicyClause"][];
+            /**
+             * Goals
+             * @default []
+             */
+            goals: components["schemas"]["PolicyGoal"][];
+            /**
+             * Limitations
+             * @default []
+             */
+            limitations: string[];
+            /** Policy Text Sha256 */
+            policy_text_sha256: string;
+            /** Review Fingerprint */
+            review_fingerprint: string;
+            rules: components["schemas"]["MetricRules"] | null;
+            status: components["schemas"]["ReviewStatus"];
+        };
+        /** MetricRules */
+        MetricRules: {
+            /**
+             * Approval Budget Accounting
+             * @enum {string}
+             */
+            approval_budget_accounting: "paid_only" | "paid_and_approved";
+            /**
+             * Duplicate Scope
+             * @enum {string}
+             */
+            duplicate_scope: "claim_id" | "journey";
+            /** Participant Allowance Cents */
+            participant_allowance_cents: number;
+            /** Payment Budget Recheck */
+            payment_budget_recheck: boolean;
+            /** Per Claim Limit Cents */
+            per_claim_limit_cents: number;
+        };
+        /** MetricRunResult */
+        MetricRunResult: {
+            /**
+             * Cases
+             * @default []
+             */
+            cases: components["schemas"]["MetricCaseResult"][];
+            /** Failed */
+            failed: number;
+            /**
+             * Generation Method
+             * @default rule_templates
+             * @enum {string}
+             */
+            generation_method: "rule_templates" | "authored_fixture";
+            /**
+             * Limitations
+             * @default []
+             */
+            limitations: string[];
+            /** Pass Rate */
+            pass_rate: number | null;
+            /** Passed */
+            passed: number;
+            /** Policy Text Sha256 */
+            policy_text_sha256: string;
+            /**
+             * Policy Version
+             * @default 1
+             * @constant
+             */
+            policy_version: "1";
+            review: components["schemas"]["MetricReview"];
+            /** Review Fingerprint */
+            review_fingerprint: string;
+            /** Run Id */
+            run_id: string;
+            /**
+             * Schema Version
+             * @default 2.0
+             * @constant
+             */
+            schema_version: "2.0";
+            status: components["schemas"]["MetricRunStatus"];
+            /** Suite Sha256 */
+            suite_sha256: string;
+            /** Unscored */
+            unscored: number;
+        };
+        /**
+         * MetricRunStatus
+         * @enum {string}
+         */
+        MetricRunStatus: "completed" | "needs_clarification";
+        /** MetricState */
+        MetricState: {
+            /**
+             * Claims
+             * @default []
+             */
+            claims: components["schemas"]["ClaimRecord"][];
+            /**
+             * Participants
+             * @default []
+             */
+            participants: components["schemas"]["ParticipantTotals"][];
+        };
+        /** ParticipantTotals */
+        ParticipantTotals: {
+            /** Paid Cents */
+            paid_cents: number;
+            /** Participant Id */
+            participant_id: string;
+            /** Reserved Cents */
+            reserved_cents: number;
+        };
+        /** PayAction */
+        PayAction: {
+            /**
+             * Action
+             * @default pay
+             * @constant
+             */
+            action: "pay";
+            /** Claim Id */
+            claim_id: string;
+        };
         /** Persona */
         Persona: {
             /** Description */
@@ -80,6 +356,26 @@ export interface components {
             display_name: string;
             /** Persona Id */
             persona_id: string;
+        };
+        /** PolicyClause */
+        PolicyClause: {
+            /** Id */
+            id: string;
+            /** Text */
+            text: string;
+        };
+        /** PolicyGoal */
+        PolicyGoal: {
+            /** Clause Ids */
+            clause_ids: string[];
+            /** Id */
+            id: string;
+            /** Text */
+            text: string;
+        };
+        /** PrepareMetricRequest */
+        PrepareMetricRequest: {
+            policy: components["schemas"]["RunPolicyInput"];
         };
         /** PublicError */
         PublicError: {
@@ -144,6 +440,17 @@ export interface components {
             status: components["schemas"]["SandboxStatus"];
         };
         /**
+         * ReviewStatus
+         * @enum {string}
+         */
+        ReviewStatus: "ready" | "needs_clarification";
+        /** RunMetricRequest */
+        RunMetricRequest: {
+            policy: components["schemas"]["RunPolicyInput"];
+            /** Review Fingerprint */
+            review_fingerprint: string;
+        };
+        /**
          * RunPolicyInput
          * @description The four policy fields accepted by the first-run milestone.
          */
@@ -199,11 +506,63 @@ export interface components {
             /** Title */
             title: string;
         };
+        /** SubmitAction */
+        SubmitAction: {
+            /**
+             * Action
+             * @default submit
+             * @constant
+             */
+            action: "submit";
+            /** Amount Cents */
+            amount_cents: number;
+            /** Claim Id */
+            claim_id: string;
+            /** Journey Id */
+            journey_id: string;
+            /** Participant Id */
+            participant_id: string;
+        };
+        /** TraceStep */
+        TraceStep: {
+            /** Accepted */
+            accepted: boolean;
+            /** Action */
+            action: components["schemas"]["SubmitAction"] | components["schemas"]["ApproveAction"] | components["schemas"]["PayAction"] | components["schemas"]["CancelAction"] | components["schemas"]["UnsupportedAction"];
+            /** Action Index */
+            action_index: number;
+            /** After State Sha256 */
+            after_state_sha256: string;
+            /** Before State Sha256 */
+            before_state_sha256: string;
+            /** Detail */
+            detail: string;
+            /** Participant Paid Cents After */
+            participant_paid_cents_after: number;
+            /** Participant Paid Cents Before */
+            participant_paid_cents_before: number;
+            /** Participant Reserved Cents After */
+            participant_reserved_cents_after: number;
+            /** Participant Reserved Cents Before */
+            participant_reserved_cents_before: number;
+            /** Step Id */
+            step_id: string;
+        };
         /**
          * TranslationStatus
          * @enum {string}
          */
         TranslationStatus: "original_english" | "translated" | "unavailable";
+        /** UnsupportedAction */
+        UnsupportedAction: {
+            /** Action */
+            action: string;
+            /**
+             * Parameters
+             * @default []
+             */
+            parameters: string[];
+        };
     };
     responses: never;
     parameters: never;
@@ -229,6 +588,101 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HealthResponse"];
+                };
+            };
+        };
+    };
+    prepare_metric_api_v2_metric_prepare_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrepareMetricRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MetricReview"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicError"];
+                };
+            };
+        };
+    };
+    metric_run_api_v2_metric_runs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RunMetricRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MetricRunResult"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicError"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicError"];
+                };
+            };
+        };
+    };
+    metric_sample_api_v2_metric_sample_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunPolicyInput"];
                 };
             };
         };

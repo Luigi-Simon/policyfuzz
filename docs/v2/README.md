@@ -1,18 +1,17 @@
 # PolicyFuzz v2: two people, one shared interface
 
-This branch contains the first core milestone: a four-field `/v2` form, a
-standalone Orchestrator API and an English evidence screen using the synthetic
-Sandbox fixture. The existing v1 application remains available. Metric tests,
-Judge evaluation, persistent runs and the live MiroFish adapter are later work.
+This branch contains the four-field `/v2` app, a deterministic Metric workflow
+for a reviewed synthetic transport-claims policy, and a separate Sandbox fixture
+preview. Judge's shared contract and offline examples let the friend implement its
+adapter independently. Core can now pass real Metric results to that Judge port
+with identity checks and a timeout. Live MiroFish, the Judge adapter and its API/UI
+execution, durable runs and the revision workflow remain later work.
+The existing v1 app stays available.
 
-## Judge contributor: start here
+Current workflow: [Metric run guide](METRIC-RUN.md).
+Friend's new assignment: [Judge handoff](../../team/v2-judge/HANDOFF.md).
 
-Use [team/v2-judge/HANDOFF.md](../../team/v2-judge/HANDOFF.md). It includes the
-separate branch/worktree command, fixed async interface and three offline examples.
-These examples use authored mock Metric/Sandbox evidence. No live provider or
-completed Metric runner is needed. Simon owns shared contracts and app integration.
-
-## Run the first core milestone
+## Run v2
 
 On `p1/feat-v2-core`, use Python 3.12+ and Node 20+. From the repository root:
 
@@ -29,7 +28,9 @@ first two commands; the npm commands are identical. An existing environment can
 be reused after installing the backend dependencies. No provider keys are needed.
 
 Open **http://127.0.0.1:5173/v2** (or append `/v2` to Vite's printed URL if that
-port is occupied). Click **Load synthetic example**, then **Run fixture**. Change
+port is occupied). Load the transport claims example, review the rules, then confirm to run Metric
+tests. For the separate Sandbox preview, click **Load synthetic example**, then
+**Run fixture**. Change
 **Fixture sample** to **Translation unavailable sample** to inspect a partial run.
 The API runs on port 8002; Vite proxies `/api/v2` there. `npm run dev:v2` starts
 only the v2 API. Use the existing `npm run dev` command when working on v1.
@@ -49,11 +50,11 @@ Details and verification commands: [First-run handoff](FIRST-RUN.md).
 | --- | --- | --- | --- |
 | Simon | `p1/feat-v2-core` | Orchestrator Agent, Metric Agent, runner, UI/API, Judge integration and shared contracts | [Core handoff](../../team/v2-core/HANDOFF.md) |
 | Friend | `p3/feat-v2-sandbox` | Sandbox Agent, MiroFish, personas, capture, parsing and English output | [Sandbox handoff](../../team/v2-sandbox/HANDOFF.md) |
-| Friend | `p3/feat-v2-judge` | Judge Agent adapter and reporting | [Judge handoff](../../team/v2-judge/HANDOFF.md) |
+| Friend | `p3/feat-v2-judge` | Judge Agent adapter and grounded reporting | [Judge handoff](../../team/v2-judge/HANDOFF.md) |
 | Integration | `p1/feat-policyfuzz-v2` | Reviewed changes from both people | Simon integrates |
 
-The original branches started at the same foundation commit. Judge starts at a
-later shared-contract checkpoint; use its handoff for setup. Use a separate local clone
+The original core and Sandbox branches began at the same foundation commit.
+Judge starts at the later shared contract checkpoint. Use a separate local clone
 per person. Commit or stash your own existing changes before switching branches.
 
 Simon, from your clone:
@@ -71,7 +72,7 @@ git switch --track origin/p3/feat-v2-sandbox
 ```
 
 If the local branch already exists, use `git switch BRANCH_NAME` instead of
-creating another tracking branch. Open both feature PRs against
+creating another tracking branch. Open feature PRs against
 **`p1/feat-policyfuzz-v2`**. After a shared change is merged, update your feature
 branch with `git fetch origin` followed by `git merge origin/p1/feat-policyfuzz-v2`.
 Simon owns shared contract changes and regenerates the schemas; agree on those
@@ -88,9 +89,10 @@ repository remote `upstream` and use `upstream/...` in the fetch, switch, merge 
 SHA comparison instructions; push feature work to the fork's `origin`. The scoped
 handoff still applies.
 
-The branch tips now differ because development has progressed. Judge starts from
-its dedicated shared-contract checkpoint. Fetch the branch in your assignment and
-follow its handoff; never reset a teammate's branch to make the tips match.
+Branch tips now differ because core implementation has progressed. Fetch the branch
+for your assignment and read its handoff. Never reset a teammate's work merely to
+make branch tips match. The Judge handoff provides a separate worktree command so
+Sandbox and Judge work can proceed without file conflicts.
 
 ## Give your coding agent its assignment
 
@@ -141,8 +143,9 @@ MiroFish, call a model or prove that the full v1 or v2 application works.
 The Python source of truth is [app.v2.contracts](../../backend/app/v2/contracts.py).
 The async port is [SandboxService](../../backend/app/v2/protocols.py).
 [contracts/v2](../../contracts/v2) contains generated JSON schemas and examples.
-The interface is an internal Python boundary; no `/api/v2` endpoint is introduced
-by this foundation.
+The original Sandbox interface is an internal Python boundary. Current API
+endpoints are documented in FIRST-RUN.md and METRIC-RUN.md; new Metric/Judge models
+are additive and do not change the original Sandbox contract.
 
 ```python
 from app.v2.contracts import public_sandbox_result, validate_sandbox_result
@@ -177,7 +180,7 @@ partial/failure/cancellation, and expose traceable English messages. Use the pub
 projection for the browser and Judge input; never serialize the internal result
 directly into an API response.
 
-## Agent flow to implement next
+## Target integrated agent flow
 
 ```mermaid
 flowchart TD
@@ -219,7 +222,7 @@ with partial status when it cannot provide faithful English text.
 6. A revision stores real changed prose and linked rules before a fresh simulation;
    deterministic comparisons retain the frozen cases and assertions.
 
-First connect a single policy to the fixture, then the real adapter. Stateful
-policy execution, all three core agents, UI/API integration, persistence and the
-revision loop are Simon's next work. Real MiroFish integration and translation are
-the friend's next work. Historical v1 demos are not evidence of those v2 features.
+The fixture and deterministic Metric flows are available separately. Simon owns
+connecting the four stages and the app. The friend owns real MiroFish capture,
+English translation and Judge reporting on separate branches. Historical v1 demos
+and authored v2 fixtures do not establish that live four-agent integration works.

@@ -96,8 +96,8 @@ class ClaimRecord(ContractModel):
 
 class ParticipantTotals(ContractModel):
     participant_id: str = Field(pattern=_ID_PATTERN)
-    paid_cents: int = Field(strict=True, ge=0, le=100_000_000)
-    reserved_cents: int = Field(strict=True, ge=0, le=100_000_000)
+    paid_cents: int = Field(strict=True, ge=0, le=6_400_000_000)
+    reserved_cents: int = Field(strict=True, ge=0, le=6_400_000_000)
 
 
 class MetricState(ContractModel):

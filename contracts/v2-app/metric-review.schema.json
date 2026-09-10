@@ -1,0 +1,182 @@
+{
+  "$defs": {
+    "MetricRules": {
+      "additionalProperties": false,
+      "properties": {
+        "approval_budget_accounting": {
+          "enum": [
+            "paid_only",
+            "paid_and_approved"
+          ],
+          "title": "Approval Budget Accounting",
+          "type": "string"
+        },
+        "duplicate_scope": {
+          "enum": [
+            "claim_id",
+            "journey"
+          ],
+          "title": "Duplicate Scope",
+          "type": "string"
+        },
+        "participant_allowance_cents": {
+          "maximum": 100000000,
+          "minimum": 1,
+          "title": "Participant Allowance Cents",
+          "type": "integer"
+        },
+        "payment_budget_recheck": {
+          "title": "Payment Budget Recheck",
+          "type": "boolean"
+        },
+        "per_claim_limit_cents": {
+          "maximum": 10000000,
+          "minimum": 1,
+          "title": "Per Claim Limit Cents",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "per_claim_limit_cents",
+        "participant_allowance_cents",
+        "approval_budget_accounting",
+        "payment_budget_recheck",
+        "duplicate_scope"
+      ],
+      "title": "MetricRules",
+      "type": "object"
+    },
+    "PolicyClause": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "text"
+      ],
+      "title": "PolicyClause",
+      "type": "object"
+    },
+    "PolicyGoal": {
+      "additionalProperties": false,
+      "properties": {
+        "clause_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Clause Ids",
+          "type": "array"
+        },
+        "id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "clause_ids"
+      ],
+      "title": "PolicyGoal",
+      "type": "object"
+    },
+    "ReviewStatus": {
+      "enum": [
+        "ready",
+        "needs_clarification"
+      ],
+      "title": "ReviewStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "assumptions": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 16,
+      "title": "Assumptions",
+      "type": "array"
+    },
+    "clauses": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PolicyClause"
+      },
+      "maxItems": 16,
+      "title": "Clauses",
+      "type": "array"
+    },
+    "goals": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PolicyGoal"
+      },
+      "maxItems": 16,
+      "title": "Goals",
+      "type": "array"
+    },
+    "limitations": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 16,
+      "title": "Limitations",
+      "type": "array"
+    },
+    "policy_text_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Policy Text Sha256",
+      "type": "string"
+    },
+    "review_fingerprint": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Review Fingerprint",
+      "type": "string"
+    },
+    "rules": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MetricRules"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "$ref": "#/$defs/ReviewStatus"
+    }
+  },
+  "required": [
+    "policy_text_sha256",
+    "review_fingerprint",
+    "status",
+    "rules"
+  ],
+  "title": "MetricReview",
+  "type": "object"
+}
