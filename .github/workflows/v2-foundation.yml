@@ -3,6 +3,7 @@ name: V2 foundation
 on:
   push:
     branches:
+      - main
       - p1/feat-policyfuzz-v2
       - p1/feat-v2-core
       - p3/feat-v2-sandbox
@@ -37,8 +38,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install contract and lint dependencies
-        run: python -m pip install pydantic==2.13.5 fastapi httpx pytest ruff
+      - name: Install backend and agent test dependencies
+        run: python -m pip install -e './backend[dev]' pydantic==2.13.5
       - name: Validate synthetic fixtures and interface
         run: python scripts/check_v2_foundation.py
       - name: Check v2 API schemas

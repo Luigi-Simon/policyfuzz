@@ -2,7 +2,6 @@ import asyncio
 import json
 
 import pytest
-from test_service import APPROVED, FakeModel
 
 from app.v2.judge.evidence import index_evidence
 from app.v2.judge.prompts import EDITORIAL_FIELDS
@@ -13,6 +12,8 @@ from app.v2.judge_contracts import (
     judge_request_fingerprint,
     validate_judge_result,
 )
+
+from .test_service import APPROVED, FakeModel
 
 
 def citation(message_id):
