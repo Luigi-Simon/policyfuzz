@@ -1,0 +1,478 @@
+{
+  "limitations": [
+    "Authored Judge contract example; no Judge model was called.",
+    "Sandbox dialogue is a citation-format fixture and does not analyze the transport claims policy."
+  ],
+  "metric": {
+    "cases": [
+      {
+        "actions": [
+          {
+            "action": "submit",
+            "amount_cents": 10000,
+            "claim_id": "C1",
+            "journey_id": "J1",
+            "participant_id": "P1"
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          }
+        ],
+        "assertions": [
+          {
+            "actual": "Authored fixture payout: SGD 100.00.",
+            "expected": "Participant payouts are at most SGD 150.00.",
+            "passed": true,
+            "requirement_id": "G-BUDGET",
+            "step_refs": [
+              "S3"
+            ]
+          }
+        ],
+        "case_id": "fixture-valid-claim",
+        "category": "normal",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "minimal_actions": null,
+        "plausibility": "Synthetic adapter fixture only: one valid claim is paid.",
+        "title": "Authored passing claim",
+        "trace": [
+          {
+            "accepted": true,
+            "action": {
+              "action": "submit",
+              "amount_cents": 10000,
+              "claim_id": "C1",
+              "journey_id": "J1",
+              "participant_id": "P1"
+            },
+            "action_index": 0,
+            "after_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "detail": "Authored fixture: submit C1 is shown as accepted.",
+            "participant_paid_cents_after": 0,
+            "participant_paid_cents_before": 0,
+            "participant_reserved_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "step_id": "S1"
+          },
+          {
+            "accepted": true,
+            "action": {
+              "action": "approve",
+              "claim_id": "C1"
+            },
+            "action_index": 1,
+            "after_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "before_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "detail": "Authored fixture: approve C1 is shown as accepted.",
+            "participant_paid_cents_after": 0,
+            "participant_paid_cents_before": 0,
+            "participant_reserved_cents_after": 10000,
+            "participant_reserved_cents_before": 0,
+            "step_id": "S2"
+          },
+          {
+            "accepted": true,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "action_index": 2,
+            "after_state_sha256": "5064c688f9717d295f0d724387308a69a9ebd0c8b931b4a387854bbe64f59e44",
+            "before_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "detail": "Authored fixture: pay C1 is shown as accepted.",
+            "participant_paid_cents_after": 10000,
+            "participant_paid_cents_before": 0,
+            "participant_reserved_cents_after": 0,
+            "participant_reserved_cents_before": 10000,
+            "step_id": "S3"
+          }
+        ],
+        "unscored_reason": null,
+        "verdict": "pass"
+      },
+      {
+        "actions": [
+          {
+            "action": "submit",
+            "amount_cents": 10000,
+            "claim_id": "C1",
+            "journey_id": "J1",
+            "participant_id": "P1"
+          },
+          {
+            "action": "submit",
+            "amount_cents": 10000,
+            "claim_id": "C2",
+            "journey_id": "J2",
+            "participant_id": "P1"
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "approve",
+            "claim_id": "C2"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C2"
+          }
+        ],
+        "assertions": [
+          {
+            "actual": "Authored fixture payout: SGD 200.00.",
+            "expected": "Participant payouts are at most SGD 150.00.",
+            "passed": false,
+            "requirement_id": "G-BUDGET",
+            "step_refs": [
+              "S6"
+            ]
+          }
+        ],
+        "case_id": "fixture-budget-failure",
+        "category": "compound",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "minimal_actions": null,
+        "plausibility": "Synthetic adapter fixture only: two approvals before payment.",
+        "title": "Authored budget failure",
+        "trace": [
+          {
+            "accepted": true,
+            "action": {
+              "action": "submit",
+              "amount_cents": 10000,
+              "claim_id": "C1",
+              "journey_id": "J1",
+              "participant_id": "P1"
+            },
+            "action_index": 0,
+            "after_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "detail": "Authored fixture: submit C1 is shown as accepted.",
+            "participant_paid_cents_after": 0,
+            "participant_paid_cents_before": 0,
+            "participant_reserved_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "step_id": "S1"
+          },
+          {
+            "accepted": true,
+            "action": {
+              "action": "submit",
+              "amount_cents": 10000,
+              "claim_id": "C2",
+              "journey_id": "J2",
+              "participant_id": "P1"
+            },
+            "action_index": 1,
+            "after_state_sha256": "fe3e753d1beba4bdef36e421c9b2dc317960cd0156ad4a16d13a9170d9204223",
+            "before_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "detail": "Authored fixture: submit C2 is shown as accepted.",
+            "participant_paid_cents_after": 0,
+            "participant_paid_cents_before": 0,
+            "participant_reserved_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "step_id": "S2"
+          },
+          {
+            "accepted": true,
+            "action": {
+              "action": "approve",
+              "claim_id": "C1"
+            },
+            "action_index": 2,
+            "after_state_sha256": "8a62c892ea8cd97746805ca423b290a5609ad6f365c7031b562f1387fa138ba1",
+            "before_state_sha256": "fe3e753d1beba4bdef36e421c9b2dc317960cd0156ad4a16d13a9170d9204223",
+            "detail": "Authored fixture: approve C1 is shown as accepted.",
+            "participant_paid_cents_after": 0,
+            "participant_paid_cents_before": 0,
+            "participant_reserved_cents_after": 10000,
+            "participant_reserved_cents_before": 0,
+            "step_id": "S3"
+          },
+          {
+            "accepted": true,
+            "action": {
+              "action": "approve",
+              "claim_id": "C2"
+            },
+            "action_index": 3,
+            "after_state_sha256": "56403acf7046a272f73cf9f030d045084dd64c66c5d61d7049b1b04c798cecf9",
+            "before_state_sha256": "8a62c892ea8cd97746805ca423b290a5609ad6f365c7031b562f1387fa138ba1",
+            "detail": "Authored fixture: approve C2 is shown as accepted.",
+            "participant_paid_cents_after": 0,
+            "participant_paid_cents_before": 0,
+            "participant_reserved_cents_after": 20000,
+            "participant_reserved_cents_before": 10000,
+            "step_id": "S4"
+          },
+          {
+            "accepted": true,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "action_index": 4,
+            "after_state_sha256": "9a9d8ea5ba4f5ef356c556da0bb0072e9d69b3d826f2402e1143266792a2f22d",
+            "before_state_sha256": "56403acf7046a272f73cf9f030d045084dd64c66c5d61d7049b1b04c798cecf9",
+            "detail": "Authored fixture: pay C1 is shown as accepted.",
+            "participant_paid_cents_after": 10000,
+            "participant_paid_cents_before": 0,
+            "participant_reserved_cents_after": 10000,
+            "participant_reserved_cents_before": 20000,
+            "step_id": "S5"
+          },
+          {
+            "accepted": true,
+            "action": {
+              "action": "pay",
+              "claim_id": "C2"
+            },
+            "action_index": 5,
+            "after_state_sha256": "f775167cc3e0092d3d22ec9545de05532d66c2e6c6c6764f6defc3a356e59d13",
+            "before_state_sha256": "9a9d8ea5ba4f5ef356c556da0bb0072e9d69b3d826f2402e1143266792a2f22d",
+            "detail": "Authored fixture: pay C2 is shown as accepted.",
+            "participant_paid_cents_after": 20000,
+            "participant_paid_cents_before": 10000,
+            "participant_reserved_cents_after": 0,
+            "participant_reserved_cents_before": 10000,
+            "step_id": "S6"
+          }
+        ],
+        "unscored_reason": null,
+        "verdict": "fail"
+      }
+    ],
+    "failed": 1,
+    "generation_method": "authored_fixture",
+    "limitations": [
+      "Authored Metric fixture for Judge adapter development; no policy runner or generator was executed."
+    ],
+    "pass_rate": 0.5,
+    "passed": 1,
+    "policy_text_sha256": "f1476b3974cf09fd19a9bf7b84ff14cb8a4703c64f40e55cc3158815e9f94f64",
+    "policy_version": "1",
+    "review": {
+      "assumptions": [
+        "Money values use strict integer SGD cents.",
+        "Each participant has an independent allowance.",
+        "Execution models ordered actions rather than concurrent infrastructure load.",
+        "Claim IDs are unique, and resubmission cannot overwrite an existing claim.",
+        "Approval requires a submitted claim; payment requires approval and cannot repeat.",
+        "Cancellation voids a submitted or approved claim and releases its reservation; cancelling a paid claim is rejected without a refund.",
+        "A rejected action preserves the complete prior state.",
+        "Eligibility is defined only by the stated amount, lifecycle, budget, and duplicate rules; no separate eligibility flag is inferred."
+      ],
+      "clauses": [
+        {
+          "id": "C-AMOUNT",
+          "text": "Claim amounts must be positive and no greater than the configured per-claim limit."
+        },
+        {
+          "id": "C-ALLOWANCE",
+          "text": "Each participant has a separate configured total payment allowance."
+        },
+        {
+          "id": "C-APPROVAL-BUDGET",
+          "text": "Approval budget checks use the configured accounting basis."
+        },
+        {
+          "id": "C-PAYMENT-RECHECK",
+          "text": "Payment uses the configured allowance recheck setting."
+        },
+        {
+          "id": "C-DUPLICATE",
+          "text": "Duplicate rejection uses the configured identity scope for the same participant."
+        },
+        {
+          "id": "C-LIFECYCLE",
+          "text": "Claims follow ordered submission, approval, payment, and cancellation rules."
+        }
+      ],
+      "goals": [
+        {
+          "clause_ids": [
+            "C-ALLOWANCE",
+            "C-APPROVAL-BUDGET",
+            "C-PAYMENT-RECHECK"
+          ],
+          "id": "G-BUDGET",
+          "text": "Total participant payouts must not exceed that participant's allowance."
+        },
+        {
+          "clause_ids": [
+            "C-DUPLICATE"
+          ],
+          "id": "G-JOURNEY",
+          "text": "A participant must receive at most one payment for the same journey."
+        },
+        {
+          "clause_ids": [
+            "C-LIFECYCLE"
+          ],
+          "id": "G-CANCELLED",
+          "text": "A cancelled claim must not be paid."
+        },
+        {
+          "clause_ids": [
+            "C-AMOUNT",
+            "C-ALLOWANCE",
+            "C-LIFECYCLE"
+          ],
+          "id": "G-LONE-VALID",
+          "text": "A lone valid claim within the limits can be paid."
+        },
+        {
+          "clause_ids": [
+            "C-AMOUNT"
+          ],
+          "id": "G-AMOUNT",
+          "text": "No payment may occur for a claim outside the stated amount bounds."
+        }
+      ],
+      "limitations": [
+        "Interpretation is limited to the bounded synthetic reimbursement domain.",
+        "The controlled format does not establish legal or real-policy provenance."
+      ],
+      "policy_text_sha256": "f1476b3974cf09fd19a9bf7b84ff14cb8a4703c64f40e55cc3158815e9f94f64",
+      "review_fingerprint": "c8b1b562514d75bca36e144b609a1be801cf90f1bed8389cedb2917113e5d163",
+      "rules": {
+        "approval_budget_accounting": "paid_only",
+        "duplicate_scope": "claim_id",
+        "participant_allowance_cents": 15000,
+        "payment_budget_recheck": false,
+        "per_claim_limit_cents": 10000
+      },
+      "status": "ready"
+    },
+    "review_fingerprint": "c8b1b562514d75bca36e144b609a1be801cf90f1bed8389cedb2917113e5d163",
+    "run_id": "judge-example-complete",
+    "schema_version": "2.0",
+    "status": "completed",
+    "suite_sha256": "6177e2d598c9ac876cd2592f628d3b386aa4b26246b295904ae65358812a9e3b",
+    "unscored": 0
+  },
+  "policy_text_sha256": "f1476b3974cf09fd19a9bf7b84ff14cb8a4703c64f40e55cc3158815e9f94f64",
+  "policy_title": "Synthetic transport reimbursement policy",
+  "policy_version": "1",
+  "request_id": "judge-request-complete",
+  "run_id": "judge-example-complete",
+  "sandbox": {
+    "configured_stakeholder_count": 3,
+    "errors": [],
+    "execution_mode": "fixture",
+    "limitations": [
+      "Authored synthetic fixture dialogue; it does not analyze the supplied policy or personality seed, and no live Sandbox was executed."
+    ],
+    "messages": [
+      {
+        "content": "The rider asks the city to retain late-night service.",
+        "message_id": "message-001",
+        "persona_id": "persona-001",
+        "recorded_at": null,
+        "reply_to_message_ids": [],
+        "round_number": 1,
+        "sequence": 1,
+        "source_refs": [
+          "source-001"
+        ],
+        "translation_status": "translated"
+      },
+      {
+        "content": "Late-night service needs adequate rest time and clear safety procedures.",
+        "message_id": "message-002",
+        "persona_id": "persona-002",
+        "recorded_at": null,
+        "reply_to_message_ids": [
+          "message-001"
+        ],
+        "round_number": 1,
+        "sequence": 2,
+        "source_refs": [
+          "source-002"
+        ],
+        "translation_status": "translated"
+      },
+      {
+        "content": "Every pilot stop should preserve an accessible route.",
+        "message_id": "message-003",
+        "persona_id": "persona-003",
+        "recorded_at": null,
+        "reply_to_message_ids": [
+          "message-001"
+        ],
+        "round_number": 1,
+        "sequence": 3,
+        "source_refs": [
+          "source-003"
+        ],
+        "translation_status": "original_english"
+      }
+    ],
+    "observed_stakeholder_count": 3,
+    "personas": [
+      {
+        "description": "A hospital worker who depends on transit after midnight.",
+        "display_name": "Night-shift rider",
+        "persona_id": "persona-001"
+      },
+      {
+        "description": "A driver focused on safe schedules and reliable breaks.",
+        "display_name": "Transit operator",
+        "persona_id": "persona-002"
+      },
+      {
+        "description": "A rider who evaluates step-free late-night journeys.",
+        "display_name": "Accessibility advocate",
+        "persona_id": "persona-003"
+      }
+    ],
+    "policy_text_sha256": "f1476b3974cf09fd19a9bf7b84ff14cb8a4703c64f40e55cc3158815e9f94f64",
+    "policy_title": "Synthetic transport reimbursement policy",
+    "policy_version": "1",
+    "request_fingerprint": "82897b7754f4c8815f29720c1a16b8988217dbadc4d9b5335ed352769d507a86",
+    "request_id": "sandbox-example-complete",
+    "requested_stakeholder_count": 3,
+    "run_id": "judge-example-complete",
+    "schema_version": "2.0",
+    "sources": [
+      {
+        "excerpt": "The rider requests continued late-night service.",
+        "record_id": "message-001",
+        "source_id": "source-001",
+        "title": "Rider response"
+      },
+      {
+        "excerpt": "The operator requests rest time and clear safety procedures.",
+        "record_id": "message-002",
+        "source_id": "source-002",
+        "title": "Operator response"
+      },
+      {
+        "excerpt": "The advocate requests an accessible route at every stop.",
+        "record_id": "message-003",
+        "source_id": "source-003",
+        "title": "Accessibility response"
+      }
+    ],
+    "status": "completed"
+  },
+  "schema_version": "2.0"
+}

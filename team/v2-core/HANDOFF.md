@@ -3,28 +3,30 @@
 ## Start here
 
 Your branch: **p1/feat-v2-core**. Target pull requests at **p1/feat-policyfuzz-v2**.
-Your friend works on p3/feat-v2-sandbox. Both begin at the same foundation commit.
+Your friend works on p3/feat-v2-sandbox and p3/feat-v2-judge in separate worktrees.
+Judge starts at a later shared-contract checkpoint. Preserve the existing Sandbox
+branch; core owns integration of the shared types.
 Read docs/v2/README.md, root AGENTS.md, and the shared Sandbox contracts before changes.
 
 ## You own
 
 - **Orchestrator Agent:** one run lifecycle, stage progress, timeouts, integration and follow-up exploration.
 - **Metric Agent:** automatic normal, boundary, compound, cascading and adversarial cases; plausibility checks and minimal counterexamples.
-- **Judge Agent:** evidence-grounded pros/cons, recommendations/next steps, key interactions and test results.
+- **Judge integration:** shared contract, validation and app wiring. Your friend implements the adapter; see ../v2-judge/HANDOFF.md.
 - Policy extraction, deterministic stateful execution, assertions and frozen regression as supporting tools.
 - Four-field UI, public API, shared configuration/contracts, persistence, revisions, English public presentation and exports.
 
-Your friend owns **Sandbox Agent**, MiroFish integration and its English output. Do not build an alternative live Sandbox implementation in their folder.
+Your friend owns **Sandbox Agent**, MiroFish integration and its English output, plus **Judge Agent** in a separate folder/branch. Do not build an alternative live Sandbox implementation in their folder.
 
 ## Exact boundaries
 
-Canonical models: app.v2.contracts.
+Canonical models: app.v2.contracts (Sandbox), app.v2.metric_contracts (Metric evidence), app.v2.judge_contracts (Judge).
 Canonical protocol: app.v2.protocols.SandboxService.
 Your fixture: app.v2.fixtures.FixtureSandboxService.
 Friend implementation target: app.v2.sandbox.service.MiroFishSandboxService (not implemented by this foundation).
 The Orchestrator consumes the protocol, not a MiroFish-specific transport.
 
-Own backend/app/v2/** except sandbox/**; backend/tests/v2/** except sandbox/**;
+Own backend/app/v2/** except sandbox/** and judge/**; backend/tests/v2/** except sandbox/** and judge/**;
 contracts/v2; and v2 additions to the frontend, APIs, docs and shared configuration.
 This does not transfer ownership of preserved v1 features. Any integration change
 affecting an existing v1 surface must preserve its behaviour and include relevant

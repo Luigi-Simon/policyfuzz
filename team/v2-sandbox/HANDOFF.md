@@ -3,7 +3,7 @@
 ## Your assignment
 
 Own the **Sandbox Agent**: MiroFish integration, stakeholder personas, simulation capture, parsing and English output.
-Simon owns the Orchestrator Agent, Metric Agent, Judge Agent, deterministic tests, app and shared schemas.
+Simon owns Orchestrator Agent, Metric Agent, deterministic tests, app, shared schemas and Judge integration. You may also implement Judge on its separate branch; see ../v2-judge/HANDOFF.md.
 There are exactly four top-level agent roles. Translation and parsing are tools; MiroFish stakeholders are participants inside the Sandbox Agent.
 
 Your branch is **p3/feat-v2-sandbox**.
@@ -47,7 +47,7 @@ A typed SandboxResult with:
 - Ordering and reply/timing references where supported.
 - Structured errors/limitations if evidence is incomplete.
 
-You do not produce authoritative policy pass/fail scores or the final policy recommendation. Simon's test runner and Judge Agent own those.
+You do not produce authoritative policy pass/fail scores or the final policy recommendation. The deterministic test runner and the separately implemented Judge Agent own those.
 
 ## Implementation order
 

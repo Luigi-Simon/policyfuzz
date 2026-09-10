@@ -1,0 +1,28 @@
+{
+  "cons": [],
+  "errors": [],
+  "execution_mode": "fixture",
+  "key_interactions": [],
+  "limitations": [
+    "Authored Judge contract example; no Judge model was called.",
+    "Sandbox dialogue is a citation-format fixture and does not analyze the transport claims policy.",
+    "Metric policy needs clarification; Sandbox was not requested."
+  ],
+  "next_steps": [
+    {
+      "action": "Clarify the supported policy clauses and review the explicit goals.",
+      "citations": [],
+      "reason": "The policy has no supported executable interpretation and no scored tests."
+    }
+  ],
+  "policy_text_sha256": "5f6c393bfcb7c2f283d86ddec6b8349c52d318c504fbdfd7498ab05ee2579366",
+  "policy_version": "1",
+  "pros": [],
+  "recommendation": "insufficient_evidence",
+  "request_fingerprint": "e66a242123178c57948e050a865400e6c38f90f020e119caf57c78157591f552",
+  "request_id": "judge-request-unscored",
+  "run_id": "judge-example-unscored",
+  "schema_version": "2.0",
+  "status": "partial",
+  "summary": "The policy needs clarification before executable testing."
+}

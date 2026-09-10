@@ -1,0 +1,44 @@
+{
+  "limitations": [
+    "Authored Judge contract example; no Judge model was called.",
+    "Sandbox dialogue is a citation-format fixture and does not analyze the transport claims policy.",
+    "Metric policy needs clarification; Sandbox was not requested."
+  ],
+  "metric": {
+    "cases": [],
+    "failed": 0,
+    "generation_method": "authored_fixture",
+    "limitations": [
+      "Authored Metric fixture for Judge adapter development; no policy runner or generator was executed."
+    ],
+    "pass_rate": null,
+    "passed": 0,
+    "policy_text_sha256": "5f6c393bfcb7c2f283d86ddec6b8349c52d318c504fbdfd7498ab05ee2579366",
+    "policy_version": "1",
+    "review": {
+      "assumptions": [],
+      "clauses": [],
+      "goals": [],
+      "limitations": [
+        "Use exactly the documented line-based reimbursement policy format, including every required operative clause and explicit Goal clause."
+      ],
+      "policy_text_sha256": "5f6c393bfcb7c2f283d86ddec6b8349c52d318c504fbdfd7498ab05ee2579366",
+      "review_fingerprint": "2abbaa726f8a64493eb2e8168e7003b7edbab9018b16ab81f62a0b367bbebfb7",
+      "rules": null,
+      "status": "needs_clarification"
+    },
+    "review_fingerprint": "2abbaa726f8a64493eb2e8168e7003b7edbab9018b16ab81f62a0b367bbebfb7",
+    "run_id": "judge-example-unscored",
+    "schema_version": "2.0",
+    "status": "needs_clarification",
+    "suite_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "unscored": 0
+  },
+  "policy_text_sha256": "5f6c393bfcb7c2f283d86ddec6b8349c52d318c504fbdfd7498ab05ee2579366",
+  "policy_title": "Synthetic transport reimbursement policy",
+  "policy_version": "1",
+  "request_id": "judge-request-unscored",
+  "run_id": "judge-example-unscored",
+  "sandbox": null,
+  "schema_version": "2.0"
+}

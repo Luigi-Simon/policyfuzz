@@ -1,0 +1,67 @@
+{
+  "cons": [
+    {
+      "citations": [
+        {
+          "case_id": null,
+          "id": "fixture-budget-failure",
+          "kind": "metric_case"
+        }
+      ],
+      "text": "The authored fixture includes a failing Metric case; no policy runner was executed."
+    }
+  ],
+  "errors": [],
+  "execution_mode": "fixture",
+  "key_interactions": [
+    {
+      "citations": [
+        {
+          "case_id": null,
+          "id": "message-001",
+          "kind": "sandbox_message"
+        }
+      ],
+      "text": "This authored stakeholder message demonstrates a resolvable citation, not policy-specific simulation evidence."
+    }
+  ],
+  "limitations": [
+    "Authored Judge contract example; no Judge model was called.",
+    "Sandbox dialogue is a citation-format fixture and does not analyze the transport claims policy.",
+    "One Sandbox translation is unavailable and cannot support a finding."
+  ],
+  "next_steps": [
+    {
+      "action": "Inspect the failing trace, revise the relevant operative clauses and rerun the same cases.",
+      "citations": [
+        {
+          "case_id": null,
+          "id": "fixture-budget-failure",
+          "kind": "metric_case"
+        }
+      ],
+      "reason": "The supplied mock case is marked as failing its budget assertion."
+    }
+  ],
+  "policy_text_sha256": "f1476b3974cf09fd19a9bf7b84ff14cb8a4703c64f40e55cc3158815e9f94f64",
+  "policy_version": "1",
+  "pros": [
+    {
+      "citations": [
+        {
+          "case_id": null,
+          "id": "fixture-valid-claim",
+          "kind": "metric_case"
+        }
+      ],
+      "text": "The authored fixture includes a passing Metric case for report development."
+    }
+  ],
+  "recommendation": "revise_before_pilot",
+  "request_fingerprint": "82f356a0a58a672faf90ef6204508932f4d44d85720f0fac8a1e02344df4ac23",
+  "request_id": "judge-request-partial",
+  "run_id": "judge-example-partial",
+  "schema_version": "2.0",
+  "status": "partial",
+  "summary": "This authored fixture demonstrates reporting a failing Metric case; no policy test was executed."
+}

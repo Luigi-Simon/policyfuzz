@@ -6,11 +6,13 @@ on:
       - p1/feat-policyfuzz-v2
       - p1/feat-v2-core
       - p3/feat-v2-sandbox
+      - p3/feat-v2-judge
     paths:
       - backend/app/v2/**
       - backend/tests/v2/**
       - contracts/v2/**
       - contracts/v2-app/**
+      - contracts/v2-judge/**
       - scripts/check_v2_foundation.py
       - .github/workflows/v2-foundation.yml
   pull_request:
@@ -19,6 +21,7 @@ on:
       - backend/tests/v2/**
       - contracts/v2/**
       - contracts/v2-app/**
+      - contracts/v2-judge/**
       - scripts/check_v2_foundation.py
       - .github/workflows/v2-foundation.yml
 
@@ -40,8 +43,10 @@ jobs:
         run: python scripts/check_v2_foundation.py
       - name: Check v2 API schemas
         run: PYTHONPATH=backend python -m app.v2.export_api --check
-      - name: Test v2 fixture API
-        run: python -m pytest backend/tests/v2/test_run_api.py -q
+      - name: Check Judge handoff contracts
+        run: PYTHONPATH=backend python -m app.v2.export_judge --check
+      - name: Test v2 fixture API and Judge boundary
+        run: python -m pytest backend/tests/v2 -q
       - name: Check foundation formatting
         run: python -m ruff format --check --diff backend/app/v2 backend/tests/v2 scripts/check_v2_foundation.py
       - name: Lint foundation

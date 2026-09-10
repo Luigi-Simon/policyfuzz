@@ -7,9 +7,9 @@ Read docs/v2/README.md and the applicable team/v2-core or team/v2-sandbox handof
 
 - V2 has exactly four product agent roles: **Orchestrator Agent**, **Metric Agent**, **Sandbox Agent**, **Judge Agent**. The old Fuzz Agent role is named Metric Agent in v2. PolicyFuzz remains the project name.
 - Parsing, translation, deterministic execution and storage are tools, not extra agent roles. Stakeholders are participants inside the Sandbox Agent.
-- Simon owns shared schemas, configuration and integration, plus all v2 paths except the Sandbox contributor's paths.
-- The Sandbox contributor owns backend/app/v2/sandbox/** and backend/tests/v2/sandbox/**. Shared schema or dependency changes go through Simon.
-- Canonical v2 models come from app.v2.contracts; the Sandbox protocol comes from app.v2.protocols. This is an explicit versioned exception to the v1 import rule below.
+- Simon owns shared schemas, configuration and integration, plus all v2 paths except the friend's Sandbox and Judge implementation/test paths.
+- The friend owns backend/app/v2/sandbox/**, backend/tests/v2/sandbox/**, backend/app/v2/judge/** and backend/tests/v2/judge/**. Use separate Sandbox and Judge feature branches. Shared schema or dependency changes go through Simon.
+- Canonical v2 models come from app.v2.contracts (Sandbox), app.v2.metric_contracts (Metric) and app.v2.judge_contracts (Judge); protocols come from app.v2.protocols and app.v2.judge_protocols. This is an explicit versioned exception to the v1 import rule below.
 - V2 work uses synthetic or explicitly non-confidential policy text. The executable domain is limited to what the runner actually supports; no general-policy correctness claim.
 - Preserve v1 schemas, recorded artifacts and historical hashes. Legacy v1 modules retain their names until a separately tested migration is integrated.
 - Do not send expected verdicts or historical outcomes into stakeholder seed material.

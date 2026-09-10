@@ -5,6 +5,13 @@ standalone Orchestrator API and an English evidence screen using the synthetic
 Sandbox fixture. The existing v1 application remains available. Metric tests,
 Judge evaluation, persistent runs and the live MiroFish adapter are later work.
 
+## Judge contributor: start here
+
+Use [team/v2-judge/HANDOFF.md](../../team/v2-judge/HANDOFF.md). It includes the
+separate branch/worktree command, fixed async interface and three offline examples.
+These examples use authored mock Metric/Sandbox evidence. No live provider or
+completed Metric runner is needed. Simon owns shared contracts and app integration.
+
 ## Run the first core milestone
 
 On `p1/feat-v2-core`, use Python 3.12+ and Node 20+. From the repository root:
@@ -40,11 +47,13 @@ Details and verification commands: [First-run handoff](FIRST-RUN.md).
 
 | Person | Branch | Owns | Instructions |
 | --- | --- | --- | --- |
-| Simon | `p1/feat-v2-core` | Orchestrator Agent, Metric Agent, Judge Agent, runner, UI/API and shared contracts | [Core handoff](../../team/v2-core/HANDOFF.md) |
+| Simon | `p1/feat-v2-core` | Orchestrator Agent, Metric Agent, runner, UI/API, Judge integration and shared contracts | [Core handoff](../../team/v2-core/HANDOFF.md) |
 | Friend | `p3/feat-v2-sandbox` | Sandbox Agent, MiroFish, personas, capture, parsing and English output | [Sandbox handoff](../../team/v2-sandbox/HANDOFF.md) |
+| Friend | `p3/feat-v2-judge` | Judge Agent adapter and reporting | [Judge handoff](../../team/v2-judge/HANDOFF.md) |
 | Integration | `p1/feat-policyfuzz-v2` | Reviewed changes from both people | Simon integrates |
 
-All three branches start at the same foundation commit. Use a separate local clone
+The original branches started at the same foundation commit. Judge starts at a
+later shared-contract checkpoint; use its handoff for setup. Use a separate local clone
 per person. Commit or stash your own existing changes before switching branches.
 
 Simon, from your clone:
@@ -79,17 +88,9 @@ repository remote `upstream` and use `upstream/...` in the fetch, switch, merge 
 SHA comparison instructions; push feature work to the fork's `origin`. The scoped
 handoff still applies.
 
-Before either person starts changing code, these commands must print the same
-foundation SHA (also recorded in the foundation PR):
-
-```bash
-git rev-parse origin/p1/feat-policyfuzz-v2
-git rev-parse origin/p1/feat-v2-core
-git rev-parse origin/p3/feat-v2-sandbox
-```
-
-The branch tips will naturally diverge once development starts. Never reset a
-teammate's work merely to make the tips match again.
+The branch tips now differ because development has progressed. Judge starts from
+its dedicated shared-contract checkpoint. Fetch the branch in your assignment and
+follow its handoff; never reset a teammate's branch to make the tips match.
 
 ## Give your coding agent its assignment
 
@@ -107,7 +108,7 @@ Simon can paste:
 > Work on p1/feat-v2-core. Read root AGENTS.md, docs/v2/README.md and
 > team/v2-core/HANDOFF.md. Build the v2 app using the shared SandboxService and
 > explicitly labelled fixture adapter while my friend implements the live Sandbox
-> Agent. Own Orchestrator Agent, Metric Agent, Judge Agent, deterministic execution,
+> Agent. Own Orchestrator Agent, Metric Agent, Judge integration, deterministic execution,
 > API and UI. Follow the handoff's evidence and regression rules. Target your PR
 > at p1/feat-policyfuzz-v2.
 
