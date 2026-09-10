@@ -126,13 +126,13 @@ export function usePolicyFuzzRun(transport: PolicyFuzzTransport, initialRunId?: 
     setError(null); setBusy(true);
     await getFresh(token, currentId.current);
   }, [begin,getFresh]);
-  const deleteRun = useCallback(async ():Promise<void> => {
+  const deleteRun = useCallback(async (onDeleted?: () => void):Promise<void> => {
     const value = currentRun.current;
     if (!mounted.current || generation.current?.deleting || !value?.allowed_actions?.includes('delete_run')) return;
     const token = begin(); token.pending = true; token.deleting = true; setBusy(true); setError(null);
     try {
       await transport.deleteRun(value.run_id, token.controller.signal);
-      if (current(token)) {invalidate(); clearLocal();}
+      if (current(token)) {invalidate(); clearLocal(); onDeleted?.();}
     } catch (failure) {if (current(token)) setError(publicFailure(failure));}
     finally {token.pending = false; token.deleting = false; if (current(token)) setBusy(false);}
   }, [begin,clearLocal,current,invalidate,transport]);

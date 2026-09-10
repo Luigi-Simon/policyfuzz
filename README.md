@@ -10,6 +10,18 @@ Preparing for a first demo? The [rehearsal guide](docs/demo-day-guide.md) includ
 
 Requirements: Python 3.12+, Node 20+ and Git. Use two terminals from a clone of this repository. The default backend mode is `cached`; it requires no provider key. The frontend talks to the real local API and displays the cached label.
 
+After the one-time dependency installation below, you can launch both services
+from the repository root with **`npm run dev`**. Press Ctrl+C to stop both.
+Use `npm run dev -- --mock` for the labelled interactive screen rehearsal.
+`npm run dev -- --agents` also starts the optional exploratory engine, after
+installing its dependencies in `engine/.venv`. The launcher does not save keys.
+The core backend reads its process environment; the optional engine also reads
+`engine/.env` and uses separate settings documented in [engine/README.md](engine/README.md).
+MiroFish itself must be running separately for external agent conversations.
+
+See the [semifinal refinement record](docs/semifinal-refinement.md) for the latest
+reliability changes, verification results and remaining rehearsal checks.
+
 Terminal 1, macOS/Linux:
 
 ```bash

@@ -1,0 +1,129 @@
+{
+  "kind": "application_verification_not_release_gate",
+  "date": "2026-09-09",
+  "base_commit": "61cd0d5946d78202493f89b2e733956ce478ebcb",
+  "source_binding": "SHA-256 of changed implementation, test and configuration files; unchanged files inherit base_commit",
+  "source_files_sha256": {
+    ".github/workflows/ci.yml": "2f558110d0a75199b398e52d98c75feb35661865603f8acb1183c04e0f6c1246",
+    "backend/app/api/routes.py": "e892baef4a23f05ef6093bee437585b1c7fbcef462befb995aa493533734f983",
+    "backend/app/features/fuzzing/engine_client.py": "c091c72608b7069f6305c41fae91a722475d62e1353784f22dae9203060b8487",
+    "backend/tests/api/test_agent_simulation.py": "5f36b3e5539d5b59d8c28b8ecfeba6b9109dda534f53952f3cbd6cacd82f380e",
+    "engine/app/services/coordinator.py": "9ac975335f62fc3443eaf7261596bacf13ba6b893d0771a8db8352ff55361ff4",
+    "engine/app/services/effectiveness.py": "60fe761f5a5416b64e9984bd3e2478d2605a1364c43f5e779d8ffe8d0083860f",
+    "engine/app/services/evaluate.py": "e40699f23afbbbfc752d56f478ecb8bf6b2c896a5e0c20a14cee7515837f6ab9",
+    "engine/app/services/extract.py": "ea4144c14a5442ae1e84009751211e8b00506657aa69b9a3a5688460fe8bcfbf",
+    "engine/app/services/fuzz.py": "4d0148ec032b44777da985aade54095eda35f652d5b98a5090b39d85ce457ef8",
+    "engine/app/services/revise.py": "ca2a631dffbe3c282251f99ff87d9c80c3a04e65f039124138d39532d28df531",
+    "engine/tests/test_coordinator.py": "94ca7ac99fd8c5e1df0d5165d94222aad33d077d58ab710df800636e49de2316",
+    "engine/tests/test_evidence_integrity.py": "37e4acbdd7bccf0603bde00611d9263b3ef4bc21c723e9bb25e8de269acff32a",
+    "engine/tests/test_extraction_integrity.py": "be57851fde248c45a85fe1bf33bb40858e22cbfdcfa8f9bd1e20e2f859eb0a37",
+    "engine/tests/test_fuzz.py": "7ba7ac50f78bf562d761d086f5635c266e7b67395d039b7b90988b67e8f713c3",
+    "frontend/src/App.tsx": "d171833a555aa9abe2b1aaf719614ecb349bf3593bac9db585f1b3a74377392a",
+    "frontend/src/api/httpTransport.ts": "da06fe00b57e40fb55595cd89e295cd7e63197fa11d6f40b16ec4f1c925f6cbc",
+    "frontend/src/api/transport.ts": "cb092b3c6569871df46c7aaca72f4a921e5ecc4824631d2103feb69fe44b4042",
+    "frontend/src/api/validateAgentResult.ts": "214fd083ed24206507b7ff8ff1dc99ddd2277af8421bdfe535453d600c8b94f6",
+    "frontend/src/main.tsx": "b7c5662e562945b4be5f7328547fc52dd7b0c8ec59f27b053a757d19ea30df03",
+    "frontend/src/state/useAgentSimulation.ts": "62aff647f2194a359126f416df62159572927a70e65c566eaad5ecc611d66fa8",
+    "frontend/src/state/usePolicyFuzzRun.ts": "1c6ca24bbbb93d485df32e019c0d25ac4933cd8dc082d0f22e0cc166193d6795",
+    "frontend/src/test/agent-evidence.test.tsx": "1519c31da1b8b704a0485ff1b07e7ba7f82c7ed18065ce44003d3b9dd42d509b",
+    "frontend/src/test/agent-input.test.tsx": "8dd2e22433ebec5f6e168b9e10c9210bc0cc1f1d9d7824b893c3f1deee4ba24b",
+    "frontend/src/test/agent-lifecycle.test.tsx": "802a1704d273484f2ae970f9f10d3aa67e9410d0e0dbb52a756165e946fae547",
+    "frontend/src/test/agent-transport.test.tsx": "8938c50afc3bd341d3ef37d5503c1e1053bf62c79715b2fafae042702637b386",
+    "frontend/src/test/validate-agent-result.test.ts": "d654681527d91fb66a9510920f0fb3285c12352886feec45429110b6abea6ec4",
+    "frontend/src/views/AgentEvidenceView.tsx": "50d2dce5222684e3facdbfb5ff91d03900f445febe73a47abc34d4611814e286",
+    "frontend/src/views/InputContractView.tsx": "410ecc08935364725f44464c612a2e87fa3206280f8339b9ed2c3d87fcc05c71",
+    "frontend/vite.config.ts": "49b061b5358c1e8a50a5832c42548cb277da9201f01b43f4f34dd79504f6ddda",
+    "package.json": "c00144c3e0df9d40523126c3f020615a6cc6dc44eb3d3cc6828f0dee020680a3",
+    "scripts/dev.mjs": "60fe36498d3fea5c65eb0bbdfd4e8f8f8cfbfdc591c74db3584aee1a8327cdb5"
+  },
+  "checks": {
+    "backend_pytest": {
+      "command": "backend/.venv/bin/python -m pytest backend/tests -q --tb=short",
+      "passed": 1534,
+      "duration_seconds": 123.46
+    },
+    "frontend": {
+      "commands": [
+        "npm run check:generated",
+        "npm run typecheck",
+        "npm run test:run",
+        "npm run build"
+      ],
+      "working_directory": "frontend",
+      "passed": 177,
+      "test_duration_seconds": 16.43,
+      "production_build": "passed"
+    },
+    "exploratory_engine": {
+      "command": "LLM_MOCK=true .venv/bin/python -m pytest -q --tb=short",
+      "working_directory": "engine",
+      "passed": 83,
+      "duration_seconds": 13.45,
+      "warnings": [
+        "Upstream anyio BlockingPortal alias deprecation"
+      ]
+    },
+    "backend_ruff_check": "passed",
+    "backend_ruff_format": {
+      "status": "passed",
+      "files": 168
+    },
+    "contract_drift": {
+      "command": "backend/.venv/bin/python scripts/validate_contracts.py",
+      "status": "passed",
+      "schemas": 111
+    },
+    "public_synthetic_benchmarks": {
+      "command": "backend/.venv/bin/python scripts/verify_benchmarks.py",
+      "status": "passed",
+      "human_reviewed": false,
+      "development_true_positives": 3,
+      "development_false_positives": 0,
+      "development_false_negatives": 0,
+      "control_false_positives": 0
+    },
+    "offline_workflow": {
+      "command": "backend/.venv/bin/python scripts/offline_smoke.py",
+      "status": "passed",
+      "scenarios": 10,
+      "baseline_defects": 3,
+      "remaining_defects": 0,
+      "patch_accepted": true,
+      "scripted_model_calls": 4,
+      "actual_provider_calls": 0,
+      "suite_sha256": "1e940319389dbf72e2ca09782cc4a7b35a4321cda5c8ed978e1871ec7f14cf18"
+    },
+    "cached_replay": {
+      "command": "backend/.venv/bin/python scripts/replay_check.py",
+      "status": "passed",
+      "replays": 3,
+      "semantic_execution_sha256": "bab4805986a8d06b3bf80e923018d6f23091885880a21a8b255258189fb2310a"
+    },
+    "combined_launcher": {
+      "command": "npm run dev",
+      "status": "passed",
+      "checks": [
+        "backend health HTTP 200",
+        "frontend index HTTP 200",
+        "shutdown exits 0"
+      ],
+      "platform": "Linux",
+      "windows_execution": "not_run"
+    },
+    "launcher_syntax": {
+      "command": "node --check scripts/dev.mjs",
+      "status": "passed"
+    }
+  },
+  "independent_code_review": "No remaining concrete blockers after correcting nullable failed-run responses and preventing stale-prose swarm launches following structured revisions.",
+  "provider_calls_this_pass": 0,
+  "browser_acceptance": {
+    "status": "blocked",
+    "reason": "Preview started, but browser-control operations did not return. No DOM journey or screenshot captured."
+  },
+  "fresh_live_provider_rehearsal": false,
+  "fresh_mirofish_capture": false,
+  "human_benchmark_approval": false,
+  "gate_b": false,
+  "final_release": false
+}

@@ -29,6 +29,9 @@ class RuleEvaluator(Evaluator):
                 "rule_count": len(ir.rules),
                 "rules_covered": len(covered),
                 "verdicts": by_verdict,
+                "unasserted_count": sum(
+                    scenario.expected_outcome is None for scenario in suite.scenarios
+                ),
             },
         )
 
@@ -45,6 +48,8 @@ def _grade(ir: PolicyIR, scenario: Scenario) -> Finding:
         f"{scenario.title}: expected {scenario.expected_outcome or 'unspecified'}, "
         f"policy yielded {actual}."
     )
+    if scenario.expected_outcome is None:
+        summary += " Unasserted exploratory case: no pass/fail claim is possible."
     return Finding(
         scenario_id=scenario.scenario_id,
         verdict=verdict,
@@ -65,8 +70,14 @@ def _infer_outcome(
     excepted: list[Rule] = []
     for rule_id in targets:
         rule = rule_map[rule_id]
-        when_ok = all(_matches(predicate, scenario.facts) for predicate in rule.when) if rule.when else True
-        except_ok = any(_matches(predicate, scenario.facts) for predicate in rule.except_when)
+        when_ok = (
+            all(_matches(predicate, scenario.facts) for predicate in rule.when)
+            if rule.when
+            else True
+        )
+        except_ok = any(
+            _matches(predicate, scenario.facts) for predicate in rule.except_when
+        )
         traces.append(
             TraceStep(
                 rule_id=rule.id,
@@ -84,7 +95,9 @@ def _infer_outcome(
     if excepted:
         return "exception"
     if not matched:
-        if scenario.kind == "targeted" or any(rule_map[rid].ambiguity for rid in targets if rid in rule_map):
+        if scenario.kind == "targeted" or any(
+            rule_map[rid].ambiguity for rid in targets if rid in rule_map
+        ):
             return "ambiguous"
         return "ambiguous"
     for rule in matched:
@@ -100,7 +113,7 @@ def _infer_outcome(
 
 def _verdict(expected: ExpectedOutcome | None, actual: ExpectedOutcome) -> Verdict:
     if expected is None:
-        return "ambiguous" if actual == "ambiguous" else "pass"
+        return "ambiguous"
     if actual == "ambiguous" and expected == "ambiguous":
         return "pass"
     if actual == expected:

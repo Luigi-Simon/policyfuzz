@@ -8,4 +8,4 @@ import './styles.css';
 
 const transport = dataMode === 'mock' ? new MockTransport() : new HttpTransport(apiBase);
 const query = new URLSearchParams(window.location.search);
-ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App transport={transport} initialAgentRunId={query.get('mirofish_run') ?? undefined}/></React.StrictMode>);
+ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App transport={transport} initialRunId={query.get('run_id') ?? undefined} initialAgentRunId={query.get('mirofish_run') ?? undefined}/></React.StrictMode>);

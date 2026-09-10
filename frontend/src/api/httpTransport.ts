@@ -1,4 +1,5 @@
 import { apiBase } from './config';
+import { validateAgentSimulationResult } from './validateAgentResult';
 import { PublicTransportError, safePublicError, type AgentSimulationRequest, AgentSimulationResult, type PolicyFuzzTransport } from './transport';
 import type {
   ConfirmContractRequest,
@@ -17,6 +18,7 @@ import {
 } from './validateRunView';
 
 export const HTTP_REQUEST_TIMEOUT_MS = 15_000;
+export const AGENT_SIMULATION_TIMEOUT_MS = 360_000;
 
 const invalidResponse = () =>
   safePublicError('INTERNAL_ERROR', 'The public API returned an invalid response.');
@@ -35,6 +37,7 @@ function assertRunId(runId: string): void {
 
 export class HttpTransport implements PolicyFuzzTransport {
   readonly dataSourceLabel = 'Public API';
+  readonly supportsAgentSimulation = true;
   private readonly baseUrl: string;
   private readonly timeoutMs: number;
 
@@ -115,11 +118,9 @@ export class HttpTransport implements PolicyFuzzTransport {
         confirmation: 'confirmed',
       },
       signal,
+      AGENT_SIMULATION_TIMEOUT_MS,
     );
-    if (typeof result !== 'object' || result === null || Array.isArray(result) || typeof (result as { run_id?: unknown }).run_id !== 'string') {
-      throw safePublicError('INTERNAL_ERROR', 'The agent engine returned no run identifier.');
-    }
-    return result as AgentSimulationResult;
+    return validateAgentSimulationResult(result);
   }
 
   async startCustomAgentSimulation(request: AgentSimulationRequest, signal?: AbortSignal): Promise<AgentSimulationResult> {
@@ -136,12 +137,9 @@ export class HttpTransport implements PolicyFuzzTransport {
         non_confidential_confirmed: true,
       },
       signal,
-      360_000,
+      AGENT_SIMULATION_TIMEOUT_MS,
     );
-    if (typeof result !== 'object' || result === null || Array.isArray(result) || typeof (result as { run_id?: unknown }).run_id !== 'string') {
-      throw safePublicError('INTERNAL_ERROR', 'The generic MiroFish engine returned no run identifier.');
-    }
-    return result as AgentSimulationResult;
+    return validateAgentSimulationResult(result);
   }
 
   async loadAgentSimulation(engineRunId: string, signal?: AbortSignal): Promise<AgentSimulationResult> {
@@ -153,10 +151,9 @@ export class HttpTransport implements PolicyFuzzTransport {
       undefined,
       signal,
     );
-    if (typeof result !== 'object' || result === null || Array.isArray(result) || typeof (result as { run_id?: unknown }).run_id !== 'string') {
-      throw safePublicError('INTERNAL_ERROR', 'The stored agent result returned no run identifier.');
-    }
-    return result as AgentSimulationResult;
+    const validated = validateAgentSimulationResult(result);
+    if (validated.run_id !== engineRunId) throw invalidResponse();
+    return validated;
   }
 
   private async runRequest(
