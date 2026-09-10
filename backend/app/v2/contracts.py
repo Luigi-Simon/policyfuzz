@@ -359,12 +359,9 @@ def validate_sandbox_result(request: SandboxRequest, result: SandboxResult) -> N
             raise ValueError(
                 f"message {record.record_id} does not cite its original source"
             )
-        if (
-            translated.translation_status is TranslationStatus.ORIGINAL_ENGLISH
-            and (
-                record.language.casefold() != "english"
-                or translated.content != record.content
-            )
+        if translated.translation_status is TranslationStatus.ORIGINAL_ENGLISH and (
+            record.language.casefold() != "english"
+            or translated.content != record.content
         ):
             raise ValueError(
                 f"message {record.record_id} has invalid original-English provenance"
