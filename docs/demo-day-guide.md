@@ -1,5 +1,7 @@
 # PolicyFuzz rehearsal guide
 
+**Using the Maju Forest semifinal demo?** Start with the [Maju demo guide](maju-forest-demo.md). It covers the new exploratory preset, separate simulation setup and revised presentation story. The expense walkthrough and recorded results below apply to the original demo.
+
 Use this to prepare tonight and start tomorrow. This is a rehearsal guide, not a completed browser test or final submission approval.
 
 ## What you can do from your phone tonight

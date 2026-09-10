@@ -1,0 +1,71 @@
+{
+  "date": "2026-09-10",
+  "base_commit": "899959e626b050af6e0ab96d3ea01f3433f210fd",
+  "scope": "Hypothetical Maju Forest exploratory demo; no deterministic land-use verdicts",
+  "checks": [
+    {
+      "cwd": "frontend",
+      "command": "npm run test:run",
+      "exit_code": 0,
+      "passed": 184
+    },
+    {
+      "cwd": "frontend",
+      "command": "npm run check:generated",
+      "exit_code": 0
+    },
+    {
+      "cwd": "frontend",
+      "command": "npm run build",
+      "exit_code": 0,
+      "includes": "TypeScript no-emit check and production Vite build"
+    },
+    {
+      "cwd": "engine",
+      "command": "LLM_MOCK=true .venv/bin/python -m pytest -q",
+      "exit_code": 0,
+      "passed": 84,
+      "warnings": [
+        "Dependency deprecation for anyio.abc.BlockingPortal"
+      ]
+    },
+    {
+      "check": "Preset title and policy paragraphs match bundled source; documentation links resolve",
+      "result": "passed"
+    },
+    {
+      "check": "Independent scoped code review",
+      "result": "no blockers"
+    }
+  ],
+  "file_sha256": {
+    "README.md": "dfd0fb870c3048006aee2590872cf5ecd957ff72ab7e2d104ea30728cb508a0e",
+    "docs/demo-day-guide.md": "3e6aed58f629b56c40631ef82e0515462c156d204be861a051129b0e1b273d08",
+    "docs/maju-forest-demo.md": "0cd80fc4440c366d7ccf027e91610b864263693e413df986ed87a4404c40a06b",
+    "engine/app/services/extract.py": "837ebcf9fbb435494a2dae97c3cf1e04b52c95c0e9cb1556daee7ea8e22af881",
+    "engine/app/services/mirofish_bridge.py": "5e9a29833403ee632d459c026d18c8124ede70689ccd36bd1b6c0e3cdfeaeaf5",
+    "engine/tests/test_mirofish_bridge.py": "2e469ef5bfc0eb08520520c05089a49347cb58cd1ab1ac8db32c1b44faa61ae3",
+    "frontend/src/App.tsx": "5ef3c5dedaf9fe6f83cce8dac3372def5fc1e5dceeb8c676e435474820c0f0a7",
+    "frontend/src/components/StepNavigation.tsx": "fcb81bf6462d4d55dc25e7db5b92008cd38146e15569c36a76e5d3c458731979",
+    "frontend/src/fixtures/majuForestDemo.ts": "76c189769c7109317ee88af39aa3e9731f2e223b66980c6cdab3c7e426903988",
+    "frontend/src/test/maju-demo.test.tsx": "32ade39dc20a6e924760c8755cf01c44d34c2fc2cd892e846133eef6b0a65c9f",
+    "frontend/src/views/AgentEvidenceView.tsx": "0398b423427c2b808da8dcc23ff49769b7421559383f98954c4d3c74d7c87c83",
+    "frontend/src/views/InputContractView.tsx": "6831ffd4a8c3d15f8c183c90180f7bb0462a0982d30f2bc102954ab3784e7b88",
+    "samples/demos/maju-forest/README.md": "7856afff44a24d37c6e6b8d3ef0eabf2e8b4de3d01c7e1743722844589420bde",
+    "samples/demos/maju-forest/policy.txt": "373a81a7e70226da54c9a0f743d6d922d5da9798daf0e1fab9995e1907df67e1",
+    "samples/demos/maju-forest/seed.txt": "ffe3f91507ff1768765d84e97a1e48df23c119033dfba61f18f6a6e091ecb783",
+    "team/person-1-integration/HANDOFF.md": "8d098e09eff192f1eb028b123193a8b40b5f3f2297087ceb9fa05ed3e888f650"
+  },
+  "not_verified": [
+    "Live model extraction quality",
+    "Live MiroFish conversation capture",
+    "Browser and presentation-laptop acceptance",
+    "Ecological outcomes, public opinion or project feasibility",
+    "Final presentation deck or video"
+  ],
+  "notes": [
+    "All automated provider and simulator tests use fakes.",
+    "Maju statistics and government attribution are unverified scenario premises.",
+    "Existing expense test results are not Maju results."
+  ]
+}

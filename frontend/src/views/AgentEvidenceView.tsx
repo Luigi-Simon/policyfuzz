@@ -1,4 +1,5 @@
 import type { AgentSimulationResult } from '../api/transport';
+import { majuForestDemo } from '../fixtures/majuForestDemo';
 
 type Turn = { agent: string; text: string; kind: string; why?: string };
 const hasText = (turn: Turn) => turn.text.trim().length > 0;
@@ -31,6 +32,7 @@ export function AgentEvidenceView({ result, step = 'evidence' }: { result: Agent
     .filter((rule) => rule.statement?.trim());
   const policySource = result.policy_source_text || result.document?.text || result.ir?.source?.text;
   const policyLabel = result.policy_title || result.ir?.title || result.document?.filename || 'Untitled policy';
+  const hypotheticalDemo = policyLabel === majuForestDemo.title || policySource?.includes(majuForestDemo.notice);
   const reportedCounts = ['pass', 'fail', 'ambiguous'].map((label) => ({ label, count: findings.filter((finding) => finding.verdict === label).length }));
   const duplicates = swarm?.duplicate_messages_rejected ?? 0;
   const interactionClaim = result.effectiveness?.interaction_verified ?? swarm?.interaction_verified;
@@ -47,7 +49,9 @@ export function AgentEvidenceView({ result, step = 'evidence' }: { result: Agent
 
   return <div className="content" id="agent-evidence">
     <section className="page-title"><div><span className="eyebrow">MiroFish · exploratory simulation</span><h2>{title}</h2><p>{policyLabel}</p></div></section>
+    {hypotheticalDemo ? <div className="notice warning" role="note"><strong>{majuForestDemo.notice}</strong><span>Dates, figures, agency actions and environmental claims are unverified scenario premises.</span></div> : null}
     <div className="notice warning" role="note"><strong>Exploratory simulation — unverified</strong><span>Agent observations, reported labels, and heuristic scores are not deterministic verdicts. They do not establish policy correctness, confirmed defects, or revision acceptance.</span></div>
+    <p className="notice">Simulated participants do not speak for real people or agencies. Their statements are not a representative survey or a prediction of public opinion.</p>
     <section className="metrics">
       <article className="panel"><span className="eyebrow">Provider status</span><div className="metric">{result.status}</div></article>
       <article className="panel"><span className="eyebrow">Heuristic score</span><div className="metric">{score}</div><p className="muted small">Provider-reported; not a validated pass rate.</p></article>

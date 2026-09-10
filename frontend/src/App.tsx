@@ -32,8 +32,10 @@ export default function App({transport,initialRunId,initialAgentRunId}:{transpor
   const [active,setActive] = useState<ViewStep>('input');
   const [deleteArmed,setDeleteArmed] = useState(false);
   const [title,setTitle] = useState('');
+  const [inputVersion,setInputVersion] = useState(0);
   const agent = useAgentSimulation(transport, initialAgentRunId);
   const { result: agentResult, busy: agentBusy, error: agentError } = agent;
+  const exploratoryOnly = !run && Boolean(agentBusy || agentResult || agentError || agent.runId);
   const [pendingAgentRequest,setPendingAgentRequest] = useState<AgentSimulationRequest>();
   const nextAgentRequest = useRef<AgentSimulationRequest | undefined>(undefined);
   const currentStep = run ? stageView(run) : 'input';
@@ -56,6 +58,7 @@ export default function App({transport,initialRunId,initialAgentRunId}:{transpor
   const canDelete = run?.allowed_actions?.includes('delete_run') === true;
   const reset = () => {
     nextAgentRequest.current = undefined; agent.reset(); lifecycle.reset(); setActive('input'); setTitle(''); setDeleteArmed(false); setPendingAgentRequest(undefined);
+    setInputVersion(version => version + 1);
   };
   const create = (request: CreateRunRequest) => {
     agent.reset();
@@ -69,6 +72,14 @@ export default function App({transport,initialRunId,initialAgentRunId}:{transpor
     window.setTimeout(() => document.getElementById('agent-evidence')?.scrollIntoView({ block: 'start' }), 0);
   };
   const queueAgentSimulation = (request: AgentSimulationRequest) => { nextAgentRequest.current = request; };
+  const startExploratory = (request: AgentSimulationRequest) => {
+    nextAgentRequest.current = undefined;
+    setPendingAgentRequest(undefined);
+    lifecycle.reset();
+    setTitle(request.title);
+    setActive('input');
+    void agent.launch(request, true);
+  };
   const startIndependent = () => {
     if (!pendingAgentRequest || !run) return;
     const request = { ...pendingAgentRequest, confirmedRunId: run.run_id };
@@ -93,12 +104,12 @@ export default function App({transport,initialRunId,initialAgentRunId}:{transpor
   };
 
   return <div className="app-shell">
-    <AppHeader run={run} busy={busy} onReset={run || agentResult || agentError || lifecycle.runId ? reset : undefined} onDelete={canDelete ? () => void remove() : undefined} deleteArmed={deleteArmed} />
+    <AppHeader run={run} busy={busy} onReset={run || agentBusy || agentResult || agentError || lifecycle.runId ? reset : undefined} onDelete={canDelete ? () => void remove() : undefined} deleteArmed={deleteArmed} />
     <main id="main-content" tabIndex={-1}>
       <div className="page-heading">
-        <p className="eyebrow">{transport.dataSourceLabel ?? 'Public API'}{run ? '' : ' · no run loaded'}</p>
+        <p className="eyebrow">{exploratoryOnly ? 'Independent exploratory simulation' : transport.dataSourceLabel ?? 'Public API'}{run || exploratoryOnly ? '' : ' · no run loaded'}</p>
         {title ? <p>{title}</p> : null}
-        <StepNavigation active={active} available={available} onNavigate={setActive}/>
+        <StepNavigation active={active} available={available} onNavigate={setActive} exploratory={exploratoryOnly}/>
       </div>
       {run ? <div className="status-strip" role="status"><strong>{status}</strong>{isPollingStage(run.stage) && !agentResult ? <span>Partial results may change</span> : null}</div> : null}
       {agentResult ? <section className="panel" aria-live="polite">
@@ -127,13 +138,13 @@ export default function App({transport,initialRunId,initialAgentRunId}:{transpor
       {historical ? <p className="notice">Retained public snapshot from this session. Actions apply only to the current review.</p> : null}
       {run && currentStep !== 'input' && !snapshots.input ? <p className="muted small">Earlier detail is unavailable in this session. Only retained public snapshots can be reopened.</p> : null}
       {pendingAgentRequest && run && !agentResult && (isPollingStage(run.stage) || run.stage === 'awaiting_contract') ? <section className="notice" role="status"><p><strong>Independent agent simulation is queued.</strong> After contract review and initial tests, MiroFish separately interprets the original text and generates its own scenarios. Its observations do not change the frozen suite or deterministic verdicts.</p></section> : null}
-      {active === 'input' ? <InputContractView key={run?.run_id ?? 'new'} run={display} busy={busy || historical} onCreate={create} onAgentSimulation={transport.supportsAgentSimulation && transport.startAgentSimulation ? queueAgentSimulation : undefined} onConfirm={request=>void lifecycle.confirmContract(request)}/> : null}
+      {active === 'input' ? <InputContractView key={`${run?.run_id ?? 'new'}-${inputVersion}`} run={display} busy={busy || agentBusy || historical} onCreate={create} onAgentSimulation={transport.supportsAgentSimulation && transport.startAgentSimulation ? queueAgentSimulation : undefined} onExplore={transport.supportsAgentSimulation && transport.startCustomAgentSimulation ? startExploratory : undefined} onConfirm={request=>void lifecycle.confirmContract(request)}/> : null}
       {active === 'evidence' && agentResult ? <AgentEvidenceView result={agentResult} /> : null}
       {active === 'findings' && agentResult ? <AgentEvidenceView result={agentResult} step="findings" /> : null}
       {active === 'evidence' && display ? <RunEvidenceView run={display}/> : null}
       {active === 'findings' && display ? <FindingsRevisionView key={run?.run_id} run={display} busy={busy || historical} onSelect={request=>void lifecycle.selectFindings(request)} onConfirm={request=>void lifecycle.confirmRevision(request)}/> : null}
       {active === 'comparison' && display ? <ComparisonView run={display}/> : null}
     </main>
-    <footer><span>PolicyFuzz · Public run evidence</span><span>Deterministic results describe this frozen suite.</span></footer>
+    <footer><span>PolicyFuzz · Public run evidence</span><span>{exploratoryOnly ? 'Exploratory observations require independent review.' : 'Deterministic results describe this frozen suite.'}</span></footer>
   </div>;
 }

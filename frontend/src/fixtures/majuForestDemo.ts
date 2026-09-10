@@ -1,0 +1,13 @@
+/** User-supplied hypothetical text; factual assertions have not been independently verified. */
+export const majuForestDemo = {
+  title: 'Maju Forest Redevelopment and Land Optimization Framework',
+  notice: 'Hypothetical demo scenario — not a verified government announcement',
+  text: `To address Singapore’s acute land scarcity and the escalating demand for affordable public housing, the Ministry of National Development (MND) and the Urban Redevelopment Authority (URA) have re-zoned the 32-hectare Maju Forest tract for residential and mixed-use development. Site clearance will occur in three phases beginning Q2 2027, projecting a yield of 8,500 new Build-To-Order (BTO) units by 2031 to support young families.
+Recognizing the ecological significance of the secondary forest, the government will mandate a 5-hectare interconnected 'Green Corridor' to facilitate wildlife movement toward the Central Catchment Nature Reserve. Environmental Baseline Studies (EBS) indicate moderate displacement of local avian and macaque populations, which will be mitigated through targeted relocation programs and phased land-clearing. This framework aims to balance essential urban expansion with pragmatic environmental stewardship, ensuring sustainable infrastructure growth.`,
+  groups: 'prospective home buyers, nearby residents, conservation researchers, infrastructure planners, construction implementers',
+  seedText: 'Explore this hypothetical redevelopment framework from the perspectives of prospective home buyers, nearby residents, conservation researchers, infrastructure planners and construction implementers. Identify unclear commitments, missing evidence, implementation dependencies and trade-offs. Simulated statements are exploratory hypotheses, not surveys, predictions of real public opinion or statements by real agencies.',
+} as const;
+
+export function withHypotheticalDemoContext(text: string) {
+  return `${majuForestDemo.notice}\nThe following user-supplied scenario is hypothetical. Its dates, figures, agency actions and environmental claims are unverified premises for exploration. Do not present them as established facts or impersonate real agencies.\n\n${text}`;
+}

@@ -1,9 +1,11 @@
 import { useState, type FormEvent } from 'react';
 import { Check, FileText, ShieldCheck } from 'lucide-react';
 import type { ConfirmContractRequest, CreateRunRequest, InvariantSummary, RunView } from '../api/types';
+import type { AgentSimulationRequest } from '../api/transport';
 import { HashValue } from '../components/HashValue';
 import { OutcomeBadge } from '../components/OutcomeBadge';
 import { SourceCitation } from '../components/SourceCitation';
+import { majuForestDemo, withHypotheticalDemoContext } from '../fixtures/majuForestDemo';
 
 const bundledSamples = [{ id: 'development-policy', label: 'Development reimbursement policy' }] as const;
 
@@ -13,6 +15,7 @@ export interface InputContractViewProps {
   onCreate: (request: CreateRunRequest) => void;
   onConfirm: (request: ConfirmContractRequest) => void;
   onAgentSimulation?: (request: { title: string; text: string; seedText: string; populationSize: number; groups: string }) => void;
+  onExplore?: (request: AgentSimulationRequest) => void;
 }
 
 function valueText(value: unknown) {
@@ -27,7 +30,11 @@ function codePointLength(value: string) {
   return Array.from(value).length;
 }
 
-export function InputContractView({ run, busy, onCreate, onConfirm, onAgentSimulation }: InputContractViewProps) {
+export function InputContractView({ run, busy, onCreate, onConfirm, onAgentSimulation, onExplore }: InputContractViewProps) {
+  const [workflow, setWorkflow] = useState<'contract' | 'exploratory'>('contract');
+  const exploratory = workflow === 'exploratory' && Boolean(onExplore);
+  const [hypotheticalDemo, setHypotheticalDemo] = useState(false);
+  const [externalProcessing, setExternalProcessing] = useState(false);
   const [sourceType, setSourceType] = useState<CreateRunRequest['source_type']>('pasted_text');
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -37,6 +44,7 @@ export function InputContractView({ run, busy, onCreate, onConfirm, onAgentSimul
   const [agentEnabled, setAgentEnabled] = useState(false);
   const [seedText, setSeedText] = useState('Employees, managers and finance reviewers discuss expense claims, unclear wording and exceptions.');
   const [populationSize, setPopulationSize] = useState(12);
+  const [groups, setGroups] = useState<string>(majuForestDemo.groups);
   const pending = run?.pending_confirmation?.kind === 'contract' ? run.pending_confirmation : null;
   const [ruleAcknowledgements, setRuleAcknowledgements] = useState<Record<string, boolean>>({});
   const [dimensionAcknowledgements, setDimensionAcknowledgements] = useState<Record<string, boolean>>({});
@@ -44,8 +52,23 @@ export function InputContractView({ run, busy, onCreate, onConfirm, onAgentSimul
 
   const invariantIsSelected = (id: string) => selectedInvariantIds[id] ?? true;
 
+  const useMajuDemo = () => {
+    setWorkflow('exploratory');
+    setSourceType('pasted_text');
+    setTitle(majuForestDemo.title);
+    setText(majuForestDemo.text);
+    setSeedText(majuForestDemo.seedText);
+    setGroups(majuForestDemo.groups);
+    setPopulationSize(5);
+    setHypotheticalDemo(true);
+    setNonConfidential(false);
+    setExternalProcessing(false);
+    setMessage('');
+  };
+
   const create = (event: FormEvent) => {
     event.preventDefault();
+    if (busy) return;
     setMessage('');
     if (!title.trim()) return setMessage('Enter a policy title.');
     if (!nonConfidential) return setMessage('Confirm that the source is non-confidential.');
@@ -56,9 +79,15 @@ export function InputContractView({ run, busy, onCreate, onConfirm, onAgentSimul
     if (sourceType === 'bundled_sample' && (codePointLength(normalizedSampleId) < 1 || codePointLength(normalizedSampleId) > 200)) {
       return setMessage('Bundled sample ID must contain between 1 and 200 characters.');
     }
-    if (agentEnabled && onAgentSimulation && sourceType === 'pasted_text') {
+    if (exploratory || (agentEnabled && onAgentSimulation && sourceType === 'pasted_text')) {
       if (!seedText.trim()) return setMessage('Enter an agent seed before starting the simulation.');
       if (!Number.isInteger(populationSize) || populationSize < 1 || populationSize > 50) return setMessage('Agent count must be a whole number between 1 and 50.');
+    }
+    if (exploratory) {
+      if (!groups.trim()) return setMessage('Enter at least one stakeholder group.');
+      if (!externalProcessing) return setMessage('Confirm external processing and separate simulation retention before starting.');
+      onExplore?.({ title: title.trim(), text: hypotheticalDemo ? withHypotheticalDemoContext(text) : text, seedText: seedText.trim(), populationSize, groups: groups.trim() });
+      return;
     }
     const agentRequest = agentEnabled && onAgentSimulation && sourceType === 'pasted_text'
       ? { title: title.trim(), text, seedText: seedText.trim(), populationSize, groups: 'employees,managers,finance reviewers' }
@@ -100,7 +129,7 @@ export function InputContractView({ run, busy, onCreate, onConfirm, onAgentSimul
           <div>
             <span className="eyebrow">Step 1</span>
             <h2>Policy input</h2>
-            <p>Start with a bundled synthetic sample or paste non-confidential policy text.</p>
+            <p>Test expense rules against confirmed intent, or explore a broader hypothetical scenario with simulated stakeholders.</p>
           </div>
         </section>
         {run ? (
@@ -111,12 +140,21 @@ export function InputContractView({ run, busy, onCreate, onConfirm, onAgentSimul
         ) : (
           <form className="input-grid" onSubmit={create}>
             <section className="panel">
+              {onExplore ? <>
+                <div className="inset"><span className="eyebrow">Featured demo · exploratory</span><h3>Maju Forest redevelopment</h3><p>Explore missing evidence, implementation questions and stakeholder trade-offs in a hypothetical land-use framework.</p><button type="button" disabled={busy} onClick={useMajuDemo}>Use Maju Forest demo</button></div>
+                <fieldset className="segmented"><legend>Testing workflow</legend>
+                  <label><input type="radio" name="workflow" disabled={busy} checked={!exploratory} onChange={() => { setWorkflow('contract'); setExternalProcessing(false); setMessage(''); }} /> Expense policy contract testing</label>
+                  <label><input type="radio" name="workflow" disabled={busy} checked={exploratory} onChange={() => { setWorkflow('exploratory'); setSourceType('pasted_text'); setExternalProcessing(false); setMessage(''); }} /> Exploratory stakeholder simulation</label>
+                </fieldset>
+              </> : null}
+              {exploratory ? <p className="notice">A separate simulation of possible questions and trade-offs. It does not confirm policy correctness, predict public opinion or verify a revision against the expense test suite.</p> : null}
+              {hypotheticalDemo ? <p className="notice warning">{majuForestDemo.notice}</p> : null}
               <div className="section-heading"><span className="iconbox"><FileText aria-hidden="true" /></span><div><span className="eyebrow">Source</span><h3>Provide a policy</h3></div></div>
-              <fieldset className="segmented">
+              {!exploratory ? <fieldset className="segmented">
                 <legend>Policy source</legend>
                 <label><input type="radio" name="source" disabled={busy} checked={sourceType === 'pasted_text'} onChange={() => setSourceType('pasted_text')} /> Pasted text</label>
                 <label><input type="radio" name="source" disabled={busy} checked={sourceType === 'bundled_sample'} onChange={() => setSourceType('bundled_sample')} /> Bundled sample</label>
-              </fieldset>
+              </fieldset> : null}
               <label className="field">Policy title<input value={title} disabled={busy} onChange={(event) => setTitle(event.target.value)} /></label>
               {sourceType === 'pasted_text' ? (
                 <label className="field">Policy text<textarea aria-label="Policy text" rows={16} value={text} disabled={busy} onChange={(event) => setText(event.target.value)} aria-describedby="policy-length" /><small id="policy-length">{codePointLength(text).toLocaleString()} / 50,000 characters</small></label>
@@ -127,13 +165,14 @@ export function InputContractView({ run, busy, onCreate, onConfirm, onAgentSimul
             <aside>
               <section className="panel sample-card">
                 <ShieldCheck className="iconbox large" aria-hidden="true" />
-                <h3>Private by design</h3>
-                <div className="disclosure"><p>The source stays in memory for up to 60 minutes. Delete the run sooner from the header. Provider processing is disclosed by the configured service.</p></div>
+                <h3>{exploratory ? 'Before you simulate' : 'Private by design'}</h3>
+                <div className="disclosure"><p>{exploratory ? 'The configured simulation service and MiroFish process and retain their own copies. Starting a new run or cancelling waiting here does not delete those copies. Model-provider processing follows the configured service.' : 'The source stays in memory for up to 60 minutes. Delete the run sooner from the header. Provider processing is disclosed by the configured service.'}</p></div>
                 <label className="checkbox"><input type="checkbox" checked={nonConfidential} disabled={busy} onChange={(event) => setNonConfidential(event.target.checked)} /> I confirm this policy is non-confidential and may be processed by the configured provider.</label>
-                {onAgentSimulation ? <><label className="checkbox"><input type="checkbox" checked={agentEnabled && sourceType === 'pasted_text'} disabled={busy || sourceType !== 'pasted_text'} onChange={(event) => setAgentEnabled(event.target.checked)} /> Enable AI agents for an independent MiroFish simulation</label>{sourceType !== 'pasted_text' ? <p className="small muted">Paste non-confidential policy text to enable independent agent simulation.</p> : null}</> : null}
-                {onAgentSimulation && agentEnabled && sourceType === 'pasted_text' ? <div className="inset"><p className="small">After the PolicyFuzz contract review and initial tests, MiroFish separately interprets the original text and generates its own scenarios. Its observations do not change the deterministic verdicts or frozen test suite. MiroFish processes and retains its own copy; deleting the PolicyFuzz run does not delete that separate simulation.</p><label className="field">Agent seed<textarea rows={3} value={seedText} disabled={busy} onChange={(event) => setSeedText(event.target.value)} /></label><label className="field">Agent count<input type="number" min={1} max={50} value={populationSize} disabled={busy} onChange={(event) => setPopulationSize(Number(event.target.value))} /></label></div> : null}
+                {exploratory ? <label className="checkbox"><input type="checkbox" checked={externalProcessing} disabled={busy} onChange={(event) => setExternalProcessing(event.target.checked)} /> I understand this sends the source to the configured external simulation services with separate retention, and the results are simulated observations.</label> : null}
+                {onAgentSimulation && !exploratory ? <><label className="checkbox"><input type="checkbox" checked={agentEnabled && sourceType === 'pasted_text'} disabled={busy || sourceType !== 'pasted_text'} onChange={(event) => setAgentEnabled(event.target.checked)} /> Enable AI agents for an independent MiroFish simulation</label>{sourceType !== 'pasted_text' ? <p className="small muted">Paste non-confidential policy text to enable independent agent simulation.</p> : null}</> : null}
+                {exploratory || (onAgentSimulation && agentEnabled && sourceType === 'pasted_text') ? <div className="inset">{!exploratory ? <p className="small">After the PolicyFuzz contract review and initial tests, MiroFish separately interprets the original text and generates its own scenarios. Its observations do not change the deterministic verdicts or frozen test suite. MiroFish processes and retains its own copy; deleting the PolicyFuzz run does not delete that separate simulation.</p> : <label className="field">Stakeholder groups<textarea aria-label="Stakeholder groups" rows={3} value={groups} disabled={busy} onChange={(event) => setGroups(event.target.value)} /><small>Comma-separated perspectives; simulated participants do not speak for real people or agencies.</small></label>}<label className="field">Agent seed<textarea rows={3} value={seedText} disabled={busy} onChange={(event) => setSeedText(event.target.value)} /></label><label className="field">Agent count<input type="number" min={1} max={50} value={populationSize} disabled={busy} onChange={(event) => setPopulationSize(Number(event.target.value))} /></label></div> : null}
                 {message ? <p role="alert" className="form-error">{message}</p> : null}
-                <button className="wide" disabled={busy} type="submit">{busy ? 'Starting…' : 'Analyze policy'}</button>
+                <button className="wide" disabled={busy} type="submit">{busy ? 'Starting…' : exploratory ? 'Start exploratory simulation' : 'Analyze policy'}</button>
               </section>
             </aside>
           </form>

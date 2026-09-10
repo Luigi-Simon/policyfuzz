@@ -350,3 +350,15 @@ Public Gate A1 metadata at `304145f2e35071135e7f43a7db1ba0383b858a4a` was rechec
 5. Runtime policy execution, interpretation quality, oracle correctness, parent lookup, actual run projection/sanitization and performance evaluation remain later work. Schema/custody validation does not establish these properties.
 
 No real Gate A2 ledger, private corpus reveal, live-provider run, deployment or submission package was produced by Task 3.
+
+## Maju Forest demo update — 2026-09-10
+
+Built from merged PR #3 (`899959e626b050af6e0ab96d3ea01f3433f210fd`) under the user's authorization to cover all five roles and switch the demo scenario.
+
+- Added a Maju preset and direct `startCustomAgentSimulation` UI path with separate exploratory navigation, five fictional perspectives, explicit processing acknowledgements, and cancellation/reset handling. Shared API schemas and deterministic evaluation interfaces are unchanged.
+- Preserved the supplied scenario wording; the preset, restored evidence and external simulation prompts retain hypothetical/unverified status. Removed the extraction prompt's minimum rule count.
+- Added the source, neutral seed and presentation guide under `samples/demos/maju-forest/` and `docs/maju-forest-demo.md`; linked them from the root setup and rehearsal guide.
+- Local verification: frontend **184 passed**, engine **84 passed**, generated-contract check and production build **passed**. An independent scoped review found no blockers. File hashes and commands are recorded in [the verification record](evidence/maju-demo-verification-2026-09-10.json).
+- No live provider/MiroFish run, browser rehearsal, new deck/video or Maju outcome was produced. The original expense recording is not Maju evidence. Exact displayed title after reload may depend on the engine's extracted title; the hypothetical source notice persists.
+
+Next integration step: review the published demo branch, merge it through the normal queue, and rehearse with the separately configured engine and MiroFish on the presentation laptop.
