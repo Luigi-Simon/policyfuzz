@@ -1,0 +1,34 @@
+{
+  "schema_version": "2.0",
+  "request_id": "sandbox-v2-live-20260910-03",
+  "run_id": "sandbox-v2-live-20260910-03",
+  "policy_version": "2026-09-10",
+  "policy_title": "Synthetic late-night transit pilot",
+  "policy_text": "The city will extend late-night transit service for six months and review ridership, accessibility, worker safety, and operating cost each month.",
+  "policy_text_sha256": "3c80093d65b680c91284cdec986c943b0133952bc4f932e4547f59fdb3587b4a",
+  "personality_seed": "Three night-shift hospital workers: one practical and cost-conscious, one cautious about personal safety, and one wheelchair user focused on accessible journeys. They are riders, not officials.",
+  "random_seed": 90210,
+  "stakeholder_count": 3,
+  "test_budget": 8,
+  "context": [
+    {
+      "source_id": "context-rider-survey",
+      "title": "Synthetic rider survey summary",
+      "text": "Authored fixture context: riders report limited transport options after midnight.",
+      "source_uri": "https://example.invalid/context/rider-survey"
+    }
+  ],
+  "scenario_setups": [
+    {
+      "scenario_id": "scenario-late-shift",
+      "title": "Late shift journey",
+      "circumstances": "A rider finishes work after midnight during the pilot.",
+      "stakeholder_actions": [
+        "Ask how often the service runs."
+      ]
+    }
+  ],
+  "target_language": "English",
+  "max_rounds": 2,
+  "timeout_seconds": 180
+}
