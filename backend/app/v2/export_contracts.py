@@ -30,9 +30,9 @@ def _json_bytes(value: Any) -> bytes:
 async def _rendered_contracts() -> dict[str, bytes]:
     request = make_example_request()
     completed = await FixtureSandboxService().run(request)
-    partial = await FixtureSandboxService(
-        "partial_translation_unavailable"
-    ).run(request)
+    partial = await FixtureSandboxService("partial_translation_unavailable").run(
+        request
+    )
     return {
         "policy-input.schema.json": _json_bytes(PolicyInput.model_json_schema()),
         "sandbox-request.schema.json": _json_bytes(SandboxRequest.model_json_schema()),
@@ -43,9 +43,7 @@ async def _rendered_contracts() -> dict[str, bytes]:
                 "schema_version": "2.0",
             }
         ),
-        "fixtures/example-request.json": _json_bytes(
-            request.model_dump(mode="json")
-        ),
+        "fixtures/example-request.json": _json_bytes(request.model_dump(mode="json")),
         "fixtures/completed-result.json": _json_bytes(
             completed.model_dump(mode="json")
         ),
@@ -70,7 +68,9 @@ def _check(output: Path, rendered: dict[str, bytes]) -> int:
         if not (output / relative).is_file()
         or (output / relative).read_bytes() != content
     ]
-    unexpected = sorted(str(path.relative_to(output)) for path in current_paths - expected_paths)
+    unexpected = sorted(
+        str(path.relative_to(output)) for path in current_paths - expected_paths
+    )
     if drifted or unexpected:
         for relative in sorted(drifted):
             print(f"contract drift: {relative}", file=sys.stderr)

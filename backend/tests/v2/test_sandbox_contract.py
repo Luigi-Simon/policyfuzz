@@ -15,7 +15,9 @@ def load(name: str):
     try:
         return importlib.import_module(f"app.v2.{name}")
     except ModuleNotFoundError as error:
-        raise AssertionError("the app.v2 sandbox boundary has not been implemented") from error
+        raise AssertionError(
+            "the app.v2 sandbox boundary has not been implemented"
+        ) from error
 
 
 class SandboxContractTests(unittest.TestCase):
@@ -27,7 +29,9 @@ class SandboxContractTests(unittest.TestCase):
             message.model_copy(
                 update={
                     "translation_status": contracts.TranslationStatus.ORIGINAL_ENGLISH,
-                    "source_refs": result.messages[(index + 1) % len(result.messages)].source_refs,
+                    "source_refs": result.messages[
+                        (index + 1) % len(result.messages)
+                    ].source_refs,
                 }
             )
             for index, message in enumerate(result.messages)
@@ -35,7 +39,9 @@ class SandboxContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "own source"):
             contracts.validate_sandbox_result(
                 request,
-                result.model_copy(update={"messages": messages, "original_records": ()}),
+                result.model_copy(
+                    update={"messages": messages, "original_records": ()}
+                ),
             )
 
     def test_agent_roles_are_exactly_the_four_public_labels(self) -> None:
@@ -71,7 +77,9 @@ class SandboxContractTests(unittest.TestCase):
         request = contracts.make_example_request()
 
         with self.assertRaises(ValidationError):
-            request.model_copy(update={"policy_text_sha256": "0" * 64}, deep=True).__class__(
+            request.model_copy(
+                update={"policy_text_sha256": "0" * 64}, deep=True
+            ).__class__(
                 **{
                     **request.model_dump(),
                     "policy_text_sha256": "0" * 64,
@@ -136,36 +144,50 @@ class SandboxContractTests(unittest.TestCase):
         request = contracts.make_example_request()
         result = asyncio.run(load("fixtures").FixtureSandboxService().run(request))
 
-        bad_author = result.messages[0].model_copy(update={"persona_id": "missing-persona"})
+        bad_author = result.messages[0].model_copy(
+            update={"persona_id": "missing-persona"}
+        )
         with self.assertRaisesRegex(ValueError, "unknown persona"):
             contracts.validate_sandbox_result(
                 request,
-                result.model_copy(update={"messages": (bad_author, *result.messages[1:])}),
+                result.model_copy(
+                    update={"messages": (bad_author, *result.messages[1:])}
+                ),
             )
 
-        bad_source = result.messages[0].model_copy(update={"source_refs": ("missing-source",)})
+        bad_source = result.messages[0].model_copy(
+            update={"source_refs": ("missing-source",)}
+        )
         with self.assertRaisesRegex(ValueError, "unknown source"):
             contracts.validate_sandbox_result(
                 request,
-                result.model_copy(update={"messages": (bad_source, *result.messages[1:])}),
+                result.model_copy(
+                    update={"messages": (bad_source, *result.messages[1:])}
+                ),
             )
 
         with self.assertRaisesRegex(ValueError, "duplicate persona"):
             contracts.validate_sandbox_result(
                 request,
-                result.model_copy(update={"personas": (*result.personas, result.personas[0])}),
+                result.model_copy(
+                    update={"personas": (*result.personas, result.personas[0])}
+                ),
             )
         with self.assertRaisesRegex(ValueError, "duplicate message"):
             contracts.validate_sandbox_result(
                 request,
-                result.model_copy(update={"messages": (*result.messages, result.messages[0])}),
+                result.model_copy(
+                    update={"messages": (*result.messages, result.messages[0])}
+                ),
             )
 
         fake_record = result.sources[0].model_copy(update={"record_id": "message-999"})
         with self.assertRaisesRegex(ValueError, "unknown record"):
             contracts.validate_sandbox_result(
                 request,
-                result.model_copy(update={"sources": (fake_record, *result.sources[1:])}),
+                result.model_copy(
+                    update={"sources": (fake_record, *result.sources[1:])}
+                ),
             )
 
     def test_boundaries_revalidate_models_after_model_copy(self) -> None:
@@ -185,7 +207,9 @@ class SandboxContractTests(unittest.TestCase):
         with self.assertRaises(ValidationError):
             contracts.public_sandbox_result(copied)
 
-    def test_translation_status_and_round_metadata_cannot_invent_provenance(self) -> None:
+    def test_translation_status_and_round_metadata_cannot_invent_provenance(
+        self,
+    ) -> None:
         contracts = load("contracts")
         request = contracts.make_example_request()
         result = asyncio.run(load("fixtures").FixtureSandboxService().run(request))
@@ -212,9 +236,7 @@ class SandboxContractTests(unittest.TestCase):
             contracts.validate_sandbox_result(
                 request,
                 result.model_copy(
-                    update={
-                        "messages": (wrong_original_status, *result.messages[1:])
-                    }
+                    update={"messages": (wrong_original_status, *result.messages[1:])}
                 ),
             )
         late_round = result.messages[0].model_copy(
@@ -232,9 +254,9 @@ class SandboxContractTests(unittest.TestCase):
         contracts = load("contracts")
         request = contracts.make_example_request()
         result = asyncio.run(
-            load("fixtures").FixtureSandboxService(
-                "partial_translation_unavailable"
-            ).run(request)
+            load("fixtures")
+            .FixtureSandboxService("partial_translation_unavailable")
+            .run(request)
         )
         invented = result.messages[1].model_copy(
             update={"content": "The policy has full stakeholder support."}
@@ -243,7 +265,9 @@ class SandboxContractTests(unittest.TestCase):
             contracts.validate_sandbox_result(
                 request,
                 result.model_copy(
-                    update={"messages": (result.messages[0], invented, result.messages[2])}
+                    update={
+                        "messages": (result.messages[0], invented, result.messages[2])
+                    }
                 ),
             )
 
@@ -252,11 +276,17 @@ class SandboxContractTests(unittest.TestCase):
         request = contracts.make_example_request()
         result = asyncio.run(load("fixtures").FixtureSandboxService().run(request))
 
-        missing = result.messages[1].model_copy(update={"reply_to_message_ids": ("missing",)})
+        missing = result.messages[1].model_copy(
+            update={"reply_to_message_ids": ("missing",)}
+        )
         with self.assertRaisesRegex(ValueError, "unknown reply"):
             contracts.validate_sandbox_result(
                 request,
-                result.model_copy(update={"messages": (result.messages[0], missing, *result.messages[2:])}),
+                result.model_copy(
+                    update={
+                        "messages": (result.messages[0], missing, *result.messages[2:])
+                    }
+                ),
             )
         duplicate = result.messages[1].model_copy(
             update={"reply_to_message_ids": (result.messages[0].message_id,) * 2}
@@ -264,7 +294,15 @@ class SandboxContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "duplicate reply"):
             contracts.validate_sandbox_result(
                 request,
-                result.model_copy(update={"messages": (result.messages[0], duplicate, *result.messages[2:])}),
+                result.model_copy(
+                    update={
+                        "messages": (
+                            result.messages[0],
+                            duplicate,
+                            *result.messages[2:],
+                        )
+                    }
+                ),
             )
 
     def test_validation_rejects_count_and_completed_status_contradictions(self) -> None:
@@ -307,7 +345,9 @@ class SandboxContractTests(unittest.TestCase):
                 translation_status=contracts.TranslationStatus.TRANSLATED,
             )
 
-    def test_public_projection_is_allowlisted_and_never_contains_original_records(self) -> None:
+    def test_public_projection_is_allowlisted_and_never_contains_original_records(
+        self,
+    ) -> None:
         contracts = load("contracts")
         request = contracts.make_example_request()
         result = asyncio.run(load("fixtures").FixtureSandboxService().run(request))
@@ -327,7 +367,9 @@ class SandboxContractTests(unittest.TestCase):
         for original in result.original_records:
             translated = messages[original.record_id]
             self.assertEqual(translated.persona_id, original.speaker_id)
-            self.assertEqual(translated.reply_to_message_ids, original.reply_to_record_ids)
+            self.assertEqual(
+                translated.reply_to_message_ids, original.reply_to_record_ids
+            )
 
 
 class FixtureSandboxServiceTests(unittest.IsolatedAsyncioTestCase):
@@ -344,9 +386,13 @@ class FixtureSandboxServiceTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(result.messages)
         self.assertTrue(result.sources)
 
-    async def test_translation_unavailable_fixture_is_explicit_and_partial(self) -> None:
+    async def test_translation_unavailable_fixture_is_explicit_and_partial(
+        self,
+    ) -> None:
         contracts = load("contracts")
-        service = load("fixtures").FixtureSandboxService("partial_translation_unavailable")
+        service = load("fixtures").FixtureSandboxService(
+            "partial_translation_unavailable"
+        )
         request = contracts.make_example_request()
 
         result = await service.run(request)
@@ -358,7 +404,9 @@ class FixtureSandboxServiceTests(unittest.IsolatedAsyncioTestCase):
         )
         self.assertIn("English translation unavailable", result.messages[1].content)
         self.assertIn("夜间服务", result.original_records[1].content)
-        self.assertNotIn("夜间服务", json.dumps(contracts.public_sandbox_result(result)))
+        self.assertNotIn(
+            "夜间服务", json.dumps(contracts.public_sandbox_result(result))
+        )
 
     async def test_unknown_fixture_name_is_rejected(self) -> None:
         fixtures = load("fixtures")

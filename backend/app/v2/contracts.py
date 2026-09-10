@@ -14,10 +14,10 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 SCHEMA_VERSION = "2.0"
 FOUNDATION_MAX_STAKEHOLDERS = 100
-ENGLISH_TRANSLATION_UNAVAILABLE = (
-    "[English translation unavailable for this record.]"
+ENGLISH_TRANSLATION_UNAVAILABLE = "[English translation unavailable for this record.]"
+_HAN_SCRIPT = re.compile(
+    r"[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\U00020000-\U0003134f]"
 )
-_HAN_SCRIPT = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\U00020000-\U0003134f]")
 
 
 def _english_display(value: str) -> str:
@@ -251,7 +251,9 @@ def validate_sandbox_result(request: SandboxRequest, result: SandboxResult) -> N
         if source.record_id not in set(message_ids):
             raise ValueError(f"source {source.source_id} references unknown record")
 
-    if [message.sequence for message in result.messages] != list(range(1, len(result.messages) + 1)):
+    if [message.sequence for message in result.messages] != list(
+        range(1, len(result.messages) + 1)
+    ):
         raise ValueError("message sequence must be contiguous and ordered from 1")
 
     persona_id_set = set(persona_ids)
@@ -261,38 +263,55 @@ def validate_sandbox_result(request: SandboxRequest, result: SandboxResult) -> N
         if message.persona_id not in persona_id_set:
             raise ValueError(f"message {message.message_id} references unknown persona")
         if len(message.source_refs) != len(set(message.source_refs)):
-            raise ValueError(f"message {message.message_id} has duplicate source references")
+            raise ValueError(
+                f"message {message.message_id} has duplicate source references"
+            )
         unknown_sources = set(message.source_refs) - source_id_set
         if unknown_sources:
             raise ValueError(f"message {message.message_id} references unknown source")
         if len(message.reply_to_message_ids) != len(set(message.reply_to_message_ids)):
-            raise ValueError(f"message {message.message_id} has duplicate reply references")
+            raise ValueError(
+                f"message {message.message_id} has duplicate reply references"
+            )
         if set(message.reply_to_message_ids) - seen_messages:
-            raise ValueError(f"message {message.message_id} has unknown reply reference")
+            raise ValueError(
+                f"message {message.message_id} has unknown reply reference"
+            )
         seen_messages.add(message.message_id)
 
     message_by_id = {message.message_id: message for message in result.messages}
     source_by_record = {source.record_id: source for source in result.sources}
-    original_by_id = {
-        record.record_id: record for record in result.original_records
-    }
+    original_by_id = {record.record_id: record for record in result.original_records}
     for message in result.messages:
         if result.status is SandboxStatus.COMPLETED:
             own_source = source_by_record.get(message.message_id)
             if own_source is None or own_source.source_id not in message.source_refs:
                 raise ValueError("completed message must cite its own source record")
-        if message.round_number is not None and message.round_number > request.max_rounds:
+        if (
+            message.round_number is not None
+            and message.round_number > request.max_rounds
+        ):
             raise ValueError("message round_number exceeds request max_rounds")
-        if message.translation_status in {
-            TranslationStatus.TRANSLATED,
-            TranslationStatus.UNAVAILABLE,
-        } and message.message_id not in original_by_id:
-            raise ValueError("translated or unavailable message must retain original record")
+        if (
+            message.translation_status
+            in {
+                TranslationStatus.TRANSLATED,
+                TranslationStatus.UNAVAILABLE,
+            }
+            and message.message_id not in original_by_id
+        ):
+            raise ValueError(
+                "translated or unavailable message must retain original record"
+            )
         if message.translation_status is TranslationStatus.UNAVAILABLE:
             if result.status is not SandboxStatus.PARTIAL:
-                raise ValueError("unavailable translation requires partial result status")
+                raise ValueError(
+                    "unavailable translation requires partial result status"
+                )
             if message.content != ENGLISH_TRANSLATION_UNAVAILABLE:
-                raise ValueError("unavailable translation must use the exact placeholder")
+                raise ValueError(
+                    "unavailable translation must use the exact placeholder"
+                )
             if any(
                 source.excerpt != ENGLISH_TRANSLATION_UNAVAILABLE
                 for source in result.sources
@@ -304,27 +323,48 @@ def validate_sandbox_result(request: SandboxRequest, result: SandboxResult) -> N
     seen_records: set[str] = set()
     for record in result.original_records:
         if record.speaker_id not in persona_id_set:
-            raise ValueError(f"original record {record.record_id} references unknown persona")
+            raise ValueError(
+                f"original record {record.record_id} references unknown persona"
+            )
         if record.source_id not in source_id_set:
-            raise ValueError(f"original record {record.record_id} references unknown source")
+            raise ValueError(
+                f"original record {record.record_id} references unknown source"
+            )
         if len(record.reply_to_record_ids) != len(set(record.reply_to_record_ids)):
-            raise ValueError(f"original record {record.record_id} has duplicate reply references")
+            raise ValueError(
+                f"original record {record.record_id} has duplicate reply references"
+            )
         if set(record.reply_to_record_ids) - seen_records:
-            raise ValueError(f"original record {record.record_id} has unknown reply reference")
+            raise ValueError(
+                f"original record {record.record_id} has unknown reply reference"
+            )
         translated = message_by_id.get(record.record_id)
         if translated is None:
-            raise ValueError(f"original record {record.record_id} has no public message")
+            raise ValueError(
+                f"original record {record.record_id} has no public message"
+            )
         if translated.persona_id != record.speaker_id:
-            raise ValueError(f"original record {record.record_id} changed speaker identity")
+            raise ValueError(
+                f"original record {record.record_id} changed speaker identity"
+            )
         if translated.reply_to_message_ids != record.reply_to_record_ids:
-            raise ValueError(f"original record {record.record_id} changed reply identity")
+            raise ValueError(
+                f"original record {record.record_id} changed reply identity"
+            )
         source = source_by_record.get(record.record_id)
         if source is None or source.source_id != record.source_id:
-            raise ValueError(f"original record {record.record_id} changed source identity")
+            raise ValueError(
+                f"original record {record.record_id} changed source identity"
+            )
         if record.source_id not in translated.source_refs:
-            raise ValueError(f"message {record.record_id} does not cite its original source")
+            raise ValueError(
+                f"message {record.record_id} does not cite its original source"
+            )
         if translated.translation_status is TranslationStatus.ORIGINAL_ENGLISH:
-            if record.language.casefold() != "english" or translated.content != record.content:
+            if (
+                record.language.casefold() != "english"
+                or translated.content != record.content
+            ):
                 raise ValueError(
                     f"message {record.record_id} has invalid original-English provenance"
                 )
@@ -346,18 +386,24 @@ def validate_sandbox_result(request: SandboxRequest, result: SandboxResult) -> N
 
     if result.status is SandboxStatus.COMPLETED:
         if not result.personas or not result.messages or not result.sources:
-            raise ValueError("completed result requires personas, messages, and evidence")
+            raise ValueError(
+                "completed result requires personas, messages, and evidence"
+            )
         if result.errors:
             raise ValueError("completed result cannot contain errors")
         if result.observed_stakeholder_count != result.requested_stakeholder_count:
-            raise ValueError("completed result must observe every requested stakeholder")
+            raise ValueError(
+                "completed result must observe every requested stakeholder"
+            )
         if any(not message.source_refs for message in result.messages):
             raise ValueError("completed result messages require evidence references")
     elif result.status is SandboxStatus.FAILED and not result.errors:
         raise ValueError("failed result requires at least one error")
     elif result.status in {SandboxStatus.PARTIAL, SandboxStatus.CANCELLED}:
         if not result.limitations and not result.errors:
-            raise ValueError(f"{result.status.value} result requires a limitation or error")
+            raise ValueError(
+                f"{result.status.value} result requires a limitation or error"
+            )
 
 
 def public_sandbox_result(result: SandboxResult) -> dict[str, Any]:
