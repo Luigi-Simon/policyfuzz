@@ -1,0 +1,25 @@
+{
+  "schema_version": "2.0",
+  "request_id": "judge-request-unscored",
+  "run_id": "judge-example-unscored",
+  "policy_version": "1",
+  "policy_text_sha256": "5f6c393bfcb7c2f283d86ddec6b8349c52d318c504fbdfd7498ab05ee2579366",
+  "request_fingerprint": "e66a242123178c57948e050a865400e6c38f90f020e119caf57c78157591f552",
+  "execution_mode": "live",
+  "status": "failed",
+  "summary": "Judge advice is unavailable. No policy recommendation was produced.",
+  "recommendation": "insufficient_evidence",
+  "pros": [],
+  "cons": [],
+  "next_steps": [],
+  "key_interactions": [],
+  "limitations": [
+    "Metric evidence is incomplete or includes unscored work; unscored does not mean passed.",
+    "Supplied Metric cases are authored fixtures; no executed policy test is established by this input.",
+    "Sandbox evidence is absent; no stakeholder sentiment or interaction conclusion is available.",
+    "Advice is scoped to the supplied evidence. The full original policy text is not included in JudgeRequest."
+  ],
+  "errors": [
+    "judge_invalid_output: Judge output failed validation after the configured repair attempts. Validation codes: non_english, unsupported_claim, missing_limitation, fixture_misrepresented."
+  ]
+}

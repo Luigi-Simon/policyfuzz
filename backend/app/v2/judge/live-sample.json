@@ -1,0 +1,25 @@
+{
+  "schema_version": "2.0",
+  "request_id": "judge-request-complete",
+  "run_id": "judge-example-complete",
+  "policy_version": "1",
+  "policy_text_sha256": "f1476b3974cf09fd19a9bf7b84ff14cb8a4703c64f40e55cc3158815e9f94f64",
+  "request_fingerprint": "26de32c853f23781e1b702dab0682ca04fbec01026c36f7f7aee3bbdd23b05ab",
+  "execution_mode": "live",
+  "status": "failed",
+  "summary": "Judge advice is unavailable. No policy recommendation was produced.",
+  "recommendation": "insufficient_evidence",
+  "pros": [],
+  "cons": [],
+  "next_steps": [],
+  "key_interactions": [],
+  "limitations": [
+    "Supplied Metric cases are authored fixtures; no executed policy test is established by this input.",
+    "Supplied Sandbox dialogue is an authored fixture, not a live MiroFish simulation.",
+    "Simulated stakeholder statements are qualitative observations, not population statistics or verified policy facts.",
+    "Advice is scoped to the supplied evidence. The full original policy text is not included in JudgeRequest."
+  ],
+  "errors": [
+    "judge_invalid_output: Judge output failed validation after the configured repair attempts. Validation codes: unsupported_claim, missing_limitation, metric_contradiction."
+  ]
+}
