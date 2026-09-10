@@ -31,6 +31,8 @@ jobs:
       - run: python -m ruff check backend/app backend/tests
       - run: python -m ruff format --check backend/app backend/tests
       - run: python -m pytest backend/tests -q
+      - name: Check v2 API schema drift
+        run: python -m app.v2.export_api --check
       - run: python scripts/validate_contracts.py
       - run: python scripts/replay_check.py
       - run: python scripts/offline_smoke.py

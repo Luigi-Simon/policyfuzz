@@ -1,9 +1,40 @@
 # PolicyFuzz v2: two people, one shared interface
 
-This branch prepares independent development. The existing v1 application remains
-available. The foundation contains typed contracts, generated schemas, synthetic
-Sandbox fixtures, offline checks and scoped handoffs. It does **not** yet provide
-the full v2 UI/workflow or a live MiroFish adapter.
+This branch contains the first core milestone: a four-field `/v2` form, a
+standalone Orchestrator API and an English evidence screen using the synthetic
+Sandbox fixture. The existing v1 application remains available. Metric tests,
+Judge evaluation, persistent runs and the live MiroFish adapter are later work.
+
+## Run the first core milestone
+
+On `p1/feat-v2-core`, use Python 3.12+ and Node 20+. From the repository root:
+
+```bash
+python3 -m venv backend/.venv
+backend/.venv/bin/python -m pip install -e './backend[dev]'
+npm --prefix frontend ci
+npm run dev:v2
+```
+
+On Windows, use `py -3.12 -m venv backend/.venv` and
+`backend\.venv\Scripts\python.exe -m pip install -e "./backend[dev]"` for the
+first two commands; the npm commands are identical. An existing environment can
+be reused after installing the backend dependencies. No provider keys are needed.
+
+Open **http://127.0.0.1:5173/v2** (or append `/v2` to Vite's printed URL if that
+port is occupied). Click **Load synthetic example**, then **Run fixture**. Change
+**Fixture sample** to **Translation unavailable sample** to inspect a partial run.
+The API runs on port 8002; Vite proxies `/api/v2` there. `npm run dev:v2` starts
+only the v2 API. Use the existing `npm run dev` command when working on v1.
+
+The four policy fields are passed into a bound Sandbox request, but the authored
+fixture dialogue does not analyse them. Public evidence includes participant
+counts, translation status, replies, source excerpts and request hashes. Original
+records are excluded. The API is stateless: it does not save policy submissions or
+runs, and a page reload clears the displayed result. This milestone does not add
+a translator; the live Sandbox contributor owns parsing and English translation.
+
+Details and verification commands: [First-run handoff](FIRST-RUN.md).
 
 ## Pick your branch
 
@@ -86,7 +117,7 @@ Python 3.12+ is required. From the repository root on macOS/Linux:
 
 ```bash
 python3 -m venv backend/.venv
-backend/.venv/bin/python -m pip install 'pydantic==2.13.5'
+backend/.venv/bin/python -m pip install -e './backend[dev]'
 backend/.venv/bin/python scripts/check_v2_foundation.py
 ```
 
@@ -94,7 +125,7 @@ PowerShell:
 
 ```powershell
 py -3.12 -m venv backend/.venv
-backend\.venv\Scripts\python.exe -m pip install pydantic==2.13.5
+backend\.venv\Scripts\python.exe -m pip install -e "./backend[dev]"
 backend\.venv\Scripts\python.exe scripts/check_v2_foundation.py
 ```
 

@@ -34,6 +34,10 @@ and have both feature branches merge integration before depending on it.
 
 ## First implementation steps
 
+The approved first core milestone implements step 2 with a stateless fixture API
+and the `/v2` evidence screen. See [the first-run handoff](../../docs/v2/FIRST-RUN.md)
+for startup, interfaces and remaining work. Steps 3–7 remain separate milestones.
+
 1. Run the foundation smoke command described in docs/v2/README.md.
 2. Build one run from the four user fields and call the fixture through SandboxService. Label every fixture result.
 3. Implement supported state/actions for one demo domain; cases must have an initial state and ordered actions.
@@ -60,9 +64,13 @@ Fuzz Agent is renamed to Metric Agent in the v2 contract and active documentatio
 Keep PolicyFuzz as the project name.
 Any later migration of legacy fuzzing module paths must update imports, configuration, tests and documentation in one change. Do not alter archived fixture hashes merely to change a label.
 
-## Done for your first integration PR
+## Done for this first core milestone
 
-One policy submission calls a SandboxService, stores a validated result, displays English evidence, and lets the Judge Agent cite an exact message. Fixture mode is visible until a real adapter is connected. Existing v1 functionality remains available.
+One four-field submission calls SandboxService through the Orchestrator and
+displays validated English public evidence with exact message references.
+Fixture mode is explicit; complete and partial evidence remain distinct.
+No durable storage or Judge evaluation is included in this milestone. Existing
+v1 functionality remains available through its original entry and launcher.
 
 ## What to include in your handoff
 

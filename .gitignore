@@ -19,3 +19,4 @@ uploads/
 cache/
 *.zip
 .DS_Store
+/.superpowers/

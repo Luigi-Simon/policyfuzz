@@ -2,8 +2,10 @@
 
 **Building v2?** Start with the [two-person development guide](docs/v2/README.md).
 The v2 foundation defines exactly four agents: Orchestrator Agent, Metric Agent,
-Sandbox Agent and Judge Agent. It includes a shared Sandbox contract and labelled
-offline fixtures. The live adapter and full v2 application are the next work packets.
+Sandbox Agent and Judge Agent. The first core milestone adds a `/v2` policy form,
+Orchestrator API and English fixture evidence screen. Start it with
+`npm run dev:v2` after the [v2 setup](docs/v2/README.md). Live MiroFish, Metric
+tests and Judge evaluation are the next work packets.
 Use the v2 ownership guide for new work; the quickstart and five-person allocation
 below describe the existing v1 application.
 

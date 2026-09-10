@@ -2,6 +2,7 @@
   "name": "policyfuzz-workspace",
   "private": true,
   "scripts": {
-    "dev": "node scripts/dev.mjs"
+    "dev": "node scripts/dev.mjs",
+    "dev:v2": "node scripts/dev.mjs --v2"
   }
 }

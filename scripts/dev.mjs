@@ -8,7 +8,12 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
 const mock = args.includes('--mock');
 const agents = args.includes('--agents');
-const viteArgs = args.filter(value => value !== '--mock' && value !== '--agents');
+const v2 = args.includes('--v2');
+if (v2 && (mock || agents)) {
+  console.error('--v2 runs the standalone fixture API; use it without --mock or --agents.');
+  process.exit(1);
+}
+const viteArgs = args.filter(value => !['--mock', '--agents', '--v2'].includes(value));
 const python = folder => join(root, folder, '.venv', process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python');
 const vite = join(root, 'frontend/node_modules/vite/bin/vite.js');
 const required = [vite, ...(!mock ? [python('backend')] : []), ...(agents ? [python('engine')] : [])];
@@ -50,6 +55,7 @@ function start(label, command, commandArgs, folder, extra = {}) {
 process.on('SIGINT', () => stop());
 process.on('SIGTERM', () => stop());
 
-if (!mock) start('Backend', python('backend'), ['-m', 'uvicorn', 'app.main:app', '--host', '127.0.0.1', '--port', '8000'], 'backend', { APP_MODE: process.env.APP_MODE || 'cached' });
+if (!mock) start('Backend', python('backend'), ['-m', 'uvicorn', v2 ? 'app.v2.main:app' : 'app.main:app', '--host', '127.0.0.1', '--port', v2 ? '8002' : '8000'], 'backend', { APP_MODE: process.env.APP_MODE || 'cached' });
 if (agents) start('Exploratory engine', python('engine'), ['-m', 'uvicorn', 'app.main:app', '--host', '127.0.0.1', '--port', '8001'], 'engine');
 start('Frontend', process.execPath, [vite, ...viteArgs], 'frontend', { VITE_DATA_MODE: mock ? 'mock' : 'http' });
+if (v2) console.log('PolicyFuzz v2 fixture: open the frontend URL at /v2 (normally http://127.0.0.1:5173/v2).');
