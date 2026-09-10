@@ -11,7 +11,6 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-
 SCHEMA_VERSION = "2.0"
 FOUNDATION_MAX_STAKEHOLDERS = 100
 ENGLISH_TRANSLATION_UNAVAILABLE = "[English translation unavailable for this record.]"
@@ -360,14 +359,16 @@ def validate_sandbox_result(request: SandboxRequest, result: SandboxResult) -> N
             raise ValueError(
                 f"message {record.record_id} does not cite its original source"
             )
-        if translated.translation_status is TranslationStatus.ORIGINAL_ENGLISH:
-            if (
+        if (
+            translated.translation_status is TranslationStatus.ORIGINAL_ENGLISH
+            and (
                 record.language.casefold() != "english"
                 or translated.content != record.content
-            ):
-                raise ValueError(
-                    f"message {record.record_id} has invalid original-English provenance"
-                )
+            )
+        ):
+            raise ValueError(
+                f"message {record.record_id} has invalid original-English provenance"
+            )
         seen_records.add(record.record_id)
 
     if result.original_records and set(record_ids) != set(message_ids):

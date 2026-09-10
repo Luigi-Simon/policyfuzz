@@ -38,8 +38,10 @@ class FixtureSandboxService:
             partial=partial,
         )
         limitations = [
-            "Authored synthetic fixture dialogue; it does not analyze the supplied "
-            "policy or personality seed, and no live Sandbox was executed."
+            (
+                "Authored synthetic fixture dialogue; it does not analyze the supplied "
+                "policy or personality seed, and no live Sandbox was executed."
+            )
         ]
         if partial:
             limitations.append(
