@@ -1,11 +1,15 @@
 # PolicyFuzz
 
-**Building v2?** Start with the [two-person development guide](docs/v2/README.md).
-The v2 foundation defines exactly four agents: Orchestrator Agent, Metric Agent,
-Sandbox Agent and Judge Agent. The first core milestone adds a `/v2` policy form,
-Orchestrator API and English fixture evidence screen. Start it with
-`npm run dev:v2` after the [v2 setup](docs/v2/README.md). Live MiroFish, Metric
-tests and Judge evaluation are the next work packets.
+**Run v2:** see the [assembled workflow guide](docs/v2/INTEGRATION.md).
+The `/v2` form now connects Orchestrator, deterministic Metric tests, Sandbox and
+Judge, and shows cited advice alongside the underlying evidence. Start the offline
+fixture workflow with `npm run dev:v2`. Live mode uses the existing MiroFish
+installation and server-side provider configuration. Exact testing currently
+supports the controlled synthetic reimbursement format. Ordinary prose can also
+produce source-linked checks of explicit numeric conditions. Those local model
+checks have partial coverage: combined eligibility and payout outcomes remain
+unscored while Sandbox and Judge continue.
+The [two-person development guide](docs/v2/README.md) retains the historical handoffs.
 Use the v2 ownership guide for new work; the quickstart and five-person allocation
 below describe the existing v1 application.
 

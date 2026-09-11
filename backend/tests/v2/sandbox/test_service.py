@@ -113,6 +113,22 @@ def changed(request, **updates):
 
 
 @pytest.mark.asyncio
+async def test_repetition_warning_preserves_distinct_records_and_completion():
+    transport = FakeMiroFish()
+    transport.rows["comments"][1]["content"] = transport.rows["comments"][0]["content"]
+    request = changed(make_example_request(), stakeholder_count=3)
+    result = await MiroFishSandboxService(
+        transport, FakeLanguage(), poll_seconds=0.001
+    ).run(request)
+    assert result.status == "completed"
+    assert len(result.messages) == 5
+    assert any(
+        note.startswith("discussion_quality: duplicate") for note in result.limitations
+    )
+    assert len({message.message_id for message in result.messages}) == 5
+
+
+@pytest.mark.asyncio
 async def test_exact_seed_count_and_real_reply_evidence():
     request = make_example_request()
     engine, language = FakeMiroFish(), FakeLanguage()
@@ -390,3 +406,60 @@ async def test_total_translation_deadline_retains_already_projected_messages():
     assert len(result.messages) == 5
     assert sum(m.translation_status == "unavailable" for m in result.messages) == 2
     assert len(result.original_records) == 5
+
+
+@pytest.mark.asyncio
+async def test_lost_stop_response_reconciles_a_bound_terminal_job():
+    engine = FakeMiroFish()
+    request = make_example_request()
+    people = await FakeLanguage().personas(request, 3)
+    await engine.prepare(request, people)
+    fp = request_fingerprint(request)
+
+    async def stop(key):
+        engine.jobs[key]["status"] = "cancelled"
+        raise TimeoutError()
+
+    engine.stop = stop
+    service = MiroFishSandboxService(engine, FakeLanguage(), cleanup_seconds=0.01)
+    errors = []
+    await service._stop(fp, True, errors)
+    assert not errors
+
+
+@pytest.mark.asyncio
+async def test_stop_reconciliation_rejects_a_different_fingerprint():
+    engine = FakeMiroFish()
+
+    async def stop(key):
+        raise TimeoutError()
+
+    async def status(key):
+        return {"status": "cancelled", "request_fingerprint": "b" * 64}
+
+    engine.stop, engine.status = stop, status
+    errors = []
+    await MiroFishSandboxService(engine, FakeLanguage(), cleanup_seconds=0.01)._stop(
+        "a" * 64, True, errors
+    )
+    assert errors[0].startswith("stop_unacknowledged:")
+
+
+@pytest.mark.asyncio
+async def test_normal_native_action_metadata_does_not_downgrade_complete_evidence():
+    engine = FakeMiroFish()
+    engine.rows["actions"] = [
+        {
+            "round_num": 1,
+            "agent_id": 0,
+            "action_type": "create_comment",
+            "success": True,
+            "action_args": {"comment_id": 1},
+        }
+    ]
+    result = await MiroFishSandboxService(engine, FakeLanguage()).run(
+        make_example_request()
+    )
+    assert result.status == "completed"
+    assert len(result.messages) == 5
+    assert any(note.startswith("action_metadata_only:") for note in result.limitations)

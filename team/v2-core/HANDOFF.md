@@ -1,5 +1,59 @@
 # Simon — PolicyFuzz v2 core handoff
 
+Frontend thread view (September 11): `frontend/src/v2/SandboxEvidence.tsx` now
+groups opening messages and their descendant replies into collapsible threads,
+with reply counts and readable parent links. Each message keeps its original ID,
+source disclosure, author and order within its thread. Multiple-parent replies
+appear once under their first parent's thread and retain every parent link.
+Judge citations open the containing thread and focus the exact message, including
+initial fragments and repeated clicks on the same citation. No API, dependency or
+backend changes were needed. Styles are in `frontend/src/v2/v2.css`; coverage is
+in `frontend/src/test/v2-threads.test.tsx` and the updated `v2-app.test.tsx`.
+The three new behavior tests failed before implementation; all 35 thread, fixture
+and workflow tests then passed using `npm --prefix frontend run test:run --
+src/test/v2-threads.test.tsx src/test/v2-app.test.tsx src/test/v2-workflow.test.tsx
+--maxWorkers=1`. `npm --prefix frontend run build` and the scoped whitespace check
+passed. Browser inspection on the existing Hybrid Work result verified that the
+Judge comment-1 citation opens Jin Lee's three-reply thread, highlights Ravi's
+reply and retains the result; captured browser warnings/errors were empty. These
+are presentation checks, not a new simulation or policy evaluation.
+
+Incident follow-up (September 11): [employment and citation verification](../../docs/v2/INCIDENT-FIXES-2026-09-11-1400.md).
+The shared NumericCondition field union now includes rest_minutes, notice_days and
+weekly_work_minutes; generated schemas and frontend types were updated together.
+These remain partial, clause-local model checks. The real Judge adapter treats
+comparison-only evidence as qualitative policy review, checks findings against
+isolated citations, and performs bounded item-level repair. The native adapter
+uses a five-post rotating peer feed with visible, non-destructive quality notes.
+The linked record lists regression commands, acceptance evidence and limitations.
+
+Current integration status: [assembled workflow and acceptance record](../../docs/v2/INTEGRATION.md).
+Metric execution, Sandbox/Judge wiring and the combined UI/API are now implemented
+on `p1/fix-v2-agent-integration`, based on main `efedfeb`. Existing canonical Sandbox
+and Judge interfaces are unchanged; the new workflow API is additive. The original
+milestone allocation and remaining persistence/revision work are retained below.
+
+The user subsequently requested immediate fixes for the observed workweek run.
+Those integration fixes cover the owned native wrapper, peer feed, progress and
+stop handling, Judge evidence gating, Metric capability wording, and an additive
+workflow health endpoint. No native MiroFish dependency/source files or teammate
+worktrees were edited. Regenerated v2 Judge examples reflect the clarified Metric
+limitation; v1 artifacts remain unchanged. See the linked integration record for
+the new endpoint, cleanup budgets, native offline check and validation results.
+
+The subsequent GST fixes add `PolicyConditions`, `NumericCondition`,
+`EvaluateConditionAction`, `ConditionTraceStep`, Metric `partial` status and
+`policy_conditions` generation in the canonical v2 Metric contract. Existing
+reimbursement models and historical v1 artifacts are preserved. The prose compiler
+is deterministic, bounded and source-linked; passing comparisons establish model
+conformance only. Combined policy outcomes always remain unscored. Judge receives
+this partial evidence and retains the closed pilot gate; the UI uses condition
+outcomes rather than payment traces for this domain. V2 schemas, fixtures and
+generated TS types were updated together. Job journal reconciliation now persists
+terminal status safely across concurrent requests and engine restarts. See
+[GST follow-up verification](../../docs/v2/GST-VOUCHER-RUN-2026-09-11.md) for the
+successful live rerun and validation details. These changes remain local and uncommitted.
+
 ## Start here
 
 Your branch: **p1/feat-v2-core**. Target pull requests at **p1/feat-policyfuzz-v2**.

@@ -154,6 +154,84 @@
       "title": "ClaimStatus",
       "type": "string"
     },
+    "ConditionTraceStep": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/EvaluateConditionAction"
+        },
+        "action_index": {
+          "maximum": 63,
+          "minimum": 0,
+          "title": "Action Index",
+          "type": "integer"
+        },
+        "after_state_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "After State Sha256",
+          "type": "string"
+        },
+        "before_state_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Before State Sha256",
+          "type": "string"
+        },
+        "detail": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Detail",
+          "type": "string"
+        },
+        "matches": {
+          "title": "Matches",
+          "type": "boolean"
+        },
+        "step_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "title": "Step Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "step_id",
+        "action_index",
+        "action",
+        "matches",
+        "detail",
+        "before_state_sha256",
+        "after_state_sha256"
+      ],
+      "title": "ConditionTraceStep",
+      "type": "object"
+    },
+    "EvaluateConditionAction": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "evaluate_condition",
+          "default": "evaluate_condition",
+          "title": "Action",
+          "type": "string"
+        },
+        "condition_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "title": "Condition Id",
+          "type": "string"
+        },
+        "value": {
+          "maximum": 100000001,
+          "minimum": -1,
+          "title": "Value",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "condition_id",
+        "value"
+      ],
+      "title": "EvaluateConditionAction",
+      "type": "object"
+    },
     "ExecutionMode": {
       "enum": [
         "fixture",
@@ -180,6 +258,9 @@
               },
               {
                 "$ref": "#/$defs/CancelAction"
+              },
+              {
+                "$ref": "#/$defs/EvaluateConditionAction"
               },
               {
                 "$ref": "#/$defs/UnsupportedAction"
@@ -229,6 +310,9 @@
                     "$ref": "#/$defs/CancelAction"
                   },
                   {
+                    "$ref": "#/$defs/EvaluateConditionAction"
+                  },
+                  {
                     "$ref": "#/$defs/UnsupportedAction"
                   }
                 ]
@@ -258,7 +342,14 @@
         "trace": {
           "default": [],
           "items": {
-            "$ref": "#/$defs/TraceStep"
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TraceStep"
+              },
+              {
+                "$ref": "#/$defs/ConditionTraceStep"
+              }
+            ]
           },
           "maxItems": 32,
           "title": "Trace",
@@ -348,9 +439,13 @@
               "$ref": "#/$defs/MetricRules"
             },
             {
+              "$ref": "#/$defs/PolicyConditions"
+            },
+            {
               "type": "null"
             }
-          ]
+          ],
+          "title": "Rules"
         },
         "status": {
           "$ref": "#/$defs/ReviewStatus"
@@ -432,7 +527,9 @@
           "default": "rule_templates",
           "enum": [
             "rule_templates",
-            "authored_fixture"
+            "authored_fixture",
+            "policy_conditions",
+            "policy_scenarios"
           ],
           "title": "Generation Method",
           "type": "string"
@@ -524,6 +621,7 @@
     "MetricRunStatus": {
       "enum": [
         "completed",
+        "partial",
         "needs_clarification"
       ],
       "title": "MetricRunStatus",
@@ -552,6 +650,81 @@
         }
       },
       "title": "MetricState",
+      "type": "object"
+    },
+    "NumericCondition": {
+      "additionalProperties": false,
+      "description": "One source-bound comparison, never an inferred whole-policy decision.",
+      "properties": {
+        "clause_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "title": "Clause Id",
+          "type": "string"
+        },
+        "field": {
+          "enum": [
+            "age_years",
+            "assessable_income_cents",
+            "annual_income_cents",
+            "monthly_income_cents",
+            "annual_value_cents",
+            "property_count",
+            "rest_minutes",
+            "notice_days",
+            "weekly_work_minutes"
+          ],
+          "title": "Field",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "operator": {
+          "enum": [
+            "ge",
+            "gt",
+            "le",
+            "lt",
+            "eq"
+          ],
+          "title": "Operator",
+          "type": "string"
+        },
+        "source_end": {
+          "minimum": 1,
+          "title": "Source End",
+          "type": "integer"
+        },
+        "source_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Sha256",
+          "type": "string"
+        },
+        "source_start": {
+          "minimum": 0,
+          "title": "Source Start",
+          "type": "integer"
+        },
+        "threshold": {
+          "maximum": 100000000,
+          "minimum": 0,
+          "title": "Threshold",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "clause_id",
+        "field",
+        "operator",
+        "threshold",
+        "source_start",
+        "source_end",
+        "source_sha256"
+      ],
+      "title": "NumericCondition",
       "type": "object"
     },
     "ParticipantTotals": {
@@ -651,6 +824,31 @@
         "text"
       ],
       "title": "PolicyClause",
+      "type": "object"
+    },
+    "PolicyConditions": {
+      "additionalProperties": false,
+      "properties": {
+        "conditions": {
+          "items": {
+            "$ref": "#/$defs/NumericCondition"
+          },
+          "maxItems": 12,
+          "minItems": 1,
+          "title": "Conditions",
+          "type": "array"
+        },
+        "kind": {
+          "const": "policy_conditions",
+          "default": "policy_conditions",
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "conditions"
+      ],
+      "title": "PolicyConditions",
       "type": "object"
     },
     "PolicyGoal": {
@@ -993,6 +1191,9 @@
             },
             {
               "$ref": "#/$defs/CancelAction"
+            },
+            {
+              "$ref": "#/$defs/EvaluateConditionAction"
             },
             {
               "$ref": "#/$defs/UnsupportedAction"

@@ -1,0 +1,2476 @@
+{
+  "schema_version": "2.0",
+  "run_id": "1731dc54-d1c1-4795-9c62-6e1ab76b0093",
+  "policy_version": "1",
+  "policy_title": "Synthetic transport reimbursement policy",
+  "policy_text_sha256": "f1476b3974cf09fd19a9bf7b84ff14cb8a4703c64f40e55cc3158815e9f94f64",
+  "execution_mode": "fixture",
+  "status": "completed",
+  "metric": {
+    "schema_version": "2.0",
+    "run_id": "1731dc54-d1c1-4795-9c62-6e1ab76b0093",
+    "policy_version": "1",
+    "policy_text_sha256": "f1476b3974cf09fd19a9bf7b84ff14cb8a4703c64f40e55cc3158815e9f94f64",
+    "review_fingerprint": "41f721c2d104f25025ada6c4952a8ac5fa0ee9d72648ca491d7edaf9f253995a",
+    "generation_method": "rule_templates",
+    "status": "completed",
+    "review": {
+      "policy_text_sha256": "f1476b3974cf09fd19a9bf7b84ff14cb8a4703c64f40e55cc3158815e9f94f64",
+      "review_fingerprint": "41f721c2d104f25025ada6c4952a8ac5fa0ee9d72648ca491d7edaf9f253995a",
+      "status": "ready",
+      "clauses": [
+        {
+          "id": "C-AMOUNT",
+          "text": "Claim amounts must be positive and no greater than the configured per-claim limit."
+        },
+        {
+          "id": "C-ALLOWANCE",
+          "text": "Each participant has a separate configured total payment allowance."
+        },
+        {
+          "id": "C-APPROVAL-BUDGET",
+          "text": "Approval budget checks use the configured accounting basis."
+        },
+        {
+          "id": "C-PAYMENT-RECHECK",
+          "text": "Payment uses the configured allowance recheck setting."
+        },
+        {
+          "id": "C-DUPLICATE",
+          "text": "Duplicate rejection uses the configured identity scope for the same participant."
+        },
+        {
+          "id": "C-LIFECYCLE",
+          "text": "Claims follow ordered submission, approval, payment, and cancellation rules."
+        }
+      ],
+      "goals": [
+        {
+          "id": "G-BUDGET",
+          "text": "Total participant payouts must not exceed that participant's allowance.",
+          "clause_ids": [
+            "C-ALLOWANCE",
+            "C-APPROVAL-BUDGET",
+            "C-PAYMENT-RECHECK"
+          ]
+        },
+        {
+          "id": "G-JOURNEY",
+          "text": "A participant must receive at most one payment for the same journey.",
+          "clause_ids": [
+            "C-DUPLICATE"
+          ]
+        },
+        {
+          "id": "G-CANCELLED",
+          "text": "A cancelled claim must not be paid.",
+          "clause_ids": [
+            "C-LIFECYCLE"
+          ]
+        },
+        {
+          "id": "G-LONE-VALID",
+          "text": "A lone valid claim within the limits can be paid.",
+          "clause_ids": [
+            "C-AMOUNT",
+            "C-ALLOWANCE",
+            "C-LIFECYCLE"
+          ]
+        },
+        {
+          "id": "G-AMOUNT",
+          "text": "No payment may occur for a claim outside the stated amount bounds.",
+          "clause_ids": [
+            "C-AMOUNT"
+          ]
+        }
+      ],
+      "rules": {
+        "per_claim_limit_cents": 10000,
+        "participant_allowance_cents": 15000,
+        "approval_budget_accounting": "paid_only",
+        "payment_budget_recheck": false,
+        "duplicate_scope": "claim_id"
+      },
+      "assumptions": [
+        "Money values use strict integer SGD cents.",
+        "Each participant has an independent allowance.",
+        "Execution models ordered actions rather than concurrent infrastructure load.",
+        "Claim IDs are unique, and resubmission cannot overwrite an existing claim.",
+        "Approval requires a submitted claim; payment requires approval and cannot repeat.",
+        "Cancellation voids a submitted or approved claim and releases its reservation; cancelling a paid claim is rejected without a refund.",
+        "A rejected action preserves the complete prior state.",
+        "Eligibility is defined only by the stated amount, lifecycle, budget, and duplicate rules; no separate eligibility flag is inferred."
+      ],
+      "limitations": [
+        "Interpretation is limited to the bounded synthetic reimbursement domain.",
+        "The controlled format does not establish legal or real-policy provenance."
+      ]
+    },
+    "suite_sha256": "9fb1a03ca27f917dcb320a933d5ee046893d4b0db4e980e3c6d0277b875b6388",
+    "cases": [
+      {
+        "case_id": "normal-claim",
+        "title": "One valid claim",
+        "category": "normal",
+        "plausibility": "A participant submits one ordinary reimbursement claim.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "submit",
+            "claim_id": "C1",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 10000
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "submit",
+              "claim_id": "C1",
+              "participant_id": "P1",
+              "journey_id": "J1",
+              "amount_cents": 10000
+            },
+            "accepted": true,
+            "detail": "Claim submitted.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "approve",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim approved.",
+            "before_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "after_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 10000
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim paid.",
+            "before_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "after_state_sha256": "5064c688f9717d295f0d724387308a69a9ebd0c8b931b4a387854bbe64f59e44",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 10000,
+            "participant_reserved_cents_before": 10000,
+            "participant_reserved_cents_after": 0
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-BUDGET",
+            "passed": true,
+            "expected": "Each participant's payouts remain at most 15000 SGD cents.",
+            "actual": "Maximum participant payout observed: 10000 SGD cents.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          },
+          {
+            "requirement_id": "G-JOURNEY",
+            "passed": true,
+            "expected": "At most one payment per participant and journey.",
+            "actual": "Maximum payments per participant and journey: 1.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          },
+          {
+            "requirement_id": "G-CANCELLED",
+            "passed": true,
+            "expected": "Cancelled claims are never paid.",
+            "actual": "Payment of a previously cancelled claim observed: False.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          },
+          {
+            "requirement_id": "G-AMOUNT",
+            "passed": true,
+            "expected": "Payments respect the stated amount bounds.",
+            "actual": "Paid amounts in SGD cents: [10000].",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          },
+          {
+            "requirement_id": "G-LONE-VALID",
+            "passed": true,
+            "expected": "The lone valid claim receives one payment.",
+            "actual": "Paid claims observed: 1.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          }
+        ],
+        "verdict": "pass",
+        "unscored_reason": null,
+        "minimal_actions": null
+      },
+      {
+        "case_id": "zero-amount",
+        "title": "Zero amount",
+        "category": "boundary",
+        "plausibility": "A participant submits a claim with a zero amount.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "submit",
+            "claim_id": "C1",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 0
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "submit",
+              "claim_id": "C1",
+              "participant_id": "P1",
+              "journey_id": "J1",
+              "amount_cents": 0
+            },
+            "accepted": false,
+            "detail": "Amount is outside the per-claim bounds.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "approve",
+              "claim_id": "C1"
+            },
+            "accepted": false,
+            "detail": "Claim does not exist.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "accepted": false,
+            "detail": "Claim does not exist.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-BUDGET",
+            "passed": true,
+            "expected": "Each participant's payouts remain at most 15000 SGD cents.",
+            "actual": "Maximum participant payout observed: 0 SGD cents.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          },
+          {
+            "requirement_id": "G-JOURNEY",
+            "passed": true,
+            "expected": "At most one payment per participant and journey.",
+            "actual": "Maximum payments per participant and journey: 0.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          },
+          {
+            "requirement_id": "G-CANCELLED",
+            "passed": true,
+            "expected": "Cancelled claims are never paid.",
+            "actual": "Payment of a previously cancelled claim observed: False.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          },
+          {
+            "requirement_id": "G-AMOUNT",
+            "passed": true,
+            "expected": "Payments respect the stated amount bounds.",
+            "actual": "Paid amounts in SGD cents: [].",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          }
+        ],
+        "verdict": "pass",
+        "unscored_reason": null,
+        "minimal_actions": null
+      },
+      {
+        "case_id": "above-claim-limit",
+        "title": "Amount above the claim limit",
+        "category": "boundary",
+        "plausibility": "A claim amount is one cent above the stated per-claim limit.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "submit",
+            "claim_id": "C1",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 10001
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "submit",
+              "claim_id": "C1",
+              "participant_id": "P1",
+              "journey_id": "J1",
+              "amount_cents": 10001
+            },
+            "accepted": false,
+            "detail": "Amount is outside the per-claim bounds.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "approve",
+              "claim_id": "C1"
+            },
+            "accepted": false,
+            "detail": "Claim does not exist.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "accepted": false,
+            "detail": "Claim does not exist.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-BUDGET",
+            "passed": true,
+            "expected": "Each participant's payouts remain at most 15000 SGD cents.",
+            "actual": "Maximum participant payout observed: 0 SGD cents.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          },
+          {
+            "requirement_id": "G-JOURNEY",
+            "passed": true,
+            "expected": "At most one payment per participant and journey.",
+            "actual": "Maximum payments per participant and journey: 0.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          },
+          {
+            "requirement_id": "G-CANCELLED",
+            "passed": true,
+            "expected": "Cancelled claims are never paid.",
+            "actual": "Payment of a previously cancelled claim observed: False.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          },
+          {
+            "requirement_id": "G-AMOUNT",
+            "passed": true,
+            "expected": "Payments respect the stated amount bounds.",
+            "actual": "Paid amounts in SGD cents: [].",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          }
+        ],
+        "verdict": "pass",
+        "unscored_reason": null,
+        "minimal_actions": null
+      },
+      {
+        "case_id": "overlapping-approvals",
+        "title": "Overlapping approvals",
+        "category": "compound",
+        "plausibility": "Two claims for different journeys are approved before either payment is processed.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "submit",
+            "claim_id": "C1",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 7501
+          },
+          {
+            "action": "submit",
+            "claim_id": "C2",
+            "participant_id": "P1",
+            "journey_id": "J2",
+            "amount_cents": 7501
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "approve",
+            "claim_id": "C2"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C2"
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "submit",
+              "claim_id": "C1",
+              "participant_id": "P1",
+              "journey_id": "J1",
+              "amount_cents": 7501
+            },
+            "accepted": true,
+            "detail": "Claim submitted.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "c1878348b61dc21a417269cc81930e75b7c33fc558bfdbcc6ae101257c4110bc",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "submit",
+              "claim_id": "C2",
+              "participant_id": "P1",
+              "journey_id": "J2",
+              "amount_cents": 7501
+            },
+            "accepted": true,
+            "detail": "Claim submitted.",
+            "before_state_sha256": "c1878348b61dc21a417269cc81930e75b7c33fc558bfdbcc6ae101257c4110bc",
+            "after_state_sha256": "61d4b4295c188d829b24abadb526ef1f210809fd2371a6acda7cff44f0fcebc3",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "approve",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim approved.",
+            "before_state_sha256": "61d4b4295c188d829b24abadb526ef1f210809fd2371a6acda7cff44f0fcebc3",
+            "after_state_sha256": "bc70cb23cb3897effeddcca0bd27cc2b02ad4e13ee590232b67ae6b104adde27",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 7501
+          },
+          {
+            "step_id": "S4",
+            "action_index": 3,
+            "action": {
+              "action": "approve",
+              "claim_id": "C2"
+            },
+            "accepted": true,
+            "detail": "Claim approved.",
+            "before_state_sha256": "bc70cb23cb3897effeddcca0bd27cc2b02ad4e13ee590232b67ae6b104adde27",
+            "after_state_sha256": "5b29ff604d9fca0589be182f4d9b0c27023adb0b82d864ff35e4261474280339",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 7501,
+            "participant_reserved_cents_after": 15002
+          },
+          {
+            "step_id": "S5",
+            "action_index": 4,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim paid.",
+            "before_state_sha256": "5b29ff604d9fca0589be182f4d9b0c27023adb0b82d864ff35e4261474280339",
+            "after_state_sha256": "cba37e0af9a63ddb8d777e15cb0fb9846ed593114270f704f873bd80a7193202",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 7501,
+            "participant_reserved_cents_before": 15002,
+            "participant_reserved_cents_after": 7501
+          },
+          {
+            "step_id": "S6",
+            "action_index": 5,
+            "action": {
+              "action": "pay",
+              "claim_id": "C2"
+            },
+            "accepted": true,
+            "detail": "Claim paid.",
+            "before_state_sha256": "cba37e0af9a63ddb8d777e15cb0fb9846ed593114270f704f873bd80a7193202",
+            "after_state_sha256": "154be0ae04da8e362435dbad1089152846f3c65f2107646add88a1796f91e43e",
+            "participant_paid_cents_before": 7501,
+            "participant_paid_cents_after": 15002,
+            "participant_reserved_cents_before": 7501,
+            "participant_reserved_cents_after": 0
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-BUDGET",
+            "passed": false,
+            "expected": "Each participant's payouts remain at most 15000 SGD cents.",
+            "actual": "Maximum participant payout observed: 15002 SGD cents.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          },
+          {
+            "requirement_id": "G-JOURNEY",
+            "passed": true,
+            "expected": "At most one payment per participant and journey.",
+            "actual": "Maximum payments per participant and journey: 1.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          },
+          {
+            "requirement_id": "G-CANCELLED",
+            "passed": true,
+            "expected": "Cancelled claims are never paid.",
+            "actual": "Payment of a previously cancelled claim observed: False.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          },
+          {
+            "requirement_id": "G-AMOUNT",
+            "passed": true,
+            "expected": "Payments respect the stated amount bounds.",
+            "actual": "Paid amounts in SGD cents: [7501, 7501].",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          }
+        ],
+        "verdict": "fail",
+        "unscored_reason": null,
+        "minimal_actions": [
+          {
+            "action": "submit",
+            "claim_id": "C1",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 7501
+          },
+          {
+            "action": "submit",
+            "claim_id": "C2",
+            "participant_id": "P1",
+            "journey_id": "J2",
+            "amount_cents": 7501
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "approve",
+            "claim_id": "C2"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C2"
+          }
+        ]
+      },
+      {
+        "case_id": "duplicate-journey",
+        "title": "Two claims for one journey",
+        "category": "adversarial",
+        "plausibility": "A participant uses distinct claim IDs for the same journey.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "submit",
+            "claim_id": "C1",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 5000
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          },
+          {
+            "action": "submit",
+            "claim_id": "C2",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 5000
+          },
+          {
+            "action": "approve",
+            "claim_id": "C2"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C2"
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "submit",
+              "claim_id": "C1",
+              "participant_id": "P1",
+              "journey_id": "J1",
+              "amount_cents": 5000
+            },
+            "accepted": true,
+            "detail": "Claim submitted.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "d721bb56787635cfce76d2b0b896ba140829f65ce7d5a8bc55cb39f189329dcd",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "approve",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim approved.",
+            "before_state_sha256": "d721bb56787635cfce76d2b0b896ba140829f65ce7d5a8bc55cb39f189329dcd",
+            "after_state_sha256": "21a4eafcdf355e298a56acb33058459653d58a124ef49438d290ae3ad4003d65",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 5000
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim paid.",
+            "before_state_sha256": "21a4eafcdf355e298a56acb33058459653d58a124ef49438d290ae3ad4003d65",
+            "after_state_sha256": "a17b2344775f8e9a9dc4d5eae74fdfbed4b0a2694653cc1db987ddae0fc50e82",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 5000,
+            "participant_reserved_cents_before": 5000,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S4",
+            "action_index": 3,
+            "action": {
+              "action": "submit",
+              "claim_id": "C2",
+              "participant_id": "P1",
+              "journey_id": "J1",
+              "amount_cents": 5000
+            },
+            "accepted": true,
+            "detail": "Claim submitted.",
+            "before_state_sha256": "a17b2344775f8e9a9dc4d5eae74fdfbed4b0a2694653cc1db987ddae0fc50e82",
+            "after_state_sha256": "76daf74700965013284f8c21b868a6827ce3178fe89fe71c2b5d5f11c12eb9b5",
+            "participant_paid_cents_before": 5000,
+            "participant_paid_cents_after": 5000,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S5",
+            "action_index": 4,
+            "action": {
+              "action": "approve",
+              "claim_id": "C2"
+            },
+            "accepted": true,
+            "detail": "Claim approved.",
+            "before_state_sha256": "76daf74700965013284f8c21b868a6827ce3178fe89fe71c2b5d5f11c12eb9b5",
+            "after_state_sha256": "0a08f0678e77c353d3fc7c3a8cc3b710b48e4c0cfbcb9fd03f660e25f69dbf18",
+            "participant_paid_cents_before": 5000,
+            "participant_paid_cents_after": 5000,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 5000
+          },
+          {
+            "step_id": "S6",
+            "action_index": 5,
+            "action": {
+              "action": "pay",
+              "claim_id": "C2"
+            },
+            "accepted": true,
+            "detail": "Claim paid.",
+            "before_state_sha256": "0a08f0678e77c353d3fc7c3a8cc3b710b48e4c0cfbcb9fd03f660e25f69dbf18",
+            "after_state_sha256": "1fcd7a214201b916a7b06d5e3561333b31fbbd4438fc7f6fe2013a282635203c",
+            "participant_paid_cents_before": 5000,
+            "participant_paid_cents_after": 10000,
+            "participant_reserved_cents_before": 5000,
+            "participant_reserved_cents_after": 0
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-BUDGET",
+            "passed": true,
+            "expected": "Each participant's payouts remain at most 15000 SGD cents.",
+            "actual": "Maximum participant payout observed: 10000 SGD cents.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          },
+          {
+            "requirement_id": "G-JOURNEY",
+            "passed": false,
+            "expected": "At most one payment per participant and journey.",
+            "actual": "Maximum payments per participant and journey: 2.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          },
+          {
+            "requirement_id": "G-CANCELLED",
+            "passed": true,
+            "expected": "Cancelled claims are never paid.",
+            "actual": "Payment of a previously cancelled claim observed: False.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          },
+          {
+            "requirement_id": "G-AMOUNT",
+            "passed": true,
+            "expected": "Payments respect the stated amount bounds.",
+            "actual": "Paid amounts in SGD cents: [5000, 5000].",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          }
+        ],
+        "verdict": "fail",
+        "unscored_reason": null,
+        "minimal_actions": [
+          {
+            "action": "submit",
+            "claim_id": "C1",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 5000
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          },
+          {
+            "action": "submit",
+            "claim_id": "C2",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 5000
+          },
+          {
+            "action": "approve",
+            "claim_id": "C2"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C2"
+          }
+        ]
+      },
+      {
+        "case_id": "cancel-then-pay",
+        "title": "Cancellation before payment",
+        "category": "cascading",
+        "plausibility": "An approved claim is cancelled before a payment request arrives.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "submit",
+            "claim_id": "C1",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 10000
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "cancel",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "submit",
+              "claim_id": "C1",
+              "participant_id": "P1",
+              "journey_id": "J1",
+              "amount_cents": 10000
+            },
+            "accepted": true,
+            "detail": "Claim submitted.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "approve",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim approved.",
+            "before_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "after_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 10000
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "cancel",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim cancelled.",
+            "before_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "after_state_sha256": "b566c1dd4f2166f3b9a2129d9b058276c92c2acc3bf400e7bfc43ca810468486",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 10000,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S4",
+            "action_index": 3,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "accepted": false,
+            "detail": "Payment requires an approved, unpaid claim.",
+            "before_state_sha256": "b566c1dd4f2166f3b9a2129d9b058276c92c2acc3bf400e7bfc43ca810468486",
+            "after_state_sha256": "b566c1dd4f2166f3b9a2129d9b058276c92c2acc3bf400e7bfc43ca810468486",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-BUDGET",
+            "passed": true,
+            "expected": "Each participant's payouts remain at most 15000 SGD cents.",
+            "actual": "Maximum participant payout observed: 0 SGD cents.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4"
+            ]
+          },
+          {
+            "requirement_id": "G-JOURNEY",
+            "passed": true,
+            "expected": "At most one payment per participant and journey.",
+            "actual": "Maximum payments per participant and journey: 0.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4"
+            ]
+          },
+          {
+            "requirement_id": "G-CANCELLED",
+            "passed": true,
+            "expected": "Cancelled claims are never paid.",
+            "actual": "Payment of a previously cancelled claim observed: False.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4"
+            ]
+          },
+          {
+            "requirement_id": "G-AMOUNT",
+            "passed": true,
+            "expected": "Payments respect the stated amount bounds.",
+            "actual": "Paid amounts in SGD cents: [].",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4"
+            ]
+          }
+        ],
+        "verdict": "pass",
+        "unscored_reason": null,
+        "minimal_actions": null
+      },
+      {
+        "case_id": "cancel-release",
+        "title": "Cancellation and a new claim",
+        "category": "cascading",
+        "plausibility": "An approval is cancelled and a different journey claim follows.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "submit",
+            "claim_id": "C1",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 10000
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "cancel",
+            "claim_id": "C1"
+          },
+          {
+            "action": "submit",
+            "claim_id": "C2",
+            "participant_id": "P1",
+            "journey_id": "J2",
+            "amount_cents": 10000
+          },
+          {
+            "action": "approve",
+            "claim_id": "C2"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C2"
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "submit",
+              "claim_id": "C1",
+              "participant_id": "P1",
+              "journey_id": "J1",
+              "amount_cents": 10000
+            },
+            "accepted": true,
+            "detail": "Claim submitted.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "approve",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim approved.",
+            "before_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "after_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 10000
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "cancel",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim cancelled.",
+            "before_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "after_state_sha256": "b566c1dd4f2166f3b9a2129d9b058276c92c2acc3bf400e7bfc43ca810468486",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 10000,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S4",
+            "action_index": 3,
+            "action": {
+              "action": "submit",
+              "claim_id": "C2",
+              "participant_id": "P1",
+              "journey_id": "J2",
+              "amount_cents": 10000
+            },
+            "accepted": true,
+            "detail": "Claim submitted.",
+            "before_state_sha256": "b566c1dd4f2166f3b9a2129d9b058276c92c2acc3bf400e7bfc43ca810468486",
+            "after_state_sha256": "8cc9a7ff3123e6785ee880b6e772fc9186e5d6d46ed0f2896110df948aea9200",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S5",
+            "action_index": 4,
+            "action": {
+              "action": "approve",
+              "claim_id": "C2"
+            },
+            "accepted": true,
+            "detail": "Claim approved.",
+            "before_state_sha256": "8cc9a7ff3123e6785ee880b6e772fc9186e5d6d46ed0f2896110df948aea9200",
+            "after_state_sha256": "be24a4cc303636fc51e0c89c21469f67f353a274bdff6f3e2405fd8f69d9d785",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 10000
+          },
+          {
+            "step_id": "S6",
+            "action_index": 5,
+            "action": {
+              "action": "pay",
+              "claim_id": "C2"
+            },
+            "accepted": true,
+            "detail": "Claim paid.",
+            "before_state_sha256": "be24a4cc303636fc51e0c89c21469f67f353a274bdff6f3e2405fd8f69d9d785",
+            "after_state_sha256": "ad888d5b2120cd7bb5b0467e8fabb7843f8ef6fb7febc4c18fde386086148d6d",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 10000,
+            "participant_reserved_cents_before": 10000,
+            "participant_reserved_cents_after": 0
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-BUDGET",
+            "passed": true,
+            "expected": "Each participant's payouts remain at most 15000 SGD cents.",
+            "actual": "Maximum participant payout observed: 10000 SGD cents.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          },
+          {
+            "requirement_id": "G-JOURNEY",
+            "passed": true,
+            "expected": "At most one payment per participant and journey.",
+            "actual": "Maximum payments per participant and journey: 1.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          },
+          {
+            "requirement_id": "G-CANCELLED",
+            "passed": true,
+            "expected": "Cancelled claims are never paid.",
+            "actual": "Payment of a previously cancelled claim observed: False.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          },
+          {
+            "requirement_id": "G-AMOUNT",
+            "passed": true,
+            "expected": "Payments respect the stated amount bounds.",
+            "actual": "Paid amounts in SGD cents: [10000].",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          }
+        ],
+        "verdict": "pass",
+        "unscored_reason": null,
+        "minimal_actions": null
+      },
+      {
+        "case_id": "duplicate-claim-id",
+        "title": "Resubmission of a claim ID",
+        "category": "adversarial",
+        "plausibility": "A participant resubmits an already paid claim ID.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "submit",
+            "claim_id": "C1",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 10000
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          },
+          {
+            "action": "submit",
+            "claim_id": "C1",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 10000
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "submit",
+              "claim_id": "C1",
+              "participant_id": "P1",
+              "journey_id": "J1",
+              "amount_cents": 10000
+            },
+            "accepted": true,
+            "detail": "Claim submitted.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "approve",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim approved.",
+            "before_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "after_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 10000
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim paid.",
+            "before_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "after_state_sha256": "5064c688f9717d295f0d724387308a69a9ebd0c8b931b4a387854bbe64f59e44",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 10000,
+            "participant_reserved_cents_before": 10000,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S4",
+            "action_index": 3,
+            "action": {
+              "action": "submit",
+              "claim_id": "C1",
+              "participant_id": "P1",
+              "journey_id": "J1",
+              "amount_cents": 10000
+            },
+            "accepted": false,
+            "detail": "Claim ID already exists.",
+            "before_state_sha256": "5064c688f9717d295f0d724387308a69a9ebd0c8b931b4a387854bbe64f59e44",
+            "after_state_sha256": "5064c688f9717d295f0d724387308a69a9ebd0c8b931b4a387854bbe64f59e44",
+            "participant_paid_cents_before": 10000,
+            "participant_paid_cents_after": 10000,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S5",
+            "action_index": 4,
+            "action": {
+              "action": "approve",
+              "claim_id": "C1"
+            },
+            "accepted": false,
+            "detail": "Approval requires a submitted claim.",
+            "before_state_sha256": "5064c688f9717d295f0d724387308a69a9ebd0c8b931b4a387854bbe64f59e44",
+            "after_state_sha256": "5064c688f9717d295f0d724387308a69a9ebd0c8b931b4a387854bbe64f59e44",
+            "participant_paid_cents_before": 10000,
+            "participant_paid_cents_after": 10000,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S6",
+            "action_index": 5,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "accepted": false,
+            "detail": "Payment requires an approved, unpaid claim.",
+            "before_state_sha256": "5064c688f9717d295f0d724387308a69a9ebd0c8b931b4a387854bbe64f59e44",
+            "after_state_sha256": "5064c688f9717d295f0d724387308a69a9ebd0c8b931b4a387854bbe64f59e44",
+            "participant_paid_cents_before": 10000,
+            "participant_paid_cents_after": 10000,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-BUDGET",
+            "passed": true,
+            "expected": "Each participant's payouts remain at most 15000 SGD cents.",
+            "actual": "Maximum participant payout observed: 10000 SGD cents.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          },
+          {
+            "requirement_id": "G-JOURNEY",
+            "passed": true,
+            "expected": "At most one payment per participant and journey.",
+            "actual": "Maximum payments per participant and journey: 1.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          },
+          {
+            "requirement_id": "G-CANCELLED",
+            "passed": true,
+            "expected": "Cancelled claims are never paid.",
+            "actual": "Payment of a previously cancelled claim observed: False.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          },
+          {
+            "requirement_id": "G-AMOUNT",
+            "passed": true,
+            "expected": "Payments respect the stated amount bounds.",
+            "actual": "Paid amounts in SGD cents: [10000].",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          }
+        ],
+        "verdict": "pass",
+        "unscored_reason": null,
+        "minimal_actions": null
+      },
+      {
+        "case_id": "repeated-payment",
+        "title": "Repeated payment request",
+        "category": "adversarial",
+        "plausibility": "The same payment request arrives twice.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "submit",
+            "claim_id": "C1",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 10000
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "submit",
+              "claim_id": "C1",
+              "participant_id": "P1",
+              "journey_id": "J1",
+              "amount_cents": 10000
+            },
+            "accepted": true,
+            "detail": "Claim submitted.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "approve",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim approved.",
+            "before_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "after_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 10000
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim paid.",
+            "before_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "after_state_sha256": "5064c688f9717d295f0d724387308a69a9ebd0c8b931b4a387854bbe64f59e44",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 10000,
+            "participant_reserved_cents_before": 10000,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S4",
+            "action_index": 3,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "accepted": false,
+            "detail": "Payment requires an approved, unpaid claim.",
+            "before_state_sha256": "5064c688f9717d295f0d724387308a69a9ebd0c8b931b4a387854bbe64f59e44",
+            "after_state_sha256": "5064c688f9717d295f0d724387308a69a9ebd0c8b931b4a387854bbe64f59e44",
+            "participant_paid_cents_before": 10000,
+            "participant_paid_cents_after": 10000,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-BUDGET",
+            "passed": true,
+            "expected": "Each participant's payouts remain at most 15000 SGD cents.",
+            "actual": "Maximum participant payout observed: 10000 SGD cents.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4"
+            ]
+          },
+          {
+            "requirement_id": "G-JOURNEY",
+            "passed": true,
+            "expected": "At most one payment per participant and journey.",
+            "actual": "Maximum payments per participant and journey: 1.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4"
+            ]
+          },
+          {
+            "requirement_id": "G-CANCELLED",
+            "passed": true,
+            "expected": "Cancelled claims are never paid.",
+            "actual": "Payment of a previously cancelled claim observed: False.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4"
+            ]
+          },
+          {
+            "requirement_id": "G-AMOUNT",
+            "passed": true,
+            "expected": "Payments respect the stated amount bounds.",
+            "actual": "Paid amounts in SGD cents: [10000].",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4"
+            ]
+          }
+        ],
+        "verdict": "pass",
+        "unscored_reason": null,
+        "minimal_actions": null
+      },
+      {
+        "case_id": "premature-payment",
+        "title": "Payment before approval",
+        "category": "compound",
+        "plausibility": "A payment request arrives before the claim's approval.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "submit",
+            "claim_id": "C1",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 10000
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "submit",
+              "claim_id": "C1",
+              "participant_id": "P1",
+              "journey_id": "J1",
+              "amount_cents": 10000
+            },
+            "accepted": true,
+            "detail": "Claim submitted.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "accepted": false,
+            "detail": "Payment requires an approved, unpaid claim.",
+            "before_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "after_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "approve",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim approved.",
+            "before_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "after_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 10000
+          },
+          {
+            "step_id": "S4",
+            "action_index": 3,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim paid.",
+            "before_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "after_state_sha256": "5064c688f9717d295f0d724387308a69a9ebd0c8b931b4a387854bbe64f59e44",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 10000,
+            "participant_reserved_cents_before": 10000,
+            "participant_reserved_cents_after": 0
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-BUDGET",
+            "passed": true,
+            "expected": "Each participant's payouts remain at most 15000 SGD cents.",
+            "actual": "Maximum participant payout observed: 10000 SGD cents.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4"
+            ]
+          },
+          {
+            "requirement_id": "G-JOURNEY",
+            "passed": true,
+            "expected": "At most one payment per participant and journey.",
+            "actual": "Maximum payments per participant and journey: 1.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4"
+            ]
+          },
+          {
+            "requirement_id": "G-CANCELLED",
+            "passed": true,
+            "expected": "Cancelled claims are never paid.",
+            "actual": "Payment of a previously cancelled claim observed: False.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4"
+            ]
+          },
+          {
+            "requirement_id": "G-AMOUNT",
+            "passed": true,
+            "expected": "Payments respect the stated amount bounds.",
+            "actual": "Paid amounts in SGD cents: [10000].",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4"
+            ]
+          }
+        ],
+        "verdict": "pass",
+        "unscored_reason": null,
+        "minimal_actions": null
+      },
+      {
+        "case_id": "independent-participants",
+        "title": "Separate participant allowances",
+        "category": "normal",
+        "plausibility": "Two participants each submit one claim for different journeys.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "submit",
+            "claim_id": "C1",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": 10000
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          },
+          {
+            "action": "submit",
+            "claim_id": "C2",
+            "participant_id": "P2",
+            "journey_id": "J2",
+            "amount_cents": 10000
+          },
+          {
+            "action": "approve",
+            "claim_id": "C2"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C2"
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "submit",
+              "claim_id": "C1",
+              "participant_id": "P1",
+              "journey_id": "J1",
+              "amount_cents": 10000
+            },
+            "accepted": true,
+            "detail": "Claim submitted.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "approve",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim approved.",
+            "before_state_sha256": "35e996174d8d6e1ed3ed71efe3600daf957222ab43d1567a3cc112b8b5e57c93",
+            "after_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 10000
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "accepted": true,
+            "detail": "Claim paid.",
+            "before_state_sha256": "01eccf258d60caf68a4a560886cc8179af91b3531a177489c0dc1a336c05b326",
+            "after_state_sha256": "5064c688f9717d295f0d724387308a69a9ebd0c8b931b4a387854bbe64f59e44",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 10000,
+            "participant_reserved_cents_before": 10000,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S4",
+            "action_index": 3,
+            "action": {
+              "action": "submit",
+              "claim_id": "C2",
+              "participant_id": "P2",
+              "journey_id": "J2",
+              "amount_cents": 10000
+            },
+            "accepted": true,
+            "detail": "Claim submitted.",
+            "before_state_sha256": "5064c688f9717d295f0d724387308a69a9ebd0c8b931b4a387854bbe64f59e44",
+            "after_state_sha256": "88964b9b19b399f55a4b57e11b0a2d35c44c3aa8c23a2b660d4f6a1f6844e88e",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S5",
+            "action_index": 4,
+            "action": {
+              "action": "approve",
+              "claim_id": "C2"
+            },
+            "accepted": true,
+            "detail": "Claim approved.",
+            "before_state_sha256": "88964b9b19b399f55a4b57e11b0a2d35c44c3aa8c23a2b660d4f6a1f6844e88e",
+            "after_state_sha256": "734212e6954d1c387c9a1671e930fd925992aa8194507209ca4004402c663ad5",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 10000
+          },
+          {
+            "step_id": "S6",
+            "action_index": 5,
+            "action": {
+              "action": "pay",
+              "claim_id": "C2"
+            },
+            "accepted": true,
+            "detail": "Claim paid.",
+            "before_state_sha256": "734212e6954d1c387c9a1671e930fd925992aa8194507209ca4004402c663ad5",
+            "after_state_sha256": "0dd795187559d87636db253746bdffe63f689567518f8c1a79fa511f9b0c0641",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 10000,
+            "participant_reserved_cents_before": 10000,
+            "participant_reserved_cents_after": 0
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-BUDGET",
+            "passed": true,
+            "expected": "Each participant's payouts remain at most 15000 SGD cents.",
+            "actual": "Maximum participant payout observed: 10000 SGD cents.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          },
+          {
+            "requirement_id": "G-JOURNEY",
+            "passed": true,
+            "expected": "At most one payment per participant and journey.",
+            "actual": "Maximum payments per participant and journey: 1.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          },
+          {
+            "requirement_id": "G-CANCELLED",
+            "passed": true,
+            "expected": "Cancelled claims are never paid.",
+            "actual": "Payment of a previously cancelled claim observed: False.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          },
+          {
+            "requirement_id": "G-AMOUNT",
+            "passed": true,
+            "expected": "Payments respect the stated amount bounds.",
+            "actual": "Paid amounts in SGD cents: [10000, 10000].",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ]
+          }
+        ],
+        "verdict": "pass",
+        "unscored_reason": null,
+        "minimal_actions": null
+      },
+      {
+        "case_id": "negative-amount",
+        "title": "Negative claim amount",
+        "category": "boundary",
+        "plausibility": "A participant submits a negative claim amount.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "submit",
+            "claim_id": "C1",
+            "participant_id": "P1",
+            "journey_id": "J1",
+            "amount_cents": -1
+          },
+          {
+            "action": "approve",
+            "claim_id": "C1"
+          },
+          {
+            "action": "pay",
+            "claim_id": "C1"
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "submit",
+              "claim_id": "C1",
+              "participant_id": "P1",
+              "journey_id": "J1",
+              "amount_cents": -1
+            },
+            "accepted": false,
+            "detail": "Amount is outside the per-claim bounds.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "approve",
+              "claim_id": "C1"
+            },
+            "accepted": false,
+            "detail": "Claim does not exist.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "pay",
+              "claim_id": "C1"
+            },
+            "accepted": false,
+            "detail": "Claim does not exist.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "participant_paid_cents_before": 0,
+            "participant_paid_cents_after": 0,
+            "participant_reserved_cents_before": 0,
+            "participant_reserved_cents_after": 0
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-BUDGET",
+            "passed": true,
+            "expected": "Each participant's payouts remain at most 15000 SGD cents.",
+            "actual": "Maximum participant payout observed: 0 SGD cents.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          },
+          {
+            "requirement_id": "G-JOURNEY",
+            "passed": true,
+            "expected": "At most one payment per participant and journey.",
+            "actual": "Maximum payments per participant and journey: 0.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          },
+          {
+            "requirement_id": "G-CANCELLED",
+            "passed": true,
+            "expected": "Cancelled claims are never paid.",
+            "actual": "Payment of a previously cancelled claim observed: False.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          },
+          {
+            "requirement_id": "G-AMOUNT",
+            "passed": true,
+            "expected": "Payments respect the stated amount bounds.",
+            "actual": "Paid amounts in SGD cents: [].",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          }
+        ],
+        "verdict": "pass",
+        "unscored_reason": null,
+        "minimal_actions": null
+      }
+    ],
+    "passed": 10,
+    "failed": 2,
+    "unscored": 0,
+    "pass_rate": 0.8333333333333334,
+    "limitations": [
+      "Interpretation is limited to the bounded synthetic reimbursement domain.",
+      "The controlled format does not establish legal or real-policy provenance.",
+      "Finite deterministic rule templates are not exhaustive policy testing.",
+      "Counterexamples are minimal under action deletion, not globally minimal."
+    ]
+  },
+  "sandbox": {
+    "schema_version": "2.0",
+    "request_id": "c404c5cc-58a4-43c0-8e9e-cd826f43259b",
+    "run_id": "1731dc54-d1c1-4795-9c62-6e1ab76b0093",
+    "policy_version": "1",
+    "policy_title": "Synthetic transport reimbursement policy",
+    "policy_text_sha256": "f1476b3974cf09fd19a9bf7b84ff14cb8a4703c64f40e55cc3158815e9f94f64",
+    "request_fingerprint": "404ccdf94852b227d9f12bae090ddd7569dbbc55e16b4816033f5ad3acaf50dc",
+    "execution_mode": "fixture",
+    "status": "completed",
+    "requested_stakeholder_count": 3,
+    "configured_stakeholder_count": 3,
+    "observed_stakeholder_count": 3,
+    "personas": [
+      {
+        "persona_id": "persona-001",
+        "display_name": "Night-shift rider",
+        "description": "A hospital worker who depends on transit after midnight."
+      },
+      {
+        "persona_id": "persona-002",
+        "display_name": "Transit operator",
+        "description": "A driver focused on safe schedules and reliable breaks."
+      },
+      {
+        "persona_id": "persona-003",
+        "display_name": "Accessibility advocate",
+        "description": "A rider who evaluates step-free late-night journeys."
+      }
+    ],
+    "messages": [
+      {
+        "message_id": "message-001",
+        "sequence": 1,
+        "persona_id": "persona-001",
+        "content": "The rider asks the city to retain late-night service.",
+        "translation_status": "translated",
+        "source_refs": [
+          "source-001"
+        ],
+        "reply_to_message_ids": [],
+        "round_number": 1,
+        "recorded_at": null
+      },
+      {
+        "message_id": "message-002",
+        "sequence": 2,
+        "persona_id": "persona-002",
+        "content": "Late-night service needs adequate rest time and clear safety procedures.",
+        "translation_status": "translated",
+        "source_refs": [
+          "source-002"
+        ],
+        "reply_to_message_ids": [
+          "message-001"
+        ],
+        "round_number": 1,
+        "recorded_at": null
+      },
+      {
+        "message_id": "message-003",
+        "sequence": 3,
+        "persona_id": "persona-003",
+        "content": "Every pilot stop should preserve an accessible route.",
+        "translation_status": "original_english",
+        "source_refs": [
+          "source-003"
+        ],
+        "reply_to_message_ids": [
+          "message-001"
+        ],
+        "round_number": 1,
+        "recorded_at": null
+      }
+    ],
+    "sources": [
+      {
+        "source_id": "source-001",
+        "record_id": "message-001",
+        "title": "Rider response",
+        "excerpt": "The rider requests continued late-night service."
+      },
+      {
+        "source_id": "source-002",
+        "record_id": "message-002",
+        "title": "Operator response",
+        "excerpt": "The operator requests rest time and clear safety procedures."
+      },
+      {
+        "source_id": "source-003",
+        "record_id": "message-003",
+        "title": "Accessibility response",
+        "excerpt": "The advocate requests an accessible route at every stop."
+      }
+    ],
+    "limitations": [
+      "Authored synthetic fixture dialogue; it does not analyze the supplied policy or personality seed, and no live Sandbox was executed."
+    ],
+    "errors": []
+  },
+  "judge": {
+    "schema_version": "2.0",
+    "request_id": "0173549a-cad3-4de1-a2b8-86af0c1639b6",
+    "run_id": "1731dc54-d1c1-4795-9c62-6e1ab76b0093",
+    "policy_version": "1",
+    "policy_text_sha256": "f1476b3974cf09fd19a9bf7b84ff14cb8a4703c64f40e55cc3158815e9f94f64",
+    "request_fingerprint": "d77d0a880e1c50dbe3b77b536243dcaa4f4d86582206bd0de9e77f0b210ddfff",
+    "execution_mode": "fixture",
+    "status": "completed",
+    "summary": "Fixture advice combines deterministic Metric results with authored Sandbox dialogue. Inspect the cited tests and resolve evidence limitations before making policy decisions.",
+    "recommendation": "revise_before_pilot",
+    "pros": [
+      {
+        "text": "Fixture advice: the deterministic case 'One valid claim' returned pass.",
+        "citations": [
+          {
+            "kind": "metric_case",
+            "id": "normal-claim",
+            "case_id": null
+          }
+        ]
+      },
+      {
+        "text": "Fixture advice: the deterministic case 'Zero amount' returned pass.",
+        "citations": [
+          {
+            "kind": "metric_case",
+            "id": "zero-amount",
+            "case_id": null
+          }
+        ]
+      },
+      {
+        "text": "Fixture advice: the deterministic case 'Amount above the claim limit' returned pass.",
+        "citations": [
+          {
+            "kind": "metric_case",
+            "id": "above-claim-limit",
+            "case_id": null
+          }
+        ]
+      },
+      {
+        "text": "Fixture advice: the deterministic case 'Cancellation before payment' returned pass.",
+        "citations": [
+          {
+            "kind": "metric_case",
+            "id": "cancel-then-pay",
+            "case_id": null
+          }
+        ]
+      },
+      {
+        "text": "Fixture advice: the deterministic case 'Cancellation and a new claim' returned pass.",
+        "citations": [
+          {
+            "kind": "metric_case",
+            "id": "cancel-release",
+            "case_id": null
+          }
+        ]
+      }
+    ],
+    "cons": [
+      {
+        "text": "Fixture advice: the deterministic case 'Overlapping approvals' returned fail.",
+        "citations": [
+          {
+            "kind": "metric_case",
+            "id": "overlapping-approvals",
+            "case_id": null
+          }
+        ]
+      },
+      {
+        "text": "Fixture advice: the deterministic case 'Two claims for one journey' returned fail.",
+        "citations": [
+          {
+            "kind": "metric_case",
+            "id": "duplicate-journey",
+            "case_id": null
+          }
+        ]
+      }
+    ],
+    "next_steps": [
+      {
+        "action": "Review the failing assertions and revise their cited policy clauses.",
+        "reason": "Deterministic failures need correction; fixture dialogue cannot support a pilot decision.",
+        "citations": [
+          {
+            "kind": "metric_case",
+            "id": "overlapping-approvals",
+            "case_id": null
+          }
+        ]
+      }
+    ],
+    "key_interactions": [
+      {
+        "text": "Fixture dialogue contains a reply between two distinct sample participants; this is not policy-specific simulation evidence.",
+        "citations": [
+          {
+            "kind": "sandbox_message",
+            "id": "message-001",
+            "case_id": null
+          },
+          {
+            "kind": "sandbox_message",
+            "id": "message-002",
+            "case_id": null
+          }
+        ]
+      },
+      {
+        "text": "Fixture dialogue contains a reply between two distinct sample participants; this is not policy-specific simulation evidence.",
+        "citations": [
+          {
+            "kind": "sandbox_message",
+            "id": "message-001",
+            "case_id": null
+          },
+          {
+            "kind": "sandbox_message",
+            "id": "message-003",
+            "case_id": null
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Fixture Judge: deterministic report demonstration; no Judge model was called.",
+      "Fixture Sandbox dialogue does not analyse the submitted policy or personality seed.",
+      "Completion describes evidence processing, not policy correctness.",
+      "Fixture mode uses authored Sandbox dialogue and a deterministic demonstration of Judge advice.",
+      "Interpretation is limited to the bounded synthetic reimbursement domain.",
+      "The controlled format does not establish legal or real-policy provenance.",
+      "Finite deterministic rule templates are not exhaustive policy testing.",
+      "Counterexamples are minimal under action deletion, not globally minimal.",
+      "Authored synthetic fixture dialogue; it does not analyze the supplied policy or personality seed, and no live Sandbox was executed."
+    ],
+    "errors": []
+  },
+  "stages": [
+    {
+      "role": "Orchestrator Agent",
+      "status": "completed",
+      "detail": "Inputs bound to a single policy version and run."
+    },
+    {
+      "role": "Metric Agent",
+      "status": "completed",
+      "detail": "10 passed, 2 failed, 0 unscored cases."
+    },
+    {
+      "role": "Sandbox Agent",
+      "status": "completed",
+      "detail": "3 of 3 requested stakeholders observed."
+    },
+    {
+      "role": "Judge Agent",
+      "status": "completed",
+      "detail": "Cited advice validated."
+    }
+  ],
+  "limitations": [
+    "Completion describes evidence processing, not policy correctness.",
+    "Fixture mode uses authored Sandbox dialogue and a deterministic demonstration of Judge advice."
+  ]
+}

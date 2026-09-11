@@ -15,7 +15,12 @@ from app.v2.metric_contracts import (
 )
 from app.v2.run_models import RunPolicyInput
 
-_CLARIFICATION = "Use exactly the documented line-based reimbursement policy format, including every required operative clause and explicit Goal clause."
+_CLARIFICATION = (
+    "The Metric engine cannot interpret this input. The workflow supports "
+    "the documented reimbursement format and a bounded set of explicit numeric conditions. No policy requirements "
+    "were extracted or tested. This is a tool capability limitation, not evidence "
+    "that the submitted policy lacks provisions or needs substantive revision."
+)
 _ASSUMPTIONS = (
     "Money values use strict integer SGD cents.",
     "Each participant has an independent allowance.",

@@ -10,6 +10,44 @@ def post(identifier=1, author=0, content="The service helps.", **metadata):
     return {"post_id": identifier, "user_id": author, "content": content, **metadata}
 
 
+def test_equal_time_source_ids_follow_numeric_order_with_parent_before_replies():
+    rows = {
+        "posts": [post(i, created_at=0) for i in (10, 2, 1)],
+        "comments": [
+            {
+                "comment_id": i,
+                "post_id": 10,
+                "user_id": 0,
+                "content": "Reply",
+                "created_at": 0,
+            }
+            for i in (11, 2, 1)
+        ],
+    }
+    parsed, notes = parse_records(rows, 1, 3, clock="oasis_step_v1")
+    assert [r.identifier for r, _ in parsed] == [
+        "post:1",
+        "post:2",
+        "post:10",
+        "comment:1",
+        "comment:2",
+        "comment:11",
+    ]
+    assert not notes
+
+
+def test_nonnumeric_source_ids_remain_supported_and_stable():
+    parsed, notes = parse_records(
+        {"posts": [post("opaque-b"), post("opaque-a"), post(2)]}, 1, 3
+    )
+    assert [r.identifier for r, _ in parsed] == [
+        "post:2",
+        "post:opaque-a",
+        "post:opaque-b",
+    ]
+    assert not notes
+
+
 def test_quotes_do_not_reattribute_original_authors_words():
     rows = {
         "posts": [

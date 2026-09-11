@@ -2,11 +2,11 @@
 
 import asyncio
 import importlib.util
-import json
 import os
 import random
+import signal
+import sqlite3
 import sys
-from datetime import UTC, datetime
 from pathlib import Path
 from typing import ClassVar
 
@@ -27,6 +27,11 @@ def main():
     peer_feed = importlib.util.module_from_spec(peer_spec)
     peer_spec.loader.exec_module(peer_feed)
     peer_feed.install_peer_feed(Platform)
+    guard_spec = importlib.util.spec_from_file_location(
+        "policyfuzz_native_guard", Path(__file__).with_name("native_guard.py")
+    )
+    guard = importlib.util.module_from_spec(guard_spec)
+    guard_spec.loader.exec_module(guard)
     # Some local MiroFish forks add conflict missions. Seed personas must remain
     # independent of Metric findings, so disable that optional injection here.
     if hasattr(native, "inject_conflict_directives"):
@@ -38,47 +43,100 @@ def main():
             native.ActionType.QUOTE_POST,
         ]
 
-        def _record(self, **event):
-            path = Path(self.simulation_dir) / "twitter/actions.jsonl"
-            path.parent.mkdir(exist_ok=True)
-            with path.open("a", encoding="utf-8") as output:
-                output.write(
-                    json.dumps({"timestamp": datetime.now(UTC).isoformat(), **event})
-                    + "\n"
-                )
-
         def _get_active_agents_for_round(self, env, current_hour, round_num):
-            if round_num:
-                self._record(
-                    event_type="round_end", round=round_num, simulated_hours=round_num
-                )
-            self._record(
-                event_type="round_start",
-                round=round_num + 1,
-                simulated_hour=current_hour,
-            )
             agents = list(env.agent_graph.get_agents())
             if len(agents) != self.config["policyfuzz_v2"]["configured_count"]:
                 raise RuntimeError("OASIS roster differs from configured count")
             return agents
 
         async def run(self, max_rounds=None):
-            seed = self.config["policyfuzz_v2"].get("random_seed")
+            settings = self.config["policyfuzz_v2"]
+            seed = settings.get("random_seed")
             if seed is not None:
                 random.seed(seed)
-            # Let the native runner exit after its rounds. The extension does not
-            # use its interactive interview server, which can otherwise stay alive.
             self.wait_for_commands = False
-            await super().run(max_rounds=max_rounds)
             rounds = min(
                 max_rounds or 20, self.config["time_config"]["total_simulation_hours"]
             )
-            self._record(event_type="round_end", round=rounds, simulated_hours=rounds)
-            self._record(event_type="simulation_end", total_rounds=rounds)
+            progress = guard.NativeProgress(self.simulation_dir, rounds)
+            original_make = native.oasis.make
+
+            def make(*args, **kwargs):
+                env = original_make(*args, **kwargs)
+                guard.guard_environment(
+                    env,
+                    progress,
+                    action_timeout=settings.get("action_timeout_seconds", 60),
+                    step_timeout=settings.get("step_timeout_seconds", 180),
+                )
+                return env
+
+            native.oasis.make = make
+            status, error = "failed", None
+            try:
+                await super().run(max_rounds=max_rounds)
+                if progress.data["completed_rounds"] != rounds:
+                    raise RuntimeError("native_incomplete_rounds")
+                status = "completed"
+            except asyncio.CancelledError:
+                status = "stopped"
+                raise
+            except Exception as exc:
+                error = (
+                    progress.data["error"]
+                    or f"native_runner_failed:{type(exc).__name__}"
+                )
+                raise
+            finally:
+                native.oasis.make = original_make
+                env = getattr(self, "env", None)
+                if env is not None:
+                    try:
+                        async with asyncio.timeout(3):
+                            if not env.platform_task.done():
+                                await env.close()
+                    except Exception:  # noqa: BLE001 - always clean up a failed native environment
+                        env.platform_task.cancel()
+                    finally:
+                        await asyncio.gather(env.platform_task, return_exceptions=True)
+                        try:
+                            env.platform.db.close()
+                        except sqlite3.Error:
+                            pass
+                handler = getattr(self, "ipc_handler", None)
+                if handler:
+                    handler.update_status(
+                        "stopped" if status == "completed" else status
+                    )
+                progress.finish(status, error)
 
     native.TwitterSimulationRunner = ExplicitRosterRunner
-    native.setup_signal_handlers()
-    asyncio.run(native.main())
+
+    async def run_main():
+        loop, task = asyncio.get_running_loop(), asyncio.current_task()
+        previous = {
+            sig: signal.getsignal(sig) for sig in (signal.SIGTERM, signal.SIGINT)
+        }
+        registered = set()
+        # The upstream handler only signals its interview loop; cancellation
+        # must reach an active step so pending agents and SQLite can be closed.
+        for sig in (signal.SIGTERM, signal.SIGINT):
+            try:
+                loop.add_signal_handler(sig, task.cancel)
+                registered.add(sig)
+            except NotImplementedError:  # Windows event loops use signal.signal.
+                signal.signal(sig, lambda *_: loop.call_soon_threadsafe(task.cancel))
+        try:
+            await native.main()
+        except asyncio.CancelledError:
+            pass
+        finally:
+            for sig in (signal.SIGTERM, signal.SIGINT):
+                if sig in registered:
+                    loop.remove_signal_handler(sig)
+                signal.signal(sig, previous[sig])
+
+    asyncio.run(run_main())
 
 
 if __name__ == "__main__":

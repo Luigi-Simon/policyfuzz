@@ -1,0 +1,484 @@
+{
+  "schema_version": "2.0",
+  "run_id": "55d56aed-bf0a-441d-bd2e-b4a2eecd9fd2",
+  "policy_version": "1",
+  "policy_title": "Synthetic transport reimbursement policy",
+  "policy_text_sha256": "836da25b43cb1b57349902a0a9099347e5b73e6f17fa7bab50804dbc265435db",
+  "execution_mode": "fixture",
+  "status": "partial",
+  "metric": {
+    "schema_version": "2.0",
+    "run_id": "55d56aed-bf0a-441d-bd2e-b4a2eecd9fd2",
+    "policy_version": "1",
+    "policy_text_sha256": "836da25b43cb1b57349902a0a9099347e5b73e6f17fa7bab50804dbc265435db",
+    "review_fingerprint": "48dee9e0b0ae182d4ee024af34cfc232031cb3a2aeeb460a107e0ca03ecd0c48",
+    "generation_method": "policy_scenarios",
+    "status": "partial",
+    "review": {
+      "policy_text_sha256": "836da25b43cb1b57349902a0a9099347e5b73e6f17fa7bab50804dbc265435db",
+      "review_fingerprint": "48dee9e0b0ae182d4ee024af34cfc232031cb3a2aeeb460a107e0ca03ecd0c48",
+      "status": "needs_clarification",
+      "clauses": [],
+      "goals": [],
+      "rules": null,
+      "assumptions": [],
+      "limitations": [
+        "Metric prepared unscored scenario questions, not executed policy tests. No supported executable interpretation or authoritative expected outcomes are available.",
+        "Topic matching does not extract provisions, establish omissions, or resolve exceptions. Review each scenario against the actual policy and supply testable requirements before scoring.",
+        "These bounded scenario templates are exploratory, not exhaustive coverage. They contain no verified policy findings or pass/fail conclusions."
+      ]
+    },
+    "suite_sha256": "2584b0b2cf9d2312ca90a6f10e8a5bda2d42b6b51e5c61f27cef91fb8ced5679",
+    "cases": [
+      {
+        "case_id": "scenario-1",
+        "title": "Hours and rest",
+        "category": "boundary",
+        "plausibility": "A participant's schedule crosses a working-hours or rest boundary; include an overnight shift.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "topic_offset=10:14;sha256=2e09d5210db8417757b0f875c276d0cb877b22514e9a3583d2d8d7445368a027"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-2",
+        "title": "Standby and compensation",
+        "category": "compound",
+        "plausibility": "A participant monitors messages on standby and then handles a work request; examine how the two activities are recorded.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "topic_offset=19:27;sha256=d998262a26d6842c034084d7d97de940139ce85c6a1fccee80fce258387c6441"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-3",
+        "title": "Operational exception",
+        "category": "compound",
+        "plausibility": "An ordinary request and an urgent operational request arrive together; examine how each is handled and documented.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "topic_offset=40:49;sha256=b955e6cd0808744cf5cba260906e156ab4c43076b4c933dea0a1df1baae2a4bb"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-4",
+        "title": "Review and transition",
+        "category": "cascading",
+        "plausibility": "A case remains open when a review or implementation period ends; examine notice, monitoring and transition handling.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "topic_offset=65:72;sha256=9169e3ca73eeb47d29e92532bcc0ffd1f22178bc26e73bf6e466f0aefadb8b50"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-5",
+        "title": "Ordinary use",
+        "category": "normal",
+        "plausibility": "A participant follows the ordinary process described by the submitted policy.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "generic_exploration"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-6",
+        "title": "Boundary ambiguity",
+        "category": "boundary",
+        "plausibility": "Two otherwise similar participants fall on opposite sides of an applicable policy boundary, if one exists.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "generic_exploration"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-7",
+        "title": "Overlapping circumstances",
+        "category": "compound",
+        "plausibility": "One participant encounters two applicable policy circumstances at the same time.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "generic_exploration"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-8",
+        "title": "Interrupted process",
+        "category": "cascading",
+        "plausibility": "A request is interrupted and resumed after a participant's circumstances change.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "generic_exploration"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-9",
+        "title": "Repeated request",
+        "category": "adversarial",
+        "plausibility": "A participant repeats a request through different channels; examine consistent treatment and record keeping.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "generic_exploration"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      }
+    ],
+    "passed": 0,
+    "failed": 0,
+    "unscored": 9,
+    "pass_rate": null,
+    "limitations": [
+      "Metric prepared unscored scenario questions, not executed policy tests. No supported executable interpretation or authoritative expected outcomes are available.",
+      "Topic matching does not extract provisions, establish omissions, or resolve exceptions. Review each scenario against the actual policy and supply testable requirements before scoring.",
+      "These bounded scenario templates are exploratory, not exhaustive coverage. They contain no verified policy findings or pass/fail conclusions."
+    ]
+  },
+  "sandbox": {
+    "schema_version": "2.0",
+    "request_id": "ed3cb819-4160-466f-9099-5d8574e65876",
+    "run_id": "55d56aed-bf0a-441d-bd2e-b4a2eecd9fd2",
+    "policy_version": "1",
+    "policy_title": "Synthetic transport reimbursement policy",
+    "policy_text_sha256": "836da25b43cb1b57349902a0a9099347e5b73e6f17fa7bab50804dbc265435db",
+    "request_fingerprint": "a8b58c8c9494a5a00b8e498ba2a470f874cd2ebfc9668f71bc1997454aca67c1",
+    "execution_mode": "fixture",
+    "status": "completed",
+    "requested_stakeholder_count": 4,
+    "configured_stakeholder_count": 4,
+    "observed_stakeholder_count": 4,
+    "personas": [
+      {
+        "persona_id": "persona-001",
+        "display_name": "Night-shift rider",
+        "description": "A hospital worker who depends on transit after midnight."
+      },
+      {
+        "persona_id": "persona-002",
+        "display_name": "Transit operator",
+        "description": "A driver focused on safe schedules and reliable breaks."
+      },
+      {
+        "persona_id": "persona-003",
+        "display_name": "Accessibility advocate",
+        "description": "A rider who evaluates step-free late-night journeys."
+      },
+      {
+        "persona_id": "persona-004",
+        "display_name": "Synthetic stakeholder 4",
+        "description": "An authored fixture participant used only to exercise count handling."
+      }
+    ],
+    "messages": [
+      {
+        "message_id": "message-001",
+        "sequence": 1,
+        "persona_id": "persona-001",
+        "content": "The rider asks the city to retain late-night service.",
+        "translation_status": "translated",
+        "source_refs": [
+          "source-001"
+        ],
+        "reply_to_message_ids": [],
+        "round_number": 1,
+        "recorded_at": null
+      },
+      {
+        "message_id": "message-002",
+        "sequence": 2,
+        "persona_id": "persona-002",
+        "content": "Late-night service needs adequate rest time and clear safety procedures.",
+        "translation_status": "translated",
+        "source_refs": [
+          "source-002"
+        ],
+        "reply_to_message_ids": [
+          "message-001"
+        ],
+        "round_number": 1,
+        "recorded_at": null
+      },
+      {
+        "message_id": "message-003",
+        "sequence": 3,
+        "persona_id": "persona-003",
+        "content": "Every pilot stop should preserve an accessible route.",
+        "translation_status": "original_english",
+        "source_refs": [
+          "source-003"
+        ],
+        "reply_to_message_ids": [
+          "message-001"
+        ],
+        "round_number": 1,
+        "recorded_at": null
+      },
+      {
+        "message_id": "message-004",
+        "sequence": 4,
+        "persona_id": "persona-004",
+        "content": "Authored fixture response from synthetic stakeholder 4.",
+        "translation_status": "original_english",
+        "source_refs": [
+          "source-004"
+        ],
+        "reply_to_message_ids": [
+          "message-001"
+        ],
+        "round_number": 1,
+        "recorded_at": null
+      }
+    ],
+    "sources": [
+      {
+        "source_id": "source-001",
+        "record_id": "message-001",
+        "title": "Rider response",
+        "excerpt": "The rider requests continued late-night service."
+      },
+      {
+        "source_id": "source-002",
+        "record_id": "message-002",
+        "title": "Operator response",
+        "excerpt": "The operator requests rest time and clear safety procedures."
+      },
+      {
+        "source_id": "source-003",
+        "record_id": "message-003",
+        "title": "Accessibility response",
+        "excerpt": "The advocate requests an accessible route at every stop."
+      },
+      {
+        "source_id": "source-004",
+        "record_id": "message-004",
+        "title": "Synthetic stakeholder 4 response",
+        "excerpt": "Authored fixture response from synthetic stakeholder 4."
+      }
+    ],
+    "limitations": [
+      "Authored synthetic fixture dialogue; it does not analyze the supplied policy or personality seed, and no live Sandbox was executed."
+    ],
+    "errors": []
+  },
+  "judge": {
+    "schema_version": "2.0",
+    "request_id": "6c1e8b74-9184-4056-b2e6-d40cfff747e3",
+    "run_id": "55d56aed-bf0a-441d-bd2e-b4a2eecd9fd2",
+    "policy_version": "1",
+    "policy_text_sha256": "836da25b43cb1b57349902a0a9099347e5b73e6f17fa7bab50804dbc265435db",
+    "request_fingerprint": "9a7e83b21015f0d49645299f4751b9d1ed1ef617748f967fe602505ba6ba0c86",
+    "execution_mode": "fixture",
+    "status": "partial",
+    "summary": "Fixture advice combines deterministic Metric results with authored Sandbox dialogue. Inspect the cited tests and resolve evidence limitations before making policy decisions.",
+    "recommendation": "insufficient_evidence",
+    "pros": [],
+    "cons": [],
+    "next_steps": [
+      {
+        "action": "Clarify executable requirements and collect live stakeholder evidence.",
+        "reason": "A fixture report cannot establish policy readiness.",
+        "citations": []
+      }
+    ],
+    "key_interactions": [
+      {
+        "text": "Fixture dialogue contains a reply between two distinct sample participants; this is not policy-specific simulation evidence.",
+        "citations": [
+          {
+            "kind": "sandbox_message",
+            "id": "message-001",
+            "case_id": null
+          },
+          {
+            "kind": "sandbox_message",
+            "id": "message-002",
+            "case_id": null
+          }
+        ]
+      },
+      {
+        "text": "Fixture dialogue contains a reply between two distinct sample participants; this is not policy-specific simulation evidence.",
+        "citations": [
+          {
+            "kind": "sandbox_message",
+            "id": "message-001",
+            "case_id": null
+          },
+          {
+            "kind": "sandbox_message",
+            "id": "message-003",
+            "case_id": null
+          }
+        ]
+      },
+      {
+        "text": "Fixture dialogue contains a reply between two distinct sample participants; this is not policy-specific simulation evidence.",
+        "citations": [
+          {
+            "kind": "sandbox_message",
+            "id": "message-001",
+            "case_id": null
+          },
+          {
+            "kind": "sandbox_message",
+            "id": "message-004",
+            "case_id": null
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Fixture Judge: deterministic report demonstration; no Judge model was called.",
+      "Fixture Sandbox dialogue does not analyse the submitted policy or personality seed.",
+      "Completion describes evidence processing, not policy correctness.",
+      "Fixture mode uses authored Sandbox dialogue and a deterministic demonstration of Judge advice.",
+      "Metric prepared scenario questions; executable rules and expected outcomes still need review. No passing tests were invented.",
+      "Metric prepared unscored scenario questions, not executed policy tests. No supported executable interpretation or authoritative expected outcomes are available.",
+      "Topic matching does not extract provisions, establish omissions, or resolve exceptions. Review each scenario against the actual policy and supply testable requirements before scoring.",
+      "These bounded scenario templates are exploratory, not exhaustive coverage. They contain no verified policy findings or pass/fail conclusions.",
+      "Authored synthetic fixture dialogue; it does not analyze the supplied policy or personality seed, and no live Sandbox was executed."
+    ],
+    "errors": []
+  },
+  "stages": [
+    {
+      "role": "Orchestrator Agent",
+      "status": "completed",
+      "detail": "Inputs bound to a single policy version and run."
+    },
+    {
+      "role": "Metric Agent",
+      "status": "partial",
+      "detail": "0 passed, 0 failed, 9 unscored cases."
+    },
+    {
+      "role": "Sandbox Agent",
+      "status": "completed",
+      "detail": "4 of 4 requested stakeholders observed."
+    },
+    {
+      "role": "Judge Agent",
+      "status": "partial",
+      "detail": "Qualitative review only; policy recommendation withheld."
+    }
+  ],
+  "limitations": [
+    "Completion describes evidence processing, not policy correctness.",
+    "Fixture mode uses authored Sandbox dialogue and a deterministic demonstration of Judge advice.",
+    "Metric prepared scenario questions; executable rules and expected outcomes still need review. No passing tests were invented."
+  ]
+}

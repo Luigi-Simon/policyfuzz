@@ -14,6 +14,7 @@ from app.v2.contracts import (
     TranslationStatus,
 )
 
+from .quality import discussion_quality
 from .translation import checked_projection
 
 
@@ -35,6 +36,17 @@ def identifier(value):
     if not str(value).strip():
         raise ValueError("Empty source identifier")
     return quote(str(value), safe="")
+
+
+def source_order(value):
+    kind, suffix = value.rsplit(":", 1)
+    # Native IDs are numeric, but opaque source IDs remain valid. The final
+    # suffix makes equal numeric spellings deterministic without merging IDs.
+    return (
+        (kind, 0, int(suffix), suffix)
+        if suffix.isascii() and suffix.isdigit()
+        else (kind, 1, 0, suffix)
+    )
 
 
 def parse_records(rows, count, max_rounds, *, clock="unknown"):
@@ -155,7 +167,7 @@ def parse_records(rows, count, max_rounds, *, clock="unknown"):
             key=lambda r: (
                 r.simulation_step if r.simulation_step is not None else -1,
                 r.recorded_at.isoformat() if r.recorded_at else "",
-                r.identifier,
+                source_order(r.identifier),
             )
         )
         for record in eligible:
@@ -186,6 +198,7 @@ async def project_capture(
     parsed, notes = parse_records(
         rows, len(roster), request.max_rounds, clock=job.get("clock", "unknown")
     )
+    notes.extend(discussion_quality(parsed))
     slots = asyncio.Semaphore(4)
 
     async def display(record):

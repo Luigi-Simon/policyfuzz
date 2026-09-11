@@ -10,6 +10,49 @@ import threading
 from pathlib import Path
 
 
+def reconcile_progress(state, directory, summary_type):
+    """Project the owned runner's counters into native status without guessing."""
+    directory = Path(directory)
+    path = directory / "policyfuzz_progress.json"
+    if not path.exists():
+        return
+    data = json.loads(path.read_text(encoding="utf-8"))
+    status = state.runner_status.value
+    terminal = status in {"completed", "stopped", "failed"}
+    state.current_round = state.twitter_current_round = data["completed_rounds"]
+    state.simulated_hours = state.twitter_simulated_hours = data["completed_rounds"]
+    state.twitter_actions_count = data["actions_count"]
+    state.twitter_running = not terminal and status == "running"
+    state.twitter_completed = status == "completed" and data[
+        "completed_rounds"
+    ] == data.get("total_rounds")
+    state.updated_at = (state.completed_at if terminal else None) or data["updated_at"]
+    if data.get("error"):
+        state.error = data["error"]
+    state.rounds = [
+        summary_type(
+            round_num=row["round"],
+            start_time=row.get("started_at", row["completed_at"]),
+            end_time=row["completed_at"],
+            simulated_hour=row["round"],
+            twitter_actions=row.get("actions_count", 0),
+        )
+        for row in data["rounds"]
+    ]
+    # On forced termination the child cannot update its own environment file.
+    if terminal:
+        env = directory / "env_status.json"
+        if env.exists():
+            value = json.loads(env.read_text(encoding="utf-8"))
+            value.update(
+                status="stopped" if status == "completed" else status,
+                timestamp=state.updated_at,
+            )
+            temporary = env.with_suffix(".tmp")
+            temporary.write_text(json.dumps(value), encoding="utf-8")
+            temporary.replace(env)
+
+
 def build_roster_config(request, personas, simulation_id, project_id):
     count, profiles, activity, posts = len(personas), [], [], []
     for index, person in enumerate(personas):
@@ -30,6 +73,11 @@ def build_roster_config(request, personas, simulation_id, project_id):
                 "persona": f"Your platform user_id is {index}. Only reply to posts by other user_ids. "
                 "You are this individual simulated stakeholder. Speak English. "
                 "Use your assigned personality and constraints. React substantively to "
+                "a visible question using a concrete constraint from your own background. "
+                "Read existing comments before replying; add a distinct example, question or "
+                "tradeoff instead of repeating another participant's wording. Agreement is "
+                "allowed; do not invent conflict. Consider an under-discussed visible post "
+                "when you have a relevant contribution. React to "
                 "another participant, using posts you actually see. Do not invent policy "
                 "provisions or pursue a predetermined verdict. You have no authority to "
                 "announce implementation decisions. Explicitly label your suggestions as "
@@ -71,6 +119,8 @@ def build_roster_config(request, personas, simulation_id, project_id):
         "twitter_config": {"platform": "twitter"},
         "reddit_config": None,
         "policyfuzz_v2": {
+            "action_timeout_seconds": min(60, max(1, request["timeout_seconds"] * 0.8)),
+            "step_timeout_seconds": max(1, request["timeout_seconds"] * 0.8),
             "configured_count": count,
             "requested_count": request["stakeholder_count"],
             "random_seed": request["random_seed"],
@@ -121,11 +171,28 @@ class JobRegistry:
         if (
             job
             and job.get("simulation_id")
-            and job["status"] not in {"ready", "cancelled", "prepare_uncertain"}
+            and job["status"]
+            not in {
+                "ready",
+                "cancelled",
+                "prepare_uncertain",
+                "completed",
+                "failed",
+                "stopped",
+            }
         ):
             state = self.runtime.status(job["simulation_id"])
             if state:
-                job["status"] = state
+                # Poll outside the transaction, then compare the complete snapshot.
+                # Another process may have cancelled or finished the same job while
+                # the engine response was in flight. Never overwrite that decision.
+                with self._lock, self._db() as db:
+                    db.execute("BEGIN IMMEDIATE")
+                    current = self._read(db, fingerprint)
+                    if current == job:
+                        current["status"] = state
+                        self._write(db, fingerprint, current)
+                    job = current
         return job
 
     def prepare(self, fingerprint, request, personas):
@@ -167,16 +234,19 @@ class JobRegistry:
                 job = self._read(db, fingerprint)
                 if job is None:
                     raise ValueError("Unknown job")
-                if job["status"] != "ready":
-                    return self.lookup(fingerprint)
-                job["status"] = "start_uncertain"
-                self._write(db, fingerprint, job)
+                launch = job["status"] == "ready"
+                if launch:
+                    job["status"] = "start_uncertain"
+                    self._write(db, fingerprint, job)
+            if not launch:
+                # lookup may now write; the claim transaction must be closed first.
+                return self.lookup(fingerprint)
             self.runtime.start(job["simulation_id"], job["request"]["max_rounds"])
             with self._db() as db:
                 db.execute("BEGIN IMMEDIATE")
                 current = self._read(db, fingerprint)
                 cancelled = current["status"] == "cancelled"
-                if not cancelled:
+                if current["status"] == "start_uncertain":
                     job["status"] = "running"
                     self._write(db, fingerprint, job)
             if cancelled:
@@ -252,10 +322,34 @@ class NativeRuntime:
         return state.simulation_id
 
     def start(self, simulation_id, rounds):
-        from app.services.simulation_runner import SimulationRunner
+        from app.services.simulation_runner import RoundSummary, SimulationRunner
 
         class SeededRunner(SimulationRunner):
             SCRIPTS_DIR = str(Path(__file__).resolve().parent)
+
+            @classmethod
+            def _save_run_state(cls, state):
+                reconcile_progress(
+                    state, Path(cls.RUN_STATE_DIR) / state.simulation_id, RoundSummary
+                )
+                super()._save_run_state(state)
+
+            @classmethod
+            def _sync_simulation_status(cls, simulation_id, runner_status, error=None):
+                super()._sync_simulation_status(simulation_id, runner_status, error)
+                state = cls.get_run_state(simulation_id)
+                path = Path(cls.RUN_STATE_DIR) / simulation_id / "state.json"
+                if state and path.exists():
+                    data = json.loads(path.read_text(encoding="utf-8"))
+                    data.update(
+                        current_round=state.current_round,
+                        twitter_status=runner_status.value,
+                        updated_at=state.updated_at,
+                        error=state.error,
+                    )
+                    temporary = path.with_suffix(".tmp")
+                    temporary.write_text(json.dumps(data), encoding="utf-8")
+                    temporary.replace(path)
 
         SeededRunner.start_simulation(
             simulation_id,
@@ -283,6 +377,10 @@ def install(app, contracts, journal_path, *, runtime=None):
 
     registry = JobRegistry(journal_path, runtime or NativeRuntime())
     bp = Blueprint("policyfuzz_v2_sandbox", __name__)
+
+    @bp.get("/health")
+    def health():
+        return jsonify(success=True, data={"service": "policyfuzz_v2", "status": "ok"})
 
     def fingerprint(value):
         if not isinstance(value, str) or not re.fullmatch(r"[a-f0-9]{64}", value):

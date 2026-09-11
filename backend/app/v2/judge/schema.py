@@ -95,6 +95,8 @@ def strict_schema(source):
 def editorial_schema(index):
     schema = JudgeResult.model_json_schema()
     schema["properties"] = {key: schema["properties"][key] for key in EDITORIAL_FIELDS}
+    for field in ("pros", "cons", "next_steps", "key_interactions"):
+        schema["properties"][field]["maxItems"] = 4
     if not index.pilot_eligible:
         schema["properties"]["recommendation"]["enum"] = [
             "revise_before_pilot",

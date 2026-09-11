@@ -26,8 +26,10 @@ def persona_payload(request: SandboxRequest, count: int) -> dict:
 
 
 PERSONA_PROMPT = """Design individual stakeholders inside the Sandbox Agent.
-Create exactly stakeholder_count distinct people. Their backgrounds, motivations,
-constraints and personalities must follow the supplied personality_seed. Explain
+Create exactly stakeholder_count distinct people.
+Never reuse excluded_names. If repair_codes are supplied, correct those defects
+in this batch; retain the same requested count and original seed constraints.
+Their backgrounds, motivations, constraints and personalities must follow the supplied personality_seed. Explain
 the concrete seed connection in each description. Preserve explicit seed constraints;
 vary personalities only where the seed allows. Do not infer nationality from names.
 Do not give participants desired outcomes, policy verdicts, or a mission to prove

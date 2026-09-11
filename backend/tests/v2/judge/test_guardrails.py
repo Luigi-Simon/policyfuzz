@@ -288,7 +288,8 @@ async def test_prompt_injection_remains_data_and_snapshot_survives_client_mutati
     class MutatingModel(FakeModel):
         async def complete(self, **kwargs):
             result = await super().complete(**kwargs)
-            kwargs["payload"]["request"]["metric"]["passed"] = 999
+            if "request" in kwargs["payload"]:
+                kwargs["payload"]["request"]["metric"]["passed"] = 999
             return result
 
     model = MutatingModel(drafts["complete"], APPROVED)
@@ -312,6 +313,8 @@ async def test_concurrent_runs_keep_identity_and_evidence_separate(examples, dra
         async def complete(self, **kwargs):
             await asyncio.sleep(0)
             payload = kwargs["payload"]
+            if "citation_check" in payload:
+                return json.dumps({"supported": True, "problem": ""})
             return json.dumps(
                 APPROVED
                 if "draft" in payload
@@ -405,3 +408,98 @@ def test_provider_schema_is_derived_and_every_object_is_strict(examples):
 def test_service_configuration_is_bounded(kwargs):
     with pytest.raises(ValueError):
         JudgeAgentService(FakeModel(), **kwargs)
+
+
+@pytest.mark.asyncio
+async def test_no_reviewed_policy_blocks_omission_claims_even_if_model_would_approve(
+    examples, drafts
+):
+    from app.v2.metric.service import run_metric
+    from app.v2.run_models import RunPolicyInput
+
+    policy = RunPolicyInput(
+        title="Synthetic work schedule",
+        description="Protect caregivers from discrimination. Track productivity and wellbeing monthly.",
+        agent_seed="Synthetic participants",
+        agent_count=3,
+    )
+    metric = run_metric(policy, run_id="synthetic-workweek", test_budget=12)
+    request = JudgeRequest(
+        request_id="judge-workweek",
+        run_id=metric.run_id,
+        policy_version="1",
+        policy_title=policy.title,
+        policy_text_sha256=metric.policy_text_sha256,
+        metric=metric,
+        limitations=("Sandbox evidence unavailable.",),
+    )
+    model = FakeModel(
+        drafts["unscored"]
+        | {"summary": "The policy lacks caregiver protection and a Goal clause."},
+        APPROVED,
+    )
+    result = await JudgeAgentService(model, max_repairs=0).run(request)
+    assert result.status == "partial"
+    assert result.recommendation == "insufficient_evidence"
+    assert not result.pros and not result.cons and not result.key_interactions
+    assert not model.calls
+    assert (
+        "lacks" not in result.summary and "Goal clause" not in result.model_dump_json()
+    )
+    assert any("not called" in note for note in result.limitations)
+    assert "discussion remains available" not in result.summary
+    assert any("Sandbox" in s.action for s in result.next_steps)
+    validate_judge_result(request, result)
+
+
+@pytest.mark.asyncio
+async def test_unsupported_metric_can_receive_qualitative_judge_review(examples):
+    from app.v2.metric.sample import SAMPLE_POLICY
+    from app.v2.metric.service import run_metric
+
+    request = examples["complete"][0]
+    metric = run_metric(
+        SAMPLE_POLICY.model_copy(
+            update={"description": "Synthetic rest and overtime policy."}
+        ),
+        request.run_id,
+    )
+    # Bind the synthetic scenario plan to this fixture's existing policy identity.
+    data = request.model_dump(mode="json")
+    data["metric"] = metric.model_dump(mode="json")
+    data["policy_text_sha256"] = data["sandbox"]["policy_text_sha256"] = (
+        metric.policy_text_sha256
+    )
+    request = JudgeRequest.model_validate(data)
+    draft = {
+        "summary": "Only qualitative fixture discussion is available; policy outcomes remain unscored.",
+        "recommendation": "insufficient_evidence",
+        "pros": [],
+        "cons": [],
+        "next_steps": [
+            {
+                "action": "Review the source policy and define executable requirements for the unscored scenarios.",
+                "reason": "Scenario planning does not establish an observed policy defect.",
+                "citations": [],
+            }
+        ],
+        "key_interactions": [],
+        "limitations": [],
+    }
+    model = FakeModel(draft, APPROVED)
+    result = await JudgeAgentService(model, max_repairs=0).run(request)
+    assert len(model.calls) == 2 and result.status == "partial" and not result.errors
+    assert model.calls[0]["payload"]["qualitative_only"] is True
+    assert model.calls[0]["response_schema"]["properties"]["pros"]["maxItems"] == 0
+
+
+@pytest.mark.asyncio
+async def test_qualitative_judge_cannot_publish_policy_pros_or_revision_verdict(
+    examples, drafts
+):
+    data = examples["complete"][0].model_dump(mode="json")
+    data["metric"] = None
+    request = JudgeRequest.model_validate(data)
+    model = FakeModel(drafts["complete"], APPROVED)
+    result = await JudgeAgentService(model, max_repairs=0).run(request)
+    assert result.status == "failed" and not result.pros and not result.cons

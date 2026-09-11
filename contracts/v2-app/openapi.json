@@ -1,6 +1,283 @@
 {
   "components": {
     "schemas": {
+      "AgentRole": {
+        "enum": [
+          "Orchestrator Agent",
+          "Metric Agent",
+          "Sandbox Agent",
+          "Judge Agent"
+        ],
+        "title": "AgentRole",
+        "type": "string"
+      },
+      "ApproveAction": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "const": "approve",
+            "default": "approve",
+            "title": "Action",
+            "type": "string"
+          },
+          "claim_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Claim Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "claim_id"
+        ],
+        "title": "ApproveAction",
+        "type": "object"
+      },
+      "AssertionResult": {
+        "additionalProperties": false,
+        "properties": {
+          "actual": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Actual",
+            "type": "string"
+          },
+          "expected": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Expected",
+            "type": "string"
+          },
+          "passed": {
+            "title": "Passed",
+            "type": "boolean"
+          },
+          "requirement_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Requirement Id",
+            "type": "string"
+          },
+          "step_refs": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 32,
+            "minItems": 1,
+            "title": "Step Refs",
+            "type": "array"
+          }
+        },
+        "required": [
+          "requirement_id",
+          "passed",
+          "expected",
+          "actual",
+          "step_refs"
+        ],
+        "title": "AssertionResult",
+        "type": "object"
+      },
+      "CancelAction": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "const": "cancel",
+            "default": "cancel",
+            "title": "Action",
+            "type": "string"
+          },
+          "claim_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Claim Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "claim_id"
+        ],
+        "title": "CancelAction",
+        "type": "object"
+      },
+      "CaseCategory": {
+        "enum": [
+          "normal",
+          "boundary",
+          "compound",
+          "cascading",
+          "adversarial"
+        ],
+        "title": "CaseCategory",
+        "type": "string"
+      },
+      "CaseVerdict": {
+        "enum": [
+          "pass",
+          "fail",
+          "unscored"
+        ],
+        "title": "CaseVerdict",
+        "type": "string"
+      },
+      "Citation": {
+        "additionalProperties": false,
+        "properties": {
+          "case_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Case Id"
+          },
+          "id": {
+            "minLength": 1,
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "policy_clause",
+              "metric_case",
+              "metric_step",
+              "sandbox_message"
+            ],
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "id"
+        ],
+        "title": "Citation",
+        "type": "object"
+      },
+      "CitedFinding": {
+        "additionalProperties": false,
+        "properties": {
+          "citations": {
+            "items": {
+              "$ref": "#/components/schemas/Citation"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Citations",
+            "type": "array"
+          },
+          "text": {
+            "maxLength": 8000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text",
+          "citations"
+        ],
+        "title": "CitedFinding",
+        "type": "object"
+      },
+      "ClaimRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "amount_cents": {
+            "maximum": 100000000.0,
+            "minimum": 0.0,
+            "title": "Amount Cents",
+            "type": "integer"
+          },
+          "claim_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Claim Id",
+            "type": "string"
+          },
+          "journey_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Journey Id",
+            "type": "string"
+          },
+          "participant_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Participant Id",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ClaimStatus"
+          }
+        },
+        "required": [
+          "claim_id",
+          "participant_id",
+          "journey_id",
+          "amount_cents",
+          "status"
+        ],
+        "title": "ClaimRecord",
+        "type": "object"
+      },
+      "ClaimStatus": {
+        "enum": [
+          "submitted",
+          "approved",
+          "paid",
+          "cancelled"
+        ],
+        "title": "ClaimStatus",
+        "type": "string"
+      },
+      "ConditionTraceStep": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/EvaluateConditionAction"
+          },
+          "action_index": {
+            "maximum": 63.0,
+            "minimum": 0.0,
+            "title": "Action Index",
+            "type": "integer"
+          },
+          "after_state_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "After State Sha256",
+            "type": "string"
+          },
+          "before_state_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Before State Sha256",
+            "type": "string"
+          },
+          "detail": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Detail",
+            "type": "string"
+          },
+          "matches": {
+            "title": "Matches",
+            "type": "boolean"
+          },
+          "step_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Step Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "step_id",
+          "action_index",
+          "action",
+          "matches",
+          "detail",
+          "before_state_sha256",
+          "after_state_sha256"
+        ],
+        "title": "ConditionTraceStep",
+        "type": "object"
+      },
       "CreateRunRequest": {
         "additionalProperties": false,
         "properties": {
@@ -21,6 +298,34 @@
           "policy"
         ],
         "title": "CreateRunRequest",
+        "type": "object"
+      },
+      "EvaluateConditionAction": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "const": "evaluate_condition",
+            "default": "evaluate_condition",
+            "title": "Action",
+            "type": "string"
+          },
+          "condition_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Condition Id",
+            "type": "string"
+          },
+          "value": {
+            "maximum": 100000001.0,
+            "minimum": -1.0,
+            "title": "Value",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "condition_id",
+          "value"
+        ],
+        "title": "EvaluateConditionAction",
         "type": "object"
       },
       "ExecutionMode": {
@@ -51,6 +356,705 @@
         "title": "HealthResponse",
         "type": "object"
       },
+      "JudgeResult": {
+        "additionalProperties": false,
+        "description": "Advice only. There are deliberately no writable verdict/count fields.",
+        "properties": {
+          "cons": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/CitedFinding"
+            },
+            "maxItems": 20,
+            "title": "Cons",
+            "type": "array"
+          },
+          "errors": {
+            "default": [],
+            "items": {
+              "maxLength": 8000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "title": "Errors",
+            "type": "array"
+          },
+          "execution_mode": {
+            "$ref": "#/components/schemas/ExecutionMode"
+          },
+          "key_interactions": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/CitedFinding"
+            },
+            "maxItems": 20,
+            "title": "Key Interactions",
+            "type": "array"
+          },
+          "limitations": {
+            "default": [],
+            "items": {
+              "maxLength": 8000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "title": "Limitations",
+            "type": "array"
+          },
+          "next_steps": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/NextStep"
+            },
+            "maxItems": 20,
+            "title": "Next Steps",
+            "type": "array"
+          },
+          "policy_text_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Policy Text Sha256",
+            "type": "string"
+          },
+          "policy_version": {
+            "minLength": 1,
+            "title": "Policy Version",
+            "type": "string"
+          },
+          "pros": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/CitedFinding"
+            },
+            "maxItems": 20,
+            "title": "Pros",
+            "type": "array"
+          },
+          "recommendation": {
+            "enum": [
+              "revise_before_pilot",
+              "consider_limited_pilot",
+              "insufficient_evidence"
+            ],
+            "title": "Recommendation",
+            "type": "string"
+          },
+          "request_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Request Fingerprint",
+            "type": "string"
+          },
+          "request_id": {
+            "minLength": 1,
+            "title": "Request Id",
+            "type": "string"
+          },
+          "run_id": {
+            "minLength": 1,
+            "title": "Run Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "2.0",
+            "default": "2.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "partial",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "summary": {
+            "maxLength": 8000,
+            "minLength": 1,
+            "title": "Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "request_id",
+          "run_id",
+          "policy_version",
+          "policy_text_sha256",
+          "request_fingerprint",
+          "execution_mode",
+          "status",
+          "summary",
+          "recommendation"
+        ],
+        "title": "JudgeResult",
+        "type": "object"
+      },
+      "MetricCaseResult": {
+        "additionalProperties": false,
+        "properties": {
+          "actions": {
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/SubmitAction"
+                },
+                {
+                  "$ref": "#/components/schemas/ApproveAction"
+                },
+                {
+                  "$ref": "#/components/schemas/PayAction"
+                },
+                {
+                  "$ref": "#/components/schemas/CancelAction"
+                },
+                {
+                  "$ref": "#/components/schemas/EvaluateConditionAction"
+                },
+                {
+                  "$ref": "#/components/schemas/UnsupportedAction"
+                }
+              ]
+            },
+            "maxItems": 32,
+            "minItems": 1,
+            "title": "Actions",
+            "type": "array"
+          },
+          "assertions": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/AssertionResult"
+            },
+            "maxItems": 16,
+            "title": "Assertions",
+            "type": "array"
+          },
+          "case_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Case Id",
+            "type": "string"
+          },
+          "category": {
+            "$ref": "#/components/schemas/CaseCategory"
+          },
+          "initial_state": {
+            "$ref": "#/components/schemas/MetricState"
+          },
+          "minimal_actions": {
+            "anyOf": [
+              {
+                "items": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/SubmitAction"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ApproveAction"
+                    },
+                    {
+                      "$ref": "#/components/schemas/PayAction"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CancelAction"
+                    },
+                    {
+                      "$ref": "#/components/schemas/EvaluateConditionAction"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnsupportedAction"
+                    }
+                  ]
+                },
+                "maxItems": 32,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minimal Actions"
+          },
+          "plausibility": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Plausibility",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "trace": {
+            "default": [],
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/TraceStep"
+                },
+                {
+                  "$ref": "#/components/schemas/ConditionTraceStep"
+                }
+              ]
+            },
+            "maxItems": 32,
+            "title": "Trace",
+            "type": "array"
+          },
+          "unscored_reason": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unscored Reason"
+          },
+          "verdict": {
+            "$ref": "#/components/schemas/CaseVerdict"
+          }
+        },
+        "required": [
+          "case_id",
+          "title",
+          "category",
+          "plausibility",
+          "initial_state",
+          "actions",
+          "verdict"
+        ],
+        "title": "MetricCaseResult",
+        "type": "object"
+      },
+      "MetricReview": {
+        "additionalProperties": false,
+        "properties": {
+          "assumptions": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 16,
+            "title": "Assumptions",
+            "type": "array"
+          },
+          "clauses": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/PolicyClause"
+            },
+            "maxItems": 16,
+            "title": "Clauses",
+            "type": "array"
+          },
+          "goals": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/PolicyGoal"
+            },
+            "maxItems": 16,
+            "title": "Goals",
+            "type": "array"
+          },
+          "limitations": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 16,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "policy_text_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Policy Text Sha256",
+            "type": "string"
+          },
+          "review_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Review Fingerprint",
+            "type": "string"
+          },
+          "rules": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MetricRules"
+              },
+              {
+                "$ref": "#/components/schemas/PolicyConditions"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rules"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ReviewStatus"
+          }
+        },
+        "required": [
+          "policy_text_sha256",
+          "review_fingerprint",
+          "status",
+          "rules"
+        ],
+        "title": "MetricReview",
+        "type": "object"
+      },
+      "MetricRules": {
+        "additionalProperties": false,
+        "properties": {
+          "approval_budget_accounting": {
+            "enum": [
+              "paid_only",
+              "paid_and_approved"
+            ],
+            "title": "Approval Budget Accounting",
+            "type": "string"
+          },
+          "duplicate_scope": {
+            "enum": [
+              "claim_id",
+              "journey"
+            ],
+            "title": "Duplicate Scope",
+            "type": "string"
+          },
+          "participant_allowance_cents": {
+            "maximum": 100000000.0,
+            "minimum": 1.0,
+            "title": "Participant Allowance Cents",
+            "type": "integer"
+          },
+          "payment_budget_recheck": {
+            "title": "Payment Budget Recheck",
+            "type": "boolean"
+          },
+          "per_claim_limit_cents": {
+            "maximum": 10000000.0,
+            "minimum": 1.0,
+            "title": "Per Claim Limit Cents",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "per_claim_limit_cents",
+          "participant_allowance_cents",
+          "approval_budget_accounting",
+          "payment_budget_recheck",
+          "duplicate_scope"
+        ],
+        "title": "MetricRules",
+        "type": "object"
+      },
+      "MetricRunResult": {
+        "additionalProperties": false,
+        "properties": {
+          "cases": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/MetricCaseResult"
+            },
+            "maxItems": 32,
+            "title": "Cases",
+            "type": "array"
+          },
+          "failed": {
+            "minimum": 0.0,
+            "title": "Failed",
+            "type": "integer"
+          },
+          "generation_method": {
+            "default": "rule_templates",
+            "enum": [
+              "rule_templates",
+              "authored_fixture",
+              "policy_conditions",
+              "policy_scenarios"
+            ],
+            "title": "Generation Method",
+            "type": "string"
+          },
+          "limitations": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 16,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "pass_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pass Rate"
+          },
+          "passed": {
+            "minimum": 0.0,
+            "title": "Passed",
+            "type": "integer"
+          },
+          "policy_text_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Policy Text Sha256",
+            "type": "string"
+          },
+          "policy_version": {
+            "const": "1",
+            "default": "1",
+            "title": "Policy Version",
+            "type": "string"
+          },
+          "review": {
+            "$ref": "#/components/schemas/MetricReview"
+          },
+          "review_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Review Fingerprint",
+            "type": "string"
+          },
+          "run_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Run Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "2.0",
+            "default": "2.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/MetricRunStatus"
+          },
+          "suite_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Suite Sha256",
+            "type": "string"
+          },
+          "unscored": {
+            "minimum": 0.0,
+            "title": "Unscored",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "run_id",
+          "policy_text_sha256",
+          "review_fingerprint",
+          "status",
+          "review",
+          "suite_sha256",
+          "passed",
+          "failed",
+          "unscored",
+          "pass_rate"
+        ],
+        "title": "MetricRunResult",
+        "type": "object"
+      },
+      "MetricRunStatus": {
+        "enum": [
+          "completed",
+          "partial",
+          "needs_clarification"
+        ],
+        "title": "MetricRunStatus",
+        "type": "string"
+      },
+      "MetricState": {
+        "additionalProperties": false,
+        "properties": {
+          "claims": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ClaimRecord"
+            },
+            "maxItems": 64,
+            "title": "Claims",
+            "type": "array"
+          },
+          "participants": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ParticipantTotals"
+            },
+            "maxItems": 32,
+            "title": "Participants",
+            "type": "array"
+          }
+        },
+        "title": "MetricState",
+        "type": "object"
+      },
+      "NextStep": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "maxLength": 8000,
+            "minLength": 1,
+            "title": "Action",
+            "type": "string"
+          },
+          "citations": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Citation"
+            },
+            "maxItems": 20,
+            "title": "Citations",
+            "type": "array"
+          },
+          "reason": {
+            "maxLength": 8000,
+            "minLength": 1,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "reason"
+        ],
+        "title": "NextStep",
+        "type": "object"
+      },
+      "NumericCondition": {
+        "additionalProperties": false,
+        "description": "One source-bound comparison, never an inferred whole-policy decision.",
+        "properties": {
+          "clause_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Clause Id",
+            "type": "string"
+          },
+          "field": {
+            "enum": [
+              "age_years",
+              "assessable_income_cents",
+              "annual_income_cents",
+              "monthly_income_cents",
+              "annual_value_cents",
+              "property_count",
+              "rest_minutes",
+              "notice_days",
+              "weekly_work_minutes"
+            ],
+            "title": "Field",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "operator": {
+            "enum": [
+              "ge",
+              "gt",
+              "le",
+              "lt",
+              "eq"
+            ],
+            "title": "Operator",
+            "type": "string"
+          },
+          "source_end": {
+            "minimum": 1.0,
+            "title": "Source End",
+            "type": "integer"
+          },
+          "source_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Source Sha256",
+            "type": "string"
+          },
+          "source_start": {
+            "minimum": 0.0,
+            "title": "Source Start",
+            "type": "integer"
+          },
+          "threshold": {
+            "maximum": 100000000.0,
+            "minimum": 0.0,
+            "title": "Threshold",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "clause_id",
+          "field",
+          "operator",
+          "threshold",
+          "source_start",
+          "source_end",
+          "source_sha256"
+        ],
+        "title": "NumericCondition",
+        "type": "object"
+      },
+      "ParticipantTotals": {
+        "additionalProperties": false,
+        "properties": {
+          "paid_cents": {
+            "maximum": 100000000.0,
+            "minimum": 0.0,
+            "title": "Paid Cents",
+            "type": "integer"
+          },
+          "participant_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Participant Id",
+            "type": "string"
+          },
+          "reserved_cents": {
+            "maximum": 100000000.0,
+            "minimum": 0.0,
+            "title": "Reserved Cents",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "participant_id",
+          "paid_cents",
+          "reserved_cents"
+        ],
+        "title": "ParticipantTotals",
+        "type": "object"
+      },
+      "PayAction": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "const": "pay",
+            "default": "pay",
+            "title": "Action",
+            "type": "string"
+          },
+          "claim_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Claim Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "claim_id"
+        ],
+        "title": "PayAction",
+        "type": "object"
+      },
       "Persona": {
         "additionalProperties": false,
         "properties": {
@@ -76,6 +1080,85 @@
           "description"
         ],
         "title": "Persona",
+        "type": "object"
+      },
+      "PolicyClause": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "text"
+        ],
+        "title": "PolicyClause",
+        "type": "object"
+      },
+      "PolicyConditions": {
+        "additionalProperties": false,
+        "properties": {
+          "conditions": {
+            "items": {
+              "$ref": "#/components/schemas/NumericCondition"
+            },
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Conditions",
+            "type": "array"
+          },
+          "kind": {
+            "const": "policy_conditions",
+            "default": "policy_conditions",
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        "required": [
+          "conditions"
+        ],
+        "title": "PolicyConditions",
+        "type": "object"
+      },
+      "PolicyGoal": {
+        "additionalProperties": false,
+        "properties": {
+          "clause_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 8,
+            "minItems": 1,
+            "title": "Clause Ids",
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "text",
+          "clause_ids"
+        ],
+        "title": "PolicyGoal",
         "type": "object"
       },
       "PublicError": {
@@ -210,6 +1293,14 @@
         ],
         "title": "PublicSandboxResult",
         "type": "object"
+      },
+      "ReviewStatus": {
+        "enum": [
+          "ready",
+          "needs_clarification"
+        ],
+        "title": "ReviewStatus",
+        "type": "string"
       },
       "RunPolicyInput": {
         "additionalProperties": false,
@@ -369,6 +1460,170 @@
         "title": "SourceEvidence",
         "type": "object"
       },
+      "StageResult": {
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "role": {
+            "$ref": "#/components/schemas/AgentRole"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "partial",
+              "failed",
+              "cancelled",
+              "needs_clarification"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "role",
+          "status",
+          "detail"
+        ],
+        "title": "StageResult",
+        "type": "object"
+      },
+      "SubmitAction": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "const": "submit",
+            "default": "submit",
+            "title": "Action",
+            "type": "string"
+          },
+          "amount_cents": {
+            "maximum": 100000000.0,
+            "minimum": -100000000.0,
+            "title": "Amount Cents",
+            "type": "integer"
+          },
+          "claim_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Claim Id",
+            "type": "string"
+          },
+          "journey_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Journey Id",
+            "type": "string"
+          },
+          "participant_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Participant Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "claim_id",
+          "participant_id",
+          "journey_id",
+          "amount_cents"
+        ],
+        "title": "SubmitAction",
+        "type": "object"
+      },
+      "TraceStep": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted": {
+            "title": "Accepted",
+            "type": "boolean"
+          },
+          "action": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SubmitAction"
+              },
+              {
+                "$ref": "#/components/schemas/ApproveAction"
+              },
+              {
+                "$ref": "#/components/schemas/PayAction"
+              },
+              {
+                "$ref": "#/components/schemas/CancelAction"
+              },
+              {
+                "$ref": "#/components/schemas/EvaluateConditionAction"
+              },
+              {
+                "$ref": "#/components/schemas/UnsupportedAction"
+              }
+            ],
+            "title": "Action"
+          },
+          "action_index": {
+            "maximum": 63.0,
+            "minimum": 0.0,
+            "title": "Action Index",
+            "type": "integer"
+          },
+          "after_state_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "After State Sha256",
+            "type": "string"
+          },
+          "before_state_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Before State Sha256",
+            "type": "string"
+          },
+          "detail": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Detail",
+            "type": "string"
+          },
+          "participant_paid_cents_after": {
+            "minimum": 0.0,
+            "title": "Participant Paid Cents After",
+            "type": "integer"
+          },
+          "participant_paid_cents_before": {
+            "minimum": 0.0,
+            "title": "Participant Paid Cents Before",
+            "type": "integer"
+          },
+          "participant_reserved_cents_after": {
+            "minimum": 0.0,
+            "title": "Participant Reserved Cents After",
+            "type": "integer"
+          },
+          "participant_reserved_cents_before": {
+            "minimum": 0.0,
+            "title": "Participant Reserved Cents Before",
+            "type": "integer"
+          },
+          "step_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+            "title": "Step Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "step_id",
+          "action_index",
+          "action",
+          "accepted",
+          "detail",
+          "before_state_sha256",
+          "after_state_sha256",
+          "participant_paid_cents_before",
+          "participant_paid_cents_after",
+          "participant_reserved_cents_before",
+          "participant_reserved_cents_after"
+        ],
+        "title": "TraceStep",
+        "type": "object"
+      },
       "TranslationStatus": {
         "enum": [
           "original_english",
@@ -377,17 +1632,264 @@
         ],
         "title": "TranslationStatus",
         "type": "string"
+      },
+      "UnsupportedAction": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "pattern": "^[a-z][a-z0-9_]{0,31}$",
+            "title": "Action",
+            "type": "string"
+          },
+          "parameters": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 16,
+            "title": "Parameters",
+            "type": "array"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "title": "UnsupportedAction",
+        "type": "object"
+      },
+      "WorkflowCapabilities": {
+        "additionalProperties": false,
+        "properties": {
+          "fixture_available": {
+            "default": true,
+            "title": "Fixture Available",
+            "type": "boolean"
+          },
+          "live_available": {
+            "title": "Live Available",
+            "type": "boolean"
+          },
+          "live_detail": {
+            "title": "Live Detail",
+            "type": "string"
+          },
+          "max_live_stakeholders": {
+            "default": 50,
+            "title": "Max Live Stakeholders",
+            "type": "integer"
+          },
+          "max_test_budget": {
+            "default": 12,
+            "title": "Max Test Budget",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "live_available",
+          "live_detail"
+        ],
+        "title": "WorkflowCapabilities",
+        "type": "object"
+      },
+      "WorkflowHealth": {
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "live_configured": {
+            "title": "Live Configured",
+            "type": "boolean"
+          },
+          "mirofish": {
+            "enum": [
+              "reachable",
+              "unavailable",
+              "not_checked"
+            ],
+            "title": "Mirofish",
+            "type": "string"
+          },
+          "provider": {
+            "enum": [
+              "configured_not_checked",
+              "not_configured"
+            ],
+            "title": "Provider",
+            "type": "string"
+          },
+          "status": {
+            "const": "ok",
+            "default": "ok",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "live_configured",
+          "mirofish",
+          "provider",
+          "detail"
+        ],
+        "title": "WorkflowHealth",
+        "type": "object"
+      },
+      "WorkflowRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "fixture_name": {
+            "default": "completed",
+            "enum": [
+              "completed",
+              "partial_translation_unavailable"
+            ],
+            "title": "Fixture Name",
+            "type": "string"
+          },
+          "max_rounds": {
+            "default": 4,
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Max Rounds",
+            "type": "integer"
+          },
+          "mode": {
+            "default": "fixture",
+            "enum": [
+              "fixture",
+              "live"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "policy": {
+            "$ref": "#/components/schemas/RunPolicyInput"
+          },
+          "sandbox_timeout_seconds": {
+            "default": 180,
+            "maximum": 600.0,
+            "minimum": 1.0,
+            "title": "Sandbox Timeout Seconds",
+            "type": "integer"
+          },
+          "test_budget": {
+            "default": 12,
+            "maximum": 12.0,
+            "minimum": 1.0,
+            "title": "Test Budget",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "policy"
+        ],
+        "title": "WorkflowRequest",
+        "type": "object"
+      },
+      "WorkflowResult": {
+        "additionalProperties": false,
+        "properties": {
+          "execution_mode": {
+            "$ref": "#/components/schemas/ExecutionMode"
+          },
+          "judge": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/JudgeResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Limitations",
+            "type": "array"
+          },
+          "metric": {
+            "$ref": "#/components/schemas/MetricRunResult"
+          },
+          "policy_text_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Policy Text Sha256",
+            "type": "string"
+          },
+          "policy_title": {
+            "title": "Policy Title",
+            "type": "string"
+          },
+          "policy_version": {
+            "const": "1",
+            "default": "1",
+            "title": "Policy Version",
+            "type": "string"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "sandbox": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublicSandboxResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "schema_version": {
+            "const": "2.0",
+            "default": "2.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "stages": {
+            "items": {
+              "$ref": "#/components/schemas/StageResult"
+            },
+            "title": "Stages",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "partial"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id",
+          "policy_title",
+          "policy_text_sha256",
+          "execution_mode",
+          "status",
+          "metric",
+          "sandbox",
+          "judge",
+          "stages",
+          "limitations"
+        ],
+        "title": "WorkflowResult",
+        "type": "object"
       }
     }
   },
   "info": {
-    "title": "PolicyFuzz v2 Fixture API",
+    "title": "PolicyFuzz v2 API",
     "version": "2.0.0"
   },
   "openapi": "3.1.0",
   "paths": {
     "/api/v2/health": {
       "get": {
+        "description": "Legacy fixture API liveness. Use /api/v2/workflows/health for live workflow configuration and engine reachability.",
         "operationId": "health_api_v2_health_get",
         "responses": {
           "200": {
@@ -460,6 +1962,108 @@
           }
         },
         "summary": "Create Run"
+      }
+    },
+    "/api/v2/workflows": {
+      "post": {
+        "operationId": "create_workflow_api_v2_workflows_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkflowRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkflowResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Create Workflow"
+      }
+    },
+    "/api/v2/workflows/capabilities": {
+      "get": {
+        "operationId": "workflow_capabilities_api_v2_workflows_capabilities_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkflowCapabilities"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Workflow Capabilities"
+      }
+    },
+    "/api/v2/workflows/health": {
+      "get": {
+        "operationId": "workflow_health_api_v2_workflows_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkflowHealth"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Workflow Health"
+      }
+    },
+    "/api/v2/workflows/sample": {
+      "get": {
+        "operationId": "workflow_sample_api_v2_workflows_sample_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunPolicyInput"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Workflow Sample"
       }
     }
   }

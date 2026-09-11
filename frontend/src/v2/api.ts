@@ -11,7 +11,7 @@ export class FixtureError extends Error {}
 
 // The wire always includes defaults. Require all declared fields in this public
 // response so generated types cannot promise fields absent from a valid payload.
-function requiredWireFields(value: unknown): unknown {
+export function requiredWireFields(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(requiredWireFields);
   if (value === null || typeof value !== 'object') return value;
   const result = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, requiredWireFields(item)]));
@@ -27,7 +27,7 @@ const check = ajv.compile<PublicResult>(requiredWireFields(schema) as object);
 const han = /[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\u{20000}-\u{3134f}]/u;
 const unavailable = '[English translation unavailable for this record.]';
 
-export function validateResult(value: unknown): PublicResult {
+export function validateResult(value: unknown, expectedMode: PublicResult['execution_mode'] = 'fixture'): PublicResult {
   const invalid = () => { throw new FixtureError('The fixture response could not be verified.'); };
   if (!check(value)) return invalid();
   const personaIds = value.personas.map(persona => persona.persona_id);
@@ -60,7 +60,7 @@ export function validateResult(value: unknown): PublicResult {
     ...value.personas.flatMap(persona => [persona.display_name, persona.description]),
     ...value.messages.map(message => message.content),
     ...value.sources.flatMap(source => [source.title, source.excerpt])];
-  if (value.execution_mode !== 'fixture' || display.some(text => han.test(text)) ||
+  if (value.execution_mode !== expectedMode || display.some(text => han.test(text)) ||
       hasDuplicates(personaIds) || hasDuplicates(messageIds) || hasDuplicates(sourceIds) ||
       hasDuplicates(sourceRecordIds) || value.sources.some(source => !messageIdSet.has(source.record_id)) ||
       invalidReferences ||

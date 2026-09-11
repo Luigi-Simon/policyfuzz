@@ -25,8 +25,14 @@ class FakeModel:
     def __init__(self, *responses):
         self.responses = iter(responses)
         self.calls = []
+        self.citation_calls = []
 
     async def complete(self, **kwargs):
+        # These legacy tests isolate draft/global-review behavior. Dedicated
+        # citation-scope tests exercise acceptance, rejection and repair.
+        if "citation_check" in kwargs["payload"]:
+            self.citation_calls.append(deepcopy(kwargs))
+            return json.dumps({"supported": True, "problem": ""})
         self.calls.append(deepcopy(kwargs))
         response = next(self.responses)
         if isinstance(response, BaseException):
@@ -55,7 +61,7 @@ async def test_examples_return_bound_cited_advice_without_mutating_metrics(
     assert result.next_steps and not result.errors
     assert request.model_dump_json() == before
     assert "passed" not in result.model_dump()
-    assert len(model.calls) == 2
+    assert len(model.calls) == (2 if request.metric.review.status == "ready" else 0)
 
 
 @pytest.mark.asyncio

@@ -1,4 +1,6 @@
 import json
+import sqlite3
+import threading
 from concurrent.futures import ThreadPoolExecutor
 
 import pytest
@@ -52,6 +54,54 @@ def test_persistent_idempotent_prepare_start_and_restart(tmp_path):
     restarted.start(fp)
     assert runtime.starts == 1
     assert restarted.lookup(fp)["status"] == "running"
+
+
+@pytest.mark.parametrize("terminal", ["completed", "failed", "stopped"])
+def test_lookup_persists_terminal_status_and_survives_engine_restart(
+    tmp_path, terminal
+):
+    runtime = Runtime()
+    path = tmp_path / "jobs.sqlite"
+    registry = JobRegistry(path, runtime)
+    request = make_example_request()
+    fp = request_fingerprint(request)
+    registry.prepare(fp, request.model_dump(mode="json"), people())
+    registry.start(fp)
+    runtime.state = terminal
+    assert registry.lookup(fp)["status"] == terminal
+    with sqlite3.connect(path) as db:
+        payload = json.loads(db.execute("SELECT payload FROM jobs").fetchone()[0])
+    assert payload["status"] == terminal
+    runtime.status = lambda _: (_ for _ in ()).throw(RuntimeError("Engine offline"))
+    assert JobRegistry(path, runtime).lookup(fp)["status"] == terminal
+
+
+def test_stale_poll_cannot_overwrite_concurrent_cancellation(tmp_path):
+    runtime = Runtime()
+    path = tmp_path / "jobs.sqlite"
+    registry = JobRegistry(path, runtime)
+    other = JobRegistry(path, runtime)
+    request = make_example_request()
+    fp = request_fingerprint(request)
+    registry.prepare(fp, request.model_dump(mode="json"), people())
+    registry.start(fp)
+    polled, release = threading.Event(), threading.Event()
+
+    def delayed_status(_):
+        if threading.current_thread().name.startswith("poll"):
+            polled.set()
+            assert release.wait(3)
+            return "running"
+        return runtime.state
+
+    runtime.status = delayed_status
+    with ThreadPoolExecutor(max_workers=1, thread_name_prefix="poll") as pool:
+        future = pool.submit(registry.lookup, fp)
+        assert polled.wait(3)
+        other.stop(fp)
+        release.set()
+        assert future.result(timeout=3)["status"] == "cancelled"
+    assert registry.lookup(fp)["status"] == "cancelled"
 
 
 def test_concurrent_requests_launch_one_job(tmp_path):
@@ -114,3 +164,46 @@ def test_roster_controls_native_profiles_and_every_round():
         assert "test_budget" not in profile["persona"]
         assert "expected_verdict" not in profile["persona"]
     assert "scenario-late-shift" in json.dumps(config)
+
+
+def test_native_progress_reconciles_completed_rounds_and_forced_stop(tmp_path):
+    from types import SimpleNamespace
+
+    from app.v2.sandbox.extension import reconcile_progress
+
+    data = {
+        "status": "running",
+        "completed_rounds": 1,
+        "active_round": 2,
+        "actions_count": 12,
+        "updated_at": "2026-09-11T01:01:15+08:00",
+        "error": None,
+        "rounds": [
+            {
+                "round": 1,
+                "started_at": "start",
+                "completed_at": "end",
+                "actions_count": 10,
+            }
+        ],
+    }
+    (tmp_path / "policyfuzz_progress.json").write_text(json.dumps(data))
+    (tmp_path / "env_status.json").write_text(
+        json.dumps({"status": "running", "other": "preserved"})
+    )
+    state = SimpleNamespace(
+        runner_status=SimpleNamespace(value="stopped"),
+        current_round=0,
+        twitter_actions_count=0,
+        rounds=[],
+        completed_at="2026-09-11T01:04:09+08:00",
+    )
+    reconcile_progress(state, tmp_path, lambda **kw: SimpleNamespace(**kw))
+    assert state.current_round == 1 and state.twitter_current_round == 1
+    assert state.twitter_actions_count == 12 and not state.twitter_running
+    assert not state.twitter_completed and state.rounds[0].twitter_actions == 10
+    assert state.updated_at == state.completed_at
+    assert json.loads((tmp_path / "env_status.json").read_text())["status"] == "stopped"
+    assert (
+        json.loads((tmp_path / "env_status.json").read_text())["other"] == "preserved"
+    )

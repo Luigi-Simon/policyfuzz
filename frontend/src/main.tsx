@@ -8,6 +8,9 @@ import './styles.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 if (window.location.pathname === '/v2' || window.location.pathname === '/v2/') {
+  const WorkflowApp = React.lazy(() => import('./v2/WorkflowApp').then(module => ({ default: module.WorkflowApp })));
+  root.render(<React.StrictMode><React.Suspense fallback={<p role="status">Loading PolicyFuzz v2…</p>}><WorkflowApp /></React.Suspense></React.StrictMode>);
+} else if (window.location.pathname === '/v2/fixture') {
   const V2App = React.lazy(() => import('./v2/V2App').then(module => ({ default: module.V2App })));
   root.render(<React.StrictMode><React.Suspense fallback={<p role="status">Loading PolicyFuzz v2…</p>}><V2App /></React.Suspense></React.StrictMode>);
 } else {

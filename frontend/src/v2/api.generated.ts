@@ -11,7 +11,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Health */
+        /**
+         * Health
+         * @description Legacy fixture API liveness. Use /api/v2/workflows/health for live workflow configuration and engine reachability.
+         */
         get: operations["health_api_v2_health_get"];
         put?: never;
         post?: never;
@@ -38,10 +41,180 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v2/workflows": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Workflow */
+        post: operations["create_workflow_api_v2_workflows_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/workflows/capabilities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Workflow Capabilities */
+        get: operations["workflow_capabilities_api_v2_workflows_capabilities_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/workflows/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Workflow Health */
+        get: operations["workflow_health_api_v2_workflows_health_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/workflows/sample": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Workflow Sample */
+        get: operations["workflow_sample_api_v2_workflows_sample_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /**
+         * AgentRole
+         * @enum {string}
+         */
+        AgentRole: "Orchestrator Agent" | "Metric Agent" | "Sandbox Agent" | "Judge Agent";
+        /** ApproveAction */
+        ApproveAction: {
+            /**
+             * Action
+             * @default approve
+             * @constant
+             */
+            action: "approve";
+            /** Claim Id */
+            claim_id: string;
+        };
+        /** AssertionResult */
+        AssertionResult: {
+            /** Actual */
+            actual: string;
+            /** Expected */
+            expected: string;
+            /** Passed */
+            passed: boolean;
+            /** Requirement Id */
+            requirement_id: string;
+            /** Step Refs */
+            step_refs: string[];
+        };
+        /** CancelAction */
+        CancelAction: {
+            /**
+             * Action
+             * @default cancel
+             * @constant
+             */
+            action: "cancel";
+            /** Claim Id */
+            claim_id: string;
+        };
+        /**
+         * CaseCategory
+         * @enum {string}
+         */
+        CaseCategory: "normal" | "boundary" | "compound" | "cascading" | "adversarial";
+        /**
+         * CaseVerdict
+         * @enum {string}
+         */
+        CaseVerdict: "pass" | "fail" | "unscored";
+        /** Citation */
+        Citation: {
+            /** Case Id */
+            case_id?: string | null;
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "policy_clause" | "metric_case" | "metric_step" | "sandbox_message";
+        };
+        /** CitedFinding */
+        CitedFinding: {
+            /** Citations */
+            citations: components["schemas"]["Citation"][];
+            /** Text */
+            text: string;
+        };
+        /** ClaimRecord */
+        ClaimRecord: {
+            /** Amount Cents */
+            amount_cents: number;
+            /** Claim Id */
+            claim_id: string;
+            /** Journey Id */
+            journey_id: string;
+            /** Participant Id */
+            participant_id: string;
+            status: components["schemas"]["ClaimStatus"];
+        };
+        /**
+         * ClaimStatus
+         * @enum {string}
+         */
+        ClaimStatus: "submitted" | "approved" | "paid" | "cancelled";
+        /** ConditionTraceStep */
+        ConditionTraceStep: {
+            action: components["schemas"]["EvaluateConditionAction"];
+            /** Action Index */
+            action_index: number;
+            /** After State Sha256 */
+            after_state_sha256: string;
+            /** Before State Sha256 */
+            before_state_sha256: string;
+            /** Detail */
+            detail: string;
+            /** Matches */
+            matches: boolean;
+            /** Step Id */
+            step_id: string;
+        };
         /** CreateRunRequest */
         CreateRunRequest: {
             /**
@@ -51,6 +224,19 @@ export interface components {
              */
             fixture_name: "completed" | "partial_translation_unavailable";
             policy: components["schemas"]["RunPolicyInput"];
+        };
+        /** EvaluateConditionAction */
+        EvaluateConditionAction: {
+            /**
+             * Action
+             * @default evaluate_condition
+             * @constant
+             */
+            action: "evaluate_condition";
+            /** Condition Id */
+            condition_id: string;
+            /** Value */
+            value: number;
         };
         /**
          * ExecutionMode
@@ -72,6 +258,275 @@ export interface components {
              */
             status: "ok";
         };
+        /**
+         * JudgeResult
+         * @description Advice only. There are deliberately no writable verdict/count fields.
+         */
+        JudgeResult: {
+            /**
+             * Cons
+             * @default []
+             */
+            cons: components["schemas"]["CitedFinding"][];
+            /**
+             * Errors
+             * @default []
+             */
+            errors: string[];
+            execution_mode: components["schemas"]["ExecutionMode"];
+            /**
+             * Key Interactions
+             * @default []
+             */
+            key_interactions: components["schemas"]["CitedFinding"][];
+            /**
+             * Limitations
+             * @default []
+             */
+            limitations: string[];
+            /**
+             * Next Steps
+             * @default []
+             */
+            next_steps: components["schemas"]["NextStep"][];
+            /** Policy Text Sha256 */
+            policy_text_sha256: string;
+            /** Policy Version */
+            policy_version: string;
+            /**
+             * Pros
+             * @default []
+             */
+            pros: components["schemas"]["CitedFinding"][];
+            /**
+             * Recommendation
+             * @enum {string}
+             */
+            recommendation: "revise_before_pilot" | "consider_limited_pilot" | "insufficient_evidence";
+            /** Request Fingerprint */
+            request_fingerprint: string;
+            /** Request Id */
+            request_id: string;
+            /** Run Id */
+            run_id: string;
+            /**
+             * Schema Version
+             * @default 2.0
+             * @constant
+             */
+            schema_version: "2.0";
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "completed" | "partial" | "failed";
+            /** Summary */
+            summary: string;
+        };
+        /** MetricCaseResult */
+        MetricCaseResult: {
+            /** Actions */
+            actions: (components["schemas"]["SubmitAction"] | components["schemas"]["ApproveAction"] | components["schemas"]["PayAction"] | components["schemas"]["CancelAction"] | components["schemas"]["EvaluateConditionAction"] | components["schemas"]["UnsupportedAction"])[];
+            /**
+             * Assertions
+             * @default []
+             */
+            assertions: components["schemas"]["AssertionResult"][];
+            /** Case Id */
+            case_id: string;
+            category: components["schemas"]["CaseCategory"];
+            initial_state: components["schemas"]["MetricState"];
+            /** Minimal Actions */
+            minimal_actions?: (components["schemas"]["SubmitAction"] | components["schemas"]["ApproveAction"] | components["schemas"]["PayAction"] | components["schemas"]["CancelAction"] | components["schemas"]["EvaluateConditionAction"] | components["schemas"]["UnsupportedAction"])[] | null;
+            /** Plausibility */
+            plausibility: string;
+            /** Title */
+            title: string;
+            /**
+             * Trace
+             * @default []
+             */
+            trace: (components["schemas"]["TraceStep"] | components["schemas"]["ConditionTraceStep"])[];
+            /** Unscored Reason */
+            unscored_reason?: string | null;
+            verdict: components["schemas"]["CaseVerdict"];
+        };
+        /** MetricReview */
+        MetricReview: {
+            /**
+             * Assumptions
+             * @default []
+             */
+            assumptions: string[];
+            /**
+             * Clauses
+             * @default []
+             */
+            clauses: components["schemas"]["PolicyClause"][];
+            /**
+             * Goals
+             * @default []
+             */
+            goals: components["schemas"]["PolicyGoal"][];
+            /**
+             * Limitations
+             * @default []
+             */
+            limitations: string[];
+            /** Policy Text Sha256 */
+            policy_text_sha256: string;
+            /** Review Fingerprint */
+            review_fingerprint: string;
+            /** Rules */
+            rules: components["schemas"]["MetricRules"] | components["schemas"]["PolicyConditions"] | null;
+            status: components["schemas"]["ReviewStatus"];
+        };
+        /** MetricRules */
+        MetricRules: {
+            /**
+             * Approval Budget Accounting
+             * @enum {string}
+             */
+            approval_budget_accounting: "paid_only" | "paid_and_approved";
+            /**
+             * Duplicate Scope
+             * @enum {string}
+             */
+            duplicate_scope: "claim_id" | "journey";
+            /** Participant Allowance Cents */
+            participant_allowance_cents: number;
+            /** Payment Budget Recheck */
+            payment_budget_recheck: boolean;
+            /** Per Claim Limit Cents */
+            per_claim_limit_cents: number;
+        };
+        /** MetricRunResult */
+        MetricRunResult: {
+            /**
+             * Cases
+             * @default []
+             */
+            cases: components["schemas"]["MetricCaseResult"][];
+            /** Failed */
+            failed: number;
+            /**
+             * Generation Method
+             * @default rule_templates
+             * @enum {string}
+             */
+            generation_method: "rule_templates" | "authored_fixture" | "policy_conditions" | "policy_scenarios";
+            /**
+             * Limitations
+             * @default []
+             */
+            limitations: string[];
+            /** Pass Rate */
+            pass_rate: number | null;
+            /** Passed */
+            passed: number;
+            /** Policy Text Sha256 */
+            policy_text_sha256: string;
+            /**
+             * Policy Version
+             * @default 1
+             * @constant
+             */
+            policy_version: "1";
+            review: components["schemas"]["MetricReview"];
+            /** Review Fingerprint */
+            review_fingerprint: string;
+            /** Run Id */
+            run_id: string;
+            /**
+             * Schema Version
+             * @default 2.0
+             * @constant
+             */
+            schema_version: "2.0";
+            status: components["schemas"]["MetricRunStatus"];
+            /** Suite Sha256 */
+            suite_sha256: string;
+            /** Unscored */
+            unscored: number;
+        };
+        /**
+         * MetricRunStatus
+         * @enum {string}
+         */
+        MetricRunStatus: "completed" | "partial" | "needs_clarification";
+        /** MetricState */
+        MetricState: {
+            /**
+             * Claims
+             * @default []
+             */
+            claims: components["schemas"]["ClaimRecord"][];
+            /**
+             * Participants
+             * @default []
+             */
+            participants: components["schemas"]["ParticipantTotals"][];
+        };
+        /** NextStep */
+        NextStep: {
+            /** Action */
+            action: string;
+            /**
+             * Citations
+             * @default []
+             */
+            citations: components["schemas"]["Citation"][];
+            /** Reason */
+            reason: string;
+        };
+        /**
+         * NumericCondition
+         * @description One source-bound comparison, never an inferred whole-policy decision.
+         */
+        NumericCondition: {
+            /** Clause Id */
+            clause_id: string;
+            /**
+             * Field
+             * @enum {string}
+             */
+            field: "age_years" | "assessable_income_cents" | "annual_income_cents" | "monthly_income_cents" | "annual_value_cents" | "property_count" | "rest_minutes" | "notice_days" | "weekly_work_minutes";
+            /** Id */
+            id: string;
+            /**
+             * Operator
+             * @enum {string}
+             */
+            operator: "ge" | "gt" | "le" | "lt" | "eq";
+            /** Source End */
+            source_end: number;
+            /** Source Sha256 */
+            source_sha256: string;
+            /** Source Start */
+            source_start: number;
+            /** Threshold */
+            threshold: number;
+        };
+        /** ParticipantTotals */
+        ParticipantTotals: {
+            /** Paid Cents */
+            paid_cents: number;
+            /** Participant Id */
+            participant_id: string;
+            /** Reserved Cents */
+            reserved_cents: number;
+        };
+        /** PayAction */
+        PayAction: {
+            /**
+             * Action
+             * @default pay
+             * @constant
+             */
+            action: "pay";
+            /** Claim Id */
+            claim_id: string;
+        };
         /** Persona */
         Persona: {
             /** Description */
@@ -80,6 +535,33 @@ export interface components {
             display_name: string;
             /** Persona Id */
             persona_id: string;
+        };
+        /** PolicyClause */
+        PolicyClause: {
+            /** Id */
+            id: string;
+            /** Text */
+            text: string;
+        };
+        /** PolicyConditions */
+        PolicyConditions: {
+            /** Conditions */
+            conditions: components["schemas"]["NumericCondition"][];
+            /**
+             * Kind
+             * @default policy_conditions
+             * @constant
+             */
+            kind: "policy_conditions";
+        };
+        /** PolicyGoal */
+        PolicyGoal: {
+            /** Clause Ids */
+            clause_ids: string[];
+            /** Id */
+            id: string;
+            /** Text */
+            text: string;
         };
         /** PublicError */
         PublicError: {
@@ -144,6 +626,11 @@ export interface components {
             status: components["schemas"]["SandboxStatus"];
         };
         /**
+         * ReviewStatus
+         * @enum {string}
+         */
+        ReviewStatus: "ready" | "needs_clarification";
+        /**
          * RunPolicyInput
          * @description The four policy fields accepted by the first-run milestone.
          */
@@ -199,11 +686,184 @@ export interface components {
             /** Title */
             title: string;
         };
+        /** StageResult */
+        StageResult: {
+            /** Detail */
+            detail: string;
+            role: components["schemas"]["AgentRole"];
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "completed" | "partial" | "failed" | "cancelled" | "needs_clarification";
+        };
+        /** SubmitAction */
+        SubmitAction: {
+            /**
+             * Action
+             * @default submit
+             * @constant
+             */
+            action: "submit";
+            /** Amount Cents */
+            amount_cents: number;
+            /** Claim Id */
+            claim_id: string;
+            /** Journey Id */
+            journey_id: string;
+            /** Participant Id */
+            participant_id: string;
+        };
+        /** TraceStep */
+        TraceStep: {
+            /** Accepted */
+            accepted: boolean;
+            /** Action */
+            action: components["schemas"]["SubmitAction"] | components["schemas"]["ApproveAction"] | components["schemas"]["PayAction"] | components["schemas"]["CancelAction"] | components["schemas"]["EvaluateConditionAction"] | components["schemas"]["UnsupportedAction"];
+            /** Action Index */
+            action_index: number;
+            /** After State Sha256 */
+            after_state_sha256: string;
+            /** Before State Sha256 */
+            before_state_sha256: string;
+            /** Detail */
+            detail: string;
+            /** Participant Paid Cents After */
+            participant_paid_cents_after: number;
+            /** Participant Paid Cents Before */
+            participant_paid_cents_before: number;
+            /** Participant Reserved Cents After */
+            participant_reserved_cents_after: number;
+            /** Participant Reserved Cents Before */
+            participant_reserved_cents_before: number;
+            /** Step Id */
+            step_id: string;
+        };
         /**
          * TranslationStatus
          * @enum {string}
          */
         TranslationStatus: "original_english" | "translated" | "unavailable";
+        /** UnsupportedAction */
+        UnsupportedAction: {
+            /** Action */
+            action: string;
+            /**
+             * Parameters
+             * @default []
+             */
+            parameters: string[];
+        };
+        /** WorkflowCapabilities */
+        WorkflowCapabilities: {
+            /**
+             * Fixture Available
+             * @default true
+             */
+            fixture_available: boolean;
+            /** Live Available */
+            live_available: boolean;
+            /** Live Detail */
+            live_detail: string;
+            /**
+             * Max Live Stakeholders
+             * @default 50
+             */
+            max_live_stakeholders: number;
+            /**
+             * Max Test Budget
+             * @default 12
+             */
+            max_test_budget: number;
+        };
+        /** WorkflowHealth */
+        WorkflowHealth: {
+            /** Detail */
+            detail: string;
+            /** Live Configured */
+            live_configured: boolean;
+            /**
+             * Mirofish
+             * @enum {string}
+             */
+            mirofish: "reachable" | "unavailable" | "not_checked";
+            /**
+             * Provider
+             * @enum {string}
+             */
+            provider: "configured_not_checked" | "not_configured";
+            /**
+             * Status
+             * @default ok
+             * @constant
+             */
+            status: "ok";
+        };
+        /** WorkflowRequest */
+        WorkflowRequest: {
+            /**
+             * Fixture Name
+             * @default completed
+             * @enum {string}
+             */
+            fixture_name: "completed" | "partial_translation_unavailable";
+            /**
+             * Max Rounds
+             * @default 4
+             */
+            max_rounds: number;
+            /**
+             * Mode
+             * @default fixture
+             * @enum {string}
+             */
+            mode: "fixture" | "live";
+            policy: components["schemas"]["RunPolicyInput"];
+            /**
+             * Sandbox Timeout Seconds
+             * @default 180
+             */
+            sandbox_timeout_seconds: number;
+            /**
+             * Test Budget
+             * @default 12
+             */
+            test_budget: number;
+        };
+        /** WorkflowResult */
+        WorkflowResult: {
+            execution_mode: components["schemas"]["ExecutionMode"];
+            judge: components["schemas"]["JudgeResult"] | null;
+            /** Limitations */
+            limitations: string[];
+            metric: components["schemas"]["MetricRunResult"];
+            /** Policy Text Sha256 */
+            policy_text_sha256: string;
+            /** Policy Title */
+            policy_title: string;
+            /**
+             * Policy Version
+             * @default 1
+             * @constant
+             */
+            policy_version: "1";
+            /** Run Id */
+            run_id: string;
+            sandbox: components["schemas"]["PublicSandboxResult"] | null;
+            /**
+             * Schema Version
+             * @default 2.0
+             * @constant
+             */
+            schema_version: "2.0";
+            /** Stages */
+            stages: components["schemas"]["StageResult"][];
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "completed" | "partial";
+        };
     };
     responses: never;
     parameters: never;
@@ -280,6 +940,108 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PublicError"];
+                };
+            };
+        };
+    };
+    create_workflow_api_v2_workflows_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkflowRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkflowResult"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicError"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicError"];
+                };
+            };
+        };
+    };
+    workflow_capabilities_api_v2_workflows_capabilities_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkflowCapabilities"];
+                };
+            };
+        };
+    };
+    workflow_health_api_v2_workflows_health_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkflowHealth"];
+                };
+            };
+        };
+    };
+    workflow_sample_api_v2_workflows_sample_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunPolicyInput"];
                 };
             };
         };

@@ -68,7 +68,7 @@ async def test_roster_is_seed_bound_english_and_exact_count():
 
 @pytest.mark.asyncio
 async def test_wrong_roster_count_fails_before_launch():
-    sdk = SDK([Roster(personas=[])])
+    sdk = SDK([Roster(personas=[])] * 3)
     with pytest.raises(LanguageError, match="roster_invalid"):
         await OpenAILanguageTools(model="fake-model", client=sdk).personas(
             make_example_request(), 3

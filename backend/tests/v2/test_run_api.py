@@ -328,7 +328,11 @@ def test_export_is_deterministic_and_check_detects_drift(tmp_path: Any) -> None:
         for path in output.rglob("*")
         if path.is_file()
     }
-    assert set(first) == {"openapi.json", "public-sandbox-result.schema.json"}
+    assert set(first) == {
+        "openapi.json",
+        "public-sandbox-result.schema.json",
+        "workflow-result.schema.json",
+    }
     assert export_api.main(["--output", str(output), "--check"]) == 0
 
     openapi = json.loads(first["openapi.json"])

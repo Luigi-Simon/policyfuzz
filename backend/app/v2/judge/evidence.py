@@ -47,12 +47,23 @@ def index_evidence(request: JudgeRequest, execution_mode: str) -> EvidenceIndex:
             notes.append(
                 "Supplied Metric cases are authored fixtures; no executed policy test is established by this input."
             )
+        if metric.generation_method in {"policy_conditions", "policy_scenarios"}:
+            notes.extend(metric.limitations)
+        if metric.generation_method == "policy_conditions":
+            notes.append(
+                "Local comparison evidence supports reporting its test outcomes only. Judge's policy review remains qualitative: incomplete extraction cannot establish a missing provision, policy strength, defect or pilot recommendation."
+            )
+    if metric is None or metric.review.status != "ready":
+        notes.append(
+            "Judge review is qualitative only: no executable policy interpretation is available. Scenario questions and participant statements cannot establish policy pros, cons, omissions or approval readiness."
+        )
     if sandbox is None:
         incomplete = True
         notes.append(
             "Sandbox evidence is absent; no stakeholder sentiment or interaction conclusion is available."
         )
     else:
+        notes.extend(sandbox.limitations)
         personas = {p.persona_id for p in sandbox.personas}
         messages = {m.message_id: m for m in sandbox.messages}
         sources = {s.source_id: s for s in sandbox.sources}

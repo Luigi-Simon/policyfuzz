@@ -1,0 +1,542 @@
+{
+  "schema_version": "2.0",
+  "run_id": "fixture-prose-run",
+  "policy_version": "1",
+  "policy_title": "Synthetic transport reimbursement policy",
+  "policy_text_sha256": "865978455bb8fb036ab6f1cbf540f873c5a332b264312d2cd5b048817ecbfd6a",
+  "execution_mode": "fixture",
+  "status": "partial",
+  "metric": {
+    "schema_version": "2.0",
+    "run_id": "fixture-prose-run",
+    "policy_version": "1",
+    "policy_text_sha256": "865978455bb8fb036ab6f1cbf540f873c5a332b264312d2cd5b048817ecbfd6a",
+    "review_fingerprint": "15071006a421d525d6370b04e2c77fcc5de1858686062fd65a17bd1fb696fda6",
+    "generation_method": "policy_conditions",
+    "status": "partial",
+    "review": {
+      "policy_text_sha256": "865978455bb8fb036ab6f1cbf540f873c5a332b264312d2cd5b048817ecbfd6a",
+      "review_fingerprint": "15071006a421d525d6370b04e2c77fcc5de1858686062fd65a17bd1fb696fda6",
+      "status": "ready",
+      "clauses": [
+        {
+          "id": "C-R1",
+          "text": "Extracted local condition: Age in completed years ge 23. Applicability to benefits is not established. Source characters 11–28 (end exclusive)."
+        },
+        {
+          "id": "C-R2",
+          "text": "Extracted local condition: Annual income in cents le 3170000. Applicability to benefits is not established. Source characters 30–54 (end exclusive)."
+        }
+      ],
+      "goals": [
+        {
+          "id": "G-R1",
+          "text": "Verify that the interpreted comparison respects its explicit threshold and inclusive or exclusive boundary. This tests model conformance only.",
+          "clause_ids": [
+            "C-R1"
+          ]
+        },
+        {
+          "id": "G-R2",
+          "text": "Verify that the interpreted comparison respects its explicit threshold and inclusive or exclusive boundary. This tests model conformance only.",
+          "clause_ids": [
+            "C-R2"
+          ]
+        }
+      ],
+      "rules": {
+        "kind": "policy_conditions",
+        "conditions": [
+          {
+            "id": "R1",
+            "clause_id": "C-R1",
+            "field": "age_years",
+            "operator": "ge",
+            "threshold": 23,
+            "source_start": 11,
+            "source_end": 28,
+            "source_sha256": "94e09119b395d7cfe5cbc18bcbaffe7414ebc67a8d63e970f6956cfe1935b8de"
+          },
+          {
+            "id": "R2",
+            "clause_id": "C-R2",
+            "field": "annual_income_cents",
+            "operator": "le",
+            "threshold": 3170000,
+            "source_start": 30,
+            "source_end": 54,
+            "source_sha256": "8e5f19e4c4a064aa5722dd7f9048bffc08cdfff983bc9ec5d3da09b153ec8c4d"
+          }
+        ]
+      },
+      "assumptions": [
+        "Numeric comparisons are clause-local; no implicit AND/OR relationship or jurisdiction is assumed."
+      ],
+      "limitations": [
+        "These are clause-local boundary checks of an interpreted model, not independent verification of policy correctness or a deployed benefit system.",
+        "Only explicit age, income, home annual value and property-count comparisons in supported English syntax are executable. Citizenship, residence, exclusions, voucher uses and other prose remain unscored.",
+        "Conditions are tested separately. Their applicability to individual benefits, combined eligibility, payout tiers, proration, timing and exceptions are not inferred.",
+        "Dollar amounts use integer cents; no currency conversion or real-world eligibility decision is performed."
+      ]
+    },
+    "suite_sha256": "3ae91f68ca816f08059c1de9cd4a7968d17e8f0e305ce1f9760d13013532f08c",
+    "cases": [
+      {
+        "case_id": "condition-R1",
+        "title": "Age in completed years: threshold boundary",
+        "category": "boundary",
+        "plausibility": "Applicants have age in completed years immediately below, at and above 23. Consider how their circumstances affect the policy.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "evaluate_condition",
+            "condition_id": "R1",
+            "value": 22
+          },
+          {
+            "action": "evaluate_condition",
+            "condition_id": "R1",
+            "value": 23
+          },
+          {
+            "action": "evaluate_condition",
+            "condition_id": "R1",
+            "value": 24
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "evaluate_condition",
+              "condition_id": "R1",
+              "value": 22
+            },
+            "matches": false,
+            "detail": "Age in completed years: 22. Extracted condition matches: False. This is not a benefit eligibility decision.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75"
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "evaluate_condition",
+              "condition_id": "R1",
+              "value": 23
+            },
+            "matches": true,
+            "detail": "Age in completed years: 23. Extracted condition matches: True. This is not a benefit eligibility decision.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75"
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "evaluate_condition",
+              "condition_id": "R1",
+              "value": 24
+            },
+            "matches": true,
+            "detail": "Age in completed years: 24. Extracted condition matches: True. This is not a benefit eligibility decision.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75"
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-R1",
+            "passed": true,
+            "expected": "The extracted ge comparison has below/at/above outcomes (False, True, True).",
+            "actual": "Interpreted-model outcomes: (False, True, True). No independent policy implementation was tested.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          }
+        ],
+        "verdict": "pass",
+        "unscored_reason": null,
+        "minimal_actions": null
+      },
+      {
+        "case_id": "condition-R2",
+        "title": "Annual income in cents: threshold boundary",
+        "category": "boundary",
+        "plausibility": "Applicants have annual income in cents immediately below, at and above 3170000. Consider how their circumstances affect the policy.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "evaluate_condition",
+            "condition_id": "R2",
+            "value": 3169999
+          },
+          {
+            "action": "evaluate_condition",
+            "condition_id": "R2",
+            "value": 3170000
+          },
+          {
+            "action": "evaluate_condition",
+            "condition_id": "R2",
+            "value": 3170001
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "evaluate_condition",
+              "condition_id": "R2",
+              "value": 3169999
+            },
+            "matches": true,
+            "detail": "Annual income in cents: 3169999. Extracted condition matches: True. This is not a benefit eligibility decision.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75"
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "evaluate_condition",
+              "condition_id": "R2",
+              "value": 3170000
+            },
+            "matches": true,
+            "detail": "Annual income in cents: 3170000. Extracted condition matches: True. This is not a benefit eligibility decision.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75"
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "evaluate_condition",
+              "condition_id": "R2",
+              "value": 3170001
+            },
+            "matches": false,
+            "detail": "Annual income in cents: 3170001. Extracted condition matches: False. This is not a benefit eligibility decision.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75"
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-R2",
+            "passed": true,
+            "expected": "The extracted le comparison has below/at/above outcomes (True, True, False).",
+            "actual": "Interpreted-model outcomes: (True, True, False). No independent policy implementation was tested.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          }
+        ],
+        "verdict": "pass",
+        "unscored_reason": null,
+        "minimal_actions": null
+      },
+      {
+        "case_id": "policy-combined-outcomes",
+        "title": "Combined eligibility and benefit outcomes",
+        "category": "compound",
+        "plausibility": "An applicant has several eligibility characteristics and requests multiple policy benefits. Consider component eligibility, payout tiers and exceptional circumstances.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "determine_benefits",
+            "parameters": []
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "Combined eligibility and payout outcomes remain unscored. The compiler has no verified component scope, tier formula, proration rule or benefit-system implementation. Review the actual source for these rules; an unsupported interpretation does not establish that the policy omits them.",
+        "minimal_actions": null
+      }
+    ],
+    "passed": 2,
+    "failed": 0,
+    "unscored": 1,
+    "pass_rate": 1.0,
+    "limitations": [
+      "These are clause-local boundary checks of an interpreted model, not independent verification of policy correctness or a deployed benefit system.",
+      "Only explicit age, income, home annual value and property-count comparisons in supported English syntax are executable. Citizenship, residence, exclusions, voucher uses and other prose remain unscored.",
+      "Conditions are tested separately. Their applicability to individual benefits, combined eligibility, payout tiers, proration, timing and exceptions are not inferred.",
+      "Dollar amounts use integer cents; no currency conversion or real-world eligibility decision is performed.",
+      "Executed 2 of 2 extracted comparisons; source coverage is incomplete."
+    ]
+  },
+  "sandbox": {
+    "schema_version": "2.0",
+    "request_id": "fixture-prose-sandbox",
+    "run_id": "fixture-prose-run",
+    "policy_version": "1",
+    "policy_title": "Synthetic transport reimbursement policy",
+    "policy_text_sha256": "865978455bb8fb036ab6f1cbf540f873c5a332b264312d2cd5b048817ecbfd6a",
+    "request_fingerprint": "4f7f7288f871019dfbac549855b12902ab17f120c301aa724a55d1283091f0a2",
+    "execution_mode": "fixture",
+    "status": "completed",
+    "requested_stakeholder_count": 4,
+    "configured_stakeholder_count": 4,
+    "observed_stakeholder_count": 4,
+    "personas": [
+      {
+        "persona_id": "persona-001",
+        "display_name": "Night-shift rider",
+        "description": "A hospital worker who depends on transit after midnight."
+      },
+      {
+        "persona_id": "persona-002",
+        "display_name": "Transit operator",
+        "description": "A driver focused on safe schedules and reliable breaks."
+      },
+      {
+        "persona_id": "persona-003",
+        "display_name": "Accessibility advocate",
+        "description": "A rider who evaluates step-free late-night journeys."
+      },
+      {
+        "persona_id": "persona-004",
+        "display_name": "Synthetic stakeholder 4",
+        "description": "An authored fixture participant used only to exercise count handling."
+      }
+    ],
+    "messages": [
+      {
+        "message_id": "message-001",
+        "sequence": 1,
+        "persona_id": "persona-001",
+        "content": "The rider asks the city to retain late-night service.",
+        "translation_status": "translated",
+        "source_refs": [
+          "source-001"
+        ],
+        "reply_to_message_ids": [],
+        "round_number": 1,
+        "recorded_at": null
+      },
+      {
+        "message_id": "message-002",
+        "sequence": 2,
+        "persona_id": "persona-002",
+        "content": "Late-night service needs adequate rest time and clear safety procedures.",
+        "translation_status": "translated",
+        "source_refs": [
+          "source-002"
+        ],
+        "reply_to_message_ids": [
+          "message-001"
+        ],
+        "round_number": 1,
+        "recorded_at": null
+      },
+      {
+        "message_id": "message-003",
+        "sequence": 3,
+        "persona_id": "persona-003",
+        "content": "Every pilot stop should preserve an accessible route.",
+        "translation_status": "original_english",
+        "source_refs": [
+          "source-003"
+        ],
+        "reply_to_message_ids": [
+          "message-001"
+        ],
+        "round_number": 1,
+        "recorded_at": null
+      },
+      {
+        "message_id": "message-004",
+        "sequence": 4,
+        "persona_id": "persona-004",
+        "content": "Authored fixture response from synthetic stakeholder 4.",
+        "translation_status": "original_english",
+        "source_refs": [
+          "source-004"
+        ],
+        "reply_to_message_ids": [
+          "message-001"
+        ],
+        "round_number": 1,
+        "recorded_at": null
+      }
+    ],
+    "sources": [
+      {
+        "source_id": "source-001",
+        "record_id": "message-001",
+        "title": "Rider response",
+        "excerpt": "The rider requests continued late-night service."
+      },
+      {
+        "source_id": "source-002",
+        "record_id": "message-002",
+        "title": "Operator response",
+        "excerpt": "The operator requests rest time and clear safety procedures."
+      },
+      {
+        "source_id": "source-003",
+        "record_id": "message-003",
+        "title": "Accessibility response",
+        "excerpt": "The advocate requests an accessible route at every stop."
+      },
+      {
+        "source_id": "source-004",
+        "record_id": "message-004",
+        "title": "Synthetic stakeholder 4 response",
+        "excerpt": "Authored fixture response from synthetic stakeholder 4."
+      }
+    ],
+    "limitations": [
+      "Authored synthetic fixture dialogue; it does not analyze the supplied policy or personality seed, and no live Sandbox was executed."
+    ],
+    "errors": []
+  },
+  "judge": {
+    "schema_version": "2.0",
+    "request_id": "fixture-prose-judge",
+    "run_id": "fixture-prose-run",
+    "policy_version": "1",
+    "policy_text_sha256": "865978455bb8fb036ab6f1cbf540f873c5a332b264312d2cd5b048817ecbfd6a",
+    "request_fingerprint": "a9f43585b758c649bfe50a67d68f6aef18e4e5f109b81c5d18e8c345fc1f3425",
+    "execution_mode": "fixture",
+    "status": "partial",
+    "summary": "Fixture advice combines deterministic Metric results with authored Sandbox dialogue. Inspect the cited tests and resolve evidence limitations before making policy decisions.",
+    "recommendation": "insufficient_evidence",
+    "pros": [
+      {
+        "text": "Fixture advice: the deterministic case 'Age in completed years: threshold boundary' returned pass.",
+        "citations": [
+          {
+            "kind": "metric_case",
+            "id": "condition-R1",
+            "case_id": null
+          }
+        ]
+      },
+      {
+        "text": "Fixture advice: the deterministic case 'Annual income in cents: threshold boundary' returned pass.",
+        "citations": [
+          {
+            "kind": "metric_case",
+            "id": "condition-R2",
+            "case_id": null
+          }
+        ]
+      }
+    ],
+    "cons": [],
+    "next_steps": [
+      {
+        "action": "Clarify executable requirements and collect live stakeholder evidence.",
+        "reason": "A fixture report cannot establish policy readiness.",
+        "citations": []
+      }
+    ],
+    "key_interactions": [
+      {
+        "text": "Fixture dialogue contains a reply between two distinct sample participants; this is not policy-specific simulation evidence.",
+        "citations": [
+          {
+            "kind": "sandbox_message",
+            "id": "message-001",
+            "case_id": null
+          },
+          {
+            "kind": "sandbox_message",
+            "id": "message-002",
+            "case_id": null
+          }
+        ]
+      },
+      {
+        "text": "Fixture dialogue contains a reply between two distinct sample participants; this is not policy-specific simulation evidence.",
+        "citations": [
+          {
+            "kind": "sandbox_message",
+            "id": "message-001",
+            "case_id": null
+          },
+          {
+            "kind": "sandbox_message",
+            "id": "message-003",
+            "case_id": null
+          }
+        ]
+      },
+      {
+        "text": "Fixture dialogue contains a reply between two distinct sample participants; this is not policy-specific simulation evidence.",
+        "citations": [
+          {
+            "kind": "sandbox_message",
+            "id": "message-001",
+            "case_id": null
+          },
+          {
+            "kind": "sandbox_message",
+            "id": "message-004",
+            "case_id": null
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Fixture Judge: deterministic report demonstration; no Judge model was called.",
+      "Fixture Sandbox dialogue does not analyse the submitted policy or personality seed.",
+      "Completion describes evidence processing, not policy correctness.",
+      "Fixture mode uses authored Sandbox dialogue and a deterministic demonstration of Judge advice.",
+      "Metric executed clause-local boundary checks; combined eligibility and payout outcomes remain unscored.",
+      "These are clause-local boundary checks of an interpreted model, not independent verification of policy correctness or a deployed benefit system.",
+      "Only explicit age, income, home annual value and property-count comparisons in supported English syntax are executable. Citizenship, residence, exclusions, voucher uses and other prose remain unscored.",
+      "Conditions are tested separately. Their applicability to individual benefits, combined eligibility, payout tiers, proration, timing and exceptions are not inferred.",
+      "Dollar amounts use integer cents; no currency conversion or real-world eligibility decision is performed.",
+      "Executed 2 of 2 extracted comparisons; source coverage is incomplete.",
+      "Authored synthetic fixture dialogue; it does not analyze the supplied policy or personality seed, and no live Sandbox was executed."
+    ],
+    "errors": []
+  },
+  "stages": [
+    {
+      "role": "Orchestrator Agent",
+      "status": "completed",
+      "detail": "Inputs bound to a single policy version and run."
+    },
+    {
+      "role": "Metric Agent",
+      "status": "partial",
+      "detail": "2 passed, 0 failed, 1 unscored cases."
+    },
+    {
+      "role": "Sandbox Agent",
+      "status": "completed",
+      "detail": "4 of 4 requested stakeholders observed."
+    },
+    {
+      "role": "Judge Agent",
+      "status": "partial",
+      "detail": "Cited advice validated."
+    }
+  ],
+  "limitations": [
+    "Completion describes evidence processing, not policy correctness.",
+    "Fixture mode uses authored Sandbox dialogue and a deterministic demonstration of Judge advice.",
+    "Metric executed clause-local boundary checks; combined eligibility and payout outcomes remain unscored."
+  ]
+}

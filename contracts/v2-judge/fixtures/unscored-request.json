@@ -20,14 +20,14 @@
       "clauses": [],
       "goals": [],
       "limitations": [
-        "Use exactly the documented line-based reimbursement policy format, including every required operative clause and explicit Goal clause."
+        "The Metric engine cannot interpret this input. The workflow supports the documented reimbursement format and a bounded set of explicit numeric conditions. No policy requirements were extracted or tested. This is a tool capability limitation, not evidence that the submitted policy lacks provisions or needs substantive revision."
       ],
       "policy_text_sha256": "5f6c393bfcb7c2f283d86ddec6b8349c52d318c504fbdfd7498ab05ee2579366",
-      "review_fingerprint": "2abbaa726f8a64493eb2e8168e7003b7edbab9018b16ab81f62a0b367bbebfb7",
+      "review_fingerprint": "902edf208632803997add1a46f295cddb4f6f324731a2fec1ddadbabea11a4d4",
       "rules": null,
       "status": "needs_clarification"
     },
-    "review_fingerprint": "2abbaa726f8a64493eb2e8168e7003b7edbab9018b16ab81f62a0b367bbebfb7",
+    "review_fingerprint": "902edf208632803997add1a46f295cddb4f6f324731a2fec1ddadbabea11a4d4",
     "run_id": "judge-example-unscored",
     "schema_version": "2.0",
     "status": "needs_clarification",

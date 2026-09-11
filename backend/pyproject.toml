@@ -13,6 +13,7 @@ dependencies = [
   "pydantic-settings",
   "uvicorn[standard]",
   "openai",
+  "httpx",
 ]
 
 [project.optional-dependencies]

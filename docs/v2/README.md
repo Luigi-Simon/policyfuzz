@@ -1,5 +1,11 @@
 # PolicyFuzz v2: two people, one shared interface
 
+**Current integration:** [Run the assembled workflow](INTEGRATION.md). The `/v2`
+page now connects Metric, Sandbox and Judge. The earlier Sandbox-only fixture page
+is at `/v2/fixture`, and its `/api/v2/runs` endpoint remains compatible. The material
+below records the original foundation and contributor assignments; references to
+Metric/live/Judge as future work describe that earlier milestone.
+
 This branch contains the first core milestone: a four-field `/v2` form, a
 standalone Orchestrator API and an English evidence screen using the synthetic
 Sandbox fixture. The existing v1 application remains available. Metric tests,

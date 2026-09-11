@@ -11,6 +11,7 @@ from typing import Any
 
 from .main import app
 from .run_models import PublicSandboxResult
+from .workflow_models import WorkflowResult
 
 DEFAULT_OUTPUT = Path(__file__).resolve().parents[3] / "contracts" / "v2-app"
 
@@ -26,6 +27,7 @@ def _rendered_contracts() -> dict[str, bytes]:
         "public-sandbox-result.schema.json": _json_bytes(
             PublicSandboxResult.model_json_schema()
         ),
+        "workflow-result.schema.json": _json_bytes(WorkflowResult.model_json_schema()),
     }
 
 

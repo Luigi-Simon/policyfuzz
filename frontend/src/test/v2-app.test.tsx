@@ -28,7 +28,8 @@ describe('v2 fixture flow', () => {
     expect(screen.getByText('Completed')).toBeInTheDocument();
     expect(screen.getAllByText('Synthetic fixture').length).toBeGreaterThan(0);
     expect(screen.getByText(completed.limitations[0])).toBeInTheDocument();
-    expect(screen.getAllByRole('link', { name: 'Reply to message-001' })[0]).toHaveAttribute('href', '#v2-message-message-001');
+    await user.click(screen.getByText('2 replies'));
+    expect(screen.getAllByRole('link', { name: 'Reply to Night-shift rider · Message 1' })[0]).toHaveAttribute('href', '#v2-message-message-001');
     expect(screen.getByText(completed.request_fingerprint)).toBeInTheDocument();
     expect(screen.queryByText(/乘客/)).not.toBeInTheDocument();
   });

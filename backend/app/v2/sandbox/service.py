@@ -12,8 +12,10 @@ from app.v2.contracts import (
     request_fingerprint,
     validate_sandbox_result,
 )
+from app.v2.diagnostics import record
 
 from .capture import project_capture
+from .language import LanguageError
 from .personas import SeedPersona
 from .translation import checked_projection, latin_display
 
@@ -29,7 +31,7 @@ class MiroFishSandboxService:
         language,
         *,
         poll_seconds=2,
-        cleanup_seconds=10,
+        cleanup_seconds=20,
         translation_seconds=30,
         max_agents=50,
     ):
@@ -83,12 +85,14 @@ class MiroFishSandboxService:
                 "The shared v2 contract currently requires an English policy title."
             )
         try:
+            record("title", "started")
             async with asyncio.timeout(min(30, request.timeout_seconds * 0.2)):
                 title = checked_projection(
                     request.policy_title,
                     await self.language.english(request.policy_title),
                 )
         except Exception:  # noqa: BLE001 - no valid public title exists on this failure
+            record("title", "failed", code="title_unverified")
             raise UnsupportedPolicyTitle(
                 "The policy title could not be verified as English; no simulation was started."
             ) from None
@@ -101,6 +105,7 @@ class MiroFishSandboxService:
         prepare_attempted = False
         status = SandboxStatus.COMPLETED
         projected = None
+        phase = "lookup"
         # Reserve part of the request deadline for capture/translation. Cleanup has
         # its own explicit bound so a stuck engine cannot strand the API task.
         execution_budget = max(
@@ -113,16 +118,23 @@ class MiroFishSandboxService:
             async with asyncio.timeout(execution_budget):
                 candidate = await self.client.lookup(fingerprint)
                 if candidate is None:
+                    phase = "roster"
                     count = min(request.stakeholder_count, self.max_agents)
                     people = tuple(await self.language.personas(request, count))
                     if len(people) != count:
                         raise ValueError("Persona count differs from requested cap")
                     prepare_attempted = True
+                    phase = "prepare"
+                    record(phase, "started", count=len(people))
                     candidate = await self.client.prepare(request, people)
                 self._validate_job(request, candidate)
                 job = candidate  # Only a fully bound job may be captured or stopped.
                 if job["status"] == "ready":
+                    phase = "start"
+                    record(phase, "started")
                     await self.client.start(fingerprint)
+                phase = "simulation"
+                record(phase, "started")
                 while True:
                     candidate = await self.client.status(fingerprint)
                     self._validate_job(request, candidate)
@@ -160,13 +172,25 @@ class MiroFishSandboxService:
             notes.append("cancelled: The caller cancelled this Sandbox request.")
             await self._stop(fingerprint, bool(job) or prepare_attempted, errors)
         except TimeoutError:
+            record(phase, "failed", code="sandbox_deadline")
             status = SandboxStatus.PARTIAL
             errors.append("timeout: The bounded simulation deadline expired.")
             await self._stop(fingerprint, bool(job) or prepare_attempted, errors)
-        except Exception:  # noqa: BLE001 - sanitize the injected provider boundary
+        except Exception as error:  # noqa: BLE001 - sanitize the injected provider boundary
             status = SandboxStatus.FAILED
+            code = (
+                error.code
+                if isinstance(error, LanguageError)
+                else "provider_or_binding_invalid"
+            )
+            record(phase, "failed", code=code)
             errors.append(
-                "sandbox_execution_failed: The provider response or job binding could not be validated."
+                f"sandbox_execution_failed: stage={phase}; code={code}. "
+                + (
+                    "Participant setup failed before MiroFish preparation; no simulation was started."
+                    if phase == "roster"
+                    else "The stage could not return validated evidence."
+                )
             )
             await self._stop(fingerprint, bool(job) or prepare_attempted, errors)
 
@@ -238,7 +262,17 @@ class MiroFishSandboxService:
         # The foundation requires unavailable translations to use PARTIAL even
         # after cancellation/failure. Preserve the cause in machine-prefixed notes.
         unavailable = any(m.translation_status == "unavailable" for m in messages)
-        if unavailable or (status == SandboxStatus.COMPLETED and (notes or errors)):
+        # Native action logs are metadata for the already captured posts/comments.
+        # Keeping records without message IDs in the archive is informational;
+        # it must neither duplicate messages nor downgrade a completed capture.
+        incomplete_notes = [
+            note
+            for note in notes
+            if not note.startswith(("action_metadata_only:", "discussion_quality:"))
+        ]
+        if unavailable or (
+            status == SandboxStatus.COMPLETED and (incomplete_notes or errors)
+        ):
             status = SandboxStatus.PARTIAL
         if status == SandboxStatus.FAILED and messages:
             status = SandboxStatus.PARTIAL
@@ -278,6 +312,17 @@ class MiroFishSandboxService:
             async with asyncio.timeout(self.cleanup_seconds):
                 await self.client.stop(fingerprint)
         except Exception:  # noqa: BLE001 - cleanup failures must not discard evidence
+            # A lost response or native shutdown may outlast the HTTP deadline.
+            # Confirm this exact job before warning that stopping is unknown.
+            try:
+                async with asyncio.timeout(self.cleanup_seconds):
+                    job = await self.client.status(fingerprint)
+                if job.get("request_fingerprint") == fingerprint and job.get(
+                    "status"
+                ) in {"stopped", "cancelled", "completed", "failed"}:
+                    return
+            except Exception:  # noqa: BLE001, S110 - the public warning below reports uncertainty
+                pass
             errors.append(
                 "stop_unacknowledged: MiroFish did not confirm stopping; inspect this job before retrying."
             )

@@ -30,6 +30,7 @@ class ReviewStatus(str, Enum):
 
 class MetricRunStatus(str, Enum):
     COMPLETED = "completed"
+    PARTIAL = "partial"
     NEEDS_CLARIFICATION = "needs_clarification"
 
 
@@ -84,6 +85,46 @@ class MetricRules(ContractModel):
     approval_budget_accounting: Literal["paid_only", "paid_and_approved"]
     payment_budget_recheck: bool
     duplicate_scope: Literal["claim_id", "journey"]
+
+
+class NumericCondition(ContractModel):
+    """One source-bound comparison, never an inferred whole-policy decision."""
+
+    id: str = Field(pattern=_ID_PATTERN)
+    clause_id: str = Field(pattern=_ID_PATTERN)
+    field: Literal[
+        "age_years",
+        "assessable_income_cents",
+        "annual_income_cents",
+        "monthly_income_cents",
+        "annual_value_cents",
+        "property_count",
+        "rest_minutes",
+        "notice_days",
+        "weekly_work_minutes",
+    ]
+    operator: Literal["ge", "gt", "le", "lt", "eq"]
+    threshold: int = Field(strict=True, ge=0, le=100_000_000)
+    source_start: int = Field(strict=True, ge=0)
+    source_end: int = Field(strict=True, ge=1)
+    source_sha256: str = Field(pattern=_HASH_PATTERN)
+
+    @model_validator(mode="after")
+    def source_range_is_valid(self):
+        if self.source_end <= self.source_start:
+            raise ValueError("condition source range must be nonempty")
+        return self
+
+
+class PolicyConditions(ContractModel):
+    kind: Literal["policy_conditions"] = "policy_conditions"
+    conditions: tuple[NumericCondition, ...] = Field(min_length=1, max_length=12)
+
+
+class EvaluateConditionAction(ContractModel):
+    action: Literal["evaluate_condition"] = "evaluate_condition"
+    condition_id: str = Field(pattern=_ID_PATTERN)
+    value: int = Field(strict=True, ge=-1, le=100_000_001)
 
 
 class ClaimRecord(ContractModel):
@@ -146,13 +187,18 @@ class UnsupportedAction(ContractModel):
 
     @model_validator(mode="after")
     def action_is_not_supported(self) -> UnsupportedAction:
-        if self.action in {"submit", "approve", "pay", "cancel"}:
+        if self.action in {"submit", "approve", "pay", "cancel", "evaluate_condition"}:
             raise ValueError("supported action requires its typed fields")
         return self
 
 
 MetricAction: TypeAlias = Annotated[  # noqa: UP040 - retain inline schema compatibility
-    SubmitAction | ApproveAction | PayAction | CancelAction | UnsupportedAction,
+    SubmitAction
+    | ApproveAction
+    | PayAction
+    | CancelAction
+    | EvaluateConditionAction
+    | UnsupportedAction,
     Field(union_mode="left_to_right"),
 ]
 
@@ -193,6 +239,18 @@ class TraceStep(ContractModel):
     _detail_is_english = field_validator("detail")(_english)
 
 
+class ConditionTraceStep(ContractModel):
+    step_id: str = Field(pattern=_ID_PATTERN)
+    action_index: int = Field(strict=True, ge=0, le=63)
+    action: EvaluateConditionAction
+    matches: bool
+    detail: str = Field(min_length=1, max_length=1_000)
+    before_state_sha256: str = Field(pattern=_HASH_PATTERN)
+    after_state_sha256: str = Field(pattern=_HASH_PATTERN)
+
+    _detail_is_english = field_validator("detail")(_english)
+
+
 class MetricCaseResult(ContractModel):
     case_id: str = Field(pattern=_ID_PATTERN)
     title: str = Field(min_length=1, max_length=200)
@@ -200,7 +258,7 @@ class MetricCaseResult(ContractModel):
     plausibility: str = Field(min_length=1, max_length=1_000)
     initial_state: MetricState
     actions: tuple[MetricAction, ...] = Field(min_length=1, max_length=32)
-    trace: tuple[TraceStep, ...] = Field(default=(), max_length=32)
+    trace: tuple[TraceStep | ConditionTraceStep, ...] = Field(default=(), max_length=32)
     assertions: tuple[AssertionResult, ...] = Field(default=(), max_length=16)
     verdict: CaseVerdict
     unscored_reason: str | None = Field(default=None, max_length=1_000)
@@ -256,7 +314,7 @@ class MetricReview(ContractModel):
     status: ReviewStatus
     clauses: tuple[PolicyClause, ...] = Field(default=(), max_length=16)
     goals: tuple[PolicyGoal, ...] = Field(default=(), max_length=16)
-    rules: MetricRules | None
+    rules: MetricRules | PolicyConditions | None
     assumptions: tuple[str, ...] = Field(default=(), max_length=16)
     limitations: tuple[str, ...] = Field(default=(), max_length=16)
 
@@ -276,6 +334,14 @@ class MetricReview(ContractModel):
         clause_id_set = set(clause_ids)
         if any(not set(goal.clause_ids) <= clause_id_set for goal in self.goals):
             raise ValueError("goal references unknown policy clause")
+        if isinstance(self.rules, PolicyConditions):
+            ids = [c.id for c in self.rules.conditions]
+            if len(ids) != len(set(ids)) or any(
+                c.clause_id not in clause_id_set for c in self.rules.conditions
+            ):
+                raise ValueError(
+                    "condition identifiers or clause references are invalid"
+                )
         if self.status is ReviewStatus.READY:
             if self.rules is None or not self.clauses or not self.goals:
                 raise ValueError("ready review requires rules, clauses, and goals")
@@ -290,7 +356,9 @@ class MetricRunResult(ContractModel):
     policy_version: Literal["1"] = "1"
     policy_text_sha256: str = Field(pattern=_HASH_PATTERN)
     review_fingerprint: str = Field(pattern=_HASH_PATTERN)
-    generation_method: Literal["rule_templates", "authored_fixture"] = "rule_templates"
+    generation_method: Literal[
+        "rule_templates", "authored_fixture", "policy_conditions", "policy_scenarios"
+    ] = "rule_templates"
     status: MetricRunStatus
     review: MetricReview
     suite_sha256: str = Field(pattern=_HASH_PATTERN)
@@ -341,9 +409,52 @@ class MetricRunResult(ContractModel):
             for assertion in case.assertions:
                 if assertion.requirement_id not in reviewed_goal_ids:
                     raise ValueError("assertion references unknown reviewed goal")
-        if self.status is MetricRunStatus.COMPLETED:
+        if self.generation_method == "policy_conditions":
+            if (
+                not isinstance(self.review.rules, PolicyConditions)
+                or self.status is not MetricRunStatus.PARTIAL
+            ):
+                raise ValueError("condition probes require explicit partial coverage")
+            condition_ids = {c.id for c in self.review.rules.conditions}
+            for case in self.cases:
+                for action in case.actions:
+                    if (
+                        isinstance(action, EvaluateConditionAction)
+                        and action.condition_id not in condition_ids
+                    ):
+                        raise ValueError("action references unknown condition")
+        elif isinstance(self.review.rules, PolicyConditions):
+            raise ValueError("condition evidence requires its generation method")
+        if self.generation_method == "policy_scenarios":
+            if (
+                self.status is not MetricRunStatus.PARTIAL
+                or self.review.status is not ReviewStatus.NEEDS_CLARIFICATION
+                or self.review.rules is not None
+                or self.review.clauses
+                or self.review.goals
+                or not self.cases
+                or not self.limitations
+                or any(
+                    c.verdict is not CaseVerdict.UNSCORED
+                    or c.trace
+                    or any(
+                        not isinstance(a, UnsupportedAction)
+                        or a.action != "review_scenario"
+                        for a in c.actions
+                    )
+                    for c in self.cases
+                )
+            ):
+                raise ValueError(
+                    "planned scenarios require unscored, unexecuted, explicitly limited evidence"
+                )
+        elif self.status in {MetricRunStatus.COMPLETED, MetricRunStatus.PARTIAL}:
             if self.review.status is not ReviewStatus.READY:
-                raise ValueError("completed run requires ready review")
+                raise ValueError("executed run requires ready review")
+            if self.status is MetricRunStatus.PARTIAL and (
+                not self.cases or not self.limitations
+            ):
+                raise ValueError("partial run requires cases and limitations")
         else:
             if self.review.status is not ReviewStatus.NEEDS_CLARIFICATION:
                 raise ValueError("clarification run requires clarification review")
@@ -360,6 +471,8 @@ __all__ = [
     "CaseVerdict",
     "ClaimRecord",
     "ClaimStatus",
+    "ConditionTraceStep",
+    "EvaluateConditionAction",
     "MetricAction",
     "MetricCaseResult",
     "MetricReview",
@@ -367,9 +480,11 @@ __all__ = [
     "MetricRunResult",
     "MetricRunStatus",
     "MetricState",
+    "NumericCondition",
     "ParticipantTotals",
     "PayAction",
     "PolicyClause",
+    "PolicyConditions",
     "PolicyGoal",
     "ReviewStatus",
     "SubmitAction",

@@ -33,6 +33,14 @@
 .v2-messages { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 18px; }
 .v2-message { padding: 18px; border: 1px solid var(--border); border-left: 3px solid #55ab9c; border-radius: 6px; scroll-margin-top: 20px; }
 .v2-message:target { background: #effbf6; outline: 2px solid var(--primary); }
+.v2-message:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.v2-thread { min-width: 0; }
+.v2-thread-replies { margin: 0 0 0 18px; padding: 12px 0 0 16px; border-left: 2px solid #d9e9e4; }
+.v2-thread-replies > summary { color: var(--primary); cursor: pointer; font-size: 13px; font-weight: 600; padding: 4px 0; }
+.v2-thread-replies > summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; border-radius: 2px; }
+.v2-thread-replies > .v2-messages { margin-top: 12px; gap: 12px; }
+.v2-thread-replies .v2-message { border-left-width: 1px; }
+.v2-thread-empty { margin: 10px 0 0 20px; }
 .v2-message-text { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px; margin: 15px 0; }
 .v2-replies { display: flex; flex-wrap: wrap; gap: 8px; font-size: 11px; margin-bottom: 10px; }
 .v2-personas { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 18px; }
@@ -55,5 +63,13 @@
   .v2-counts dt { font-size: 11px; }
   .v2-counts dd { font-size: 26px; }
   .v2-message { padding: 14px; }
+  .v2-thread-replies { margin-left: 8px; padding-left: 10px; }
 }
 @media (max-width: 380px) { .v2-roles ol { grid-template-columns: 1fr; } }
+.workflow-stages { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-block: 24px; }
+.workflow-stages li { min-width: 0; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+.workflow-stages .badge { margin-left: 8px; }
+.metric-case { padding: 16px 0; border-bottom: 1px solid var(--border); }
+.metric-case summary { cursor: pointer; }
+.v2-evidence li { overflow-wrap: anywhere; }
+@media (max-width: 640px) { .workflow-stages { grid-template-columns: 1fr; } }

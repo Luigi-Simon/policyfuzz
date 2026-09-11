@@ -1,0 +1,838 @@
+{
+  "schema_version": "2.0",
+  "run_id": "d0837dd2-d144-4f62-a4c4-73ee8f9e5328",
+  "policy_version": "1",
+  "policy_title": "Synthetic workplace rest and change notice pilot",
+  "policy_text_sha256": "8d4b94e7a670fd82653686009a06141ce0b94c791d0b1751472433c878a0b580",
+  "execution_mode": "fixture",
+  "status": "partial",
+  "metric": {
+    "schema_version": "2.0",
+    "run_id": "d0837dd2-d144-4f62-a4c4-73ee8f9e5328",
+    "policy_version": "1",
+    "policy_text_sha256": "8d4b94e7a670fd82653686009a06141ce0b94c791d0b1751472433c878a0b580",
+    "review_fingerprint": "50b3b45a96ad92c579b948d30103e935205d5356febc74290937f7c8f434e8e2",
+    "generation_method": "policy_conditions",
+    "status": "partial",
+    "review": {
+      "policy_text_sha256": "8d4b94e7a670fd82653686009a06141ce0b94c791d0b1751472433c878a0b580",
+      "review_fingerprint": "50b3b45a96ad92c579b948d30103e935205d5356febc74290937f7c8f434e8e2",
+      "status": "ready",
+      "clauses": [
+        {
+          "id": "C-R1",
+          "text": "Extracted local condition: Rest duration in minutes ge 660. Applicability and exceptions are not established. Source characters 68–128 (end exclusive)."
+        },
+        {
+          "id": "C-R2",
+          "text": "Extracted local condition: Change notice in calendar days ge 25. Applicability and exceptions are not established. Source characters 198–222 (end exclusive)."
+        },
+        {
+          "id": "C-R3",
+          "text": "Extracted local condition: Weekly working time in minutes le 2520. Applicability and exceptions are not established. Source characters 224–269 (end exclusive)."
+        }
+      ],
+      "goals": [
+        {
+          "id": "G-R1",
+          "text": "Verify that the interpreted comparison respects its explicit threshold and inclusive or exclusive boundary. This tests model conformance only.",
+          "clause_ids": [
+            "C-R1"
+          ]
+        },
+        {
+          "id": "G-R2",
+          "text": "Verify that the interpreted comparison respects its explicit threshold and inclusive or exclusive boundary. This tests model conformance only.",
+          "clause_ids": [
+            "C-R2"
+          ]
+        },
+        {
+          "id": "G-R3",
+          "text": "Verify that the interpreted comparison respects its explicit threshold and inclusive or exclusive boundary. This tests model conformance only.",
+          "clause_ids": [
+            "C-R3"
+          ]
+        }
+      ],
+      "rules": {
+        "kind": "policy_conditions",
+        "conditions": [
+          {
+            "id": "R1",
+            "clause_id": "C-R1",
+            "field": "rest_minutes",
+            "operator": "ge",
+            "threshold": 660,
+            "source_start": 68,
+            "source_end": 128,
+            "source_sha256": "8b0172f96fb8a11de2f489e9d4a9ea082caeae1d8ad18262a8279a224bd8eaa5"
+          },
+          {
+            "id": "R2",
+            "clause_id": "C-R2",
+            "field": "notice_days",
+            "operator": "ge",
+            "threshold": 25,
+            "source_start": 198,
+            "source_end": 222,
+            "source_sha256": "e6759d5b9307fb2076d1dbd16b9c7d053c8fbf5ef68c023309797679fa0e5a23"
+          },
+          {
+            "id": "R3",
+            "clause_id": "C-R3",
+            "field": "weekly_work_minutes",
+            "operator": "le",
+            "threshold": 2520,
+            "source_start": 224,
+            "source_end": 269,
+            "source_sha256": "d9d05e4b43840b4d771618bacf0d8b7eabb9466d68eb7d915e394497605f3533"
+          }
+        ]
+      },
+      "assumptions": [
+        "Numeric comparisons are clause-local; no implicit AND/OR relationship or jurisdiction is assumed."
+      ],
+      "limitations": [
+        "These are clause-local boundary checks of explicit duration comparisons in an interpreted model, not independent verification of policy correctness or workplace compliance.",
+        "Rest hours use integer minutes and notice uses calendar days. Applicability, operational exceptions, opt-outs, retaliation, compensation, alternative implementations and combined policy outcomes remain unscored.",
+        "Clock windows, timezone conversions and endpoint inclusivity require an explicit supported interpretation; they are scenario questions, not executed time-window tests. A standard workweek reference alone does not establish a maximum."
+      ]
+    },
+    "suite_sha256": "f6b4eba97218d45e5faf1b54bfea065a92934ea8d58dbb3138ec7d4616e5f752",
+    "cases": [
+      {
+        "case_id": "condition-R1",
+        "title": "Rest duration in minutes: threshold boundary",
+        "category": "boundary",
+        "plausibility": "Participants have rest duration in minutes immediately below, at and above 660. Consider applicability and exceptions separately.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "evaluate_condition",
+            "condition_id": "R1",
+            "value": 659
+          },
+          {
+            "action": "evaluate_condition",
+            "condition_id": "R1",
+            "value": 660
+          },
+          {
+            "action": "evaluate_condition",
+            "condition_id": "R1",
+            "value": 661
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "evaluate_condition",
+              "condition_id": "R1",
+              "value": 659
+            },
+            "matches": false,
+            "detail": "Rest duration in minutes: 659. Extracted condition matches: False. This is not a whole-policy compliance decision.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75"
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "evaluate_condition",
+              "condition_id": "R1",
+              "value": 660
+            },
+            "matches": true,
+            "detail": "Rest duration in minutes: 660. Extracted condition matches: True. This is not a whole-policy compliance decision.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75"
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "evaluate_condition",
+              "condition_id": "R1",
+              "value": 661
+            },
+            "matches": true,
+            "detail": "Rest duration in minutes: 661. Extracted condition matches: True. This is not a whole-policy compliance decision.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75"
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-R1",
+            "passed": true,
+            "expected": "The extracted ge comparison has below/at/above outcomes (False, True, True).",
+            "actual": "Interpreted-model outcomes: (False, True, True). No independent policy implementation was tested.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          }
+        ],
+        "verdict": "pass",
+        "unscored_reason": null,
+        "minimal_actions": null
+      },
+      {
+        "case_id": "condition-R2",
+        "title": "Change notice in calendar days: threshold boundary",
+        "category": "boundary",
+        "plausibility": "Participants have change notice in calendar days immediately below, at and above 25. Consider applicability and exceptions separately.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "evaluate_condition",
+            "condition_id": "R2",
+            "value": 24
+          },
+          {
+            "action": "evaluate_condition",
+            "condition_id": "R2",
+            "value": 25
+          },
+          {
+            "action": "evaluate_condition",
+            "condition_id": "R2",
+            "value": 26
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "evaluate_condition",
+              "condition_id": "R2",
+              "value": 24
+            },
+            "matches": false,
+            "detail": "Change notice in calendar days: 24. Extracted condition matches: False. This is not a whole-policy compliance decision.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75"
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "evaluate_condition",
+              "condition_id": "R2",
+              "value": 25
+            },
+            "matches": true,
+            "detail": "Change notice in calendar days: 25. Extracted condition matches: True. This is not a whole-policy compliance decision.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75"
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "evaluate_condition",
+              "condition_id": "R2",
+              "value": 26
+            },
+            "matches": true,
+            "detail": "Change notice in calendar days: 26. Extracted condition matches: True. This is not a whole-policy compliance decision.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75"
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-R2",
+            "passed": true,
+            "expected": "The extracted ge comparison has below/at/above outcomes (False, True, True).",
+            "actual": "Interpreted-model outcomes: (False, True, True). No independent policy implementation was tested.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          }
+        ],
+        "verdict": "pass",
+        "unscored_reason": null,
+        "minimal_actions": null
+      },
+      {
+        "case_id": "condition-R3",
+        "title": "Weekly working time in minutes: threshold boundary",
+        "category": "boundary",
+        "plausibility": "Participants have weekly working time in minutes immediately below, at and above 2520. Consider applicability and exceptions separately.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "evaluate_condition",
+            "condition_id": "R3",
+            "value": 2519
+          },
+          {
+            "action": "evaluate_condition",
+            "condition_id": "R3",
+            "value": 2520
+          },
+          {
+            "action": "evaluate_condition",
+            "condition_id": "R3",
+            "value": 2521
+          }
+        ],
+        "trace": [
+          {
+            "step_id": "S1",
+            "action_index": 0,
+            "action": {
+              "action": "evaluate_condition",
+              "condition_id": "R3",
+              "value": 2519
+            },
+            "matches": true,
+            "detail": "Weekly working time in minutes: 2519. Extracted condition matches: True. This is not a whole-policy compliance decision.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75"
+          },
+          {
+            "step_id": "S2",
+            "action_index": 1,
+            "action": {
+              "action": "evaluate_condition",
+              "condition_id": "R3",
+              "value": 2520
+            },
+            "matches": true,
+            "detail": "Weekly working time in minutes: 2520. Extracted condition matches: True. This is not a whole-policy compliance decision.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75"
+          },
+          {
+            "step_id": "S3",
+            "action_index": 2,
+            "action": {
+              "action": "evaluate_condition",
+              "condition_id": "R3",
+              "value": 2521
+            },
+            "matches": false,
+            "detail": "Weekly working time in minutes: 2521. Extracted condition matches: False. This is not a whole-policy compliance decision.",
+            "before_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75",
+            "after_state_sha256": "249a5979e4afcec6651fe7437dbe673cc7f89253a4ab0dcf5a8b6cf850adfc75"
+          }
+        ],
+        "assertions": [
+          {
+            "requirement_id": "G-R3",
+            "passed": true,
+            "expected": "The extracted le comparison has below/at/above outcomes (True, True, False).",
+            "actual": "Interpreted-model outcomes: (True, True, False). No independent policy implementation was tested.",
+            "step_refs": [
+              "S1",
+              "S2",
+              "S3"
+            ]
+          }
+        ],
+        "verdict": "pass",
+        "unscored_reason": null,
+        "minimal_actions": null
+      },
+      {
+        "case_id": "policy-combined-outcomes",
+        "title": "Combined workplace outcomes and exceptions",
+        "category": "compound",
+        "plausibility": "A participant encounters overlapping work arrangements, notice periods and operational exceptions. Review their combined treatment against the source policy.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_workplace_outcomes",
+            "parameters": []
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "Combined workplace outcomes, applicability and exceptions need a reviewed executable model and independent expected outcomes. Passing a duration comparison does not verify workplace compliance or establish that unsupported rules are absent.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-1",
+        "title": "Communication window",
+        "category": "boundary",
+        "plausibility": "A message arrives just before, at, or just after a communication window, including a cross-timezone recipient.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "topic_offset=23:33;sha256=4f935a0f03deea2fa71a98679eebce744bf19bd38379dece9d64ccc92a167834"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-2",
+        "title": "Hours and rest",
+        "category": "boundary",
+        "plausibility": "A participant's schedule crosses a working-hours or rest boundary; include an overnight shift.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "topic_offset=124:128;sha256=2e09d5210db8417757b0f875c276d0cb877b22514e9a3583d2d8d7445368a027"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-3",
+        "title": "Standby and compensation",
+        "category": "compound",
+        "plausibility": "A participant monitors messages on standby and then handles a work request; examine how the two activities are recorded.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "topic_offset=271:278;sha256=fcd589c1bc20cd2df52fad1f802dd6c09654fd29048b78260567223fa2b8ef69"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-4",
+        "title": "Operational exception",
+        "category": "compound",
+        "plausibility": "An ordinary request and an urgent operational request arrive together; examine how each is handled and documented.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "topic_offset=280:290;sha256=a8a5fdc05fd198750d3ea2b39e37e5a482647e272bf3e251078e791423c816e0"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-5",
+        "title": "Eligibility and changing circumstances",
+        "category": "compound",
+        "plausibility": "A participant's circumstances change; examine whether the policy still applies and how overlapping eligibility conditions are handled, if present.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "topic_offset=0:8;sha256=1889cf7628004753b631f31cd752a9feb13732d5b9ee834ff252e42cfc35cc0a"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-6",
+        "title": "Review and transition",
+        "category": "cascading",
+        "plausibility": "A case remains open when a review or implementation period ends; examine notice, monitoring and transition handling.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "topic_offset=216:222;sha256=9368a7d21e018f64ae3327d2f25cd4d7693b2d85328e4bb680bcfcbd4c26b90e"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-7",
+        "title": "Ordinary use",
+        "category": "normal",
+        "plausibility": "A participant follows the ordinary process described by the submitted policy.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "generic_exploration"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      },
+      {
+        "case_id": "scenario-8",
+        "title": "Boundary ambiguity",
+        "category": "boundary",
+        "plausibility": "Two otherwise similar participants fall on opposite sides of an applicable policy boundary, if one exists.",
+        "initial_state": {
+          "claims": [],
+          "participants": []
+        },
+        "actions": [
+          {
+            "action": "review_scenario",
+            "parameters": [
+              "generic_exploration"
+            ]
+          }
+        ],
+        "trace": [],
+        "assertions": [],
+        "verdict": "unscored",
+        "unscored_reason": "No executable rule or authoritative expected outcome is available for this scenario. Human review and a supported test adapter are required before scoring.",
+        "minimal_actions": null
+      }
+    ],
+    "passed": 3,
+    "failed": 0,
+    "unscored": 9,
+    "pass_rate": 1.0,
+    "limitations": [
+      "These are clause-local boundary checks of explicit duration comparisons in an interpreted model, not independent verification of policy correctness or workplace compliance.",
+      "Rest hours use integer minutes and notice uses calendar days. Applicability, operational exceptions, opt-outs, retaliation, compensation, alternative implementations and combined policy outcomes remain unscored.",
+      "Clock windows, timezone conversions and endpoint inclusivity require an explicit supported interpretation; they are scenario questions, not executed time-window tests. A standard workweek reference alone does not establish a maximum.",
+      "Executed 3 of 3 extracted comparisons; source coverage is incomplete."
+    ]
+  },
+  "sandbox": {
+    "schema_version": "2.0",
+    "request_id": "6bece093-104a-4af5-a68a-eb6f11072993",
+    "run_id": "d0837dd2-d144-4f62-a4c4-73ee8f9e5328",
+    "policy_version": "1",
+    "policy_title": "Synthetic workplace rest and change notice pilot",
+    "policy_text_sha256": "8d4b94e7a670fd82653686009a06141ce0b94c791d0b1751472433c878a0b580",
+    "request_fingerprint": "7c8c7e2836b4bd92337ae755a272cd17dd45572e971860a872e6309d5262d838",
+    "execution_mode": "fixture",
+    "status": "completed",
+    "requested_stakeholder_count": 4,
+    "configured_stakeholder_count": 4,
+    "observed_stakeholder_count": 4,
+    "personas": [
+      {
+        "persona_id": "persona-001",
+        "display_name": "Night-shift rider",
+        "description": "A hospital worker who depends on transit after midnight."
+      },
+      {
+        "persona_id": "persona-002",
+        "display_name": "Transit operator",
+        "description": "A driver focused on safe schedules and reliable breaks."
+      },
+      {
+        "persona_id": "persona-003",
+        "display_name": "Accessibility advocate",
+        "description": "A rider who evaluates step-free late-night journeys."
+      },
+      {
+        "persona_id": "persona-004",
+        "display_name": "Synthetic stakeholder 4",
+        "description": "An authored fixture participant used only to exercise count handling."
+      }
+    ],
+    "messages": [
+      {
+        "message_id": "message-001",
+        "sequence": 1,
+        "persona_id": "persona-001",
+        "content": "The rider asks the city to retain late-night service.",
+        "translation_status": "translated",
+        "source_refs": [
+          "source-001"
+        ],
+        "reply_to_message_ids": [],
+        "round_number": 1,
+        "recorded_at": null
+      },
+      {
+        "message_id": "message-002",
+        "sequence": 2,
+        "persona_id": "persona-002",
+        "content": "Late-night service needs adequate rest time and clear safety procedures.",
+        "translation_status": "translated",
+        "source_refs": [
+          "source-002"
+        ],
+        "reply_to_message_ids": [
+          "message-001"
+        ],
+        "round_number": 1,
+        "recorded_at": null
+      },
+      {
+        "message_id": "message-003",
+        "sequence": 3,
+        "persona_id": "persona-003",
+        "content": "Every pilot stop should preserve an accessible route.",
+        "translation_status": "original_english",
+        "source_refs": [
+          "source-003"
+        ],
+        "reply_to_message_ids": [
+          "message-001"
+        ],
+        "round_number": 1,
+        "recorded_at": null
+      },
+      {
+        "message_id": "message-004",
+        "sequence": 4,
+        "persona_id": "persona-004",
+        "content": "Authored fixture response from synthetic stakeholder 4.",
+        "translation_status": "original_english",
+        "source_refs": [
+          "source-004"
+        ],
+        "reply_to_message_ids": [
+          "message-001"
+        ],
+        "round_number": 1,
+        "recorded_at": null
+      }
+    ],
+    "sources": [
+      {
+        "source_id": "source-001",
+        "record_id": "message-001",
+        "title": "Rider response",
+        "excerpt": "The rider requests continued late-night service."
+      },
+      {
+        "source_id": "source-002",
+        "record_id": "message-002",
+        "title": "Operator response",
+        "excerpt": "The operator requests rest time and clear safety procedures."
+      },
+      {
+        "source_id": "source-003",
+        "record_id": "message-003",
+        "title": "Accessibility response",
+        "excerpt": "The advocate requests an accessible route at every stop."
+      },
+      {
+        "source_id": "source-004",
+        "record_id": "message-004",
+        "title": "Synthetic stakeholder 4 response",
+        "excerpt": "Authored fixture response from synthetic stakeholder 4."
+      }
+    ],
+    "limitations": [
+      "Authored synthetic fixture dialogue; it does not analyze the supplied policy or personality seed, and no live Sandbox was executed."
+    ],
+    "errors": []
+  },
+  "judge": {
+    "schema_version": "2.0",
+    "request_id": "ee26887b-60a6-4b4e-9221-c04436df195a",
+    "run_id": "d0837dd2-d144-4f62-a4c4-73ee8f9e5328",
+    "policy_version": "1",
+    "policy_text_sha256": "8d4b94e7a670fd82653686009a06141ce0b94c791d0b1751472433c878a0b580",
+    "request_fingerprint": "2b6700aefbddc56a99e26dabbbbfffa21c19c479780c1bc49a101397bade6745",
+    "execution_mode": "fixture",
+    "status": "partial",
+    "summary": "Fixture advice combines deterministic Metric results with authored Sandbox dialogue. Inspect the cited tests and resolve evidence limitations before making policy decisions.",
+    "recommendation": "insufficient_evidence",
+    "pros": [
+      {
+        "text": "Fixture advice: the deterministic case 'Rest duration in minutes: threshold boundary' returned pass.",
+        "citations": [
+          {
+            "kind": "metric_case",
+            "id": "condition-R1",
+            "case_id": null
+          }
+        ]
+      },
+      {
+        "text": "Fixture advice: the deterministic case 'Change notice in calendar days: threshold boundary' returned pass.",
+        "citations": [
+          {
+            "kind": "metric_case",
+            "id": "condition-R2",
+            "case_id": null
+          }
+        ]
+      },
+      {
+        "text": "Fixture advice: the deterministic case 'Weekly working time in minutes: threshold boundary' returned pass.",
+        "citations": [
+          {
+            "kind": "metric_case",
+            "id": "condition-R3",
+            "case_id": null
+          }
+        ]
+      }
+    ],
+    "cons": [],
+    "next_steps": [
+      {
+        "action": "Clarify executable requirements and collect live stakeholder evidence.",
+        "reason": "A fixture report cannot establish policy readiness.",
+        "citations": []
+      }
+    ],
+    "key_interactions": [
+      {
+        "text": "Fixture dialogue contains a reply between two distinct sample participants; this is not policy-specific simulation evidence.",
+        "citations": [
+          {
+            "kind": "sandbox_message",
+            "id": "message-001",
+            "case_id": null
+          },
+          {
+            "kind": "sandbox_message",
+            "id": "message-002",
+            "case_id": null
+          }
+        ]
+      },
+      {
+        "text": "Fixture dialogue contains a reply between two distinct sample participants; this is not policy-specific simulation evidence.",
+        "citations": [
+          {
+            "kind": "sandbox_message",
+            "id": "message-001",
+            "case_id": null
+          },
+          {
+            "kind": "sandbox_message",
+            "id": "message-003",
+            "case_id": null
+          }
+        ]
+      },
+      {
+        "text": "Fixture dialogue contains a reply between two distinct sample participants; this is not policy-specific simulation evidence.",
+        "citations": [
+          {
+            "kind": "sandbox_message",
+            "id": "message-001",
+            "case_id": null
+          },
+          {
+            "kind": "sandbox_message",
+            "id": "message-004",
+            "case_id": null
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Fixture Judge: deterministic report demonstration; no Judge model was called.",
+      "Fixture Sandbox dialogue does not analyse the submitted policy or personality seed.",
+      "Completion describes evidence processing, not policy correctness.",
+      "Fixture mode uses authored Sandbox dialogue and a deterministic demonstration of Judge advice.",
+      "Metric executed clause-local boundary checks; combined policy outcomes and unsupported scenarios remain unscored.",
+      "These are clause-local boundary checks of explicit duration comparisons in an interpreted model, not independent verification of policy correctness or workplace compliance.",
+      "Rest hours use integer minutes and notice uses calendar days. Applicability, operational exceptions, opt-outs, retaliation, compensation, alternative implementations and combined policy outcomes remain unscored.",
+      "Clock windows, timezone conversions and endpoint inclusivity require an explicit supported interpretation; they are scenario questions, not executed time-window tests. A standard workweek reference alone does not establish a maximum.",
+      "Executed 3 of 3 extracted comparisons; source coverage is incomplete.",
+      "Authored synthetic fixture dialogue; it does not analyze the supplied policy or personality seed, and no live Sandbox was executed."
+    ],
+    "errors": []
+  },
+  "stages": [
+    {
+      "role": "Orchestrator Agent",
+      "status": "completed",
+      "detail": "Inputs bound to a single policy version and run."
+    },
+    {
+      "role": "Metric Agent",
+      "status": "partial",
+      "detail": "3 passed, 0 failed, 9 unscored cases."
+    },
+    {
+      "role": "Sandbox Agent",
+      "status": "completed",
+      "detail": "4 of 4 requested stakeholders observed."
+    },
+    {
+      "role": "Judge Agent",
+      "status": "partial",
+      "detail": "Cited advice validated."
+    }
+  ],
+  "limitations": [
+    "Completion describes evidence processing, not policy correctness.",
+    "Fixture mode uses authored Sandbox dialogue and a deterministic demonstration of Judge advice.",
+    "Metric executed clause-local boundary checks; combined policy outcomes and unsupported scenarios remain unscored."
+  ]
+}
