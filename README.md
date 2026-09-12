@@ -17,6 +17,12 @@ PolicyFuzz turns a supported subset of a travel-and-expense policy into cited ex
 
 Use synthetic or explicitly non-confidential policy text only. This is a hackathon prototype, not legal advice or a compliance certification. Suggested prose is unverified: the deterministic engine tests the structured revision.
 
+## Semifinal demo: hypothetical Maju Forest framework
+
+Choose **Use Maju Forest demo** in the HTTP interface to load the supplied framework and five fictional stakeholder perspectives. **Start exploratory simulation** launches the separate simulation directly. It explores interpretation, implementation questions and missing evidence; its observations are unscored and do not establish ecological outcomes or real public opinion.
+
+The supplied dates, figures and government attribution are hypothetical scenario premises. Follow the [Maju demo guide](docs/maju-forest-demo.md) for setup, the presentation sequence and an eight-slide narrative. The [source and seed](samples/demos/maju-forest/README.md) are bundled. A fresh conversation requires the configured engine model and a separately running MiroFish service. The recorded expense demonstration below remains available for deterministic test–fix–retest evidence.
+
 ## Quickstart: recorded demonstration
 
 Preparing for a first demo? The [rehearsal guide](docs/demo-day-guide.md) includes Windows setup, safe key entry, a walkthrough, judging questions and a labelled fallback.

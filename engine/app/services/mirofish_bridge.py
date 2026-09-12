@@ -55,7 +55,9 @@ def launch_mirofish(
         "project_name": f"Policy rehearsal — {policy_filename}",
         "additional_context": (
             f"Population size {pack.population_size}. "
-            "Agents in the seed document should become simulation personas."
+            "Agents in the seed document should become fictional simulation personas. "
+            "This supplied scenario is not a verified government announcement. "
+            "Their views are not representative of real public opinion."
         ),
     }
     owns_client = client is None
@@ -102,10 +104,13 @@ def _seed_markdown(
     lines = [
         f"# {ir.title}",
         "",
-        "## Policy announcement",
+        "Hypothetical simulation input — not a verified government announcement.",
+        "Claims in the supplied text are scenario assumptions, not verified facts.",
+        "",
+        "## Supplied policy scenario",
         ir.source.text.strip() or ir.title,
         "",
-        "## Public rules (compiled)",
+        "## Provisional extracted rules",
     ]
     for rule in ir.rules:
         lines.append(f"- **{rule.id}** ({rule.then[0].modality if rule.then else 'rule'}): {rule.statement}")
@@ -117,7 +122,7 @@ def _seed_markdown(
         [
             "",
             "## Population seed",
-            seed.text.strip() or "No extra census notes.",
+            seed.text.strip() or "No additional synthetic stakeholder notes.",
             f"- Requested population size: {population}",
             f"- Groups: {', '.join(seed.groups) if seed.groups else 'unspecified'}",
             f"- Locale: {seed.locale or 'unspecified'}",
@@ -137,7 +142,8 @@ def _seed_markdown(
     lines.extend(
         [
             f"## Named residents ({len(agents) if agents else population})",
-            "Each resident is an independent person with opinions. They talk to each other on social media.",
+            "Each resident is a fictional simulation participant. These personas are not surveyed people or official representatives. "
+            "Their simulated discussions are not representative of real public opinion.",
             "",
         ]
     )
@@ -154,7 +160,7 @@ def _seed_markdown(
                     f"### Resident {index:03d}",
                     f"- Group: {group}",
                     f"- Persona: A {group.replace('_', ' ')} in this community. "
-                    "They hear the policy announcement and discuss it with neighbours online.",
+                    "They review the hypothetical policy scenario and discuss questions with other fictional participants.",
                     "",
                 ]
             )
@@ -193,8 +199,8 @@ def _agent_block(index: int, scenario: Scenario) -> list[str]:
     if scenario.narrative:
         lines.append(f"- Situation: {scenario.narrative}")
     lines.append(
-        f"- Persona: {name} is a {role} who will publicly discuss this policy. "
-        f"Their scenario aim is {scenario.kind}. They post, comment, and argue with other residents."
+        f"- Persona: {name} is a fictional {role} discussing this supplied policy scenario. "
+        f"Their scenario aim is {scenario.kind}. They exchange questions and competing considerations with other simulated participants."
     )
     lines.append("")
     return lines
@@ -210,14 +216,21 @@ def _simulation_requirement(
     question_lines = "\n".join(f"- {question}" for question in ir.open_questions[:12])
     n = min(agent_count or population or 50, 50)
     return (
-        f"A government just announced this policy: {ir.title}.\n\n"
-        f"Key rules the public has heard:\n{rule_lines}\n\n"
+        f"Explore this supplied hypothetical policy scenario: {ir.title}.\n"
+        "It is not a verified government announcement. Preserve any hypothetical or "
+        "unverified source labels; names of agencies in the source do not establish authenticity.\n\n"
+        f"Provisional rules extracted from the supplied text:\n{rule_lines}\n\n"
         f"Open questions from the source:\n{question_lines or '- None recorded.'}\n\n"
-        f"Simulate social-media reaction among {n} residents described in the seed "
-        "for about 24 hours (keep the run short). Agents must talk to each other "
+        f"Simulate social-media discussion among {n} fictional participants described in the seed "
+        "over an illustrative 24-hour period (keep the run short). This is simulated time, "
+        "not a forecast. Agents must talk to each other "
         "through posts, comments, and quote-tweets.\n\n"
-        "Track support, opposition, perceived fairness, implementation concerns, "
-        "and uncertainty about any open questions actually present in the source.\n\n"
+        "Explore competing needs, implementation concerns, missing evidence and "
+        "uncertainty about questions actually present in the source. Participants may "
+        "hold mixed views; do not prescribe fixed stances for a group. These opinions "
+        "are not representative of real public opinion and cannot prove ecological "
+        "outcomes, project feasibility or policy effectiveness. Do not optimize "
+        "persuasive messaging or claim to speak for a real person or agency.\n\n"
         "Do not only restate the rules. Show how different groups react to one another. "
         "Do not invent eligibility categories, compensation programs, benefits, penalties, "
         "rumours, or other provisions that the policy does not state. If a participant "

@@ -4,6 +4,48 @@ from app.services.mirofish_bridge import build_mirofish_pack
 from tests.conftest import SAMPLE_POLICY
 
 
+def test_uploaded_scenario_keeps_hypothetical_status_at_external_boundary():
+    """Uploading a supplied scenario must not turn it into an official announcement."""
+    import httpx
+
+    from app.contracts.run import SeedSpec
+    from app.services.mirofish_bridge import launch_mirofish
+
+    source = (
+        "Maju Forest Redevelopment and Land Optimization Framework\n"
+        "A hypothetical 32-hectare site includes a 5-hectare green corridor."
+    )
+    document = ingest_bytes("maju-demo.txt", source.encode())
+    ir = heuristic_extract(document)
+    pack = build_mirofish_pack(
+        ir,
+        SeedSpec(text="Discuss uncertain tradeoffs.", population_size=5,
+                 groups=["home_buyers", "conservation_researchers"]),
+    )
+    requests = []
+
+    def receive(request):
+        requests.append(request.content.decode())
+        return httpx.Response(200, json={"success": True, "data": {"project_id": "demo"}})
+
+    with httpx.Client(transport=httpx.MockTransport(receive)) as client:
+        launch = launch_mirofish(
+            pack,
+            policy_filename="maju-demo.txt",
+            policy_bytes=source.encode(),
+            base_url="https://simulation.example",
+            client=client,
+        )
+
+    assert launch.ok
+    assert len(requests) == 1
+    assert source in requests[0]
+    assert "hypothetical" in pack.simulation_requirement.lower()
+    assert "not a verified government announcement" in pack.seed_markdown.lower()
+    assert "not representative" in pack.simulation_requirement.lower()
+    assert "A government just announced" not in requests[0]
+
+
 def test_pack_from_ir_without_suite():
     document = ingest_bytes("p.txt", SAMPLE_POLICY.read_bytes())
     ir = heuristic_extract(document)

@@ -6,20 +6,27 @@ const steps: ReadonlyArray<{ id: WorkflowStep; label: string }> = [
   { id: 'findings', label: 'Findings & revision' },
   { id: 'comparison', label: 'Comparison' },
 ];
+const exploratorySteps: typeof steps = [
+  { id: 'input', label: 'Scenario input' },
+  { id: 'evidence', label: 'Agent evidence' },
+  { id: 'findings', label: 'Candidate observations' },
+];
 
 export function StepNavigation({
   active,
   available = {},
   onNavigate,
+  exploratory = false,
 }: {
   active: WorkflowStep;
   available?: Partial<Record<WorkflowStep, boolean>>;
   onNavigate?: (step: WorkflowStep) => void;
+  exploratory?: boolean;
 }) {
   return (
     <nav aria-label="Run workflow">
       <ol className="workflow-steps">
-        {steps.map((step, index) => {
+        {(exploratory ? exploratorySteps : steps).map((step, index) => {
           const enabled = step.id === active || available[step.id] === true;
           return (
             <li key={step.id} aria-current={step.id === active ? 'step' : undefined}>

@@ -76,7 +76,11 @@ Rules:
 - applies_to values MUST be actor_types.id values you defined.
 - then.action MUST match an actions.name you defined.
 - Extract numeric thresholds (warnings, hours, ages, fines) into parameters.
-- Prefer 8–40 rules over dumping every sentence.
+- Extract only obligations and permissions supported by the supplied text; there is
+  no minimum rule count. Never pad a short source with invented rules.
+- Keep projections, background claims, goals and hypothetical-source labels distinct
+  from binding requirements. Do not turn a projected outcome into a guaranteed duty.
+- Do not treat a cited agency name as proof that this is an official announcement.
 - Surface genuine ambiguities in open_questions and rule.ambiguity.
 """
 
